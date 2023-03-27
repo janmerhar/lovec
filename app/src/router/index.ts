@@ -13,26 +13,26 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "",
-        redirect: "/tabs/tab1",
+        redirect: "/tabs/jage",
       },
       {
-        path: "tab1",
+        path: "jage",
         component: () => import("@/views/Tab1Page.vue"),
       },
       {
-        path: "tab2",
+        path: "revirji",
         component: () => import("@/views/Tab2Page.vue"),
       },
       {
-        path: "tab3",
+        path: "belezke",
         component: () => import("@/views/Tab3Page.vue"),
       },
       {
-        path: "tab4",
+        path: "opazovalnica",
         component: () => import("@/views/Tab4Page.vue"),
       },
       {
-        path: "tab5",
+        path: "oprema",
         component: () => import("@/views/Tab5Page.vue"),
       },
     ],
