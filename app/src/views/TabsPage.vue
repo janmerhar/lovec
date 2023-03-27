@@ -7,27 +7,27 @@
       <ion-router-outlet></ion-router-outlet>
       <!-- Bootom tool bar -->
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="tab1" href="/tabs/tab1">
+        <ion-tab-button tab="jage" href="/tabs/jage">
           <ion-icon aria-hidden="true" :icon="triangle" />
           <ion-label>Jage</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab2" href="/tabs/tab2">
+        <ion-tab-button tab="revirji" href="/tabs/revirji">
           <ion-icon aria-hidden="true" :icon="ellipse" />
           <ion-label>Revirji</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab3" href="/tabs/tab3">
+        <ion-tab-button tab="belezke" href="/tabs/belezke">
           <ion-icon aria-hidden="true" :icon="square" />
           <ion-label>Beležke</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab4" href="/tabs/tab4">
+        <ion-tab-button tab="opazovalnica" href="/tabs/opazovalnica">
           <ion-icon aria-hidden="true" :icon="square" />
           <ion-label>Opazovalnica</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab5" href="/tabs/tab5">
+        <ion-tab-button tab="oprema" href="/tabs/oprema">
           <ion-icon aria-hidden="true" :icon="square" />
           <ion-label>Oprema</ion-label>
         </ion-tab-button>
