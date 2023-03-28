@@ -35,6 +35,10 @@ const routes: Array<RouteRecordRaw> = [
         path: "oprema",
         component: () => import("@/views/Tab5Page.vue"),
       },
+      {
+        path: "izkaznica",
+        component: () => import("@/views/TabIzkaznica.vue"),
+      },
     ],
   },
 ]
