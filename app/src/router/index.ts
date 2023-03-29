@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "belezke",
-        component: () => import("@/views/Tab3Page.vue"),
+        component: () => import("@/views/TabBelezke.vue"),
       },
       {
         path: "opazovalnica",
