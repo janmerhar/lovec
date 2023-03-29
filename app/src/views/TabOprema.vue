@@ -14,6 +14,9 @@
 <script setup lang="ts">
 import {
   IonPage,
-  // IonContent,
+  // IonHeader,
+  // IonToolbar,
+  // IonTitle,
+  IonContent,
 } from "@ionic/vue"
 </script>

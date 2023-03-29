@@ -33,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "oprema",
-        component: () => import("@/views/Tab5Page.vue"),
+        component: () => import("@/views/TabOprema.vue"),
       },
       {
         path: "izkaznica",
