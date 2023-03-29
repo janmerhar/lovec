@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "jage",
-        component: () => import("@/views/Tab1Page.vue"),
+        component: () => import("@/views/TabJage.vue"),
       },
       {
         path: "revirji",
