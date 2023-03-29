@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "opazovalnica",
-        component: () => import("@/views/Tab4Page.vue"),
+        component: () => import("@/views/TabOpazovalnica.vue"),
       },
       {
         path: "oprema",
