@@ -4,8 +4,8 @@
       <ion-title>Lovec</ion-title>
       <ion-buttons slot="secondary">
         <ion-button fill="solid" href="/tabs/izkaznica">
-          <ion-icon slot="start" :icon="star"></ion-icon>
-          Izkaznica
+          <font-awesome-icon icon="fa-solid fa-id-card " />
+          <p class="ion-margin">Izkaznica</p>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -19,7 +19,5 @@ import {
   IonTitle,
   IonButtons,
   IonButton,
-  IonIcon,
 } from "@ionic/vue"
-import { star } from "ionicons/icons"
 </script>
