@@ -8,6 +8,8 @@
       </ion-header>
 
       <ExploreContainer name="Tab 1 page" />
+
+      <fab-button></fab-button>
     </ion-content>
   </ion-page>
 </template>
@@ -21,4 +23,6 @@ import {
   IonContent,
 } from "@ionic/vue"
 import ExploreContainer from "@/components/ExploreContainer.vue"
+
+import FabButton from "@/components/FabButtonAdd.vue"
 </script>
