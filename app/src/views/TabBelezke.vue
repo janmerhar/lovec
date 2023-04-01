@@ -1,6 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <!--  -->
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">Tab 3</ion-title>
@@ -8,6 +9,9 @@
       </ion-header>
 
       <ExploreContainer name="Tab 3 page" />
+
+      <fab-buttons></fab-buttons>
+      <!--  -->
     </ion-content>
   </ion-page>
 </template>
@@ -21,4 +25,6 @@ import {
   IonContent,
 } from "@ionic/vue"
 import ExploreContainer from "@/components/ExploreContainer.vue"
+
+import FabButtons from "@/components/FabButtons.vue"
 </script>
