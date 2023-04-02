@@ -7,7 +7,10 @@
         </ion-toolbar>
       </ion-header>
 
-      <ExploreContainer name="Tab 1 page" />
+      <card-jaga>banana</card-jaga>
+      <card-jaga>ananab</card-jaga>
+      <card-jaga>eggplant</card-jaga>
+      <card-jaga>peach</card-jaga>
 
       <fab-button></fab-button>
     </ion-content>
@@ -22,7 +25,7 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue"
-import ExploreContainer from "@/components/ExploreContainer.vue"
 
 import FabButton from "@/components/FabButtonAdd.vue"
+import CardJaga from "@/components/CardJaga.vue"
 </script>
