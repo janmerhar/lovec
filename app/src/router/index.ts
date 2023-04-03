@@ -2,42 +2,53 @@ import { createRouter, createWebHistory } from "@ionic/vue-router"
 import { RouteRecordRaw } from "vue-router"
 import TabsPage from "../views/TabsPage.vue"
 
+// Tab paths
+import TabJage from "../views/TabJage.vue"
+import TabRevirji from "../views/TabRevirji.vue"
+import TabBelezke from "../views/TabBelezke.vue"
+import TabOpazovalnica from "@/views/TabOpazovalnica.vue"
+import TabOprema from "@/views/TabOprema.vue"
+import TabIzkaznica from "@/views/TabIzkaznica.vue"
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/tabs/tab1",
+    redirect: { name: "jage" },
   },
   {
     path: "/tabs/",
+    name: "tabs",
     component: TabsPage,
     children: [
       {
-        path: "",
-        redirect: "/tabs/jage",
-      },
-      {
         path: "jage",
-        component: () => import("@/views/TabJage.vue"),
+        name: "jage",
+        component: TabJage,
       },
       {
         path: "revirji",
-        component: () => import("@/views/TabRevirji.vue"),
+        name: "revirji",
+        component: TabRevirji,
       },
       {
         path: "belezke",
-        component: () => import("@/views/TabBelezke.vue"),
+        name: "belezke",
+        component: TabBelezke,
       },
       {
         path: "opazovalnica",
-        component: () => import("@/views/TabOpazovalnica.vue"),
+        name: "opazovalnica",
+        component: TabOpazovalnica,
       },
       {
         path: "oprema",
-        component: () => import("@/views/TabOprema.vue"),
+        name: "oprema",
+        component: TabOprema,
       },
       {
         path: "izkaznica",
-        component: () => import("@/views/TabIzkaznica.vue"),
+        name: "izkaznica",
+        component: TabIzkaznica,
       },
     ],
   },
