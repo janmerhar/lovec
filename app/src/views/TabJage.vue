@@ -11,13 +11,14 @@
       <card-jaga>ananab</card-jaga>
       <card-jaga>eggplant</card-jaga>
       <card-jaga>peach</card-jaga>
+      <card-jaga>peachy</card-jaga>
 
       <fab-button></fab-button>
     </ion-content>
   </ion-page>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import {
   IonPage,
   IonHeader,
@@ -28,4 +29,20 @@ import {
 
 import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
+
+import { defineComponent } from "vue"
+export default defineComponent({
+  components: {
+    IonPage,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    FabButton,
+    CardJaga,
+  },
+  setup() {
+    return {}
+  },
+})
 </script>
