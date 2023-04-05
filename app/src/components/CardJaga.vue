@@ -9,9 +9,12 @@
       Podrobnossti jage... Here's a small text description for the card content.
       Nothing more, nothing less.
     </ion-card-content>
-
-    <ion-button fill="clear">Pridruzi</ion-button>
-    <ion-button fill="clear">Izbrisi</ion-button>
+    <ion-button fill="clear" @click.prevent="$emit('join')"
+      >Pridruži</ion-button
+    >
+    <ion-button fill="clear" @click.prevent="$emit('delete')"
+      >Izbriši</ion-button
+    >
   </ion-card>
 </template>
 
@@ -36,6 +39,6 @@ export default defineComponent({
     IonButton,
   },
   props: [],
-  emits: [],
+  emits: ["join", "delete"],
 })
 </script>
