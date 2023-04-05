@@ -13,7 +13,7 @@
       <card-jaga>peach</card-jaga>
       <card-jaga>peachy</card-jaga>
 
-      <fab-button></fab-button>
+      <fab-button @click.prevent="openModal"></fab-button>
     </ion-content>
   </ion-page>
 </template>
@@ -25,10 +25,12 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  modalController,
 } from "@ionic/vue"
 
 import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
+import ModalJagaAdd from "@/components/ModalJagaAdd.vue"
 
 import { defineComponent } from "vue"
 export default defineComponent({
@@ -40,9 +42,24 @@ export default defineComponent({
     IonContent,
     FabButton,
     CardJaga,
+    // modalController,
   },
   setup() {
-    return {}
+    return { message: "" }
+  },
+  methods: {
+    async openModal() {
+      const modal = await modalController.create({
+        component: ModalJagaAdd,
+      })
+      modal.present()
+
+      const { data, role } = await modal.onWillDismiss()
+
+      if (role === "confirm") {
+        this.message = `Hello, ${data}!`
+      }
+    },
   },
 })
 </script>
