@@ -7,18 +7,23 @@
         </ion-toolbar>
       </ion-header>
 
-      <card-jaga>banana</card-jaga>
-      <card-jaga>ananab</card-jaga>
-      <card-jaga>eggplant</card-jaga>
-      <card-jaga>peach</card-jaga>
-      <card-jaga>peachy</card-jaga>
+      <card-jaga @join="openModalJagaDescription">banana</card-jaga>
+      <card-jaga @join="openModalJagaDescription">ananab</card-jaga>
 
-      <fab-button @click.prevent="openModal"></fab-button>
+      <card-jaga
+        @card="openModalJagaDescription"
+        @join="openModalJagaDescription"
+        >eggplant</card-jaga
+      >
+      <card-jaga @join="openModalJagaDescription">peach</card-jaga>
+      <card-jaga @join="openModalJagaDescription">peachy</card-jaga>
+
+      <fab-button @click.prevent="openModalJagaAdd"></fab-button>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import {
   IonPage,
   IonHeader,
@@ -31,6 +36,7 @@ import {
 import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
 import ModalJagaAdd from "@/components/ModalJagaAdd.vue"
+import ModalJagaDescription from "@/components/ModalJagaDescription.vue"
 
 import { defineComponent } from "vue"
 export default defineComponent({
@@ -42,16 +48,30 @@ export default defineComponent({
     IonContent,
     FabButton,
     CardJaga,
-    // modalController,
   },
   setup() {
-    return { message: "" }
+    return { message: "", isOpen: false }
   },
   methods: {
-    async openModal() {
+    async openModalJagaAdd() {
+      console.warn("click ModalJagaAdd")
       const modal = await modalController.create({
         component: ModalJagaAdd,
       })
+      modal.present()
+
+      const { data, role } = await modal.onWillDismiss()
+
+      if (role === "confirm") {
+        this.message = `Hello, ${data}!`
+      }
+    },
+    async openModalJagaDescription() {
+      console.warn("click ModalJagaDescription ")
+      const modal = await modalController.create({
+        component: ModalJagaDescription,
+      })
+      modal.dismiss()
       modal.present()
 
       const { data, role } = await modal.onWillDismiss()
