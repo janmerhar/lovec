@@ -1,20 +1,11 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true" class="ion-padding">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Izkaznica</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-content class="ion-padding-horizontal">
+      <h1 class="ion-text-center">Izkaznica</h1>
 
-      <div>
-        <ion-text color="primary">
-          <h5>Ime</h5>
-        </ion-text>
-        <ion-text color="dark"> Janez Novak </ion-text>
-      </div>
+      <grid-izkaznica :profile_picture="profile_picture"></grid-izkaznica>
 
-      <br />
+      <h1 class="ion-text-center">QR koda</h1>
       <qrcode-vue
         :value="qr_value"
         :size="1000"
@@ -26,27 +17,21 @@
 </template>
 
 <script>
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-} from "@ionic/vue"
+import { IonPage, IonContent } from "@ionic/vue"
 import QrcodeVue from "qrcode.vue"
-import { defineComponent } from "vue"
+import GridIzkaznica from "@/components/izkaznica/GridIzkaznica.vue"
 
 export default {
   components: {
     IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
     QrcodeVue,
+    IonContent,
+    GridIzkaznica,
   },
   data() {
     return {
+      profile_picture:
+        "https://cdna.artstation.com/p/assets/images/images/038/826/858/large/edward-munn-edm-asset.jpg?1624192416",
       qr_value: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     }
   },
