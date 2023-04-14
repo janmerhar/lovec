@@ -12,16 +12,19 @@
         lovec="Janez Novak"
         datum="Sobota, 1. 1. 2023"
         vplen="lalalalalla"
+        @click="openModalVplenDescription"
       ></card-vplen>
       <card-vplen
         lovec="Jože Gorišek"
         datum="Nedelja, 12. 12. 2021"
         vplen="lalalalalla"
+        @click="openModalVplenDescription"
       ></card-vplen>
       <card-vplen
         lovec="Jože Gorišek"
         datum="Nedelja, 12. 12. 2021"
         vplen="lalalalalla"
+        @click="openModalVplenDescription"
       ></card-vplen>
 
       <!-- 
@@ -40,6 +43,7 @@ import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import CardVplen from "@/components/belezke/CardVplen.vue"
 
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
+import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"
 
 export default {
   components: {
@@ -52,6 +56,18 @@ export default {
     async openModalVplenAdd() {
       const modal = await modalController.create({
         component: ModalVplenAdd,
+      })
+      modal.present()
+
+      // const { data, role } = await modal.onWillDismiss()
+
+      // if (role === "confirm") {
+      //   this.message = `Hello, ${data}!`
+      // }
+    },
+    async openModalVplenDescription() {
+      const modal = await modalController.create({
+        component: ModalVplenDescription,
       })
       modal.present()
 
