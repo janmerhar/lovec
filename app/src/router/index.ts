@@ -5,10 +5,12 @@ import TabsPage from "../views/TabsPage.vue"
 // Tab paths
 import TabJage from "../views/TabJage.vue"
 import TabRevirji from "../views/TabRevirji.vue"
-import TabBelezke from "../views/TabBelezke.vue"
 import TabOpazovalnica from "@/views/TabOpazovalnica.vue"
 import TabOprema from "@/views/TabOprema.vue"
 import TabIzkaznica from "@/views/TabIzkaznica.vue"
+import SubTabPripravniki from "@/views/belezke/SubTabPripravniki.vue"
+import SubTabVplen from "@/views/belezke/SubTabVplen.vue"
+import LoginPage from "@/views/LoginPage.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -16,9 +18,15 @@ const routes: Array<RouteRecordRaw> = [
     redirect: { name: "jage" },
   },
   {
+    path: "/login",
+    name: "login",
+    component: LoginPage,
+  },
+  {
     path: "/tabs/",
     name: "tabs",
     component: TabsPage,
+    redirect: { name: "oprema" },
     children: [
       {
         path: "jage",
@@ -31,9 +39,14 @@ const routes: Array<RouteRecordRaw> = [
         component: TabRevirji,
       },
       {
-        path: "belezke",
-        name: "belezke",
-        component: TabBelezke,
+        path: "pripravniki",
+        name: "pripravniki",
+        component: SubTabPripravniki,
+      },
+      {
+        path: "vplen",
+        name: "vplen",
+        component: SubTabVplen,
       },
       {
         path: "opazovalnica",
