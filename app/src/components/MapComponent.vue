@@ -1,6 +1,11 @@
 <template>
+  <!-- 
+    Delata tezave, saj preostali elementi jih prekrivajo
+    - IonPage
+    - IonContent
+   -->
   <ion-page>
-    <ion-content :fullscreen="true" class="ion-padding">
+    <ion-content>
       <div style="height: 50%; width: 100%">
         <l-map ref="map" v-model:zoom="zoom" :center="coordinates">
           <!-- Base map -->
@@ -13,6 +18,13 @@
           <!-- Marker for user -->
           <template>
             <l-marker :lat-lng="coordinates" :icon="iconLovec"></l-marker>
+          </template>
+          <!-- Marker for other users, but only if they are in revir -->
+          <template>
+            <l-marker
+              :lat-lng="[45.738336, 14.8557159]"
+              :icon="iconLovecNeuporabnik"
+            ></l-marker>
           </template>
           <!-- Markers for opazovalnice -->
           <template
@@ -62,6 +74,16 @@ export default {
       iconLovec: new L.Icon({
         iconUrl:
           "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png",
+        shadowUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      }),
+      iconLovecNeuporabnik: new L.Icon({
+        iconUrl:
+          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png",
         shadowUrl:
           "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
         iconSize: [25, 41],
