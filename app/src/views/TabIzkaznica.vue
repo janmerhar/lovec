@@ -5,6 +5,7 @@
 
       <grid-izkaznica :profile_picture="profile_picture"></grid-izkaznica>
 
+      <ion-button expand="full">Odjava iz aplikacije</ion-button>
       <h1 class="ion-text-center">QR koda</h1>
       <qrcode-vue
         :value="qr_value"
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { IonPage, IonContent } from "@ionic/vue"
+import { IonPage, IonContent, IonButton } from "@ionic/vue"
 import QrcodeVue from "qrcode.vue"
 import GridIzkaznica from "@/components/izkaznica/GridIzkaznica.vue"
 
@@ -27,6 +28,7 @@ export default {
     QrcodeVue,
     IonContent,
     GridIzkaznica,
+    IonButton,
   },
   data() {
     return {
