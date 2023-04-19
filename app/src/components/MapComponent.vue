@@ -4,49 +4,45 @@
     - IonPage
     - IonContent
    -->
-  <ion-page>
-    <ion-content>
-      <div style="height: 50%; width: 100%">
-        <l-map ref="map" v-model:zoom="zoom" :center="coordinates">
-          <!-- Base map -->
-          <l-tile-layer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            layer-type="base"
-            name="OpenStreetMap"
-            :attriburion="''"
-          ></l-tile-layer>
-          <!-- Marker for user -->
-          <template>
-            <l-marker :lat-lng="coordinates" :icon="iconLovec"></l-marker>
-          </template>
-          <!-- Marker for other users, but only if they are in revir -->
-          <template>
-            <l-marker
-              :lat-lng="[45.738336, 14.8557159]"
-              :icon="iconLovecNeuporabnik"
-            ></l-marker>
-          </template>
-          <!-- Markers for opazovalnice -->
-          <template
-            v-for="(opazovalnica, index) in opazovalniceDemo"
-            :key="index"
-          >
-            <l-marker
-              :lat-lng="opazovalnica"
-              :icon="iconOpazovalnica"
-            ></l-marker>
-          </template>
-          <!-- Polygon  za revirje -->
-          <l-polygon :lat-lngs="revirDemo" :color="'red'"></l-polygon>
-        </l-map>
-      </div>
-    </ion-content>
-  </ion-page>
+  <div style="height: 50%; width: 100%">
+    <l-map
+      ref="map"
+      v-model:zoom="zoom"
+      :center="coordinates"
+      :options="{ zoomControl: false }"
+    >
+      <!-- Base map -->
+      <l-tile-layer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        layer-type="base"
+        name="OpenStreetMap"
+        :attriburion="''"
+      ></l-tile-layer>
+      <!-- Marker for user -->
+      <template>
+        <l-marker :lat-lng="coordinates" :icon="iconLovec"></l-marker>
+      </template>
+      <!-- Marker for other users, but only if they are in revir -->
+
+      <template>
+        <l-marker
+          :lat-lng="[45.738336, 14.8557159]"
+          :icon="iconLovecNeuporabnik"
+        ></l-marker>
+      </template>
+      <!-- Markers for opazovalnice -->
+      <template v-for="(opazovalnica, index) in opazovalniceDemo" :key="index">
+        <l-marker :lat-lng="opazovalnica" :icon="iconOpazovalnica"></l-marker>
+      </template>
+      <!-- Polygon  za revirje -->
+      <l-polygon :lat-lngs="revirDemo" :color="'red'"></l-polygon>
+    </l-map>
+  </div>
 </template>
 
 <script>
-import { IonPage, IonContent } from "@ionic/vue"
-
+// L ne smem v celoti importat, temvec importam samo delne componennete v beforeMount()
+// funkciji
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 import { LMap, LTileLayer, LMarker, LPolygon } from "@vue-leaflet/vue-leaflet"
@@ -54,8 +50,6 @@ import { Geolocation } from "@capacitor/geolocation"
 
 export default {
   components: {
-    IonPage,
-    IonContent,
     LMap,
     LTileLayer,
     LMarker,
