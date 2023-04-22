@@ -18,6 +18,7 @@
         placeholder="Datum"
         type="date"
         :clear-input="true"
+        v-model="datum"
         required
       ></ion-input>
     </ion-item>
@@ -29,23 +30,35 @@
         placeholder="Žival"
         type="text"
         :clear-input="true"
+        v-model="zival"
         required
       ></ion-input>
     </ion-item>
-    <ion-item fill="solid">
-      <ion-label position="stacked">Morebitne bolezni</ion-label>
-      <ion-input
-        placeholder="Morebitne bolezni"
-        type="text"
-        :clear-input="true"
-        required
-      ></ion-input>
-    </ion-item>
-    <div class="ion-text-end">
-      <ion-button size="small" shape="default">Odstrani vnos</ion-button>
-    </div>
     <br />
-    <ion-button expand="full">Dodaj vplen</ion-button>
+    <!--  -->
+    <template v-for="(vnos, index) in vnosi" :key="index">
+      <template v-if="!vnos.hidden">
+        <ion-item fill="solid">
+          <ion-label position="stacked">Morebitne bolezni</ion-label>
+          <ion-input
+            placeholder="Morebitna bolezen"
+            type="text"
+            :clear-input="true"
+            v-model="vnosi[index].bolezen"
+            required
+          ></ion-input>
+        </ion-item>
+        
+        <div class="ion-text-end">
+          <ion-button size="small" shape="default" @click="removeField(index)"
+            >Odstrani vnos</ion-button
+          >
+        </div>
+      </template>
+    </template>
+    <!--  -->
+    <br />
+    <ion-button expand="full" @click="addField()">Dodaj bolezen</ion-button>
   </ion-content>
   <!--  -->
 </template>
@@ -81,9 +94,26 @@ export default defineComponent({
   data() {
     return {
       name: "",
+      datum: null, // nastavi na danasnji dan
+      zival: null,
+      vnosi: [
+        {
+          bolezen: null,
+          hidden: false,
+        },
+      ],
     }
   },
   methods: {
+    addField() {
+      this.vnosi.push({
+        bolezen: null,
+        hidden: false,
+      })
+    },
+    removeField(index) {
+      this.vnosi[index].hidden = true
+    },
     cancel() {
       return modalController.dismiss(null, "cancel")
     },
