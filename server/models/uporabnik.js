@@ -3,6 +3,7 @@ const { Schema } = mongoose
 
 const uporabnikSchema = new Schema({
   // Osebni podatki
+  uporabniskoIme: { type: String, required: true },
   ime: { type: String, required: true },
   priimek: { type: String, required: true },
   slika: { type: String, required: false },
