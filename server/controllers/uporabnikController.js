@@ -1,4 +1,4 @@
-exports.getUser = (req, res, next) => {
+exports.getUporabnik = (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
