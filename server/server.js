@@ -1,29 +1,30 @@
 // Importing required modules
-const cors = require('cors');
-const express = require('express');
+const cors = require("cors")
+const express = require("express")
 
 // parse env variables
-require('dotenv').config();
+require("dotenv").config()
 
 // Configuring port
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 9000
 
-const app = express();
+const app = express()
 
 // Configure middlewares
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
-app.set('view engine', 'html');
+app.set("view engine", "html")
 
 // Static folder
-app.use(express.static(__dirname + '/views/'));
+app.use(express.static(__dirname + "/views/"))
 
 // Defining route middleware
-app.use('/api', require('./routes/api'));
+app.use("/api", require("./routes/api"))
+app.use(require("./routes/auth"))
 
 // Listening to port
-app.listen(port);
-console.log(`Listening On http://localhost:${port}/api`);
+app.listen(port)
+console.log(`Listening On http://localhost:${port}/api`)
 
-module.exports = app;
+module.exports = app
