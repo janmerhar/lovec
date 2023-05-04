@@ -2,7 +2,7 @@
 const cors = require("cors")
 const express = require("express")
 
-const mongoConnect = require("./util/database")
+const { mongoConnect } = require("./util/database")
 
 // parse env variables
 require("dotenv").config()
@@ -31,7 +31,7 @@ app.use("/pripravniki", require("./routes/pripravnik"))
 app.use("/revirji", require("./routes/revir"))
 app.use("/uporabnik", require("./routes/uporabnik"))
 
-mongoConnect((client) => {
+mongoConnect(() => {
   // Listening to port
   app.listen(port)
   console.log(`Listening On http://localhost:${port}/api`)
