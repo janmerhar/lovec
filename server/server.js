@@ -3,6 +3,7 @@ const cors = require("cors")
 const express = require("express")
 
 const { mongoConnect } = require("./util/database")
+const mongoose = require("mongoose")
 
 // parse env variables
 require("dotenv").config()
@@ -31,10 +32,14 @@ app.use("/pripravniki", require("./routes/pripravnik"))
 app.use("/revirji", require("./routes/revir"))
 app.use("/uporabnik", require("./routes/uporabnik"))
 
-mongoConnect(() => {
-  // Listening to port
-  app.listen(port)
-  console.log(`Listening On http://localhost:${port}/api`)
-})
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then((result) => {
+    app.listen(port)
+    console.log(`http://localhost:${port}/api`)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 
 module.exports = app
