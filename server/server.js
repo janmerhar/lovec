@@ -2,8 +2,9 @@
 const cors = require("cors")
 const express = require("express")
 
-const { mongoConnect } = require("./util/database")
 const mongoose = require("mongoose")
+
+const httpLogger = require("./util/httpLogger")
 
 // parse env variables
 require("dotenv").config()
@@ -16,6 +17,7 @@ const app = express()
 // Configure middlewares
 app.use(cors())
 app.use(express.json())
+app.use(httpLogger)
 
 app.set("view engine", "html")
 
