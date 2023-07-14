@@ -1,0 +1,185 @@
+@startuml Mobilna aplikacija Lovec Vue.js
+
+title Mobilna aplikacija Lovec Vue.js
+
+skinparam class {
+  backgroundColor white
+  borderColor #5FB8EC
+  arrowColor black
+}
+skinparam class<<entity>> {
+  backgroundColor #e8f5fc
+  borderColor Blue
+}
+skinparam class<<control>> {
+  backgroundColor #fce8e8
+  borderColor Red
+}
+skinparam class<<boundary>> {
+  backgroundColor #f2fce8
+  borderColor Green
+}
+skinparam class<<External API>>{
+  backgroundColor #f8f0d4
+  borderColor Orange
+}
+skinparam class<<Vue view>>{
+  backgroundColor #f8f0d4
+  borderColor Orange
+}
+
+' skinparam shadowing false
+skinparam style strictuml
+skinparam defaultTextAlignment center
+' skinparam packageStyle rectangle
+skinparam groupInheritance 5
+hide circle
+' hide members
+
+'---------Razredi---------------------------
+class TabsPage<<boundary>>
+class AppToolbar<<boundary>>
+
+class Router<<control>>{
+}
+
+TabsPage --> Router
+AppToolbar --> Router
+
+package Views{
+  Class SubTabPripravniki<<Vue view>>{
+  }
+
+  Class TabRevirji<<Vue view>>{
+  }
+
+  Class TabOpazovalnica<<Vue view>>{
+  }
+
+  Class SubTabVplen<<Vue view>>{
+  }
+
+  Class TabOprema<<Vue view>>{
+  }
+
+  Class TabIzkaznica<<Vue view>>{
+  }
+
+  Class TabJage<<Vue view>>{
+  }
+
+  Class TabIzkaznica<<Vue view>>{
+  }
+
+  Class LoginPage<<Vue view>>{
+  }
+}
+
+Router --> SubTabPripravniki
+Router --> TabRevirji
+Router --> TabOpazovalnica
+Router --> SubTabVplen
+Router --> TabOprema
+Router --> TabIzkaznica
+Router --> TabJage
+Router --> TabIzkaznica
+Router --> LoginPage
+
+Class FabButton<<Vue component>>{
+}
+Class CardJaga<<Vue component>>{
+}
+Class ModalJagaAdd<<Vue component>>{
+}
+Class ModalJagaDescription<<Vue component>>{
+}
+
+TabJage --> FabButton
+TabJage --> CardJaga
+TabJage --> ModalJagaAdd
+TabJage --> ModalJagaDescription
+
+Class GridIzkaznica<<Vue component>>{
+}
+
+TabIzkaznica --> GridIzkaznica
+
+Class FabButtonAdd<<Vue component>>{
+}
+Class ModalOpremaAdd<<Vue component>>{
+}
+Class CardOpremaDescription<<Vue component>>{
+}
+
+TabOprema --> FabButtonAdd
+TabOprema --> ModalOpremaAdd
+TabOprema --> CardOpremaDescription
+
+' Class FabButtonAdd<<Vue component>>{
+' }
+Class CardVplen<<Vue component>>{
+}
+Class ModalVplenAdd<<Vue component>>{
+}
+Class ModalVplenDescription<<Vue component>>{
+}
+
+SubTabVplen --> FabButtonAdd
+SubTabVplen --> CardVplen
+SubTabVplen --> ModalVplenAdd
+SubTabVplen --> ModalVplenDescription
+
+Class MapComponent<<Vue component>>{
+}
+
+TabOpazovalnica --> MapComponent
+
+TabRevirji --> MapComponent
+
+' Class FabButtonAdd<<Vue component>>{
+' }
+Class ModalDnevnikAdd<<Vue component>>{
+}
+Class CardDnevnikDescription<<Vue component>>{
+}
+
+SubTabPripravniki --> FabButtonAdd
+SubTabPripravniki --> ModalDnevnikAdd
+SubTabPripravniki --> CardDnevnikDescription
+
+package Factory{
+  Class Uporabnik<<entity>> {
+    -ime: String
+    -priimek: String
+    -slika: String
+    -rojstniDatum: Date
+    -email: String
+    -geslo: String
+    -druzina: Druzina
+    -jwtToken: String
+
+    +getJwtToken(): String
+    +setJwtToken(jwtToken: String): void
+  }
+
+  Class UporabnikFactory<<control>>{
+    +createUporabnik(): Uporabnik
+    +loginUporabnik(email: String, geslo: String): Uporabnik
+  }
+
+  Class Lovec<<entity>>{
+    -role: String
+    -pripravniki: Pripravnik[]
+  }
+
+  Class Pripravnik<<entity>> {
+    -role: String
+    -mentor: Lovec
+  }
+}
+
+Lovec --|> Uporabnik
+Pripravnik --|> Uporabnik
+UporabnikFactory --> Uporabnik
+
+@enduml
