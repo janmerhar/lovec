@@ -156,10 +156,17 @@ package Factory{
     -email: String
     -geslo: String
     -druzina: Druzina
-    -jwtToken: String
-
-    +getJwtToken(): String
-    +setJwtToken(jwtToken: String): void
+    -token: String
+' 
+    +getIme(): String
+    +getPriimek(): String
+    +getSlika(): String
+    +getRojstniDatum(): Date
+    +getEmail(): String
+    +getDruzina(): Druzina
+' 
+    +getToken(): String
+    +setToken(token: String): void
   }
 
   Class UporabnikFactory<<control>>{
