@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 
 const httpLogger = require("./util/httpLogger")
 
+const ErrorHandler = require("./util/ErrorHandler")
 // parse env variables
 require("dotenv").config()
 
@@ -33,6 +34,8 @@ app.use("/oprema", require("./routes/oprema"))
 app.use("/pripravniki", require("./routes/pripravnik"))
 app.use("/revirji", require("./routes/revir"))
 app.use("/uporabnik", require("./routes/uporabnik"))
+
+app.use(ErrorHandler)
 
 mongoose
   .connect(process.env.MONGO_URI)
