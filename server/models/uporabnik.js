@@ -3,7 +3,11 @@ const { Schema } = mongoose
 
 const uporabnikSchema = new Schema({
   // Osebni podatki
-  uporabniskoIme: { type: String, required: true },
+  uporabniskoIme: {
+    type: String,
+    index: { unique: true, dropDups: true },
+    required: true,
+  },
   ime: { type: String, required: true },
   priimek: { type: String, required: true },
   slika: { type: String, required: false },
@@ -13,7 +17,12 @@ const uporabnikSchema = new Schema({
   // Deljenje na lovce ali pripravnike
   role: { type: String, enum: ["pripravnik", "lovec"], required: true },
   // PRIPRAVNIK ONLY: Tip uporabnik, ki je lovec
-  mentor: { type: Schema.Types.ObjectId, ref: "Uporabnik", required: false },
+  mentor: {
+    type: Schema.Types.ObjectId,
+    ref: "Uporabnik",
+    default: null,
+    required: false,
+  },
   // MENTOR ONLY: Seznam pripravnikov, ki jih mentorira
   pripravniki: [
     { type: Schema.Types.ObjectId, ref: "Uporabnik", required: false },
