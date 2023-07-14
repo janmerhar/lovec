@@ -1,4 +1,4 @@
-module.exports.ErrorHandler = (err, req, res, next) => {
+module.exports = (err, req, res, next) => {
   console.log("Middleware Error Hadnling")
 
   const errStatus = err.statusCode || 500
