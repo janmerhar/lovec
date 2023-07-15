@@ -2,6 +2,7 @@
 const cors = require("cors")
 const express = require("express")
 
+const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
 const httpLogger = require("./util/httpLogger")
@@ -21,6 +22,8 @@ app.use(express.json())
 app.use(httpLogger)
 
 app.set("view engine", "html")
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // Static folder
 app.use(express.static(__dirname + "/views/"))
