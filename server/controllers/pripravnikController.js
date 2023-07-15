@@ -1,14 +1,16 @@
+const Dnevnik = require("../models/dnevnik")
+
 //
 // Mentor
 //
 
 // Dnevnik za dnevnike prirpavnikov za nekega mentorja za neki dan
-exports.getDnevnikPripravniki = (req, res, next) => {
+exports.getDnevnikPripravniki = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
 
-exports.patchSpremeniStatus = (req, res, next) => {
+exports.patchSpremeniStatus = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
@@ -19,12 +21,12 @@ exports.patchSpremeniStatus = (req, res, next) => {
 
 // Vpogled v svoj dnenvik za pripravnika
 // ta nima svojega dneva, temvec continuos scroll
-exports.getDnevnikPripravnik = (req, res, next) => {
+exports.getDnevnikPripravnik = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
 
-exports.postDnevnikVnesi = (req, res, next) => {
+exports.postDnevnikVnesi = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
