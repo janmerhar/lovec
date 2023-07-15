@@ -17,7 +17,19 @@ module.exports = class Dnevnik {
   static async fetchDnevnikiPripravnik(pripravnikId, datum) {}
 
   // vrne dnevnik id
-  static async vnesiDnevnik(pripravnikId, mentorId, datum, ure, opis, delo) {}
+  static async vnesiDnevnik(pripravnikId, mentorId, datum, ure, opis, delo) {
+    const novDnevnik = await DnevnikModel.create({
+      pripravnik: pripravnikId,
+      mentor: mentorId,
+      status: "neobdelan",
+      datum,
+      ure,
+      opis,
+      delo,
+    })
+
+    return novDnevnik
+  }
 
   static async potrdiDnevnik(mentorId, dnevnikId) {}
   static async zavrniDnevnik(mentorId, dnevnikId) {}
