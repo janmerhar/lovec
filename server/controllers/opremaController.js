@@ -1,14 +1,16 @@
-exports.postOpremaAdd = (req, res, next) => {
+const Oprema = require("../models/oprema")
+
+exports.postOprema = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
 
-exports.getOpremaDate = (req, res, next) => {
+exports.deleteOprema = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
 
-exports.getOpremaRange = (req, res, next) => {
+exports.getOprema = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
