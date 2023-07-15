@@ -8,14 +8,12 @@ const vplenSchema = new Schema({
   koordinate: [{ type: koordinataSchema, required: true }],
   zival: {
     type: String,
-    enum: ["Srna", "Polh", "Zvitorepec", "Lakotnik", "Trdonja"],
     required: true,
   },
   teza: { type: Number, required: true },
   datum: { type: Date, required: true },
   bolezni: {
     type: [String],
-    enum: ["Levkemija", "COVID-19", "Driska"],
     required: false,
   },
 })
