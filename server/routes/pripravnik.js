@@ -3,11 +3,11 @@ const path = require("path")
 
 const router = express.Router()
 
-const pripravnikController = require("../controllers/pripravnikController")
+const dnevnikController = require("../controllers/dnevnikController")
 
-router.get("/dnevniki/:datum", pripravnikController.getDnevnikPripravniki)
-router.patch("/dnevniki/status", pripravnikController.patchSpremeniStatus)
-router.get("/dnevnik/:zacetek/:page", pripravnikController.getDnevnikPripravnik)
-router.post("/dodaj", pripravnikController.postDnevnikVnesi)
+router.get("/dnevniki/:datum", dnevnikController.getDnevnikPripravniki)
+router.patch("/dnevniki/status", dnevnikController.patchSpremeniStatus)
+router.get("/dnevnik/:zacetek/:page", dnevnikController.getDnevnikPripravnik)
+router.post("/dodaj", dnevnikController.postDnevnikVnesi)
 
 module.exports = router
