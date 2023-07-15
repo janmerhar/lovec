@@ -5,8 +5,8 @@ const router = express.Router()
 
 const opremaController = require("../controllers/opremaController")
 
-router.post("/dodaj", opremaController.postOpremaAdd)
-router.get("/:datum", opremaController.getOpremaDate)
-router.get("/:zacetek/:konec", opremaController.getOpremaRange)
+router.post("/dodaj", opremaController.postOprema)
+router.delete("/zbrisi", opremaController.postOprema)
+router.get("/:id", opremaController.getOprema)
 
 module.exports = router
