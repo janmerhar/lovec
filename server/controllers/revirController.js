@@ -1,10 +1,6 @@
-exports.getRevirji = (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
-}
+const Revir = require("../models/revir")
 
-// Tebe mogoce ne bom potreboval
-exports.getRevir = (req, res, next) => {
+exports.getRevirji = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
