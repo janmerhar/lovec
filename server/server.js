@@ -34,7 +34,7 @@ app.use("/", require("./routes/auth"))
 app.use("/druzina", require("./routes/druzina"))
 app.use("/opazovalnice", require("./routes/opazovalnica"))
 app.use("/oprema", require("./routes/oprema"))
-app.use("/pripravniki", require("./routes/pripravnik"))
+app.use("/dnevniki", require("./routes/dnevnik"))
 app.use("/revirji", require("./routes/revir"))
 app.use("/uporabnik", require("./routes/uporabnik"))
 
