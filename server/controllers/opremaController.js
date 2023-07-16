@@ -29,6 +29,13 @@ exports.deleteOprema = async (req, res, next) => {
 }
 
 exports.getOprema = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  try {
+    const { uporabnikId } = await UporabnikFactory.JWTpayload(req)
+
+    const result = await Oprema.fetchUporabnikOprema(uporabnikId)
+
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
 }
