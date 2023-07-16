@@ -28,8 +28,27 @@ exports.getDnevnikPripravniki = async (req, res, next) => {
 }
 
 exports.patchSpremeniStatus = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  const { dnevnikId, status } = req.body
+
+  try {
+    const { uporabnikId: mentorId, role } = await UporabnikFactory.JWTpayload(
+      req
+    )
+
+    if (role !== "mentor") {
+      throw new Error("Uporabnik nima pravic za dostop do te strani")
+    }
+
+    const result = await Dnevnik.spremeniStatusDnevnik(
+      mentorId,
+      dnevnikId,
+      status
+    )
+
+    res.send(result)
+  } catch (error) {
+    next("Prišlo je do napake pri spreminjanju statusa dnevnika")
+  }
 }
 
 //
