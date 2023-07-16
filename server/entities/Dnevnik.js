@@ -2,8 +2,6 @@ const DnevnikModel = require("../models/dnevnik")
 
 module.exports = class Dnevnik {
   constructor(dnevnikId, pripravnikId, mentorId, delo, ure, opis) {
-    // tukaj lahko se pridobim imena pripravnika in mentorja
-    // v primeru, da ju ze prej nimam
     this.dnevnikId = dnevnikId
     this.pripravnikId = pripravnikId
     this.mentorId = mentorId
@@ -46,6 +44,13 @@ module.exports = class Dnevnik {
     return novDnevnik
   }
 
-  static async potrdiDnevnik(mentorId, dnevnikId) {}
-  static async zavrniDnevnik(mentorId, dnevnikId) {}
+  static async spremeniStatusDnevnik(mentorId, dnevnikId, status) {
+    const posodobljenDnevnik = await DnevnikModel.findOneAndUpdate(
+      { _id: dnevnikId, mentor: mentorId },
+      { status: status },
+      { new: true }
+    )
+
+    return posodobljenDnevnik
+  }
 }
