@@ -1,6 +1,11 @@
-const Revir = require("../models/revir")
+const Revir = require("../entities/Revir")
 
 exports.getRevirji = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  try {
+    const result = await Revir.fetchRevirji()
+
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
 }
