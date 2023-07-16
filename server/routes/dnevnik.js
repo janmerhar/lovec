@@ -4,9 +4,9 @@ const router = express.Router()
 
 const dnevnikController = require("../controllers/dnevnikController")
 
-router.get("/:stran", dnevnikController.getDnevnikPripravniki)
+router.get("/pripravnik/:stran", dnevnikController.getDnevnikPripravnik)
 router.patch("/status", dnevnikController.patchSpremeniStatus)
-router.get("/:zacetek/:page", dnevnikController.getDnevnikPripravnik)
 router.post("/dodaj", dnevnikController.postDnevnikVnesi)
+router.get("/mentor/:datum", dnevnikController.getDnevnikPripravniki)
 
 module.exports = router
