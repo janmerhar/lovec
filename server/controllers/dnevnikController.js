@@ -76,6 +76,31 @@ exports.getDnevnikPripravnik = async (req, res, next) => {
 }
 
 exports.postDnevnikVnesi = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  // Dobim iz zahteve
+  const { datum, ure, opis, delo } = req.body
+
+  try {
+    const { uporabnikId: pripravnikId, role } =
+      await UporabnikFactory.JWTpayload(req)
+
+    if (role !== "pripravnik") {
+      throw new Error("Uporabnik nima pravic za dostop do te strani")
+    }
+
+    // Dobim iz PB glede na uporabnikId
+    const mentorId = "643e993545960e569b99ab64"
+
+    const result = await Dnevnik.vnesiDnevnik(
+      pripravnikId,
+      mentorId,
+      datum,
+      ure,
+      opis,
+      delo
+    )
+
+    res.send(result)
+  } catch (error) {
+    next("Prišlo je do napake pri vnašanju dnevnika")
+  }
 }
