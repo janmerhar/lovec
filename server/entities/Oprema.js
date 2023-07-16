@@ -25,4 +25,13 @@ module.exports = class Oprema {
     return oprema
   }
 
+  static async izbrisiOprema(uporabnikId, id) {
+    const oprema = await OpremaModel.findOneAndDelete({
+      _id: id,
+      lastnik: uporabnikId,
+    })
+
+    console.log(oprema)
+    return oprema
+  }
 }
