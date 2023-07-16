@@ -1,4 +1,5 @@
 const Dnevnik = require("../entities/Dnevnik")
+const Uporabnik = require("../entities/UserRoles/Uporabnik")
 
 const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
 
@@ -88,7 +89,9 @@ exports.postDnevnikVnesi = async (req, res, next) => {
     }
 
     // Dobim iz PB glede na uporabnikId
-    const mentorId = "643e993545960e569b99ab64"
+    const { mentor: mentorId } = await Uporabnik.fetchUporabnikById(
+      pripravnikId
+    )
 
     const result = await Dnevnik.vnesiDnevnik(
       pripravnikId,
