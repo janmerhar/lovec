@@ -15,4 +15,14 @@ module.exports = class Oprema {
     return oprema
   }
 
+  static async vnesiOprema(lastnikId, naziv, tip, stanje) {
+    const oprema = await OpremaModel.create({
+      lastnik: lastnikId,
+      naziv: naziv,
+      tip: tip,
+      stanje: stanje,
+    })
+    return oprema
+  }
+
 }
