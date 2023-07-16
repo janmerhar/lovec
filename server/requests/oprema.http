@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:1234
+
+###
+
+@naziv1 = AR-15
+@tip1 = Avtomatska puška
+@stanje1 = Kot novo
+
+
+# @name postOprema
+POST {{baseUrl}}/oprema/dodaj HTTP/1.1
+Content-Type: application/json
+
+{
+    "naziv": "{{naziv1}}",
+    "tip": "{{tip1}}",
+    "stanje": "{{stanje1}}"
+}
+
