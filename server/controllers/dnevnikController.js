@@ -58,8 +58,21 @@ exports.patchSpremeniStatus = async (req, res, next) => {
 // Vpogled v svoj dnenvik za pripravnika
 // ta nima svojega dneva, temvec continuos scroll
 exports.getDnevnikPripravnik = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  const { stran } = req.params
+
+  try {
+    const { uporabnikId: pripravnikId, role } =
+      await UporabnikFactory.JWTpayload(req)
+
+    if (role !== "pripravnik") {
+      throw new Error("Uporabnik nima pravic za dostop do te strani")
+    }
+
+    const result = await Dnevnik.fetchDnevnikiPripravnik(pripravnikId, stran)
+    res.send(result)
+  } catch (error) {
+    next("Prišlo je do napake pri pridobivanju dnevnika pripravnika")
+  }
 }
 
 exports.postDnevnikVnesi = async (req, res, next) => {
