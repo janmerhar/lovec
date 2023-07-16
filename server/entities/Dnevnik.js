@@ -13,7 +13,11 @@ module.exports = class Dnevnik {
   }
 
   // Vrneta tabelo instanc Dnevnik
-  static async fetchDnevnikiMentor(mentorId, datum) {}
+  static async fetchDnevnikiMentor(mentorId, datum) {
+    const dnevniki = await DnevnikModel.find({ mentor: mentorId, datum: datum })
+
+    return dnevniki
+  }
 
   // Return by pages
   static async fetchDnevnikiPripravnik(pripravnikId, stran) {
