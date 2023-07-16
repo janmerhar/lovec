@@ -8,5 +8,12 @@ module.exports = class Revir {
     this.druzina = druzina
   }
 
-  static async fetchRevirji() {}
+  static async fetchRevirji() {
+    const revirji = await RevirModel.find().populate({
+      path: "druzina",
+      select: "_id ime",
+    })
+
+    return revirji
+  }
 }
