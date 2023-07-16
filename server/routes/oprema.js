@@ -6,7 +6,7 @@ const router = express.Router()
 const opremaController = require("../controllers/opremaController")
 
 router.post("/dodaj", opremaController.postOprema)
-router.delete("/zbrisi", opremaController.postOprema)
-router.get("/:id", opremaController.getOprema)
+router.delete("/zbrisi", opremaController.deleteOprema)
+router.get("/uporabnik", opremaController.getOprema)
 
 module.exports = router
