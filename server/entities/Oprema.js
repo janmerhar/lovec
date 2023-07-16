@@ -10,8 +10,9 @@ module.exports = class Oprema {
     this.datum = datum
   }
 
-  static async fetchUporabnikOprema(uporabnikId) {}
-  // Vrni instanco opreme
-  static async vnesiOprema(lastnikId, naziv, tip, stanje, datum) {}
-  static async zbrisiOprema(id) {}
+  static async fetchUporabnikOprema(uporabnikId) {
+    const oprema = await OpremaModel.find({ lastnik: uporabnikId })
+    return oprema
+  }
+
 }
