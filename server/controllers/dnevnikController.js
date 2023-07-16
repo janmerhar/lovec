@@ -1,4 +1,6 @@
-const Dnevnik = require("../models/dnevnik")
+const Dnevnik = require("../entities/Dnevnik")
+
+const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
 
 //
 // Mentor
@@ -6,8 +8,23 @@ const Dnevnik = require("../models/dnevnik")
 
 // Dnevnik za dnevnike prirpavnikov za nekega mentorja za neki dan
 exports.getDnevnikPripravniki = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  const { datum } = req.params
+
+  try {
+    const { uporabnikId: mentorId, role } = await UporabnikFactory.JWTpayload(
+      req
+    )
+
+    if (role !== "mentor") {
+      throw new Error("Uporabnik nima pravic za dostop do te strani")
+    }
+
+    const result = await Dnevnik.fetchDnevnikiMentor(mentorId, datum)
+
+    res.send(result)
+  } catch (error) {
+    next("Prišlo je do napake pri pridobivanju dnevnika pripravnikov")
+  }
 }
 
 exports.patchSpremeniStatus = async (req, res, next) => {
