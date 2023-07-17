@@ -5,7 +5,7 @@ const router = express.Router()
 
 const druzinaController = require("../controllers/druzinaController")
 
-router.get("/:id", druzinaController.getDruzina)
-router.get("/:id/clani", druzinaController.getClani)
+router.post("/dodaj", druzinaController.postDruzina)
+router.get("/", druzinaController.getDruzine)
 
 module.exports = router
