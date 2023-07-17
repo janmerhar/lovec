@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:1234
+
+###
+
+@druzina1 = 643d8af94a20dd560693a6ff
+
+# @name getDruzina
+GET {{baseUrl}}/druzine/ HTTP/1.1
+Content-Type: application/json
+
