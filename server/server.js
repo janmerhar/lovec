@@ -37,6 +37,7 @@ app.use("/oprema", require("./routes/oprema"))
 app.use("/dnevniki", require("./routes/dnevnik"))
 app.use("/revirji", require("./routes/revir"))
 app.use("/uporabnik", require("./routes/uporabnik"))
+app.use("/vpleni", require("./routes/vplen"))
 
 app.use(ErrorHandler)
 
