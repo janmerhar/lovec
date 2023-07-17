@@ -5,7 +5,7 @@ const router = express.Router()
 
 const vplenController = require("../controllers/vplenController")
 
-router.get("/:id", vplenController.getVplen)
+router.get("/:datum", vplenController.getVplen)
 router.get("/moji/:stran", vplenController.getVpleni)
 router.post("/dodaj", vplenController.postVplen)
 
