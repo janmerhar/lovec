@@ -1,4 +1,4 @@
-const VplenModel = require("../models/Vplen")
+const VplenModel = require("../models/vplen")
 
 module.exports = class Vplen {
   constructor(id, uporabnikId, zival, teza, datum, bolezni) {
@@ -14,5 +14,15 @@ module.exports = class Vplen {
   static async fetchVpleni(uporabnikId, from, to) {}
   // Prenesem vse uporabnikove vplene za določen datum
   static async fetchVpleniDatum(uporabnikId, datum) {}
-  static async vnesiVplen(uporabnikId, zival, teza, datum, bolezni) {}
+  static async vnesiVplen(uporabnikId, zival, teza, datum, bolezni) {
+    const vplen = await VplenModel.create({
+      uporabnik: uporabnikId,
+      zival: zival,
+      teza: teza,
+      datum: datum,
+      bolezni: bolezni,
+    })
+
+    return vplen
+  }
 }
