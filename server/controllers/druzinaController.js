@@ -11,7 +11,7 @@ exports.postDruzina = async (req, res, next) => {
     res.send(result)
   } catch (err) {
     next(err)
-}
+  }
 }
 
 exports.getDruzine = async (req, res, next) => {
