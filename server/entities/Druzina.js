@@ -15,5 +15,8 @@ module.exports = class Druzina {
   }
 
   // Dobim imena vseh druzin
-  static async fetchDruzine() {}
+  static async fetchDruzine() {
+    const druzine = await DruzinaModel.find()
+    return druzine
+  }
 }
