@@ -9,7 +9,11 @@ module.exports = class Druzina {
   }
 
   // Vrni instanco druzine
-  static async fetchDruzina(id) {}
+  static async fetchDruzina(id) {
+    const druzina = await DruzinaModel.findById(id)
+    return druzina
+  }
+
   // Dobim imena vseh druzin
   static async fetchDruzine() {}
 }
