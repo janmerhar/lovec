@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:1234
+
+###
+
+@zival1 = srna
+@teza1 = 12
+@datum = 2023-07-17
+@bolezni = [ "bolezen1", "bolezen2" ]
+
+# @name postVplen
+POST {{baseUrl}}/vpleni/dodaj HTTP/1.1
+Content-Type: application/json
+
+{
+    "zival": "{{zival1}}",
+    "teza": "{{teza1}}",
+    "datum": "{{datum}}",
+    "bolezni": {{bolezni}}
+}
+
