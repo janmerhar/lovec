@@ -29,7 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(__dirname + "/views/"))
 
 // Defining route middleware
-app.use("/api", require("./routes/api"))
 app.use("/", require("./routes/auth"))
 app.use("/druzine", require("./routes/druzina"))
 app.use("/opazovalnice", require("./routes/opazovalnica"))
