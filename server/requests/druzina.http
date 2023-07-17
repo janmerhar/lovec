@@ -8,3 +8,14 @@
 GET {{baseUrl}}/druzine/ HTTP/1.1
 Content-Type: application/json
 
+###
+
+@druzina2 = Francetovi
+
+# @name postDruzina
+POST {{baseUrl}}/druzine/dodaj HTTP/1.1
+content-type: application/json
+
+{
+    "ime": "{{druzina2}}"
+}
