@@ -2,9 +2,9 @@
 
 ###
 
-@zival1 = srna
+@zival1 = jejz
 @teza1 = 12
-@datum = 2023-07-17
+@datum = 2023-07-15
 @bolezni = [ "bolezen1", "bolezen2" ]
 
 # @name postVplen
@@ -17,4 +17,12 @@ Content-Type: application/json
     "datum": "{{datum}}",
     "bolezni": {{bolezni}}
 }
+
+###
+
+@stran2 = 1
+
+# @name getVpleni
+GET {{baseUrl}}/vpleni/moji/{{stran2}} HTTP/1.1
+Content-Type: application/json
 
