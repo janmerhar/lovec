@@ -36,8 +36,17 @@ module.exports = class Vplen {
 
     return vpleni
   }
+
   // Prenesem vse uporabnikove vplene za določen datum
-  static async fetchVpleniDatum(uporabnikId, datum) {}
+  static async fetchVpleniDatum(uporabnikId, datum) {
+    const vpleni = await VplenModel.find({
+      uporabnik: uporabnikId,
+      datum: datum,
+    })
+
+    return vpleni
+  }
+
   static async vnesiVplen(uporabnikId, zival, teza, datum, bolezni) {
     const vplen = await VplenModel.create({
       uporabnik: uporabnikId,
