@@ -19,3 +19,28 @@ Content-Type: application/json
 }
 
 
+###
+
+@stran = 1
+
+# @name dnevnikPripravnik
+
+GET {{baseUrl}}/dnevniki/pripravnik/{{stran}} HTTP/1.1
+Content-Type: application/json
+
+
+###
+
+@dnevnikId1 = 64b30ff767fcdab2277ce37d
+@status1 = potrjen
+
+# @name spremeniStatus
+
+PATCH {{baseUrl}}/dnevniki/status HTTP/1.1
+Content-Type: application/json
+
+{
+    "dnevnikId": "{{dnevnikId1}}",
+    "status": "{{status1}}"
+}
+
