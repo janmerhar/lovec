@@ -1,4 +1,5 @@
 const VplenModel = require("../models/vplen")
+const mongoose = require("mongoose")
 
 module.exports = class Vplen {
   constructor(id, uporabnikId, zival, teza, datum, bolezni) {
@@ -11,7 +12,30 @@ module.exports = class Vplen {
   }
 
   // Prenasam samo po delih
-  static async fetchVpleni(uporabnikId, from, to) {}
+  static async fetchVpleni(uporabnikId, stran) {
+    const STRAN_SIZE = 10
+
+    const pipeline = [
+      {
+        $match: {
+          uporabnik: new mongoose.Types.ObjectId(uporabnikId),
+        },
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$datum" } },
+          zivali: { $push: "$zival" },
+        },
+      },
+    ]
+
+    const vpleni = await VplenModel.aggregate(pipeline)
+      .sort({ _id: -1 })
+      .skip((stran - 1) * STRAN_SIZE)
+      .limit(STRAN_SIZE)
+
+    return vpleni
+  }
   // Prenesem vse uporabnikove vplene za določen datum
   static async fetchVpleniDatum(uporabnikId, datum) {}
   static async vnesiVplen(uporabnikId, zival, teza, datum, bolezni) {
