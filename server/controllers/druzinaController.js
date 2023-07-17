@@ -14,7 +14,14 @@ exports.postDruzina = async (req, res, next) => {
 }
 }
 
-exports.getClani = (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+exports.getDruzine = async (req, res, next) => {
+  const { id } = req.params
+
+  try {
+    const result = await Druzina.fetchDruzine()
+
+    res.send(result)
+  } catch (err) {
+    next(err)
+  }
 }
