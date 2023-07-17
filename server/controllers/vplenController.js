@@ -15,11 +15,18 @@ exports.getVpleni = async (req, res, next) => {
   }
 }
 
-// Tukaj dobim samo podatke o enem vplenu
-// ce jih se nisem prej vseh pridobil
+// Tukaj dobim samo podatke o vseh vplenih za nek dan
 exports.getVplen = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  try {
+    const { uporabnikId } = await UporabnikFactory.JWTpayload(req)
+    const { datum } = req.params
+
+    const result = await Vplen.fetchVpleniDatum(uporabnikId, datum)
+
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.postVplen = async (req, res, next) => {
