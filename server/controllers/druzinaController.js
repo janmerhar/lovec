@@ -1,12 +1,17 @@
-exports.getDruzina = (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
-}
+const DruzinaModel = require("../models/druzina")
+const Druzina = require("../entities/Druzina")
 
-// TI si mogoce redundanten
-exports.getRevirji = (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+exports.postDruzina = async (req, res, next) => {
+  try {
+    const { ime } = req.body
+
+    const druzina = new DruzinaModel({ ime, revirji: [], clani: [] })
+    const result = await druzina.save()
+
+    res.send(result)
+  } catch (err) {
+    next(err)
+}
 }
 
 exports.getClani = (req, res, next) => {
