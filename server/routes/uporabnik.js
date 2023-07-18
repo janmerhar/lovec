@@ -5,6 +5,9 @@ const router = express.Router()
 
 const uporabnikController = require("../controllers/uporabnikController")
 
-router.get("/", uporabnikController.getUporabnik)
+router.get("/:id", uporabnikController.getUporabnik)
+router.post("/login", uporabnikController.postLogin)
+router.post("/register", uporabnikController.postRegister)
+router.post("/refreshToken", uporabnikController.refreshToken)
 
 module.exports = router
