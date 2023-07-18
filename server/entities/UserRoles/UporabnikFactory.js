@@ -35,4 +35,10 @@ module.exports = class UporabnikFactory {
     return true
   }
 
+  static async fetchUporabnik(uporabnikId) {
+    const result = await UporabnikFactory.findbyId(uporabnikId)
+
+    return result
+  }
+
 }
