@@ -32,3 +32,4 @@ plugins
 www
 
 .env
+app/android
