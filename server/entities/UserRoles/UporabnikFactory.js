@@ -11,4 +11,28 @@ module.exports = class UporabnikFactory {
     return geslo_verify ? await this.JWTcreate() : null
   }
 
+  static async register(ime, priimek, slika, rojstniDatum, email, geslo) {
+    const salt = await bcrypt.genSalt(10)
+    const geslo_hash = await bcrypt.hash(geslo, salt)
+
+    const uporabnik = new UporabnikModel({
+      ime,
+      priimek,
+      slika,
+      rojstniDatum,
+      email,
+      hash: geslo_hash,
+      role: "pripravnik",
+      mentor: null,
+      druzina: null,
+    })
+
+    await uporabnik.save()
+
+    // Tukaj samo vrnem true ali false
+    // glede na to ali je bila registracija uspešna
+    // Ce ni bila, se bo sprozila izjema, ki jo obravnavam v controllerju
+    return true
+  }
+
 }
