@@ -8,6 +8,9 @@ module.exports = (err, req, res, next) => {
     errMsg = err
   } else if (typeof err === "object") {
     errMsg = err.message
+
+    // Printing out message stack
+    console.log(err.stack)
   }
 
   res.status(errStatus).json({
