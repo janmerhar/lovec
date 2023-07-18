@@ -48,5 +48,7 @@ exports.getUporabnik = async (req, res, next) => {
   }
 }
 
-// Mogoce se sem dodam osvezevanje tokena
-// mogoce pa tudi ne, ker je to bolj za beforeEnter stvar
+exports.refreshToken = async (req, res, next) => {
+  console.log("refreshToken")
+  res.send("refreshToken")
+}
