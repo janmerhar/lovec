@@ -1,21 +1,19 @@
-const Uporabnik = require("../models/uporabnik")
-
-const bcrypt = require("bcrypt")
+const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
 
 exports.postLogin = async (req, res, next) => {
   try {
-    const uporabniskoIme = req.body.uporabniskoIme
-    const uporabnik = await Uporabnik.findOne({ uporabniskoIme }).exec()
-    console.log(uporabnik)
+    const { email, geslo } = req.body
 
-    const geslo_verify = await bcrypt.compare(req.body.geslo, uporabnik.geslo)
-    console.log(geslo_verify)
-    // Dodaj se vracanje odgovora
+    const result = await UporabnikFactory.login(email, geslo)
+
+    if (result === null) {
+      res.send("Nepravilni podatki")
+    } else {
+      res.send(result)
+    }
   } catch (err) {
-    console.log(err)
+    next(err)
   }
-
-  res.send("postLogin")
 }
 
 exports.postRegister = async (req, res, next) => {
