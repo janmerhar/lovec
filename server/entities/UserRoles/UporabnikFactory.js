@@ -41,4 +41,21 @@ module.exports = class UporabnikFactory {
     return result
   }
 
+  //
+  // JWT
+  //
+  static async JWTcreate(payload) {
+    return "neki jwt token"
+  }
+
+  static async JWTverify(req) {}
+
+  static async JWTpayload(req) {
+    return {
+      uporabnikId: "643e993545960e569b99ab64",
+      role: "pripravnik",
+    }
+  }
+
+  static async JWTrefresh(req) {}
 }
