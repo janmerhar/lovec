@@ -37,8 +37,15 @@ exports.postRegister = async (req, res, next) => {
 }
 
 exports.getUporabnik = async (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+  try {
+    const { id: uporabnikId } = req.params
+
+    const result = await UporabnikFactory.fetchUporabnik(uporabnikId)
+
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
 }
 
 // Mogoce se sem dodam osvezevanje tokena
