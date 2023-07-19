@@ -1,8 +1,8 @@
 export class Dnevnik {
   // Ali naj dodam se mentorjevo ime???
   // mogoce to dodam ze v Pinia store, ko se prirpavnik logina
-  constructor(id, pripravnikId, mentorId, delo, ure, opis) {
-    this.id = id
+  constructor({ _id, pripravnikId, mentorId, delo, ure, opis }) {
+    this.id = _id
     this.pripravnikId = pripravnikId
     this.mentorId = mentorId
     this.delo = delo
