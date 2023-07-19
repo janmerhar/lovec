@@ -1,7 +1,8 @@
 const Dnevnik = require("../entities/Dnevnik")
-const Uporabnik = require("../entities/UserRoles/Uporabnik")
 
 const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
+
+const ResponseBuilder = require("../util/ResponseBuilder")
 
 //
 // Mentor
@@ -17,12 +18,15 @@ exports.getDnevnikPripravniki = async (req, res, next) => {
     )
 
     if (role !== "mentor") {
-      throw new Error("Uporabnik nima pravic za dostop do te strani")
+      res.send(
+        ResponseBuilder.unauthorized("Uporabnik nima pravic za to stran")
+      )
+      return
     }
 
     const result = await Dnevnik.fetchDnevnikiMentor(mentorId, datum)
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next("Prišlo je do napake pri pridobivanju dnevnika pripravnikov")
   }
@@ -37,7 +41,10 @@ exports.patchSpremeniStatus = async (req, res, next) => {
     )
 
     if (role !== "mentor") {
-      throw new Error("Uporabnik nima pravic za dostop do te strani")
+      res.send(
+        ResponseBuilder.unauthorized("Uporabnik nima pravic za to operacijo")
+      )
+      return
     }
 
     const result = await Dnevnik.spremeniStatusDnevnik(
@@ -46,7 +53,7 @@ exports.patchSpremeniStatus = async (req, res, next) => {
       status
     )
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next("Prišlo je do napake pri spreminjanju statusa dnevnika")
   }
@@ -66,13 +73,17 @@ exports.getDnevnikPripravnik = async (req, res, next) => {
       await UporabnikFactory.JWTpayload(req)
 
     if (role !== "pripravnik") {
-      throw new Error("Uporabnik nima pravic za dostop do te strani")
+      res.send(
+        ResponseBuilder.unauthorized("Uporabnik nima pravic za to stran")
+      )
+      return
     }
 
     const result = await Dnevnik.fetchDnevnikiPripravnik(pripravnikId, stran)
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
-    next("Prišlo je do napake pri pridobivanju dnevnika pripravnika")
+    // next("Prišlo je do napake pri pridobivanju dnevnika pripravnika")
+    next(error)
   }
 }
 
@@ -85,11 +96,12 @@ exports.postDnevnikVnesi = async (req, res, next) => {
       await UporabnikFactory.JWTpayload(req)
 
     if (role !== "pripravnik") {
-      throw new Error("Uporabnik nima pravic za dostop do te strani")
+      res.send(ResponseBuilder.unauthorized("Uporabnik nima pravic za to"))
+      return
     }
 
     // Dobim iz PB glede na uporabnikId
-    const { mentor: mentorId } = await Uporabnik.fetchUporabnikById(
+    const { mentor: mentorId } = await UporabnikFactory.fetchUporabnik(
       pripravnikId
     )
 
@@ -102,7 +114,7 @@ exports.postDnevnikVnesi = async (req, res, next) => {
       delo
     )
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next("Prišlo je do napake pri vnašanju dnevnika")
   }
