@@ -9,8 +9,8 @@ module.exports = class ResponseBuilder {
     new ResponseBuilder(200, data, "Success")
   }
 
-    if (token) {
-      this.token = token
+  static error(message) {
+    new ResponseBuilder(500, null, message)
     }
   }
 
