@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:1234
+
+###
+
+@email1 = kk@student.si
+@geslo1 = 123
+
+# @name postLogin
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "{{email1}}",
+    "geslo": "{{geslo1}}"
+}
+
