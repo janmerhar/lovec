@@ -27,10 +27,17 @@ module.exports = class Vplen {
           zivali: { $push: "$zival" },
         },
       },
+      {
+        $project: {
+          datum: "$_id",
+          zivali: 1,
+          _id: 0,
+        },
+      },
     ]
 
     const vpleni = await VplenModel.aggregate(pipeline)
-      .sort({ _id: -1 })
+      .sort({ datum: -1 })
       .skip((stran - 1) * STRAN_SIZE)
       .limit(STRAN_SIZE)
 
