@@ -32,6 +32,7 @@
     "ionicons": "^6.0.3",
     "qrcode.vue": "^3.3.4",
     "vue": "^3.2.21",
+    "vue-axios": "^3.5.2",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
