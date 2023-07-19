@@ -10,6 +10,9 @@ import { defineCustomElements } from "@ionic/pwa-elements/loader"
 // Call the element loader after the platform has been bootstrapped
 defineCustomElements(window)
 
+import axios from "axios"
+import VueAxios from "vue-axios"
+
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css"
 
@@ -47,6 +50,7 @@ const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .component("font-awesome-icon", FontAwesomeIcon)
+  .use(VueAxios, axios)
 
 router.isReady().then(() => {
   app.mount("#app")
