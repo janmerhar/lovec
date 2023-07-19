@@ -1,6 +1,6 @@
 export class Vplen {
-  constructor(id, koordinate, zival, teza, datum, bolezni) {
-    this.id = id
+  constructor({ _id, koordinate, zival, teza, datum, bolezni }) {
+    this.id = _id
     this.koordinate = koordinate
     this.zival = zival
     this.teza = teza
