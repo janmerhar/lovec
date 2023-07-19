@@ -11,14 +11,13 @@ module.exports = class ResponseBuilder {
 
   static error(message) {
     new ResponseBuilder(500, null, message)
-    }
+  }
 
   static unauthorized(message) {
     new ResponseBuilder(400, null, message)
   }
 
-  static success(data) {}
-  static error(message) {}
-  static unauthorized(message) {}
-  static token(token) {}
+  static token(token) {
+    new ResponseBuilder(200, token, "Success")
+  }
 }
