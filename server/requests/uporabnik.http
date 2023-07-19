@@ -14,3 +14,25 @@ Content-Type: application/json
     "geslo": "{{geslo1}}"
 }
 
+
+###
+
+@ime2 = Klemen
+@priimek2 = Novak
+@slika2 = omg.jpg
+@rojstniDatum2 = 1999-01-01
+@email2 = kn@student.si
+@geslo2 = 123
+
+# @name postRegister
+POST {{baseUrl}}/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "ime": "{{ime2}}",
+    "priimek": "{{priimek2}}",
+    "slika": "{{slika2}}",
+    "rojstniDatum": "{{rojstniDatum2}}",
+    "email": "{{email2}}",
+    "geslo": "{{geslo2}}"
+}
