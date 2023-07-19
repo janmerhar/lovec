@@ -6,18 +6,18 @@ module.exports = class ResponseBuilder {
   }
 
   static success(data) {
-    new ResponseBuilder(200, data, "Success")
+    return new ResponseBuilder(200, data, "Success")
   }
 
   static error(message) {
-    new ResponseBuilder(500, null, message)
+    return new ResponseBuilder(500, null, message)
   }
 
   static unauthorized(message) {
-    new ResponseBuilder(400, null, message)
+    return new ResponseBuilder(400, null, message)
   }
 
   static token(token) {
-    new ResponseBuilder(200, token, "Success")
+    return new ResponseBuilder(200, token, "Success")
   }
 }
