@@ -35,6 +35,18 @@
       ></ion-input>
     </ion-item>
     <br />
+    <br />
+    <ion-item fill="outline" class="">
+      <ion-label position="stacked">Teža</ion-label>
+      <ion-input
+        placeholder="Teža"
+        type="number"
+        :clear-input="true"
+        v-model="teza"
+        required
+      ></ion-input>
+    </ion-item>
+    <br />
     <!--  -->
     <template v-for="(vnos, index) in vnosi" :key="index">
       <template v-if="!vnos.hidden">
@@ -48,7 +60,7 @@
             required
           ></ion-input>
         </ion-item>
-        
+
         <div class="ion-text-end">
           <ion-button size="small" shape="default" @click="removeField(index)"
             >Odstrani vnos</ion-button
@@ -78,6 +90,8 @@ import {
 } from "@ionic/vue"
 import { defineComponent } from "vue"
 
+import { Vplen } from "@/entities/Vplen"
+
 export default defineComponent({
   name: "ModalVplenAdd",
   components: {
@@ -93,9 +107,13 @@ export default defineComponent({
   },
   data() {
     return {
-      name: "",
-      datum: null, // nastavi na danasnji dan
-      zival: null,
+      name: "krneki podatek, ki se vrne",
+      //
+      // TODO premisli, kako bi to naredil
+      // koordinate: [0, 0],
+      datum: new Date().toISOString().slice(0, 10),
+      zival: "",
+      teza: 0,
       vnosi: [
         {
           bolezen: null,
@@ -117,9 +135,32 @@ export default defineComponent({
     cancel() {
       return modalController.dismiss(null, "cancel")
     },
-    confirm() {
-      return modalController.dismiss(this.name, "confirm")
+    async confirm() {
+      // TODO preverjanje, ali so vsi podatki vneseni
+      // if (!(this.datum && this.zival && this.teza && this.vnosi)) {
+      // throw new Error("Vnesi vse podatke")
+      // }
+
+      await Vplen.vnesiVplen(
+        this.zival,
+        this.teza,
+        this.datum,
+        this.vnosi.map((el) => el.bolezen)
+      )
+
+      console.log("vplen je bil vnesen")
+      // kot data naredi nov objekt vplena
+      // ali pa ne v tem primeru
+      return modalController.dismiss(null, "confirm")
     },
+    async fetchVpleni() {
+      const vpleni = await Vplen.getVpleni()
+
+      console.log(vpleni)
+    },
+  },
+  beforeMount() {
+    Vplen.setCustomAxios(this.axios)
   },
 })
 </script>
