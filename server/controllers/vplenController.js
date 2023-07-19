@@ -1,5 +1,6 @@
 const Vplen = require("../entities/Vplen")
 const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
+const ResponseBuilder = require("../util/ResponseBuilder")
 
 // Tukaj imam infinite scroll, ki mi vraca po zadnjih n vplenov
 exports.getVpleni = async (req, res, next) => {
@@ -9,7 +10,7 @@ exports.getVpleni = async (req, res, next) => {
 
     const result = await Vplen.fetchVpleni(uporabnikId, stran)
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next(error)
   }
@@ -23,7 +24,7 @@ exports.getVplen = async (req, res, next) => {
 
     const result = await Vplen.fetchVpleniDatum(uporabnikId, datum)
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next(error)
   }
@@ -42,7 +43,7 @@ exports.postVplen = async (req, res, next) => {
       bolezni
     )
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next(error)
   }
