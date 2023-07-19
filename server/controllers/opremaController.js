@@ -1,6 +1,6 @@
 const Oprema = require("../entities/Oprema")
-const Uporabnik = require("../entities/UserRoles/Uporabnik")
 const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
+const ResponseBuilder = require("../util/ResponseBuilder")
 
 exports.postOprema = async (req, res, next) => {
   try {
@@ -9,7 +9,7 @@ exports.postOprema = async (req, res, next) => {
 
     const result = await Oprema.vnesiOprema(uporabnikId, naziv, tip, stanje)
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next(error)
   }
@@ -22,7 +22,7 @@ exports.deleteOprema = async (req, res, next) => {
 
     const result = await Oprema.izbrisiOprema(uporabnikId, id)
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next(error)
   }
@@ -34,7 +34,7 @@ exports.getOprema = async (req, res, next) => {
 
     const result = await Oprema.fetchUporabnikOprema(uporabnikId)
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next(error)
   }
