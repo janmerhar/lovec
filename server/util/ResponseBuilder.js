@@ -3,6 +3,11 @@ module.exports = class ResponseBuilder {
     this.status = status
     this.data = data
     this.message = message
+  }
+
+  static success(data) {
+    new ResponseBuilder(200, data, "Success")
+  }
 
     if (token) {
       this.token = token
