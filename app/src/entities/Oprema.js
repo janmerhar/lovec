@@ -1,6 +1,6 @@
 export class Oprema {
-  constructor(id, naziv, tip, stanje) {
-    this.id = id
+  constructor({ _id, naziv, tip, stanje }) {
+    this.id = _id
     this.naziv = naziv
     this.tip = tip
     this.stanje = stanje
