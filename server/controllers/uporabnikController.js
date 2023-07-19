@@ -1,4 +1,5 @@
 const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
+const ResponseBuilder = require("../util/ResponseBuilder")
 
 exports.postLogin = async (req, res, next) => {
   try {
@@ -7,9 +8,13 @@ exports.postLogin = async (req, res, next) => {
     const result = await UporabnikFactory.login(email, geslo)
 
     if (result === null) {
-      res.send("Nepravilni podatki")
+      res.send(
+        ResponseBuilder.unauthorized("Napačno uporabniško ime ali geslo")
+      )
+      return
     } else {
-      res.send(result)
+      res.send(ResponseBuilder.success(result))
+      return
     }
   } catch (err) {
     next(err)
@@ -29,8 +34,7 @@ exports.postRegister = async (req, res, next) => {
       geslo
     )
 
-    console.log(result)
-    res.send(result)
+    res.send(ResponseBuilder.success("Registracija uspešna"))
   } catch (err) {
     next(err)
   }
@@ -42,7 +46,7 @@ exports.getUporabnik = async (req, res, next) => {
 
     const result = await UporabnikFactory.fetchUporabnik(uporabnikId)
 
-    res.send(result)
+    res.send(ResponseBuilder.success(result))
   } catch (error) {
     next(error)
   }
