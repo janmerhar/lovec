@@ -36,7 +36,7 @@ module.exports = class UporabnikFactory {
   }
 
   static async fetchUporabnik(uporabnikId) {
-    const result = await UporabnikFactory.findbyId(uporabnikId)
+    const result = await UporabnikModel.findById(uporabnikId).exec()
 
     return result
   }
