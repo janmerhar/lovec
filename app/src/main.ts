@@ -16,6 +16,12 @@ import VueAxios from "vue-axios"
 axios.defaults.baseURL = "http://localhost:1234"
 axios.defaults.headers["Content-Type"] = "application/json"
 
+import { createPinia } from "pinia"
+
+import piniaPluginPersistedState from "pinia-plugin-persistedstate"
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedState)
+
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css"
 
@@ -54,6 +60,7 @@ const app = createApp(App)
   .use(router)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(VueAxios, axios)
+  .use(pinia)
 
 router.isReady().then(() => {
   app.mount("#app")
