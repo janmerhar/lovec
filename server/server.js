@@ -38,6 +38,11 @@ app.use("/revirji", require("./routes/revir"))
 app.use("/uporabnik", require("./routes/uporabnik"))
 app.use("/vpleni", require("./routes/vplen"))
 
+// Not found
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Not found" })
+})
+
 app.use(ErrorHandler)
 
 mongoose
