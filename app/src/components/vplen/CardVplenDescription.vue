@@ -3,32 +3,18 @@
     <ion-card-header
       class="ion-no-padding ion-padding-horizontal ion-padding-top"
     >
-      <ion-card-title>Ime vplena</ion-card-title>
-      <ion-card-subtitle>Teža 86 kg</ion-card-subtitle>
+      <ion-card-title>{{ vplen.zival }}</ion-card-title>
+      <ion-card-subtitle>{{ vplen.teza }}</ion-card-subtitle>
     </ion-card-header>
     <!--  -->
     <ion-card-content>
       <ion-list>
         <!--  -->
-        <ion-item>
+        <ion-item v-for="(bolezen, index) in vplen.bolezni" :key="index">
           <ion-thumbnail slot="start">
             <font-awesome-icon icon="fa-solid fa-square-virus" size="3x" />
           </ion-thumbnail>
-          <ion-label>Bolezen</ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <font-awesome-icon icon="fa-solid fa-square-virus" size="3x" />
-          </ion-thumbnail>
-          <ion-label>Bolezen</ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <font-awesome-icon icon="fa-solid fa-square-virus" size="3x" />
-          </ion-thumbnail>
-          <ion-label>Bolezen</ion-label>
+          <ion-label>{{ bolezen }}</ion-label>
         </ion-item>
         <!--  -->
       </ion-list>
@@ -62,6 +48,7 @@ export default defineComponent({
     IonList,
     IonLabel,
   },
+  props: ["vplen"],
 })
 </script>
 
