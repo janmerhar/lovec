@@ -4,17 +4,12 @@
       <h3 class="ion-text-center">Zgodovina vplenov</h3>
       <!-- Vplen cards -->
 
-      <!-- 
-       Naredi:
-       - datum v formatu: "Sobota, 1. 1. 2023" -> computed ali pa funkcija
-       -->
-
-      <template v-for="vplen in vpleni" :key="vplen.datum">
+      <template v-for="vplen in vpleni" :key="new Date(vplen.datum).getTime()">
         <card-vplen
           lovec="Ime dobi iz store-a"
           :datum="vplen.datum"
           :vplen="vplen.zivali"
-          @click="openModalVplenDescription"
+          @click="openModalVplenDescription(vplen.datum)"
         ></card-vplen>
       </template>
 
@@ -61,14 +56,19 @@ export default defineComponent({
 
       const { role } = await modal.onWillDismiss()
 
+      // TODO
+      // Implementiraj osvezitev podatkov
       if (role === "confirm") {
         // this.message = `Hello, ${data}!`
         // posodobim podatke
       }
     },
-    async openModalVplenDescription() {
+    async openModalVplenDescription(datum) {
       const modal = await modalController.create({
         component: ModalVplenDescription,
+        componentProps: {
+          datum: datum,
+        },
       })
       modal.present()
     },
