@@ -2,31 +2,12 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <!--  -->
-      <h3 class="ion-text-center">Evidenca opreme za dan</h3>
-      <div class="ion-padding">
-        <ion-item fill="outline" class="">
-          <ion-label position="stacked">Datum</ion-label>
-          <ion-input
-            placeholder="Datum"
-            type="date"
-            :clear-input="true"
-            required
-          ></ion-input>
-        </ion-item>
-      </div>
+      <h3 class="ion-text-center">Evidenca opreme</h3>
       <!--  -->
-      <card-oprema-description
-        :oprema="'Puška'"
-        datum="Ponedeljek, 13. 3. 2023"
-      ></card-oprema-description>
-      <card-oprema-description
-        :oprema="'Puška'"
-        datum="Ponedeljek, 13. 3. 2023"
-      ></card-oprema-description>
-      <card-oprema-description
-        :oprema="'Puška'"
-        datum="Ponedeljek, 13. 3. 2023"
-      ></card-oprema-description>
+
+      <template v-for="elOprema in oprema" :key="elOprema.id">
+        <card-oprema-description :oprema="elOprema"></card-oprema-description>
+      </template>
       <!--  -->
       <fab-button-add @click.prevent="openModalOpremaAdd"></fab-button-add>
     </ion-content>
@@ -38,30 +19,23 @@ import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalOpremaAdd from "@/components/oprema/ModalOpremaAdd.vue"
 import CardOpremaDescription from "@/components/oprema/CardOpremaDescription.vue"
 
-import {
-  IonPage,
-  // IonHeader,
-  // IonToolbar,
-  // IonTitle,
-  IonContent,
-  modalController,
-  IonInput,
-  IonLabel,
-  IonItem,
-} from "@ionic/vue"
+import { defineComponent } from "vue"
 
-export default {
+import { IonPage, IonContent, modalController } from "@ionic/vue"
+
+import { Oprema } from "@/entities/Oprema"
+
+export default defineComponent({
   components: {
     IonPage,
-    // IonHeader,
-    // IonToolbar,
-    // IonTitle,
     IonContent,
     FabButtonAdd,
     CardOpremaDescription,
-    IonInput,
-    IonLabel,
-    IonItem,
+  },
+  data() {
+    return {
+      oprema: [],
+    }
   },
   methods: {
     async openModalOpremaAdd() {
@@ -76,6 +50,18 @@ export default {
       //   this.message = `Hello, ${data}!`
       // }
     },
+    async fetchUporabnikOprema() {
+      const result = await Oprema.fetchUporabnikOprema()
+
+      console.log(result)
+
+      this.oprema = result.data
+    },
   },
-}
+  async beforeMount() {
+    Oprema.setCustomAxios(this.axios)
+
+    await this.fetchUporabnikOprema()
+  },
+})
 </script>
