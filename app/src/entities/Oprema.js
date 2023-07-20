@@ -18,6 +18,17 @@ export class Oprema extends Request {
     return result.data
   }
 
+  static async vnesiOprema(naziv, tip, stanje) {
+    const result = await this.axiosInstance.post("/oprema/dodaj", {
+      naziv,
+      tip,
+      stanje,
+    })
+
+    result.data.data = new Oprema(result.data.data)
+
+    return result.data
+  }
 
   static async izbrisiOprema(id) {
     const result = await this.axiosInstance.delete("/oprema/izbrisi", {
