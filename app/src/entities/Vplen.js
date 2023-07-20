@@ -3,6 +3,7 @@ import { Request } from "../util/Request"
 
 export class Vplen extends Request {
   constructor({ _id, zival, teza, datum, bolezni }) {
+    super()
     this.id = _id
     this.zival = zival
     this.teza = teza
@@ -38,5 +39,12 @@ export class Vplen extends Request {
 
     return result.data
   }
-  // static async fetchVplenDatum(datum) {}
+
+  static async fetchVplenDatum(datum) {
+    const result = await this.axiosInstance.get(`/vpleni/${datum}`)
+
+    result.data.data = result.data.data.map((vplen) => new Vplen(vplen))
+
+    return result.data
+  }
 }
