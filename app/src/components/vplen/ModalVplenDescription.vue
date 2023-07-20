@@ -14,12 +14,13 @@
   </ion-header>
   <!--  -->
   <ion-content class="ion-padding">
-    <h3 class="ion-text-center ion-padding-bottom">Sobota 1. 1. 2023</h3>
+    <h3 class="ion-text-center ion-padding-bottom">
+      {{ formatDateToString($attrs.datum) }}
+    </h3>
 
-    <card-vplen-description></card-vplen-description>
-    <card-vplen-description></card-vplen-description>
-    <card-vplen-description></card-vplen-description>
-    <card-vplen-description></card-vplen-description>
+    <template v-for="vplen in vpleni" :key="vplen.id">
+      <card-vplen-description :vplen="vplen"></card-vplen-description>
+    </template>
   </ion-content>
   <!--  -->
 </template>
@@ -38,6 +39,8 @@ import { defineComponent } from "vue"
 
 import CardVplenDescription from "@/components/vplen/CardVplenDescription.vue"
 
+import { Vplen } from "@/entities/Vplen"
+
 export default defineComponent({
   name: "ModalVplenDescription",
   components: {
@@ -51,7 +54,7 @@ export default defineComponent({
   },
   data() {
     return {
-      name: "",
+      vpleni: [],
     }
   },
   methods: {
@@ -59,8 +62,28 @@ export default defineComponent({
       return modalController.dismiss(null, "cancel")
     },
     confirm() {
-      return modalController.dismiss(this.name, "confirm")
+      return modalController.dismiss(null, "confirm")
     },
+    formatDateToString(date) {
+      const datum = new Date(date)
+      const formattedDate = datum.toLocaleDateString("sl-SI", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+
+      return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
+    },
+    async fetchVplenPodrobnosti(datum) {
+      const vpleni = await Vplen.fetchVplenDatum(datum)
+
+      this.vpleni = vpleni.data
+    },
+  },
+  async beforeMount() {
+    Vplen.setCustomAxios(this.axios)
+    await this.fetchVplenPodrobnosti(this.$attrs.datum)
   },
 })
 </script>
