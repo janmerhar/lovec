@@ -13,6 +13,9 @@ defineCustomElements(window)
 import axios from "axios"
 import VueAxios from "vue-axios"
 
+axios.defaults.baseURL = "http://localhost:1234"
+axios.defaults.headers["Content-Type"] = "application/json"
+
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css"
 
