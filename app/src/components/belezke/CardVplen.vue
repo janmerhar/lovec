@@ -45,5 +45,18 @@ export default defineComponent({
   },
   props: ["datum", "lovec", "vplen"],
   emits: ["view"],
+  methods: {
+    formatDateToString(date) {
+      const datum = new Date(date)
+      const formattedDate = datum.toLocaleDateString("sl-SI", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+
+      return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
+    },
+  },
 })
 </script>
