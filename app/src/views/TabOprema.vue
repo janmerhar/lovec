@@ -6,7 +6,10 @@
       <!--  -->
 
       <template v-for="elOprema in oprema" :key="elOprema.id">
-        <card-oprema-description :oprema="elOprema"></card-oprema-description>
+        <card-oprema-description
+          :oprema="elOprema"
+          @izbrisi="(deleteOprema) => izbrisi(deleteOprema)"
+        ></card-oprema-description>
       </template>
       <!--  -->
       <fab-button-add @click.prevent="openModalOpremaAdd"></fab-button-add>
@@ -44,18 +47,21 @@ export default defineComponent({
       })
       modal.present()
 
-      // const { data, role } = await modal.onWillDismiss()
+      const { data, role } = await modal.onWillDismiss()
 
-      // if (role === "confirm") {
-      //   this.message = `Hello, ${data}!`
-      // }
+      if (role === "confirm") {
+        // this.oprema.push(data)
+        console.log("123")
+      }
     },
     async fetchUporabnikOprema() {
       const result = await Oprema.fetchUporabnikOprema()
 
-      console.log(result)
-
       this.oprema = result.data
+    },
+    async izbrisi(id) {
+      await Oprema.izbrisiOprema(id)
+      await this.fetchUporabnikOprema()
     },
   },
   async beforeMount() {
