@@ -22,16 +22,19 @@ export class Vplen extends Request {
   }
 
   static async fetchVpleni(stran) {
-    const result = await this.axiosInstance.get(`/vpleni/${stran}`)
+    const result = await this.axiosInstance.get(`/vpleni/moji/${stran}`)
 
-    // result.data.data = result.data.data.map((vplen) => {
-    //   return {
-    //     datum: vplen.datum,
-    //     zivali: vplen.zivali.map(
-    //       (zival) => zival.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
-    //     ),
-    //   }
-    // })
+    result.data.data = result.data.data.map((vplen) => {
+      return {
+        datum: vplen.datum,
+        zivali: vplen.zivali
+          .map(
+            (zival) =>
+              zival.charAt(0).toUpperCase() + zival.slice(1).toLowerCase()
+          )
+          .sort(),
+      }
+    })
 
     return result.data
   }
