@@ -8,26 +8,17 @@
        Naredi:
        - datum v formatu: "Sobota, 1. 1. 2023" -> computed ali pa funkcija
        -->
-      <card-vplen
-        lovec="Janez Novak"
-        datum="Sobota, 1. 1. 2023"
-        vplen="lalalalalla"
-        @click="openModalVplenDescription"
-      ></card-vplen>
-      <card-vplen
-        lovec="Jože Gorišek"
-        datum="Nedelja, 12. 12. 2021"
-        vplen="lalalalalla"
-        @click="openModalVplenDescription"
-      ></card-vplen>
-      <card-vplen
-        lovec="Jože Gorišek"
-        datum="Nedelja, 12. 12. 2021"
-        vplen="lalalalalla"
-        @click="openModalVplenDescription"
-      ></card-vplen>
 
-      <!-- 
+      <template v-for="vplen in vpleni" :key="vplen.datum">
+        <card-vplen
+          lovec="Ime dobi iz store-a"
+          :datum="vplen.datum"
+          :vplen="vplen.zivali"
+          @click="openModalVplenDescription"
+        ></card-vplen>
+      </template>
+
+      <!-- TODO
         Implementiraj infinite scroll
         https://ionicframework.com/docs/api/infinite-scroll
        -->
@@ -38,6 +29,7 @@
 
 <script lang="ts">
 import { IonPage, IonContent, modalController } from "@ionic/vue"
+import { defineComponent } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import CardVplen from "@/components/belezke/CardVplen.vue"
@@ -45,12 +37,20 @@ import CardVplen from "@/components/belezke/CardVplen.vue"
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
 import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"
 
-export default {
+import { Vplen } from "@/entities/Vplen"
+
+export default defineComponent({
   components: {
     IonPage,
     IonContent,
     FabButtonAdd,
     CardVplen,
+  },
+  data() {
+    return {
+      vpleni: [],
+      stran: 1,
+    }
   },
   methods: {
     async openModalVplenAdd() {
@@ -59,24 +59,33 @@ export default {
       })
       modal.present()
 
-      // const { data, role } = await modal.onWillDismiss()
+      const { role } = await modal.onWillDismiss()
 
-      // if (role === "confirm") {
-      //   this.message = `Hello, ${data}!`
-      // }
+      if (role === "confirm") {
+        // this.message = `Hello, ${data}!`
+        // posodobim podatke
+      }
     },
     async openModalVplenDescription() {
       const modal = await modalController.create({
         component: ModalVplenDescription,
       })
       modal.present()
+    },
+    async fetchVpleni() {
+      if (this.stran == 1) {
+        this.vpleni = []
+      }
 
-      // const { data, role } = await modal.onWillDismiss()
+      const vpleni = await Vplen.fetchVpleni(1)
+      this.stran += 1
 
-      // if (role === "confirm") {
-      //   this.message = `Hello, ${data}!`
-      // }
+      this.vpleni = this.vpleni.concat(vpleni.data)
     },
   },
-}
+  async beforeMount() {
+    Vplen.setCustomAxios(this.axios)
+    await this.fetchVpleni()
+  },
+})
 </script>
