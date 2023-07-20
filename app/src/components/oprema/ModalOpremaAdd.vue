@@ -2,61 +2,52 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button color="medium" @click="cancel">Prekliči</ion-button>
+        <ion-button color="medium" @click="cancel()">Prekliči</ion-button>
       </ion-buttons>
       <ion-title class="ion-text-center">Vnesi opremo</ion-title>
       <ion-buttons slot="end">
-        <ion-button @click="confirm">Potrdi</ion-button>
+        <ion-button @click="confirm()">Potrdi</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <!--  -->
   <ion-content class="ion-padding">
     <ion-item fill="solid">
-      <ion-label position="stacked">Oprema</ion-label>
+      <ion-label position="stacked">Tip</ion-label>
       <ion-input
         placeholder="Oprema"
         type="text"
         :clear-input="true"
+        v-model="tip"
         required
       ></ion-input>
     </ion-item>
-    <ion-item fill="solid">
-      <ion-label position="stacked">Opis opreme</ion-label>
-      <ion-input
-        placeholder="Opis opreme"
-        type="text"
-        :clear-input="true"
-        required
-      ></ion-input>
-    </ion-item>
-    <div class="ion-text-end">
-      <ion-button size="small" shape="default">Odstrani vnos</ion-button>
-    </div>
-    <!--  -->
-    <ion-item fill="solid">
-      <ion-label position="stacked">Oprema</ion-label>
-      <ion-input
-        placeholder="Oprema"
-        type="text"
-        :clear-input="true"
-        required
-      ></ion-input>
-    </ion-item>
-    <ion-item fill="solid">
-      <ion-label position="stacked">Opis opreme</ion-label>
-      <ion-input
-        placeholder="Opis opreme"
-        type="text"
-        :clear-input="true"
-        required
-      ></ion-input>
-    </ion-item>
-    <div class="ion-text-end">
-      <ion-button size="small" shape="default">Odstrani vnos</ion-button>
-    </div>
     <br />
-    <ion-button expand="full">Dodaj vnos</ion-button>
+    <ion-item fill="solid">
+      <ion-label position="stacked">Naziv</ion-label>
+      <ion-input
+        placeholder="Oprema"
+        type="text"
+        :clear-input="true"
+        v-model="naziv"
+        required
+      ></ion-input>
+    </ion-item>
+    <br />
+    <ion-item fill="solid">
+      <ion-label position="stacked">Opis</ion-label>
+      <ion-textarea
+        label="Solid textarea"
+        labelPlacement="floating"
+        :auto-grow="true"
+        rows="6"
+        fill="solid"
+        placeholder="Vnesi opis"
+        v-model="stanje"
+      ></ion-textarea>
+    </ion-item>
+    <!--  -->
+    <br />
   </ion-content>
   <!--  -->
 </template>
@@ -73,8 +64,11 @@ import {
   IonLabel,
   IonInput,
   modalController,
+  IonTextarea,
 } from "@ionic/vue"
 import { defineComponent } from "vue"
+
+import { Oprema } from "@/entities/Oprema"
 
 export default defineComponent({
   name: "ModalOpremaAdd",
@@ -88,19 +82,41 @@ export default defineComponent({
     IonItem,
     IonLabel,
     IonInput,
+    IonTextarea,
   },
   data() {
     return {
-      name: "",
+      naziv: "",
+      tip: "",
+      stanje: "",
     }
   },
   methods: {
+    //
+    // TODO noce vrniti podatkov ko enkrat vnesem opremo, vnese mi pa jo
+    //
+    async vnesiOprema() {
+      // TODO
+      // preverjane, ali podatki obstajajo
+
+      const result = await Oprema.vnesiOprema(this.naziv, this.tip, this.stanje)
+
+      return result
+    },
     cancel() {
       return modalController.dismiss(null, "cancel")
     },
-    confirm() {
-      return modalController.dismiss(this.name, "confirm")
+    async confirm() {
+      const oprema = await this.vnesiOprema()
+
+      if (oprema.status === 200) {
+        return modalController.dismiss(null, "confirm")
+      }
+      // TODO obvesti o napaki pri vnasanju
     },
+  },
+  async beforeMount() {
+    Oprema.setCustomAxios(this.axios)
   },
 })
 </script>
