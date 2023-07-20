@@ -15,7 +15,7 @@
     <ion-card-content>
       {{ oprema.stanje }}
     </ion-card-content>
-    <ion-button fill="clear" @click.prevent="$emit('remove')"
+    <ion-button fill="clear" @click.prevent="$emit('izbrisi', oprema.id)"
       >Izbriši</ion-button
     >
   </ion-card>
@@ -42,7 +42,7 @@ export default defineComponent({
     IonButton,
   },
   props: ["oprema"],
-  emits: ["remove"],
+  emits: ["izbrisi"],
   methods: {
     formatDate(date) {
       const day = date.getDate()
