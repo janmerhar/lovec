@@ -2,22 +2,17 @@
   <ion-card :button="true">
     <ion-card-header>
       <ion-card-subtitle>{{ lovec }}</ion-card-subtitle>
-      <ion-card-title>{{ datum }}</ion-card-title>
+      <ion-card-title>{{ formatDateToString(datum) }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      <!-- {{ vplen }} -->
-      Podrobnosti vplena, Podrobnosti vplena, Podrobnosti vplena, Podrobnosti
-      vplena, Podrobnosti vplena, Podrobnosti vplena, Podrobnosti vplena,
-      Podrobnosti vplena, Podrobnosti vplena, (Omejena dolžina, se preuredi)
-
-      <!-- 
-        Nacrt:
-        - naredi trim na cca 200 znakov ter jim pripni tri pike
-        - za vnos vzemi kar vnose iz tabele vplenov v vrsti objekta
-        - vnose nato preuredi v string
-        - Naj bo samo prvi znak v besedilu uppercase, vsi ostali na bodo lowercase
-       -->
+      <ion-list lines="none">
+        <ion-item v-for="(zival, id) in vplen" :key="vplen.id">
+          <ion-label>
+            {{ zival }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
     <ion-button fill="clear" @click.prevent="$emit('view')">Več</ion-button>
   </ion-card>
@@ -31,6 +26,9 @@ import {
   IonCardSubtitle,
   IonCardContent,
   IonButton,
+  IonList,
+  IonItem,
+  IonLabel,
 } from "@ionic/vue"
 import { defineComponent } from "vue"
 
@@ -42,6 +40,9 @@ export default defineComponent({
     IonCardSubtitle,
     IonCardContent,
     IonButton,
+    IonList,
+    IonItem,
+    IonLabel,
   },
   props: ["datum", "lovec", "vplen"],
   emits: ["view"],
