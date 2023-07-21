@@ -48,7 +48,12 @@ module.exports = class UporabnikFactory {
   }
 
   static async fetchUporabnik(uporabnikId) {
-    const result = await UporabnikModel.findById(uporabnikId).exec()
+    const result = await UporabnikModel.findById(uporabnikId)
+      .populate("mentor", "_id ime priimek ")
+      .populate("druzina", "_id ime")
+      .exec()
+
+    result.hash = undefined
 
     return result
   }
