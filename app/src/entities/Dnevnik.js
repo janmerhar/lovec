@@ -33,6 +33,17 @@ export class Dnevnik extends Request {
     return dnevniki.data
   }
 
+  static async fetchDnevnikiPripravnik(stran) {
+    const dnevniki = await this.axiosInstance.get(
+      `/dnevniki/pripravnik/${stran}`
+    )
+
+    dnevniki.data.data = dnevniki.data.data.map((dnevnik) => {
+      return new Dnevnik(dnevnik)
+    })
+
+    return dnevniki.data
+  }
 
   //   Funkcije za pripravnika
   static async vnesiDnevnik(datum, ure, opis, delo) {
