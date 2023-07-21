@@ -67,7 +67,9 @@ module.exports = class UporabnikFactory {
   // JWT
   //
   static async JWTcreate(payload) {
-    return "neki jwt token"
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" })
+
+    return token
   }
 
   static async JWTverify(req) {}
