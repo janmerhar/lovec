@@ -72,7 +72,17 @@ module.exports = class UporabnikFactory {
     return token
   }
 
-  static async JWTverify(req) {}
+  static async JWTverify(req) {
+    try {
+      const token = req.headers.authorization.split(" ")[1]
+
+      const payload = jwt.verify(token, process.env.JWT_SECRET)
+
+      return true
+    } catch (error) {
+      return false
+    }
+  }
 
   static async JWTpayload(req) {
     return {
