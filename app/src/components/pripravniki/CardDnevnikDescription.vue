@@ -1,30 +1,31 @@
 <template>
-  <ion-card :button="true">
+  <ion-card :button="true" :color="color(dnevnik)">
     <ion-card-header>
-      <ion-card-subtitle>Mentor {{ mentor }}</ion-card-subtitle>
-      <ion-card-title>Pripravnik {{ pripravnik }}</ion-card-title>
+      <ion-card-subtitle>{{ subtitle }}</ion-card-subtitle>
+      <ion-card-title> {{ title }}</ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
-      <!-- {{ opis }} -->
-      Podrobnosti vplena, Podrobnosti vplena, Podrobnosti vplena, Podrobnosti
-      vplena, Podrobnosti vplena, Podrobnosti vplena, Podrobnosti vplena,
-      Podrobnosti vplena, Podrobnosti vplena, (Omejena dolžina, se preuredi)
-
-      <!-- 
-        Nacrt:
-        - naredi trim na cca 200 znakov ter jim pripni tri pike
-        - za vnos vzemi kar vnose iz tabele vplenov v vrsti objekta
-        - vnose nato preuredi v string
-        - Naj bo samo prvi znak v besedilu uppercase, vsi ostali na bodo lowercase
-       -->
+    <ion-card-content :color="color(dnevnik)">
+      <ion-list>
+        <!-- <ion-item :color="color(dnevnik)">
+          Status: {{ dnevnik.status }}</ion-item
+        > -->
+        <ion-item :color="color(dnevnik)"> Ure: {{ dnevnik.ure }} </ion-item>
+        <ion-item :color="color(dnevnik)"> Delo: {{ dnevnik.delo }} </ion-item>
+        <ion-item :color="color(dnevnik)">
+          Opis: <br />{{ dnevnik.opis }}
+        </ion-item>
+      </ion-list>
     </ion-card-content>
-    <ion-button fill="clear" @click.prevent="$emit('accept')"
-      >Potrdi</ion-button
-    >
-    <ion-button fill="clear" @click.prevent="$emit('reject')"
-      >Zavrni</ion-button
-    >
+
+    <template v-if="showButtons && dnevnik.status == 'neobdelan'">
+      <ion-button fill="clear" @click.prevent="$emit('accept')"
+        >Potrdi</ion-button
+      >
+      <ion-button fill="clear" @click.prevent="$emit('reject')"
+        >Zavrni</ion-button
+      >
+    </template>
   </ion-card>
 </template>
 
@@ -36,6 +37,8 @@ import {
   IonCardSubtitle,
   IonCardContent,
   IonButton,
+  IonList,
+  IonItem,
 } from "@ionic/vue"
 
 export default {
@@ -46,8 +49,34 @@ export default {
     IonCardSubtitle,
     IonCardContent,
     IonButton,
+    IonList,
+    IonItem,
   },
-  props: ["mentor", "pripravnik", "opis"],
+  props: ["subtitle", "title", "dnevnik", "showButtons"],
   emits: ["accept", "reject"],
+  methods: {
+    color(dnevnik) {
+      if (dnevnik.status == "potrjen") return "primary"
+      if (dnevnik.status == "zavrnjen") return "danger"
+    },
+  },
 }
 </script>
+
+<style scoped>
+/* #afafaf */
+/* #e74c3c  */
+
+ion-list {
+  padding: 0;
+}
+
+.neobdelan {
+  background-color: #afafaf !important;
+  --background: #afafaf;
+}
+.zavrnjen {
+  background-color: #e74c3c !important;
+  --background: #e74c3c;
+}
+</style>
