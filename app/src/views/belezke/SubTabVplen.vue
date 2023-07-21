@@ -56,11 +56,8 @@ export default defineComponent({
 
       const { role } = await modal.onWillDismiss()
 
-      // TODO
-      // Implementiraj osvezitev podatkov
       if (role === "confirm") {
-        // this.message = `Hello, ${data}!`
-        // posodobim podatke
+        await this.fetchVpleni()
       }
     },
     async openModalVplenDescription(datum) {
@@ -73,14 +70,15 @@ export default defineComponent({
       modal.present()
     },
     async fetchVpleni() {
-      if (this.stran == 1) {
-        this.vpleni = []
+      this.vpleni = []
+
+      for (let i = 0; i < this.stran; i++) {
+        const vpleni = await Vplen.fetchVpleni(1)
+
+        this.vpleni = this.vpleni.concat(vpleni.data)
       }
 
-      const vpleni = await Vplen.fetchVpleni(1)
       this.stran += 1
-
-      this.vpleni = this.vpleni.concat(vpleni.data)
     },
   },
   async beforeMount() {
