@@ -7,7 +7,14 @@ export const useUporabnikStore = defineStore({
     uporabnik: null,
   }),
   // https://www.bitovi.com/blog/how-to-get-started-with-pinia-in-vue
-  // getters: {}, -- they use state in arguments OBVEZNO
+  getters: {
+    isMentor: (state) =>
+      state.uporabnik != null ? state.uporabnik.role == "lovec" : false,
+    mentorIme: (state) =>
+      state.uporabnik != null && state.uporabnik.mentor != null
+        ? `${state.uporabnik.mentor.ime} ${state.uporabnik.mentor.priimek}`
+        : "",
+  },
   actions: {
     login(uporabnik) {
       this.uporabnik = uporabnik
