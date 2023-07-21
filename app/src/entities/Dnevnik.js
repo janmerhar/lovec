@@ -1,19 +1,26 @@
 import { Request } from "../util/Request"
 
 export class Dnevnik extends Request {
-  // Ali naj dodam se mentorjevo ime???
-  // mogoce to dodam ze v Pinia store, ko se prirpavnik logina
-  constructor({ _id, pripravnikId, mentorId, delo, ure, opis }) {
+  constructor({ _id, pripravnik, mentor, status, datum, delo, ure, opis }) {
     super()
     this.id = _id
-    this.pripravnikId = pripravnikId
-    this.mentorId = mentorId
+    this.pripravnik = pripravnik
+    this.mentorId = mentor
+    this.status = status
+    this.datum = datum
     this.delo = delo
     this.ure = ure
     this.opis = opis
   }
 
-  async spremeniStatusDnevnik(status) {}
+  static async spremeniStatusDnevnik(id, status) {
+    const dnevnik = await this.axiosInstance.patch(`/dnevniki/status`, {
+      dnevnikId: id,
+      status,
+    })
+
+    return true
+  }
 
   //   Funkcije za mentorja
   static async fetchDnevnikiMentor(datum) {}
