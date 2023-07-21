@@ -36,3 +36,10 @@ Content-Type: application/json
     "email": "{{email2}}",
     "geslo": "{{geslo2}}"
 }
+
+###
+@id3 = 643e993545960e569b99ab64
+
+# @name getUporabnik
+GET {{baseUrl}}/uporabnik/{{id3}} HTTP/1.1
+Content-Type: application/json
