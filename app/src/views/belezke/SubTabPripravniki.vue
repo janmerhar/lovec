@@ -13,8 +13,10 @@
               :clear-input="true"
               required
               v-model="datum"
+              @ion-change="mentorDnevniki"
             ></ion-input>
           </ion-item>
+          <!-- <ion-button @click.prevent="mentorDnevniki"></ion-button> -->
         </div>
       </template>
 
@@ -23,13 +25,15 @@
         <h3 class="ion-text-center">Dnevniki</h3>
       </template>
       <!--  -->
-      <template v-for="(dnevnik, index) in dnevniki" :key="index">
+      <template v-for="(dnevnik, index) in dnevniki" :key="dnevnik.id">
         <template v-if="uporabnikStore.isMentor">
           <card-dnevnik-description
             :subtitle="formatDateToString(dnevnik.datum)"
             :title="`${dnevnik.pripravnik.ime} ${dnevnik.pripravnik.priimek}`"
             :showButtons="uporabnikStore.isMentor"
             :dnevnik="dnevnik"
+            @accept="(id) => spremeniStatus(id, 'potrjen')"
+            @reject="(id) => spremeniStatus(id, 'zavrnjen')"
           ></card-dnevnik-description>
         </template>
 
@@ -62,6 +66,7 @@ import {
   IonLabel,
   IonItem,
   IonInput,
+  IonButton,
 } from "@ionic/vue"
 
 import { defineComponent } from "vue"
@@ -83,6 +88,7 @@ export default defineComponent({
     IonLabel,
     IonItem,
     IonInput,
+    IonButton,
   },
   data() {
     return {
@@ -130,7 +136,13 @@ export default defineComponent({
     async mentorDnevniki() {
       const dnevniki = await Dnevnik.fetchDnevnikiMentor(this.datum)
 
+      this.dnevniki = []
       this.dnevniki = dnevniki.data
+    },
+    async spremeniStatus(id, status) {
+      const result = await Dnevnik.spremeniStatusDnevnik(id, status)
+
+      await this.mentorDnevniki()
     },
   },
   async beforeMount() {
