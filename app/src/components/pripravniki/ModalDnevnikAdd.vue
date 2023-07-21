@@ -22,31 +22,31 @@
         type="date"
         :clear-input="true"
         required
+        v-model="datum"
       ></ion-input>
     </ion-item>
     <br />
     <br />
     <!--
       Izbira mentorja
+      - mentor je ze izbran, zato uporabnik nima izbire
       -->
     <ion-item fill="solid">
       <ion-label position="stacked">Mentor</ion-label>
-      <ion-select aria-label="fruit" placeholder="Izberi mentorja">
-        <ion-select-option value="m1">Mentor 1</ion-select-option>
-        <ion-select-option value="m2">Mentor 2</ion-select-option>
-        <ion-select-option value="m3">Mentor 3</ion-select-option>
-      </ion-select>
+      <ion-input type="text" :value="$attrs.mentorIme" disabled></ion-input>
     </ion-item>
     <!--
       Nastavi input na dropdown
       -->
     <ion-item fill="solid">
       <ion-label position="stacked">Delo</ion-label>
-      <ion-select aria-label="fruit" placeholder="Izberi delo">
-        <ion-select-option value="d1">Delo 1</ion-select-option>
-        <ion-select-option value="d2">Delo 2</ion-select-option>
-        <ion-select-option value="d3">Delo 3</ion-select-option>
-      </ion-select>
+      <ion-input
+        placeholder="Delo"
+        type="text"
+        :clear-input="true"
+        v-model="delo"
+        required
+      ></ion-input>
     </ion-item>
     <!--  -->
     <ion-item fill="solid">
@@ -55,6 +55,7 @@
         placeholder="Ure"
         type="number"
         :clear-input="true"
+        v-model="ure"
         required
       ></ion-input>
     </ion-item>
@@ -64,8 +65,11 @@
       <ion-textarea
         label="Solid textarea"
         labelPlacement="floating"
+        :auto-grow="true"
+        rows="6"
         fill="solid"
         placeholder="Vnesi opis"
+        v-model="opis"
       ></ion-textarea>
     </ion-item>
   </ion-content>
@@ -85,10 +89,11 @@ import {
   IonInput,
   modalController,
   IonTextarea,
-  IonSelect,
-  IonSelectOption,
 } from "@ionic/vue"
+
 import { defineComponent } from "vue"
+
+import { Dnevnik } from "@/entities/Dnevnik"
 
 export default defineComponent({
   name: "ModalDnevnikAdd",
@@ -103,21 +108,40 @@ export default defineComponent({
     IonLabel,
     IonInput,
     IonTextarea,
-    IonSelect,
-    IonSelectOption,
   },
   data() {
     return {
-      name: "",
+      datum: new Date().toISOString().slice(0, 10),
+      delo: "",
+      ure: null,
+      opis: "",
     }
   },
   methods: {
     cancel() {
       return modalController.dismiss(null, "cancel")
     },
-    confirm() {
-      return modalController.dismiss(this.name, "confirm")
+    async confirm() {
+      // Checking if the fields are not empty
+      if (this.datum && this.delo && this.ure && this.opis) {
+        const result = await Dnevnik.vnesiDnevnik(
+          this.datum,
+          this.ure,
+          this.opis,
+          this.delo
+        )
+
+        if (result.status == 200) {
+          return modalController.dismiss(this.name, "confirm")
+        }
+      } else {
+        // TODO - Add error message
+        console.log("Empty fields")
+      }
     },
+  },
+  async beforeMount() {
+    Dnevnik.setCustomAxios(this.axios)
   },
 })
 </script>
