@@ -30,4 +30,12 @@ export class Uporabnik extends Request {
     }
   }
 
+  static async login(email, geslo) {
+    const uporabnik = await this.axiosInstance.post("/login", { email, geslo })
+
+    uporabnik.data.data = new Uporabnik(uporabnik.data.data)
+
+    return uporabnik.data
+  }
+
 }
