@@ -19,10 +19,14 @@
     </ion-card-content>
 
     <template v-if="showButtons && dnevnik.status == 'neobdelan'">
-      <ion-button fill="clear" @click.prevent="$emit('accept')"
+      <ion-button
+        fill="clear"
+        @click.prevent="$emit('accept', dnevnik._id ?? dnevnik.id)"
         >Potrdi</ion-button
       >
-      <ion-button fill="clear" @click.prevent="$emit('reject')"
+      <ion-button
+        fill="clear"
+        @click.prevent="$emit('reject', dnevnik._id ?? dnevnik.id)"
         >Zavrni</ion-button
       >
     </template>
