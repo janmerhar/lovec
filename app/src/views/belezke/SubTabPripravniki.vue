@@ -23,8 +23,15 @@
         <h3 class="ion-text-center">Dnevniki</h3>
       </template>
       <!--  -->
-      <template v-for="dnevnik in dnevniki" :key="dnevnik.id">
-        <template v-if="uporabnikStore.isMentor"></template>
+      <template v-for="(dnevnik, index) in dnevniki" :key="index">
+        <template v-if="uporabnikStore.isMentor">
+          <card-dnevnik-description
+            :subtitle="formatDateToString(dnevnik.datum)"
+            :title="`${dnevnik.pripravnik.ime} ${dnevnik.pripravnik.priimek}`"
+            :showButtons="uporabnikStore.isMentor"
+            :dnevnik="dnevnik"
+          ></card-dnevnik-description>
+        </template>
 
         <template v-else>
           <card-dnevnik-description
@@ -119,12 +126,18 @@ export default defineComponent({
       this.stran += 1
       this.dnevniki = dnevniki.data
     },
+    // Mentor
+    async mentorDnevniki() {
+      const dnevniki = await Dnevnik.fetchDnevnikiMentor(this.datum)
+
+      this.dnevniki = dnevniki.data
+    },
   },
   async beforeMount() {
     Dnevnik.setCustomAxios(this.axios)
     // Mentor
     if (this.uporabnikStore.isMentor) {
-      // const dnevniki =
+      await this.mentorDnevniki()
     }
     // Pripravnik
     else {
