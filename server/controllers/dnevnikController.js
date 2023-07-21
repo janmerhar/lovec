@@ -17,7 +17,7 @@ exports.getDnevnikPripravniki = async (req, res, next) => {
       req
     )
 
-    if (role !== "mentor") {
+    if (role !== "lovec") {
       res.send(
         ResponseBuilder.unauthorized("Uporabnik nima pravic za to stran")
       )
@@ -40,7 +40,7 @@ exports.patchSpremeniStatus = async (req, res, next) => {
       req
     )
 
-    if (role !== "mentor") {
+    if (role !== "lovec") {
       res.send(
         ResponseBuilder.unauthorized("Uporabnik nima pravic za to operacijo")
       )
@@ -95,7 +95,7 @@ exports.postDnevnikVnesi = async (req, res, next) => {
     const { uporabnikId: pripravnikId, role } =
       await UporabnikFactory.JWTpayload(req)
 
-    if (role !== "pripravnik") {
+    if (role == "pripravnik") {
       res.send(ResponseBuilder.unauthorized("Uporabnik nima pravic za to"))
       return
     }
