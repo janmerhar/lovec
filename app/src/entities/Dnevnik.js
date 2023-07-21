@@ -23,8 +23,16 @@ export class Dnevnik extends Request {
   }
 
   //   Funkcije za mentorja
-  static async fetchDnevnikiMentor(datum) {}
-  static async fetchDnevnikiPripravnik(stran) {}
+  static async fetchDnevnikiMentor(datum) {
+    const dnevniki = await this.axiosInstance.get(`/dnevniki/mentor/${datum}`)
+
+    // dnevniki.data.data = dnevniki.data.data.map((dnevnik) => {
+    // new Dnevnik(dnevnik)
+    // })
+
+    return dnevniki.data
+  }
+
 
   //   Funkcije za pripravnika
   static async vnesiDnevnik(datum, ure, opis, delo) {
