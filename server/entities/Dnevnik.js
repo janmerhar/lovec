@@ -13,6 +13,8 @@ module.exports = class Dnevnik {
   // Vrneta tabelo instanc Dnevnik
   static async fetchDnevnikiMentor(mentorId, datum) {
     const dnevniki = await DnevnikModel.find({ mentor: mentorId, datum: datum })
+      .populate("pripravnik", "_id ime priimek")
+      .exec()
 
     return dnevniki
   }
