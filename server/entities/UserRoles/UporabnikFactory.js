@@ -1,6 +1,7 @@
 const UporabnikModel = require("../../models/uporabnik")
 const bcrypt = require("bcrypt")
 
+const jwt = require("jsonwebtoken")
 module.exports = class UporabnikFactory {
   // Tebe dam v factory
   static async login(email, password) {
@@ -9,14 +10,18 @@ module.exports = class UporabnikFactory {
     const geslo_verify = await bcrypt.compare(password, uporabnik.hash)
 
     if (geslo_verify) {
-      const token = await this.JWTcreate(uporabnik)
+      const token = await this.JWTcreate({
+        uporabnikId: uporabnik._id.toString(),
+        role: uporabnik.role,
+      })
 
-      const returnUporabnik = await UporabnikFactory.fetchUporabnik(
-        uporabnik._id
-      )
+      let returnUporabnik = await UporabnikFactory.fetchUporabnik(uporabnik._id)
+
+      returnUporabnik = returnUporabnik.toObject()
+      returnUporabnik.refresh_token = undefined
 
       return {
-        ...returnUporabnik.toObject(),
+        ...returnUporabnik,
         token,
       }
     }
