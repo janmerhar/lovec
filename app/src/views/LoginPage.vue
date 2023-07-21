@@ -11,12 +11,12 @@
       <h3 class="ion-text-center">Prijava v aplikacijo</h3>
       <br />
       <ion-item fill="solid">
-        <ion-label position="stacked">Uporabniško ime</ion-label>
+        <ion-label position="stacked">Elektronski naslov</ion-label>
         <ion-input
-          placeholder="Uporabniško ime"
+          placeholder="Elektronski naslov"
           type="text"
           required
-          v-model="username"
+          v-model="email"
         ></ion-input>
       </ion-item>
       <ion-item fill="solid">
@@ -25,7 +25,7 @@
           placeholder="Geslo"
           type="password"
           required
-          v-model="password"
+          v-model="geslo"
         ></ion-input>
       </ion-item>
       <br />
@@ -38,7 +38,6 @@
 import {
   IonLabel,
   IonPage,
-  //   IonRouterOutlet,
   useIonRouter,
   IonInput,
   IonItem,
@@ -49,12 +48,15 @@ import {
   IonButton,
 } from "@ionic/vue"
 
-export default {
+import { defineComponent } from "vue"
+
+import { Uporabnik } from "@/entities/Uporabnik"
+import { useUporabnikStore } from "@/stores/useUporabnikStore"
+
+export default defineComponent({
   components: {
     IonLabel,
     IonPage,
-    // IonRouterOutlet,
-    // useIonRouter,
     IonInput,
     IonContent,
     IonItem,
@@ -65,21 +67,36 @@ export default {
   },
   setup() {
     const router = useIonRouter()
-    return { router }
+    const uporabnikStore = useUporabnikStore()
+
+    return { router, uporabnikStore }
   },
   data() {
     return {
-      username: "",
-      password: "",
+      email: "",
+      geslo: "",
     }
   },
   methods: {
-    login() {
-      console.log(this.username)
-      console.log(this.password)
+    async login() {
+      const uporabnik = await Uporabnik.login(this.email, this.geslo)
+
+      if (uporabnik.status == 200) {
+        console.log("Prijava uspesna")
+        // Update store
+        this.uporabnikStore.login(uporabnik.data)
+        // Redirect to home page
+        this.router.push({ name: "pripravniki" })
+      }
+      // TODO
+      // Alert wrong login data
+      // send reponse text from "message" attribute
     },
   },
-}
+  async beforeMount() {
+    Uporabnik.setCustomAxios(this.axios)
+  },
+})
 </script>
 
 <style scoped>
@@ -89,3 +106,4 @@ export default {
   display: block;
 }
 </style>
+@/stores/useUporabnikStore
