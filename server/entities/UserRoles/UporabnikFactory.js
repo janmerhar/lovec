@@ -85,9 +85,17 @@ module.exports = class UporabnikFactory {
   }
 
   static async JWTpayload(req) {
-    return {
-      uporabnikId: "643e993545960e569b99ab64",
-      role: "pripravnik",
+    try {
+      const token = req.headers.authorization.split(" ")[1]
+
+      const payload = jwt.verify(token, process.env.JWT_SECRET)
+
+      return {
+        uporabnikId: payload.uporabnikId,
+        role: payload.role,
+      }
+    } catch (error) {
+      throw new Error("Napaka pri preverjanju JWT")
     }
   }
 
