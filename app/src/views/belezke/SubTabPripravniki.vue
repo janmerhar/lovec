@@ -1,37 +1,48 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <!--  -->
-      <h3 class="ion-text-center">Dnevniki za dan</h3>
-      <div class="ion-padding">
-        <ion-item fill="outline" class="">
-          <ion-label position="stacked">Datum</ion-label>
-          <ion-input
-            placeholder="Datum"
-            type="date"
-            :clear-input="true"
-            required
-          ></ion-input>
-        </ion-item>
-      </div>
-      <!--  -->
-      <card-dnevnik-description
-        :oprema="'Puška'"
-        datum="Ponedeljek, 13. 3. 2023"
-      ></card-dnevnik-description>
-      <card-dnevnik-description
-        :oprema="'Puška'"
-        datum="Ponedeljek, 13. 3. 2023"
-      ></card-dnevnik-description>
-      <card-dnevnik-description
-        :oprema="'Puška'"
-        datum="Ponedeljek, 13. 3. 2023"
-      ></card-dnevnik-description>
+      <!-- Mentor -->
+      <template v-if="uporabnikStore.isMentor">
+        <h3 class="ion-text-center">Dnevniki za dan</h3>
+        <div class="ion-padding">
+          <ion-item fill="outline" class="">
+            <ion-label position="stacked">Datum</ion-label>
+            <ion-input
+              placeholder="Datum"
+              type="date"
+              :clear-input="true"
+              required
+              v-model="datum"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </template>
 
+      <!-- Pripravnik -->
+      <template v-else>
+        <h3 class="ion-text-center">Dnevniki</h3>
+      </template>
+      <!--  -->
+      <template v-for="dnevnik in dnevniki" :key="dnevnik.id">
+        <template v-if="uporabnikStore.isMentor"></template>
+
+        <template v-else>
+          <card-dnevnik-description
+            :subtitle="'Mentor ' + uporabnikStore.mentorIme"
+            :title="formatDateToString(dnevnik.datum)"
+            :showButtons="uporabnikStore.isMentor"
+            :dnevnik="dnevnik"
+          ></card-dnevnik-description>
+        </template>
+      </template>
       <!--  -->
 
       <!-- Gumb samo za pripravnika, da vnese porocilo -->
-      <fab-button-add @click.prevent="openModalPripravnikAdd"></fab-button-add>
+      <template v-if="!uporabnikStore.isMentor">
+        <fab-button-add
+          @click.prevent="openModalPripravnikAdd"
+        ></fab-button-add>
+      </template>
     </ion-content>
   </ion-page>
 </template>
@@ -46,11 +57,17 @@ import {
   IonInput,
 } from "@ionic/vue"
 
+import { defineComponent } from "vue"
+
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
 import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescription.vue"
 
-export default {
+import { useUporabnikStore } from "@/stores/useUporabnikStore"
+
+import { Dnevnik } from "@/entities/Dnevnik"
+
+export default defineComponent({
   components: {
     IonPage,
     IonContent,
@@ -60,13 +77,59 @@ export default {
     IonItem,
     IonInput,
   },
+  data() {
+    return {
+      datum: new Date().toISOString().slice(0, 10),
+      dnevniki: [],
+      stran: 1,
+    }
+  },
+  setup() {
+    const uporabnikStore = useUporabnikStore()
+
+    return {
+      uporabnikStore,
+    }
+  },
   methods: {
     async openModalPripravnikAdd() {
       const modal = await modalController.create({
         component: ModalDnevnikAdd,
+        componentProps: {
+          mentorIme: this.uporabnikStore.mentorIme,
+        },
       })
       modal.present()
     },
+    formatDateToString(date) {
+      const datum = new Date(date)
+      const formattedDate = datum.toLocaleDateString("sl-SI", {
+        weekday: "long",
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+      })
+
+      return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
+    },
+    // Pripravnik
+    async pripravnikDnevniki() {
+      const dnevniki = await Dnevnik.fetchDnevnikiPripravnik(this.stran)
+
+      this.stran += 1
+      this.dnevniki = dnevniki.data
+    },
   },
-}
+  async beforeMount() {
+    Dnevnik.setCustomAxios(this.axios)
+    // Mentor
+    if (this.uporabnikStore.isMentor) {
+      // const dnevniki =
+    }
+    // Pripravnik
+    else {
+      await this.pripravnikDnevniki()
+    }
+  },
+})
 </script>
