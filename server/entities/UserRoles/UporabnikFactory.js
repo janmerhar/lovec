@@ -8,7 +8,19 @@ module.exports = class UporabnikFactory {
 
     const geslo_verify = await bcrypt.compare(password, uporabnik.hash)
 
-    return geslo_verify ? await this.JWTcreate() : null
+    if (geslo_verify) {
+      const token = await this.JWTcreate(uporabnik)
+
+      const returnUporabnik = await UporabnikFactory.fetchUporabnik(
+        uporabnik._id
+      )
+
+      return {
+        ...returnUporabnik.toObject(),
+        token,
+      }
+    }
+    return null
   }
 
   static async register(ime, priimek, slika, rojstniDatum, email, geslo) {
