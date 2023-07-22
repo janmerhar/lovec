@@ -15,6 +15,7 @@ import VueAxios from "vue-axios"
 
 axios.defaults.baseURL = "http://localhost:1234"
 axios.defaults.headers["Content-Type"] = "application/json"
+axios.defaults.headers["Authorization"] = ""
 
 import { createPinia } from "pinia"
 
