@@ -14,6 +14,7 @@ export const useUporabnikStore = defineStore({
       state.uporabnik != null && state.uporabnik.mentor != null
         ? `${state.uporabnik.mentor.ime} ${state.uporabnik.mentor.priimek}`
         : "",
+    token: (state) => (state.uporabnik != null ? state.uporabnik.token : ""),
   },
   actions: {
     login(uporabnik) {
