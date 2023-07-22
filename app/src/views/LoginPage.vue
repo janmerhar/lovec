@@ -85,7 +85,13 @@ export default defineComponent({
         console.log("Prijava uspesna")
         // Update store
         this.uporabnikStore.login(uporabnik.data)
-        // Redirect to home page
+
+        // Set Bearer token
+        this.axios.defaults.headers.Authorization =
+          "Bearer " + uporabnik.data.token
+
+        // console.log(this.axios.defaults.headers.Authorization)
+        // Redirect to home pageq
         this.router.push({ name: "pripravniki" })
       }
       // TODO
