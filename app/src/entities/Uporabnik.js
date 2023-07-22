@@ -30,6 +30,24 @@ export class Uporabnik extends Request {
     }
   }
 
+  //
+  // JWT methods
+  //
+
+  isJWTvalid(token) {
+    if (!token) return false
+
+    try {
+      const decodedToken = jwt_decode(token)
+      const currentTime = Date.now() / 1000
+
+      return decodedToken.exp > currentTime
+    } catch (error) {
+      return false
+    }
+  }
+
+
   static async login(email, geslo) {
     const uporabnik = await this.axiosInstance.post("/login", { email, geslo })
 
