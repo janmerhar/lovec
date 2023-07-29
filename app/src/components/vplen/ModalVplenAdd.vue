@@ -141,16 +141,12 @@ export default defineComponent({
       // throw new Error("Vnesi vse podatke")
       // }
 
-      await Vplen.vnesiVplen(
-        this.zival,
-        this.teza,
-        this.datum,
-        this.vnosi.map((el) => el.bolezen)
-      )
+      const bolezni = this.vnosi
+        .filter((el) => el.hidden != false && el.bolezen != null)
+        .map((el) => el.bolezen)
 
-      console.log("vplen je bil vnesen")
-      // kot data naredi nov objekt vplena
-      // ali pa ne v tem primeru
+      await Vplen.vnesiVplen(this.zival, this.teza, this.datum, bolezni)
+
       return modalController.dismiss(null, "confirm")
     },
     async fetchVpleni() {
