@@ -4,8 +4,9 @@ const { Schema } = mongoose
 const koordinataSchema = require("./koordinataSchema")
 
 const opazovalnicaSchema = new Schema({
+  // tebe bom naredil samo array dveh koordinat
   koordinate: {
-    type: koordinataSchema,
+    type: [Number],
     required: true,
   },
   obiski: {
