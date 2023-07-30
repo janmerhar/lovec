@@ -17,6 +17,7 @@
           type="text"
           required
           v-model="email"
+          @keyup.enter="login()"
         ></ion-input>
       </ion-item>
       <ion-item fill="solid">
@@ -26,6 +27,7 @@
           type="password"
           required
           v-model="geslo"
+          @keyup.enter="login()"
         ></ion-input>
       </ion-item>
       <br />
