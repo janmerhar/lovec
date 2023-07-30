@@ -18,4 +18,20 @@ export class Opazovalnica extends Request {
 
     return result.data
   }
+
+  static async rezervirajOpazovalnico(id, zacetek, konec) {
+    const result = await this.axiosInstance.post(
+      `/opazovalnice/${id}/rezerviraj`,
+      {
+        zacetek,
+        konec,
+      }
+    )
+
+    result.data.data = result.data.data.map(
+      (opazovalnica) => new Opazovalnica(opazovalnica)
+    )
+
+    return true
+  }
 }
