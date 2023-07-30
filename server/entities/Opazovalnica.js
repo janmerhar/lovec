@@ -59,4 +59,20 @@ module.exports = class Opazovalnica {
   }
 
   async fetchObiski(datum) {}
+
+  static async rezervirajOpazovalnico(uporabnikId, id, zacetek, konec) {
+    const dataToAppend = {
+      uporabnik: uporabnikId,
+      zacetek: zacetek,
+      konec: konec,
+    }
+
+    const result = await OpazovalnicaModel.findByIdAndUpdate(
+      id,
+      { $push: { obiski: dataToAppend } },
+      { new: true }
+    )
+
+    return result
+  }
 }
