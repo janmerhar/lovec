@@ -11,7 +11,6 @@ export class Opazovalnica extends Request {
   static async fetchOpazovalnice() {
     const result = await this.axiosInstance.get("/opazovalnice")
 
-    console.log(result)
     result.data.data = result.data.data.map(
       (opazovalnica) => new Opazovalnica(opazovalnica)
     )
@@ -28,10 +27,6 @@ export class Opazovalnica extends Request {
       }
     )
 
-    result.data.data = result.data.data.map(
-      (opazovalnica) => new Opazovalnica(opazovalnica)
-    )
-
-    return true
+    return result.data
   }
 }
