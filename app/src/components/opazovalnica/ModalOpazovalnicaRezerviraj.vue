@@ -52,7 +52,10 @@ import {
   modalController,
   IonDatetime,
 } from "@ionic/vue"
+
 import { defineComponent } from "vue"
+
+import { Opazovalnica } from "@/entities/Opazovalnica"
 
 export default defineComponent({
   name: "ModalVplenAdd",
@@ -76,12 +79,23 @@ export default defineComponent({
       return modalController.dismiss(null, "cancel")
     },
     async confirm() {
-      // TODO preverjanje, ali so vsi podatki vneseni
-      // if (!(this.datum && this.zival && this.teza && this.vnosi)) {
-      // throw new Error("Vnesi vse podatke")
-      // }
+      // Check if zacetek is before konec
+      if (this.zacetek >= this.konec) {
+        return
+      }
 
-      return modalController.dismiss(null, "confirm")
+      const result = await Opazovalnica.rezervirajOpazovalnico(
+        this.$attrs.id,
+        this.zacetek,
+        this.konec
+      )
+      console.log(result)
+
+      if (result.status == 200) {
+        return modalController.dismiss(null, "confirm")
+      }
+
+      return
     },
     defaultDatetime() {
       const currentDate = new Date()
@@ -107,6 +121,8 @@ export default defineComponent({
     },
   },
   beforeMount() {
+    Opazovalnica.setCustomAxios(this.axios)
+
     this.zacetek = this.defaultDatetime()
     this.konec = this.defaultDatetime()
   },
