@@ -24,7 +24,7 @@
       </template>
 
       <template v-else>
-        <div class="ion-padding">
+        <div class="ion-padding-top ion-padding-horizontal">
           <h4 class="ion-text-center">Zasedenost opazovalnice za dan</h4>
           <ion-item fill="outline" class="">
             <ion-label position="stacked">Datum</ion-label>
@@ -36,15 +36,20 @@
               v-model="datum"
             ></ion-input>
           </ion-item>
-          <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-          voluptates nostrum odit minima sunt ipsa, laboriosam voluptate aut,
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic
-          consectetur illo totam aut, neque, sit labore ea cumque sed facere
-          unde! Culpa illum quaerat dolores, dolorum necessitatibus ex
-          praesentium iusto.
         </div>
-        <div class="ion-padding">
+        <div class="ion-padding-horizontal">
+          <ion-list :inset="true">
+            <ion-item
+              v-for="obisk in izbranaOpazovalnica.obiski"
+              :key="obisk._id"
+            >
+              <ion-label>
+                Od {{ formatTime(obisk.zacetek) }} do
+                {{ formatTime(obisk.konec) }}
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
           <ion-button expand="full">
             Vstopi v opazovalnico brez rezervacije
           </ion-button>
@@ -61,8 +66,16 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { IonPage, IonContent, IonButton, modalController } from "@ionic/vue"
+<script>
+import {
+  IonPage,
+  IonContent,
+  IonButton,
+  IonList,
+  IonItem,
+  IonLabel,
+  modalController,
+} from "@ionic/vue"
 
 import { defineComponent } from "vue"
 
@@ -77,6 +90,9 @@ export default defineComponent({
     IonContent,
     IonButton,
     MapComponent,
+    IonList,
+    IonItem,
+    IonLabel,
   },
   data() {
     return {
@@ -87,16 +103,23 @@ export default defineComponent({
   },
   methods: {
     izberiOpazovalnico(index) {
+      this.datum = new Date().toISOString().slice(0, 10)
       this.izbranaOpazovalnica = this.opazovalnice[index]
     },
     async openModalOpazovanilnicaRezerviraj() {
       const modal = await modalController.create({
         component: ModalOpazovalnicaRezerviraj,
         componentProps: {
-          id: this.izbranaOpazovalnica.id,
+          id: this.izbranaOpazovalnica.id ?? "",
         },
       })
       modal.present()
+    },
+    formatTime(date) {
+      const datum = new Date(date)
+      const hour = datum.getHours().toString().padStart(2, "0")
+      const minute = datum.getMinutes().toString().padStart(2, "0")
+      return `${hour}.${minute}`
     },
   },
   async beforeMount() {
@@ -107,3 +130,13 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+ion-list,
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+}
+</style>
