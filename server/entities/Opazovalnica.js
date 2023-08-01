@@ -50,12 +50,31 @@ module.exports = class Opazovalnica {
 
   async fetchObiski(datum) {}
 
-  // TODO naredi preverjanje, da opazovalnica ni ze zasedena
   static async rezervirajOpazovalnico(uporabnikId, id, zacetek, konec) {
+    const timezoneOffset = 2
+
+    const adjustedZacetek = new Date(zacetek)
+    adjustedZacetek.setUTCHours(adjustedZacetek.getUTCHours() + timezoneOffset)
+
+    const adjustedKonec = new Date(konec)
+    adjustedKonec.setUTCHours(adjustedKonec.getUTCHours() + timezoneOffset)
+
+    const existingDocument = await OpazovalnicaModel.findById(id)
+
     const dataToAppend = {
       uporabnik: uporabnikId,
-      zacetek: zacetek,
-      konec: konec,
+      zacetek: adjustedZacetek,
+      konec: adjustedKonec,
+    }
+
+    const hasOverlap = existingDocument.obiski.some(
+      (obisk) =>
+        obisk.zacetek <= dataToAppend.konec &&
+        obisk.konec >= dataToAppend.zacetek
+    )
+
+    if (hasOverlap) {
+      throw new Error("Overlap detected with existing time blocks.")
     }
 
     const result = await OpazovalnicaModel.findByIdAndUpdate(
@@ -64,8 +83,7 @@ module.exports = class Opazovalnica {
       { new: true }
     )
 
-    // TODO ne vracanje podatkov
-    // return true
+    // TODO Handle the result or return it as needed
     return result
   }
 }
