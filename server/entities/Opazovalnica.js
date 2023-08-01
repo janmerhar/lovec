@@ -13,53 +13,44 @@ module.exports = class Opazovalnica {
     // return opazovalnica
   }
 
-  // TODO
-  // preveri s polnimi podatki
-  // mogoce samo naredim, da ima vsaka opazovalnice ze dane danasnje podatke
   static async fetchOpazovalnice() {
     const today = new Date()
-    today.setHours(0, 0, 0, 0) // Set the time to the start of the day
+    const timezoneOffset = -2
 
-    const pipeline = [
+    today.setUTCHours(today.getUTCHours() + timezoneOffset)
+
+    today.setUTCHours(0, 0, 0, 0)
+
+    const result = await OpazovalnicaModel.aggregate([
       {
         $addFields: {
           obiski: {
             $filter: {
               input: "$obiski",
+              as: "obisk",
               cond: {
-                $gte: ["$$this.zacetek", today],
+                $eq: [
+                  {
+                    $dateToString: {
+                      format: "%Y-%m-%d",
+                      date: "$$obisk.zacetek",
+                    },
+                  },
+                  { $dateToString: { format: "%Y-%m-%d", date: today } },
+                ],
               },
             },
           },
         },
       },
-      {
-        $addFields: {
-          "obiski.konec": {
-            $cond: {
-              if: { $eq: [{ $size: "$obiski" }, 1] },
-              then: "$$REMOVE", // If there's only one element, remove the 'konec' field
-              else: "$obiski.konec",
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          koordinate: 1,
-          obiski: 1,
-        },
-      },
-    ]
-
-    // Assuming 'Opazovalnica' is your model name
-    const result = OpazovalnicaModel.aggregate(pipeline).exec()
+    ]).exec()
 
     return result
   }
 
   async fetchObiski(datum) {}
 
+  // TODO naredi preverjanje, da opazovalnica ni ze zasedena
   static async rezervirajOpazovalnico(uporabnikId, id, zacetek, konec) {
     const dataToAppend = {
       uporabnik: uporabnikId,
@@ -73,6 +64,8 @@ module.exports = class Opazovalnica {
       { new: true }
     )
 
+    // TODO ne vracanje podatkov
+    // return true
     return result
   }
 }
