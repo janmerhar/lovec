@@ -43,6 +43,29 @@ module.exports = class Opazovalnica {
           },
         },
       },
+      {
+        $lookup: {
+          from: "Uporabniki",
+          localField: "obiski.uporabnik",
+          foreignField: "_id",
+          as: "obiski.uporabnik",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          koordinate: 1,
+          obiski: {
+            uporabnik: {
+              _id: 1,
+              ime: 1,
+              priimek: 1,
+            },
+            zacetek: 1,
+            konec: 1,
+          },
+        },
+      },
     ]).exec()
 
     return result
