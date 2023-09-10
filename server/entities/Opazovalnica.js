@@ -1,4 +1,4 @@
-const OpazovalnicaModel = require("../models/opazovalnica")
+const OpazovalnicaModel = require("../models/opazovalnicaModel")
 
 module.exports = class Opazovalnica {
   constructor(id, koordinate, obiski) {
