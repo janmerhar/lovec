@@ -1,4 +1,4 @@
-const DruzinaModel = require("../models/druzina")
+const DruzinaModel = require("../models/druzinaModel")
 const Druzina = require("../entities/Druzina")
 
 exports.postDruzina = async (req, res, next) => {
