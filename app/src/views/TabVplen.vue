@@ -27,7 +27,7 @@ import { IonPage, IonContent, modalController } from "@ionic/vue"
 import { defineComponent } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
-import CardVplen from "@/components/belezke/CardVplen.vue"
+import CardVplen from "@/components/vplen/CardVplen.vue"
 
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
 import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"

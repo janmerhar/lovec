@@ -1,4 +1,4 @@
-const VplenModel = require("../models/vplen")
+const VplenModel = require("../models/vplenModel")
 const mongoose = require("mongoose")
 
 module.exports = class Vplen {

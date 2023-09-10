@@ -1,4 +1,4 @@
-const DruzinaModel = require("../models/druzina")
+const DruzinaModel = require("../models/druzinaModel")
 
 module.exports = class Druzina {
   constructor(id, ime, revirji, clani) {

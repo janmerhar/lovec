@@ -1,4 +1,4 @@
-const RevirModel = require("../models/revir")
+const RevirModel = require("../models/revirModel")
 
 module.exports = class Revir {
   constructor(id, ime, koordinate, druzina) {

@@ -1,4 +1,4 @@
-const DnevnikModel = require("../models/dnevnik")
+const DnevnikModel = require("../models/dnevnikModel")
 
 module.exports = class Dnevnik {
   constructor(dnevnikId, pripravnik = null, mentorId, delo, ure, opis) {
@@ -52,7 +52,6 @@ module.exports = class Dnevnik {
       { status: status },
       { new: true }
     )
-
 
     return posodobljenDnevnik !== null
   }

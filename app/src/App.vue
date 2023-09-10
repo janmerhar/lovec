@@ -13,7 +13,7 @@ import { IonApp, IonRouterOutlet } from "@ionic/vue"
 
 import { defineComponent } from "vue"
 
-import { useUporabnikStore } from "@/stores/useUporabnikStore"
+import { useUporabnikStore } from "@/stores/uporabnikStore"
 
 export default defineComponent({
   components: {

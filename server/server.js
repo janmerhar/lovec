@@ -29,14 +29,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(__dirname + "/views/"))
 
 // Defining route middleware
-app.use("/", require("./routes/auth"))
-app.use("/druzine", require("./routes/druzina"))
-app.use("/opazovalnice", require("./routes/opazovalnica"))
-app.use("/oprema", require("./routes/oprema"))
-app.use("/dnevniki", require("./routes/dnevnik"))
-app.use("/revirji", require("./routes/revir"))
-app.use("/uporabnik", require("./routes/uporabnik"))
-app.use("/vpleni", require("./routes/vplen"))
+app.use("/", require("./routes/authRoutes"))
+app.use("/druzine", require("./routes/druzinaRoutes"))
+app.use("/opazovalnice", require("./routes/opazovalnicaRoutes"))
+app.use("/oprema", require("./routes/opremaRoutes"))
+app.use("/dnevniki", require("./routes/dnevnikRoutes"))
+app.use("/revirji", require("./routes/revirRoutes"))
+app.use("/uporabnik", require("./routes/uporabnikRoutes"))
+app.use("/vpleni", require("./routes/vplenRoutes"))
 
 // Not found
 app.use((req, res, next) => {

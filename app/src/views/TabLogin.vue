@@ -53,7 +53,7 @@ import {
 import { defineComponent } from "vue"
 
 import { Uporabnik } from "@/entities/Uporabnik"
-import { useUporabnikStore } from "@/stores/useUporabnikStore"
+import { useUporabnikStore } from "@/stores/uporabnikStore"
 
 export default defineComponent({
   components: {
@@ -114,4 +114,4 @@ export default defineComponent({
   display: block;
 }
 </style>
-@/stores/useUporabnikStore
+@/stores/uporabnikStore

@@ -8,11 +8,11 @@ import TabRevirji from "../views/TabRevirji.vue"
 import TabOpazovalnica from "@/views/TabOpazovalnica.vue"
 import TabOprema from "@/views/TabOprema.vue"
 import TabIzkaznica from "@/views/TabIzkaznica.vue"
-import SubTabPripravniki from "@/views/belezke/SubTabPripravniki.vue"
-import SubTabVplen from "@/views/belezke/SubTabVplen.vue"
-import LoginPage from "@/views/LoginPage.vue"
+import TabPripravniki from "@/views/TabPripravniki.vue"
+import TabVplen from "@/views/TabVplen.vue"
+import TabLogin from "@/views/TabLogin.vue"
 
-// const uporabnikStore = useUporabnikStore()
+// const uporabnikStore = uporabnikStore()
 // console.log(uporabnikStore.token)
 
 const routes: Array<RouteRecordRaw> = [
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     name: "login",
-    component: LoginPage,
+    component: TabLogin,
   },
   {
     path: "/tabs/",
@@ -44,12 +44,12 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "pripravniki",
         name: "pripravniki",
-        component: SubTabPripravniki,
+        component: TabPripravniki,
       },
       {
         path: "vplen",
         name: "vplen",
-        component: SubTabVplen,
+        component: TabVplen,
       },
       {
         path: "opazovalnica",
