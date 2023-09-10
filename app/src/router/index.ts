@@ -12,10 +12,13 @@ import SubTabPripravniki from "@/views/belezke/SubTabPripravniki.vue"
 import SubTabVplen from "@/views/belezke/SubTabVplen.vue"
 import LoginPage from "@/views/LoginPage.vue"
 
+// const uporabnikStore = useUporabnikStore()
+// console.log(uporabnikStore.token)
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: { name: "jage" },
+    redirect: { name: "login" },
   },
   {
     path: "/login",
