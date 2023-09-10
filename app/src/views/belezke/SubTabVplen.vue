@@ -69,6 +69,8 @@ export default defineComponent({
       })
       modal.present()
     },
+    // TODO fix multiple requests
+    // that duplicate data
     async fetchVpleni() {
       this.vpleni = []
 
