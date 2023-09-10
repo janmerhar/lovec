@@ -20,6 +20,32 @@ export const useUporabnikStore = defineStore({
     login(uporabnik) {
       this.uporabnik = uporabnik
     },
+    logout() {
+      this.uporabnik = null
+      // Naredi logout call na server
+    },
+    // Tukaj lahko preverjam, ali je token se veljaven
+    async isLoggedIn() {
+      if (!this.uporabnik.token) return false
+
+      // TODO preverjanje, ali je token se veljaven
+      const tokenValidity = this.uporabnik.isJWTvalid(this.uporabnik.token)
+
+      // Token je veljaven
+      // tebe bom verjetno mogel povezati na server
+      if (tokenValidity >= 0) return true
+
+      // Token ni veljaven
+      if (tokenValidity == -1) return false
+
+      // Token je pretekel in ga zato osvezim
+      // if (tokenValidity == 0) ...
+
+      // Sicer pac uporabnik ni prijavljen
+      return false
+    },
   },
-  persist: true,
+  persist: {
+    storage: sessionStorage,
+  },
 })
