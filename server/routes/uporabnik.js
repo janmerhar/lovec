@@ -9,5 +9,6 @@ router.get("/:id", uporabnikController.getUporabnik)
 router.post("/login", uporabnikController.postLogin)
 router.post("/register", uporabnikController.postRegister)
 router.post("/refreshToken", uporabnikController.refreshToken)
+router.get("/logout", uporabnikController.logout)
 
 module.exports = router
