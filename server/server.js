@@ -36,7 +36,7 @@ app.use("/oprema", require("./routes/opremaRoutes"))
 app.use("/dnevniki", require("./routes/dnevnikRoutes"))
 app.use("/revirji", require("./routes/revirRoutes"))
 app.use("/uporabnik", require("./routes/uporabnikRoutes"))
-app.use("/vpleni", require("./routes/vplen"))
+app.use("/vpleni", require("./routes/vplenRoutes"))
 
 // Not found
 app.use((req, res, next) => {
