@@ -28,6 +28,8 @@ const uporabnikSchema = new Schema({
   ],
   // Clanstvo v neki lovski druzini
   druzina: { type: Schema.Types.ObjectId, ref: "Druzina", required: false },
+  // Polje za osvezevanje JWT tokenov
+  refresh_token: { type: String, required: false, default: null },
 })
 
 module.exports = mongoose.model("Uporabnik", uporabnikSchema, "Uporabniki")
