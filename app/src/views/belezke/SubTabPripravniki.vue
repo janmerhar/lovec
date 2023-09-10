@@ -75,7 +75,7 @@ import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
 import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescription.vue"
 
-import { useUporabnikStore } from "@/stores/useUporabnikStore"
+import { useUporabnikStore } from "@/stores/uporabnikStore"
 
 import { Dnevnik } from "@/entities/Dnevnik"
 

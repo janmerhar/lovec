@@ -12,7 +12,7 @@ import SubTabPripravniki from "@/views/belezke/SubTabPripravniki.vue"
 import SubTabVplen from "@/views/belezke/SubTabVplen.vue"
 import LoginPage from "@/views/LoginPage.vue"
 
-// const uporabnikStore = useUporabnikStore()
+// const uporabnikStore = uporabnikStore()
 // console.log(uporabnikStore.token)
 
 const routes: Array<RouteRecordRaw> = [
