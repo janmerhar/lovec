@@ -8,7 +8,7 @@ import TabRevirji from "../views/TabRevirji.vue"
 import TabOpazovalnica from "@/views/TabOpazovalnica.vue"
 import TabOprema from "@/views/TabOprema.vue"
 import TabIzkaznica from "@/views/TabIzkaznica.vue"
-import SubTabPripravniki from "@/views/belezke/SubTabPripravniki.vue"
+import SubTabPripravniki from "@/views/TabPripravniki.vue"
 import SubTabVplen from "@/views/belezke/SubTabVplen.vue"
 import TabLogin from "@/views/TabLogin.vue"
 
