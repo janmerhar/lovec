@@ -5,12 +5,12 @@
         // TODO
         tukaj lahko na vrhu dam se eno opozorilo oz gumb,
         ki uporabniku sporoca, da ima aktivno rezervacijo
-       -->
       <div class="ion-padding">
         <ion-button color="danger" expand="full">
           Zaključi obisk opazovalnice
         </ion-button>
       </div>
+    -->
 
       <map-component
         :opazovalnice="opazovalnice"
