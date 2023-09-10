@@ -10,7 +10,7 @@ import TabOprema from "@/views/TabOprema.vue"
 import TabIzkaznica from "@/views/TabIzkaznica.vue"
 import SubTabPripravniki from "@/views/belezke/SubTabPripravniki.vue"
 import SubTabVplen from "@/views/belezke/SubTabVplen.vue"
-import LoginPage from "@/views/LoginPage.vue"
+import TabLogin from "@/views/TabLogin.vue"
 
 // const uporabnikStore = uporabnikStore()
 // console.log(uporabnikStore.token)
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     name: "login",
-    component: LoginPage,
+    component: TabLogin,
   },
   {
     path: "/tabs/",
