@@ -10,30 +10,36 @@
       v-model:zoom="zoom"
       :center="coordinates"
       :options="{ zoomControl: false }"
+      :useGlobalLeaflet="false"
     >
       <!-- Base map -->
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         layer-type="base"
         name="OpenStreetMap"
-        :attriburion="''"
+        :attribution="''"
       ></l-tile-layer>
+
       <!-- Marker for user -->
       <template>
         <l-marker :lat-lng="coordinates" :icon="iconLovec"></l-marker>
       </template>
       <!-- Marker for other users, but only if they are in revir -->
 
-      <template>
+      <!-- <template>
+        <l-marker :lat-lng="[]" :icon="iconLovecNeuporabnik"></l-marker>
+      </template> -->
+
+      <!-- Markers for opazovalnice -->
+      <template v-for="(opazovalnica, index) in opazovalnice" :key="index">
         <l-marker
-          :lat-lng="[45.738336, 14.8557159]"
-          :icon="iconLovecNeuporabnik"
+          :lat-lng="opazovalnica.koordinate"
+          :icon="iconOpazovalnica"
+          @click="$emit('opazovalnica', index)"
         ></l-marker>
       </template>
-      <!-- Markers for opazovalnice -->
-      <template v-for="(opazovalnica, index) in opazovalniceDemo" :key="index">
-        <l-marker :lat-lng="opazovalnica" :icon="iconOpazovalnica"></l-marker>
-      </template>
+      <!--  -->
+
       <!-- Polygon  za revirje -->
       <l-polygon :lat-lngs="revirDemo" :color="'red'"></l-polygon>
     </l-map>
@@ -43,7 +49,6 @@
 <script>
 // L ne smem v celoti importat, temvec importam samo delne componennete v beforeMount()
 // funkciji
-import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 import { LMap, LTileLayer, LMarker, LPolygon } from "@vue-leaflet/vue-leaflet"
 import { Geolocation } from "@capacitor/geolocation"
@@ -57,52 +62,17 @@ export default {
   },
   data() {
     return {
-      //
-      attribution: "&copy; OpenStreetMap contributors",
-      //
+      // Lastnosti prikaza zemljevida
       zoom: 9,
       coordinates: [46.056946, 14.505751],
       // Ikone
-      // icon colors
       // https://github.com/pointhi/leaflet-color-markers
-      iconLovec: new L.Icon({
-        iconUrl:
-          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png",
-        shadowUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      }),
-      iconLovecNeuporabnik: new L.Icon({
-        iconUrl:
-          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png",
-        shadowUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      }),
-      iconOpazovalnica: new L.Icon({
-        iconUrl:
-          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
-        shadowUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      }),
+      iconLovec: null,
+      iconLovecNeuporabnik: null,
+      iconOpazovalnica: null,
       // Popups
       caller: null,
-      // Demo opazovalnice
-      opazovalniceDemo: [
-        [45.9576254, 14.6531854],
-        [46.2257358, 14.6118936],
-        [45.9663607, 14.2980772],
-      ],
+      // Demo podatki
       revirDemo: [
         [45.7399923, 14.7261067],
         [45.6430266, 14.8552701],
@@ -115,25 +85,58 @@ export default {
       ],
     }
   },
-  props: {
-    revirji: {
-      default: [],
+  props: ["opazovalnice", "revirji"],
+  methods: {
+    openPopUp(latLng, caller) {
+      this.caller = caller
+      this.$refs.features.mapObject.openPopup(latLng)
     },
-    opazovalnice: {
-      default: [],
+    async setIcons() {
+      const { Icon } = await import("leaflet")
+      this.iconLovec = new Icon({
+        iconUrl:
+          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png",
+        shadowUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      })
+
+      this.iconLovecNeuporabnik = new Icon({
+        iconUrl:
+          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png",
+        shadowUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      })
+
+      this.iconOpazovalnica = new Icon({
+        iconUrl:
+          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
+        shadowUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      })
     },
+  },
+  // https://www.npmjs.com/package/@vue-leaflet/vue-leaflet
+  // SSR
+  async beforeMount() {
+    await this.setIcons()
   },
   mounted() {
     Geolocation.getCurrentPosition().then((res) => {
       console.log(res.coords)
       this.coordinates = [res.coords.latitude, res.coords.longitude]
     })
-  },
-  methods: {
-    openPopUp(latLng, caller) {
-      this.caller = caller
-      this.$refs.features.mapObject.openPopup(latLng)
-    },
   },
 }
 </script>
