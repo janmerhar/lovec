@@ -29,3 +29,22 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 
+###
+
+@opazovalnica4 = 64c5c1c77a82b54cc4d93fbc
+@zacetek = 2023-07-31T00:40:06+02:00
+@konec = 2023-07-31T01:40:00+02:00
+
+# @name rezervirajOpazovalnico
+POST {{baseUrl}}/opazovalnice/{{opazovalnica4}}/rezerviraj HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "zacetek": "{{zacetek}}",
+    "konec": "{{konec}}"
+}
+
+###
+
+# @name koncajrezervacijoOpazovalnico
