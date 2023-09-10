@@ -7,17 +7,25 @@
       <ion-router-outlet></ion-router-outlet>
       <!-- Bootom tool bar -->
       <ion-tab-bar slot="bottom" :selected-tab="selectedTab">
-        <ion-tab-button tab="jage" @click="() => router.push({ name: 'jage' })">
+        <ion-tab-button
+          tab="pripravniki"
+          @click="() => router.push({ name: 'pripravniki' })"
+        >
           <font-awesome-icon icon="fa-solid fa-people-group" size="2x" />
-          <ion-label>Jage</ion-label>
+          <ion-label>Pripravniki</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
-          tab="belezke"
-          @click.prevent="() => router.push({ name: 'belezke' })"
+          tab="vplen"
+          @click.prevent="
+            () => {
+              // select('vplen')
+              router.push({ name: 'vplen' })
+            }
+          "
         >
-          <font-awesome-icon icon="fa-solid fa-note-sticky" size="2x" />
-          <ion-label>Beležke</ion-label>
+          <font-awesome-icon icon="fa-solid fa-paw" size="2x" />
+          <ion-label>Vplen</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
@@ -36,13 +44,15 @@
           <ion-label>Oprema</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button
+        <!-- 
+          <ion-tab-button
           tab="revirji"
           @click.prevent="() => router.push({ name: 'revirji' })"
         >
           <font-awesome-icon icon="fa-solid fa-map-location-dot" size="2x" />
           <ion-label>Revirji</ion-label>
-        </ion-tab-button>
+        </ion-tab-button> 
+      -->
       </ion-tab-bar>
       <!-- End bottom tool bar -->
     </ion-tabs>
@@ -57,11 +67,11 @@ import {
   IonLabel,
   IonPage,
   IonRouterOutlet,
+  useIonRouter,
 } from "@ionic/vue"
 import AppToolbar from "@/components/AppToolbar.vue"
 
 import { defineComponent } from "vue"
-import { useRouter } from "vue-router"
 
 export default defineComponent({
   components: {
@@ -74,14 +84,22 @@ export default defineComponent({
     AppToolbar,
   },
   setup() {
-    const router = useRouter()
+    const router = useIonRouter()
     return { router }
   },
   data() {
     return {
+      // TODO
       // Tab highlits do not work inside Vue.js
-      selectedTab: "belezke",
+      // https://www.youtube.com/watch?v=DSx9WkaVCo8
+      selectedTab: "opazovalnica",
     }
+  },
+  methods: {
+    // Implementiraj tako, da bo
+    clickOnTab(tab) {
+      console.log(tab)
+    },
   },
 })
 </script>
