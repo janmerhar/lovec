@@ -1,4 +1,4 @@
-const OpremaModel = require("../models/oprema")
+const OpremaModel = require("../models/opremaModel")
 
 module.exports = class Oprema {
   constructor(id, lastnikId, naziv, tip, stanje, datum) {
