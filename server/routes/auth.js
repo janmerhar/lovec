@@ -3,9 +3,9 @@ const path = require("path")
 
 const router = express.Router()
 
-const authController = require("../controllers/authController")
+const uporabnikController = require("../controllers/uporabnikController")
 
-router.post("/login", authController.postLogin)
-router.post("/register", authController.postRegister)
+router.post("/login", uporabnikController.postLogin)
+router.post("/register", uporabnikController.postRegister)
 
 module.exports = router
