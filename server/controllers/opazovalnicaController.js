@@ -6,19 +6,31 @@ const ResponseBuilder = require("../util/ResponseBuilder")
 
 // Vrnem vse podatke o neki opazovalnici
 // mogoce se samo omejim na dolocen casovni razpon obiskov
-exports.getOpazovalnica = (req, res, next) => {
+exports.getOpazovalnica = async (req, res, next) => {
+  const { id } = req.params
+
+  // await Opazovalnica.fetchOpazovalnica(id)
   console.log("getUser")
   res.send("getUser")
 }
 
 // Vrnem samo koordinate vseh opazovalnic
-exports.getOpazovalnice = (req, res, next) => {
-  console.log("getUser")
-  res.send("getUser")
+exports.getOpazovalnice = async (req, res, next) => {
+  try {
+    const result = await Opazovalnica.fetchOpazovalnice()
+
+    res.send(ResponseBuilder.success(result))
+  } catch (error) {
+    next(error)
+  }
 }
 
 // Vas verjetno ne potrebujem, saj lahko samo (ponovno) fetcham opazovalnice
-exports.getObiski = (req, res, next) => {
+// raje vas obdzim, saj bi drugace vsakic fetchal vse opazovalnice skupaj z vsemi obiski
+
+// v bistvu lahko vas uporabim za dnevni pregled zasedenosti opazovalnic
+// torej zgodovino in prihodnost
+exports.getObiski = async (req, res, next) => {
   console.log("getUser")
   res.send("getUser")
 }
@@ -44,3 +56,6 @@ exports.postRezerviraj = async (req, res, next) => {
   }
 }
 
+// TODO !!!
+exports.odpovejRezervacijo = async (req, res, next) => {}
+exports.zasediOpazovalnico = async (req, res, next) => {}
