@@ -7,6 +7,11 @@
       <ion-router-outlet></ion-router-outlet>
       <!-- Bootom tool bar -->
       <ion-tab-bar slot="bottom" :selected-tab="selectedTab">
+        <ion-tab-button tab="jage" @click="() => router.push({ name: 'jage' })">
+          <font-awesome-icon icon="fa-solid fa-people-group" size="2x" />
+          <ion-label>Jage</ion-label>
+        </ion-tab-button>
+
         <ion-tab-button
           tab="pripravniki"
           @click="() => router.push({ name: 'pripravniki' })"
