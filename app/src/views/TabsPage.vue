@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs>
       <!-- Top tool bar -->
-      <app-toolbar></app-toolbar>
+      <toolbar-navigation></toolbar-navigation>
       <!-- Component view -->
       <ion-router-outlet></ion-router-outlet>
       <!-- Bootom tool bar -->
@@ -69,7 +69,7 @@ import {
   IonRouterOutlet,
   useIonRouter,
 } from "@ionic/vue"
-import AppToolbar from "@/components/AppToolbar.vue"
+import ToolbarNavigation from "@/components/ToolbarNavigation.vue"
 
 import { defineComponent } from "vue"
 
@@ -81,7 +81,7 @@ export default defineComponent({
     IonLabel,
     IonPage,
     IonRouterOutlet,
-    AppToolbar,
+    ToolbarNavigation,
   },
   setup() {
     const router = useIonRouter()

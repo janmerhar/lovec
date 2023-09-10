@@ -38,13 +38,13 @@ hide circle
 
 '---------Razredi---------------------------
 class TabsPage<<boundary>>
-class AppToolbar<<boundary>>
+class ToolbarNavigation<<boundary>>
 
 class Router<<control>>{
 }
 
 TabsPage --> Router
-AppToolbar --> Router
+ToolbarNavigation --> Router
 
 package Views{
   Class SubTabPripravniki<<Vue view>>{
