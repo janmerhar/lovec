@@ -56,3 +56,8 @@ exports.refreshToken = async (req, res, next) => {
   console.log("refreshToken")
   res.send("refreshToken")
 }
+
+exports.logout = async (req, res, next) => {
+  console.log("logout")
+  res.send("logout")
+}
