@@ -31,7 +31,7 @@ app.use(express.static(__dirname + "/views/"))
 // Defining route middleware
 app.use("/", require("./routes/authRoutes"))
 app.use("/druzine", require("./routes/druzinaRoutes"))
-app.use("/opazovalnice", require("./routes/opazovalnica"))
+app.use("/opazovalnice", require("./routes/opazovalnicaRoutes"))
 app.use("/oprema", require("./routes/oprema"))
 app.use("/dnevniki", require("./routes/dnevnikRoutes"))
 app.use("/revirji", require("./routes/revir"))
