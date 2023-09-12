@@ -81,7 +81,11 @@ export default defineComponent({
   },
   methods: {
     async login() {
-      const uporabnik = await Uporabnik.login(this.email, this.geslo)
+      const uporabnik = await Uporabnik.login(
+        this.axios,
+        this.email,
+        this.geslo
+      )
 
       if (uporabnik.status == 200) {
         console.log("Prijava uspesna")
