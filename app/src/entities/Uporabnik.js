@@ -26,9 +26,7 @@ export class Uporabnik extends Request {
     this.token = token
     this.druzina = druzina
 
-    if (mentor) {
-      this.mentor = mentor
-    }
+    this.mentor = mentor
   }
 
   //
