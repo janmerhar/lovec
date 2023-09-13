@@ -1,7 +1,13 @@
 import { JWT } from "@/entities/JWT"
 
 describe("JWT class", () => {
-  describe("constructor", () => {})
+  describe("constructor", () => {
+    it("constructs JWT", () => {
+      const jwt = new JWT("token")
+
+      expect(jwt.token).toBe("token")
+    })
+  })
 
   const expiredJWT =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG9yYWJuaWtJZCI6IjY0M2U5YTE0NTk4ZDgyN2JlNDQ5YjRjNCIsInJvbGUiOiJsb3ZlYyIsImlhdCI6MTY5NDU0NTI1MSwiZXhwIjoxNjk0NTQ4ODUxfQ.VZ0sgfFyW8HQrK7yTocXvLEdXcFKiUYxxNwdA6u02mM"
