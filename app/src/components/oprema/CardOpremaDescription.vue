@@ -5,17 +5,14 @@
       <ion-card-title>{{ oprema.naziv }}</ion-card-title>
       <ion-card-subtitle>
         Dodana:
-        {{
-          formatDate(new Date(oprema.datum)) ??
-          formatDate(new Date("2023-01-01"))
-        }}
+        {{ formatDate(oprema.datum) }}
       </ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
       {{ oprema.stanje }}
     </ion-card-content>
-    <ion-button fill="clear" @click.prevent="$emit('izbrisi', oprema.id)"
+    <ion-button fill="clear" @click.prevent="$emit('izbrisi', oprema)"
       >Izbriši</ion-button
     >
   </ion-card>
@@ -30,7 +27,9 @@ import {
   IonCardContent,
   IonButton,
 } from "@ionic/vue"
+
 import { defineComponent } from "vue"
+import { Oprema } from "@/entities/Oprema"
 
 export default defineComponent({
   components: {
@@ -41,10 +40,12 @@ export default defineComponent({
     IonCardContent,
     IonButton,
   },
-  props: ["oprema"],
+  props: {
+    oprema: { type: Oprema, required: true },
+  },
   emits: ["izbrisi"],
   methods: {
-    formatDate(date) {
+    formatDate(date: Date) {
       const day = date.getDate()
       const month = date.getMonth() + 1
       const year = date.getFullYear()
