@@ -25,15 +25,19 @@
         <h3 class="ion-text-center">Dnevniki</h3>
       </template>
       <!--  -->
-      <template v-for="(dnevnik, index) in dnevniki" :key="dnevnik.id">
+      <template v-for="dnevnik in dnevniki" :key="dnevnik.id">
         <template v-if="uporabnikStore.isMentor">
           <card-dnevnik-description
             :subtitle="formatDateToString(dnevnik.datum)"
             :title="`${dnevnik.pripravnik.ime} ${dnevnik.pripravnik.priimek}`"
             :showButtons="uporabnikStore.isMentor"
             :dnevnik="dnevnik"
-            @accept="(id) => spremeniStatus(id, 'potrjen')"
-            @reject="(id) => spremeniStatus(id, 'zavrnjen')"
+            @accept="
+              (izbranDnevnik) => spremeniStatus(izbranDnevnik, 'potrjen')
+            "
+            @reject="
+              (izbranDnevnik) => spremeniStatus(izbranDnevnik, 'zavrnjen')
+            "
           ></card-dnevnik-description>
         </template>
 
@@ -66,10 +70,10 @@ import {
   IonLabel,
   IonItem,
   IonInput,
-  IonButton,
 } from "@ionic/vue"
 
 import { defineComponent } from "vue"
+import { ref } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
@@ -88,12 +92,11 @@ export default defineComponent({
     IonLabel,
     IonItem,
     IonInput,
-    IonButton,
   },
   data() {
     return {
       datum: new Date().toISOString().slice(0, 10),
-      dnevniki: [],
+      dnevniki: ref<Dnevnik[]>([]),
       stran: 1,
     }
   },
@@ -127,26 +130,31 @@ export default defineComponent({
     },
     // Pripravnik
     async pripravnikDnevniki() {
-      const dnevniki = await Dnevnik.fetchDnevnikiPripravnik(this.stran)
+      const dnevniki = await Dnevnik.fetchDnevnikiPripravnik(
+        this.axios,
+        this.stran
+      )
 
       this.stran += 1
       this.dnevniki = dnevniki.data
     },
     // Mentor
     async mentorDnevniki() {
-      const dnevniki = await Dnevnik.fetchDnevnikiMentor(this.datum)
+      const dnevniki = await Dnevnik.fetchDnevnikiMentor(this.axios, this.datum)
 
       this.dnevniki = []
       this.dnevniki = dnevniki.data
     },
-    async spremeniStatus(id, status) {
-      const result = await Dnevnik.spremeniStatusDnevnik(id, status)
+    async spremeniStatus(izbranDnevnik, status) {
+      const result = await izbranDnevnik.spremeniStatusDnevnik(
+        this.axios,
+        status
+      )
 
       await this.mentorDnevniki()
     },
   },
   async beforeMount() {
-    Dnevnik.setCustomAxios(this.axios)
     // Mentor
     if (this.uporabnikStore.isMentor) {
       await this.mentorDnevniki()
