@@ -51,4 +51,6 @@ export class Uporabnik {
   // static async register(ime, priimek, slika, rojstniDatum, email, geslo, role, druzina = null, mentor = null, ) {}
 
   // static async fetchUporabnik(uporabnikId) {}
+
+  // static async logout()
 }
