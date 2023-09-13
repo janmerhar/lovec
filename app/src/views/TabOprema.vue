@@ -23,6 +23,7 @@ import ModalOpremaAdd from "@/components/oprema/ModalOpremaAdd.vue"
 import CardOpremaDescription from "@/components/oprema/CardOpremaDescription.vue"
 
 import { defineComponent } from "vue"
+import { ref } from "vue"
 
 import { IonPage, IonContent, modalController } from "@ionic/vue"
 
@@ -37,7 +38,7 @@ export default defineComponent({
   },
   data() {
     return {
-      oprema: [],
+      oprema: ref<Oprema[]>([]),
     }
   },
   methods: {
@@ -55,18 +56,16 @@ export default defineComponent({
       }
     },
     async fetchUporabnikOprema() {
-      const result = await Oprema.fetchUporabnikOprema()
+      const result = await Oprema.fetchOprema(this.axios)
 
       this.oprema = result.data
     },
-    async izbrisi(id) {
-      await Oprema.izbrisiOprema(id)
+    async izbrisi(oprema) {
+      await oprema.izbrisiOprema()
       await this.fetchUporabnikOprema()
     },
   },
   async beforeMount() {
-    Oprema.setCustomAxios(this.axios)
-
     await this.fetchUporabnikOprema()
   },
 })
