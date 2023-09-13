@@ -19,14 +19,10 @@
     </ion-card-content>
 
     <template v-if="showButtons && dnevnik.status == 'neobdelan'">
-      <ion-button
-        fill="clear"
-        @click.prevent="$emit('accept', dnevnik._id ?? dnevnik.id)"
+      <ion-button fill="clear" @click.prevent="$emit('accept', dnevnik)"
         >Potrdi</ion-button
       >
-      <ion-button
-        fill="clear"
-        @click.prevent="$emit('reject', dnevnik._id ?? dnevnik.id)"
+      <ion-button fill="clear" @click.prevent="$emit('reject', dnevnik)"
         >Zavrni</ion-button
       >
     </template>
@@ -45,6 +41,8 @@ import {
   IonItem,
 } from "@ionic/vue"
 
+import { Dnevnik } from "@/entities/Dnevnik"
+
 export default {
   components: {
     IonCard,
@@ -56,7 +54,13 @@ export default {
     IonList,
     IonItem,
   },
-  props: ["subtitle", "title", "dnevnik", "showButtons"],
+  // props: ["subtitle", "title", "dnevnik", "showButtons"],
+  props: {
+    subtitle: String,
+    title: String,
+    dnevnik: { type: Dnevnik, required: true },
+    showButtons: Boolean,
+  },
   emits: ["accept", "reject"],
   methods: {
     color(dnevnik) {
