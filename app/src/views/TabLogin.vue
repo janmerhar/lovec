@@ -105,9 +105,6 @@ export default defineComponent({
       // send reponse text from "message" attribute
     },
   },
-  async beforeMount() {
-    Uporabnik.setCustomAxios(this.axios)
-  },
 })
 </script>
 
