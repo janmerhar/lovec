@@ -55,8 +55,6 @@ import {
 
 import { defineComponent } from "vue"
 
-import { Opazovalnica } from "@/entities/Opazovalnica"
-
 export default defineComponent({
   name: "ModalVplenAdd",
   components: {
@@ -84,8 +82,7 @@ export default defineComponent({
         return
       }
 
-      const result = await Opazovalnica.rezervirajOpazovalnico(
-        this.$attrs.id,
+      const result = await this.$attrs.opazovalnica.rezervirajOpazovalnico(
         this.zacetek,
         this.konec
       )
@@ -121,8 +118,6 @@ export default defineComponent({
     },
   },
   beforeMount() {
-    Opazovalnica.setCustomAxios(this.axios)
-
     this.zacetek = this.defaultDatetime()
     this.konec = this.defaultDatetime()
   },
