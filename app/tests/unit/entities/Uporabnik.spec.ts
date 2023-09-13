@@ -1,5 +1,5 @@
 import { Uporabnik } from "@/entities/Uporabnik"
-import axiosInstance from "../../helpers/axiosInstance"
+import { axiosInstance } from "../../helpers/axiosInstance"
 
 describe("Uporabnik class", () => {
   describe("constructor", () => {
