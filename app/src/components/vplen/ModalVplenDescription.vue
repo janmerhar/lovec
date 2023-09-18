@@ -76,13 +76,12 @@ export default defineComponent({
       return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
     },
     async fetchVplenPodrobnosti(datum) {
-      const vpleni = await Vplen.fetchVplenDatum(datum)
+      const vpleni = await Vplen.fetchVplen(this.axios, datum)
 
       this.vpleni = vpleni.data
     },
   },
   async beforeMount() {
-    Vplen.setCustomAxios(this.axios)
     await this.fetchVplenPodrobnosti(this.$attrs.datum)
   },
 })
