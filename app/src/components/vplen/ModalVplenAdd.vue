@@ -145,18 +145,21 @@ export default defineComponent({
         .filter((el) => el.hidden != false && el.bolezen != null)
         .map((el) => el.bolezen)
 
-      await Vplen.vnesiVplen(this.zival, this.teza, this.datum, bolezni)
+      await Vplen.insertVplen(
+        this.axios,
+        this.zival,
+        this.teza,
+        this.datum,
+        bolezni
+      )
 
       return modalController.dismiss(null, "confirm")
     },
     async fetchVpleni() {
-      const vpleni = await Vplen.getVpleni()
+      const vpleni = await Vplen.fetchVpleni(this.axios)
 
       console.log(vpleni)
     },
-  },
-  beforeMount() {
-    Vplen.setCustomAxios(this.axios)
   },
 })
 </script>
