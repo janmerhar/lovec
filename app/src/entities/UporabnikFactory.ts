@@ -9,7 +9,7 @@ import { Pripravnik } from "./users/Pripravnik"
 export class UporabnikFactory {
   private static createUporabnik(
     axiosInstance: AxiosInstance,
-    uporabnikPodatki
+    uporabnikPodatki: any
   ): Uporabnik | null {
     const { role } = uporabnikPodatki
 
