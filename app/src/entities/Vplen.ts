@@ -9,6 +9,7 @@ export class Vplen {
   teza: number
   datum: Date
   bolezni: string[]
+  // TODO
   // koordinate
 
   constructor(
@@ -42,11 +43,11 @@ export class Vplen {
   }
 
   static async insertVplen(
-    axiosInstance,
-    zival,
-    teza,
-    datum,
-    bolezni
+    axiosInstance: AxiosInstance,
+    zival: string,
+    teza: number,
+    datum: Date | string,
+    bolezni: string[]
   ): Promise<APIResponse<Vplen>> {
     const result = await axiosInstance.post("/vpleni/dodaj", {
       zival,
@@ -59,17 +60,17 @@ export class Vplen {
   }
 
   static async fetchVpleni(
-    axiosInstance,
-    stran
+    axiosInstance: AxiosInstance,
+    stran: number
   ): Promise<APIResponse<Vplen[]>> {
     const result = await axiosInstance.get(`/vpleni/moji/${stran}`)
 
-    result.data.data = result.data.data.map((vplen) => {
+    result.data.data = result.data.data.map((vplen: any) => {
       return {
         datum: vplen.datum,
         zivali: vplen.zivali
           .map(
-            (zival) =>
+            (zival: any) =>
               zival.charAt(0).toUpperCase() + zival.slice(1).toLowerCase()
           )
           .sort(),
@@ -79,11 +80,14 @@ export class Vplen {
     return result.data
   }
 
-  static async fetchVplen(axiosInstance, datum): Promise<APIResponse<Vplen[]>> {
+  static async fetchVplen(
+    axiosInstance: AxiosInstance,
+    datum: Date | string
+  ): Promise<APIResponse<Vplen[]>> {
     const result = await axiosInstance.get(`/vpleni/${datum}`)
 
     result.data.data = result.data.data.map(
-      (vplen) => new Vplen(axiosInstance, vplen)
+      (vplen: any) => new Vplen(axiosInstance, vplen)
     )
 
     return result.data
