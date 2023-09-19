@@ -1,4 +1,4 @@
-import { Uporabnik } from "@/entities/Uporabnik"
+import { UporabnikFactory } from "@/entities/UporabnikFactory"
 import { axiosInstance } from "../helpers/axiosInstance"
 import axios from "axios"
 
@@ -13,13 +13,17 @@ export const pripravnikData = {
 }
 
 export const login = async (uporabnikData) => {
-  const result = await Uporabnik.login(
+  const result = await UporabnikFactory.login(
     axiosInstance,
     uporabnikData.email,
     uporabnikData.geslo
   )
 
-  const token = result.data.token
+  if (result.data?.jwt.token === null) {
+    return null
+  }
+
+  const token = result.data?.jwt.token
   const lovecInstance = axios.create(axiosInstance.defaults)
 
   lovecInstance.defaults.headers.Authorization = `Bearer ${token}`
