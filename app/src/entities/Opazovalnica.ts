@@ -8,7 +8,14 @@ export class Opazovalnica {
   koordinate: number[]
   obiski: any[]
 
-  constructor(axiosInstance: AxiosInstance, { _id, koordinate, obiski }) {
+  constructor(
+    axiosInstance: AxiosInstance,
+    {
+      _id,
+      koordinate,
+      obiski,
+    }: { _id: string; koordinate: number[]; obiski: any[] }
+  ) {
     this.axiosInstance = axiosInstance
 
     this.id = _id
