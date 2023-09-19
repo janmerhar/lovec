@@ -5,6 +5,11 @@ describe("Oprema class", () => {
   describe("constructor", () => {
     it("constructs oprema", async () => {
       const pripravnikInstance = await login(pripravnikData)
+
+      if (pripravnikInstance === null) {
+        fail("Failed to login")
+      }
+
       const opremaData = {
         _id: "1",
         naziv: "naziv",
@@ -35,6 +40,10 @@ describe("Oprema class", () => {
     it("inserts oprema", async () => {
       const pripravnikInstance = await login(pripravnikData)
 
+      if (pripravnikInstance === null) {
+        fail("Failed to login")
+      }
+
       const result = await Oprema.insertOprema(
         pripravnikInstance,
         insertOpremaData.naziv,
@@ -53,6 +62,10 @@ describe("Oprema class", () => {
   describe("fetchOprema", () => {
     it("fetches oprema", async () => {
       const pripravnikInstance = await login(pripravnikData)
+
+      if (pripravnikInstance === null) {
+        fail("Failed to login")
+      }
 
       const result = await Oprema.fetchOprema(pripravnikInstance)
 
