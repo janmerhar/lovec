@@ -1,10 +1,14 @@
 import { JWTPayload } from "@/types"
 import jwt_decode from "jwt-decode"
+import { AxiosInstance } from "axios"
 
 export class JWT {
+  axiosInstance: AxiosInstance
   token: string
 
-  constructor(token: string) {
+  constructor(axiosInstance: AxiosInstance, token: string) {
+    this.axiosInstance = axiosInstance
+
     this.token = token
   }
 
