@@ -12,7 +12,10 @@ export const pripravnikData = {
   geslo: "123",
 }
 
-export const login = async (uporabnikData) => {
+export const login = async (uporabnikData: {
+  email: string
+  geslo: string
+}) => {
   const result = await UporabnikFactory.login(
     axiosInstance,
     uporabnikData.email,
