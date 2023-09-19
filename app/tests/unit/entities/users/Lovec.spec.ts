@@ -13,7 +13,7 @@ describe("Lovec class", () => {
         email: "email",
         token: "token",
         druzina: "druzina",
-        pripravniki: "pripravniki",
+        pripravniki: ["pripravniki1"],
       }
 
       const lovec = new Lovec(axiosInstance, lovecData)
