@@ -46,7 +46,7 @@ export class Oprema {
     const result = await axiosInstance.get("/oprema/uporabnik")
 
     result.data.data = result.data.data.map(
-      (oprema) => new Oprema(axiosInstance, oprema)
+      (oprema: any) => new Oprema(axiosInstance, oprema)
     )
 
     return result.data
