@@ -16,6 +16,16 @@ export class Lovec extends RegularUporabnik {
       token,
       druzina,
       pripravniki,
+    }: {
+      _id: string
+      ime: string
+      priimek: string
+      slika: string
+      rojstniDatum: Date | string
+      email: string
+      token: string
+      druzina: string | null
+      pripravniki: string[] | null
     }
   ) {
     super(axiosInstance, {
