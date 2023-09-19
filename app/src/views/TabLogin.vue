@@ -52,7 +52,7 @@ import {
 
 import { defineComponent } from "vue"
 
-import { Uporabnik } from "@/entities/Uporabnik"
+import { UporabnikFactory } from "@/entities/UporabnikFactory"
 import { useUporabnikStore } from "@/stores/uporabnikStore"
 
 export default defineComponent({
@@ -81,7 +81,7 @@ export default defineComponent({
   },
   methods: {
     async login() {
-      const uporabnik = await Uporabnik.login(
+      const uporabnik = await UporabnikFactory.login(
         this.axios,
         this.email,
         this.geslo
@@ -94,7 +94,7 @@ export default defineComponent({
 
         // Set Bearer token
         this.axios.defaults.headers.Authorization =
-          "Bearer " + uporabnik.data.token
+          "Bearer " + uporabnik.data.jwt.token
 
         // console.log(this.axios.defaults.headers.Authorization)
         // Redirect to home pageq
