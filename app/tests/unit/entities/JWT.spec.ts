@@ -1,9 +1,10 @@
 import { JWT } from "@/entities/JWT"
+import { axiosInstance } from "../../helpers/axiosInstance"
 
 describe("JWT class", () => {
   describe("constructor", () => {
     it("constructs JWT", () => {
-      const jwt = new JWT("token")
+      const jwt = new JWT(axiosInstance, "token")
 
       expect(jwt.token).toBe("token")
     })
@@ -18,19 +19,19 @@ describe("JWT class", () => {
 
   describe("checkToken", () => {
     it("accepts valid JWT", () => {
-      const jwt = new JWT(validJWT)
+      const jwt = new JWT(axiosInstance, validJWT)
 
       expect(jwt.checkToken()).toBeGreaterThan(0)
     })
 
     it("rejects expired JWT", () => {
-      const jwt = new JWT(expiredJWT)
+      const jwt = new JWT(axiosInstance, expiredJWT)
 
       expect(jwt.checkToken()).toBe(0)
     })
 
     it("rejects invalid JWT", () => {
-      const jwt = new JWT(invalidJWT)
+      const jwt = new JWT(axiosInstance, invalidJWT)
 
       expect(jwt.checkToken()).toBe(-1)
     })
@@ -41,7 +42,7 @@ describe("JWT class", () => {
 
   describe("payload", () => {
     it("returns payload of valid token", () => {
-      const jwt = new JWT(validJWT)
+      const jwt = new JWT(axiosInstance, validJWT)
       const payload = jwt.payload()
 
       expect(payload).toHaveProperty("uporabnikId")
@@ -49,7 +50,7 @@ describe("JWT class", () => {
     })
 
     it("returns payload of expired token", () => {
-      const jwt = new JWT(expiredJWT)
+      const jwt = new JWT(axiosInstance, expiredJWT)
       const payload = jwt.payload()
 
       expect(payload).toHaveProperty("uporabnikId")
@@ -57,7 +58,7 @@ describe("JWT class", () => {
     })
 
     it("throws error if invalid JWT", () => {
-      const jwt = new JWT(invalidJWT)
+      const jwt = new JWT(axiosInstance, invalidJWT)
 
       expect(() => jwt.payload()).toThrow()
     })
