@@ -8,3 +8,10 @@ export type JWTPayload = {
   uporabnikId: string
   role: string
 }
+
+export type UporabnikDetails = {
+  id: string
+  ime: string
+  priimek: string
+  role: string
+}
