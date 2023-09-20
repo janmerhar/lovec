@@ -9,7 +9,7 @@ describe("Lovec class", () => {
         ime: "ime",
         priimek: "priimek",
         slika: "slika",
-        rojstniDatum: "rojstniDatum",
+        rojstniDatum: new Date(),
         email: "email",
         token: "token",
         druzina: "druzina",
