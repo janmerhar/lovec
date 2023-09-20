@@ -15,6 +15,9 @@ export class Lovec extends RegularUporabnik {
       email,
       token,
       druzina,
+      // TODO
+      // vas mogoce preimenujem v pripravnikiId
+      // ter dodam getter za pripravniki user type
       pripravniki,
     }: {
       _id: string
@@ -28,6 +31,10 @@ export class Lovec extends RegularUporabnik {
       pripravniki: string[] | null
     }
   ) {
+    if (typeof rojstniDatum === "string") {
+      rojstniDatum = new Date(rojstniDatum)
+    }
+
     super(axiosInstance, {
       _id,
       ime,
