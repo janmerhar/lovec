@@ -117,7 +117,7 @@ export default defineComponent({
       })
       modal.present()
     },
-    formatDateToString(date) {
+    formatDateToString(date: string) {
       const datum = new Date(date)
       const formattedDate = datum.toLocaleDateString("sl-SI", {
         weekday: "long",
@@ -145,11 +145,8 @@ export default defineComponent({
       this.dnevniki = []
       this.dnevniki = dnevniki.data
     },
-    async spremeniStatus(izbranDnevnik, status) {
-      const result = await izbranDnevnik.spremeniStatusDnevnik(
-        this.axios,
-        status
-      )
+    async spremeniStatus(izbranDnevnik: Dnevnik, status: string) {
+      const result = await izbranDnevnik.spremeniStatus(status)
 
       await this.mentorDnevniki()
     },
