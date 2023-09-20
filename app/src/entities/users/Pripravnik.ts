@@ -1,8 +1,9 @@
 import { AxiosInstance } from "axios"
 import { RegularUporabnik } from "./RegularUporabnik"
+import { UporabnikDetails } from "@/types"
 
 export class Pripravnik extends RegularUporabnik {
-  mentor: string | null
+  mentor: UporabnikDetails | null
 
   constructor(
     axiosInstance: AxiosInstance,
@@ -25,7 +26,8 @@ export class Pripravnik extends RegularUporabnik {
       email: string
       token: string
       druzina: string | null
-      mentor: string | null
+      // TODO mentor naj bo podan s strani backend-a
+      mentor: UporabnikDetails | null
     }
   ) {
     super(axiosInstance, {
