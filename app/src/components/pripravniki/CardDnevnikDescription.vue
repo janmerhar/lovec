@@ -63,7 +63,7 @@ export default {
   },
   emits: ["accept", "reject"],
   methods: {
-    color(dnevnik) {
+    color(dnevnik: Dnevnik) {
       if (dnevnik.status == "potrjen") return "primary"
       if (dnevnik.status == "zavrnjen") return "danger"
     },
