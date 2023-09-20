@@ -60,7 +60,7 @@ export default defineComponent({
         await this.fetchVpleni()
       }
     },
-    async openModalVplenDescription(datum) {
+    async openModalVplenDescription(datum: string) {
       const modal = await modalController.create({
         component: ModalVplenDescription,
         componentProps: {
