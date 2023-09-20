@@ -1,8 +1,16 @@
 import { Pripravnik } from "@/entities/users/Pripravnik"
 import { axiosInstance } from "../../../helpers/axiosInstance"
+import { UporabnikDetails } from "@/types"
 
 describe("Pripravnik class", () => {
   describe("constructor", () => {
+    const pripravnikMentor: UporabnikDetails = {
+      id: "2",
+      ime: "imementor",
+      priimek: "priimekmentor",
+      role: "lovec",
+    }
+
     const pripravnikData = {
       _id: "1",
       ime: "ime",
@@ -12,7 +20,7 @@ describe("Pripravnik class", () => {
       email: "email@email.com",
       token: "token",
       druzina: "druzina",
-      mentor: "mentor",
+      mentor: pripravnikMentor,
     }
 
     it("constructs pripravnik", () => {
