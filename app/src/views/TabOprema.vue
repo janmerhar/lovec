@@ -60,7 +60,7 @@ export default defineComponent({
 
       this.oprema = result.data
     },
-    async izbrisi(oprema) {
+    async izbrisi(oprema: Oprema) {
       await oprema.izbrisiOprema()
       await this.fetchUporabnikOprema()
     },
