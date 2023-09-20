@@ -7,7 +7,7 @@
 
     <ion-card-content>
       <ion-list lines="none">
-        <ion-item v-for="(zival, id) in vplen" :key="vplen.id">
+        <ion-item v-for="zival in vplen" :key="vplen.id">
           <ion-label>
             {{ zival }}
           </ion-label>
@@ -30,7 +30,9 @@ import {
   IonItem,
   IonLabel,
 } from "@ionic/vue"
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
+
+import { Vplen } from "@/entities/Vplen"
 
 export default defineComponent({
   components: {
@@ -44,10 +46,24 @@ export default defineComponent({
     IonItem,
     IonLabel,
   },
-  props: ["datum", "lovec", "vplen"],
+  // props: ["datum", "lovec", "vplen"],
+  props: {
+    datum: {
+      type: String,
+      required: true,
+    },
+    lovec: {
+      type: String,
+      required: true,
+    },
+    vplen: {
+      type: Array as () => Vplen[],
+      required: true,
+    },
+  },
   emits: ["view"],
   methods: {
-    formatDateToString(date) {
+    formatDateToString(date: string) {
       const datum = new Date(date)
       const formattedDate = datum.toLocaleDateString("sl-SI", {
         weekday: "long",
