@@ -110,7 +110,7 @@ export default defineComponent({
       const modal = await modalController.create({
         component: ModalOpazovalnicaRezerviraj,
         componentProps: {
-          id: this.izbranaOpazovalnica.id ?? "",
+          opazovalnica: this.izbranaOpazovalnica,
         },
       })
       modal.present()
@@ -123,9 +123,7 @@ export default defineComponent({
     },
   },
   async beforeMount() {
-    Opazovalnica.setCustomAxios(this.axios)
-
-    const result = await Opazovalnica.fetchOpazovalnice()
+    const result = await Opazovalnica.fetchOpazovalnice(this.axios)
     this.opazovalnice = result.data
   },
 })

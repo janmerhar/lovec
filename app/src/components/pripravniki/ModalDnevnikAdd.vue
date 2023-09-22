@@ -124,7 +124,8 @@ export default defineComponent({
     async confirm() {
       // Checking if the fields are not empty
       if (this.datum && this.delo && this.ure && this.opis) {
-        const result = await Dnevnik.vnesiDnevnik(
+        const result = await Dnevnik.insertDnevnik(
+          this.axios,
           this.datum,
           this.ure,
           this.opis,
@@ -139,9 +140,6 @@ export default defineComponent({
         console.log("Empty fields")
       }
     },
-  },
-  async beforeMount() {
-    Dnevnik.setCustomAxios(this.axios)
   },
 })
 </script>

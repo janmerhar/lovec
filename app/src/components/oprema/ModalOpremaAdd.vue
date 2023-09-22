@@ -99,7 +99,12 @@ export default defineComponent({
       // TODO
       // preverjane, ali podatki obstajajo
 
-      const result = await Oprema.vnesiOprema(this.naziv, this.tip, this.stanje)
+      const result = await Oprema.insertOprema(
+        this.axios,
+        this.naziv,
+        this.tip,
+        this.stanje
+      )
 
       return result
     },
@@ -114,9 +119,6 @@ export default defineComponent({
       }
       // TODO obvesti o napaki pri vnasanju
     },
-  },
-  async beforeMount() {
-    Oprema.setCustomAxios(this.axios)
   },
 })
 </script>

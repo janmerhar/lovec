@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { IonPage, IonContent, modalController } from "@ionic/vue"
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import CardVplen from "@/components/vplen/CardVplen.vue"
@@ -43,7 +43,7 @@ export default defineComponent({
   },
   data() {
     return {
-      vpleni: [],
+      vpleni: ref<Vplen[]>([]),
       stran: 1,
     }
   },
@@ -60,7 +60,7 @@ export default defineComponent({
         await this.fetchVpleni()
       }
     },
-    async openModalVplenDescription(datum) {
+    async openModalVplenDescription(datum: string) {
       const modal = await modalController.create({
         component: ModalVplenDescription,
         componentProps: {
@@ -75,7 +75,7 @@ export default defineComponent({
       this.vpleni = []
 
       for (let i = 0; i < this.stran; i++) {
-        const vpleni = await Vplen.fetchVpleni(1)
+        const vpleni = await Vplen.fetchVpleni(this.axios, 1)
 
         this.vpleni = this.vpleni.concat(vpleni.data)
       }
@@ -84,7 +84,6 @@ export default defineComponent({
     },
   },
   async beforeMount() {
-    Vplen.setCustomAxios(this.axios)
     await this.fetchVpleni()
   },
 })

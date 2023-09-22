@@ -1,23 +1,29 @@
 import { defineStore } from "pinia"
-import { Uporabnik } from "../entities/Uporabnik"
+import { ref } from "vue"
+import { Uporabnik } from "@/entities/users/Uporabnik"
+import { Lovec } from "@/entities/users/Lovec"
+import { Pripravnik } from "@/entities/users/Pripravnik"
 
 export const useUporabnikStore = defineStore({
   id: "uporabnik",
   state: () => ({
-    uporabnik: null,
+    uporabnik: ref<Uporabnik | null>(null),
   }),
   // https://www.bitovi.com/blog/how-to-get-started-with-pinia-in-vue
   getters: {
     isMentor: (state) =>
-      state.uporabnik != null ? state.uporabnik.role == "lovec" : false,
+      state.uporabnik != null ? state.uporabnik instanceof Lovec : false,
     mentorIme: (state) =>
-      state.uporabnik != null && state.uporabnik.mentor != null
+      state.uporabnik != null &&
+      state.uporabnik instanceof Pripravnik &&
+      state.uporabnik.mentor != null
         ? `${state.uporabnik.mentor.ime} ${state.uporabnik.mentor.priimek}`
         : "",
-    token: (state) => (state.uporabnik != null ? state.uporabnik.token : ""),
+    token: (state) =>
+      state.uporabnik != null ? state.uporabnik.jwt.token : "",
   },
   actions: {
-    login(uporabnik) {
+    login(uporabnik: Uporabnik) {
       this.uporabnik = uporabnik
     },
     logout() {
@@ -26,10 +32,10 @@ export const useUporabnikStore = defineStore({
     },
     // Tukaj lahko preverjam, ali je token se veljaven
     async isLoggedIn() {
-      if (!this.uporabnik.token) return false
+      if (!this.uporabnik?.jwt.token) return false
 
       // TODO preverjanje, ali je token se veljaven
-      const tokenValidity = this.uporabnik.isJWTvalid(this.uporabnik.token)
+      const tokenValidity = this.uporabnik.jwt.checkToken()
 
       // Token je veljaven
       // tebe bom verjetno mogel povezati na server
