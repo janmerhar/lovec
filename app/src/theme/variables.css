@@ -12,6 +12,11 @@ http://ionicframework.com/docs/theming/ */
   https://palette.site/palette?id=642a99c36192921b1ac86b50
 */
 
+/* Robot Slab font */
+/* https://fonts.google.com/specimen/Roboto+Slab */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
+
 /** Ionic CSS Variables **/
 :root {
   --ion-background-color: #f3f4ef;
@@ -95,4 +100,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /* Custom font */
+  --ion-font-family: "Roboto Slab", sans-serif;
 }
