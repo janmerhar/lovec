@@ -6,28 +6,29 @@
       <!-- Component view -->
       <ion-router-outlet></ion-router-outlet>
       <!-- Bootom tool bar -->
-      <ion-tab-bar slot="bottom" :selected-tab="selectedTab">
-        <ion-tab-button tab="jage" @click="() => router.push({ name: 'jage' })">
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button
+          tab="jage"
+          :class="{ 'active-tab': selectedTab === 'jage' }"
+          @click="clickOnTab('jage')"
+        >
           <font-awesome-icon icon="fa-solid fa-people-group" size="2x" />
           <ion-label>Jage</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
           tab="pripravniki"
-          @click="() => router.push({ name: 'pripravniki' })"
+          @click="clickOnTab('pripravniki')"
+          :class="{ 'active-tab': selectedTab === 'pripravniki' }"
         >
-          <font-awesome-icon icon="fa-solid fa-people-group" size="2x" />
-          <ion-label>Pripravniki</ion-label>
+          <font-awesome-icon icon="fa-solid fa-address-book" size="2x" />
+          <ion-label>Dnevniki</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
           tab="vplen"
-          @click.prevent="
-            () => {
-              // select('vplen')
-              router.push({ name: 'vplen' })
-            }
-          "
+          @click.prevent="clickOnTab('vplen')"
+          :class="{ 'active-tab': selectedTab === 'vplen' }"
         >
           <font-awesome-icon icon="fa-solid fa-paw" size="2x" />
           <ion-label>Vplen</ion-label>
@@ -35,7 +36,8 @@
 
         <ion-tab-button
           tab="opazovalnica"
-          @click.prevent="() => router.push({ name: 'opazovalnica' })"
+          @click.prevent="clickOnTab('opazovalnica')"
+          :class="{ 'active-tab': selectedTab === 'opazovalnica' }"
         >
           <font-awesome-icon icon="fa-solid fa-tower-observation" size="2x" />
           <ion-label>Opazovalnice</ion-label>
@@ -43,28 +45,19 @@
 
         <ion-tab-button
           tab="oprema"
-          @click.prevent="() => router.push({ name: 'oprema' })"
+          @click.prevent="clickOnTab('oprema')"
+          :class="{ 'active-tab': selectedTab === 'oprema' }"
         >
           <font-awesome-icon icon="fa-solid fa-person-rifle" size="2x" />
           <ion-label>Oprema</ion-label>
         </ion-tab-button>
-
-        <!-- 
-          <ion-tab-button
-          tab="revirji"
-          @click.prevent="() => router.push({ name: 'revirji' })"
-        >
-          <font-awesome-icon icon="fa-solid fa-map-location-dot" size="2x" />
-          <ion-label>Revirji</ion-label>
-        </ion-tab-button> 
-      -->
       </ion-tab-bar>
       <!-- End bottom tool bar -->
     </ion-tabs>
   </ion-page>
 </template>
 
-<script>
+<script lang="ts">
 import {
   IonTabBar,
   IonTabButton,
@@ -97,14 +90,23 @@ export default defineComponent({
       // TODO
       // Tab highlits do not work inside Vue.js
       // https://www.youtube.com/watch?v=DSx9WkaVCo8
-      selectedTab: "opazovalnica",
+      selectedTab: "oprema",
     }
   },
   methods: {
-    // Implementiraj tako, da bo
-    clickOnTab(tab) {
-      console.log(tab)
+    clickOnTab(tabName: string) {
+      this.selectedTab = tabName
+
+      this.router.push({ name: tabName })
     },
   },
 })
 </script>
+
+<style scoped>
+.active-tab {
+  color: var(--color-selected);
+}
+
+
+</style>
