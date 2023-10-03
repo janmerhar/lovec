@@ -3,12 +3,12 @@
     <ion-toolbar>
       <ion-title size="large">Lovec</ion-title>
       <ion-buttons slot="secondary">
-        <ion-button
-          fill="solid"
-          @click="() => router.push({ name: 'izkaznica' })"
-        >
-          <font-awesome-icon icon="fa-solid fa-id-card " />
-          <p class="ion-margin">Izkaznica</p>
+        <ion-button @click="() => router.push({ name: 'izkaznica' })">
+          <!-- <font-awesome-icon icon="fa-solid fa-id-card " /> -->
+          <img
+            src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60"
+            alt=""
+          />
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -40,3 +40,13 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+img {
+  width: 31px;
+  height: 31px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--ion-color-primary);
+}
+</style>
