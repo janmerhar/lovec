@@ -1,21 +1,11 @@
 <template>
-  <ion-header>
-    <!--  -->
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button color="medium" @click="cancel">Zapri</ion-button>
-      </ion-buttons>
-      <ion-title class="ion-text-center">Podatki o vplenu</ion-title>
-
-      <ion-buttons slot="end">
-        <ion-button @click="confirm">Zapri</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <header-modal @cancel="cancel()" @confirm="confirm()" :confirm-button="false"
+    >Vplen</header-modal
+  >
   <!--  -->
   <ion-content class="ion-padding">
     <h3 class="ion-text-center ion-padding-bottom">
-      {{ formatDateToString($attrs.datum) }}
+      {{ formatDateToString($attrs.datum as string) }}
     </h3>
 
     <template v-for="vplen in vpleni" :key="vplen.id">
@@ -25,19 +15,12 @@
   <!--  -->
 </template>
 
-<script>
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  modalController,
-} from "@ionic/vue"
-import { defineComponent } from "vue"
+<script lang="ts">
+import { IonContent, modalController } from "@ionic/vue"
+import { defineComponent, ref } from "vue"
 
 import CardVplenDescription from "@/components/vplen/CardVplenDescription.vue"
+import HeaderModal from "@/components/ui-components/HeaderModal.vue"
 
 import { Vplen } from "@/entities/Vplen"
 
@@ -45,26 +28,24 @@ export default defineComponent({
   name: "ModalVplenDescription",
   components: {
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonButton,
     CardVplenDescription,
+    HeaderModal,
   },
   data() {
     return {
-      vpleni: [],
+      vpleni: ref<Vplen[]>([]),
     }
   },
   methods: {
     cancel() {
       return modalController.dismiss(null, "cancel")
     },
+
     confirm() {
       return modalController.dismiss(null, "confirm")
     },
-    formatDateToString(date) {
+
+    formatDateToString(date: string) {
       const datum = new Date(date)
       const formattedDate = datum.toLocaleDateString("sl-SI", {
         weekday: "long",
@@ -75,14 +56,15 @@ export default defineComponent({
 
       return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
     },
-    async fetchVplenPodrobnosti(datum) {
+
+    async fetchVplenPodrobnosti(datum: string) {
       const vpleni = await Vplen.fetchVplen(this.axios, datum)
 
       this.vpleni = vpleni.data
     },
   },
   async beforeMount() {
-    await this.fetchVplenPodrobnosti(this.$attrs.datum)
+    await this.fetchVplenPodrobnosti(this.$attrs.datum as string)
   },
 })
 </script>
