@@ -118,9 +118,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.active-tab {
-  color: var(--color-selected);
+@media (min-width: 1200px) {
+  ion-router-outlet {
+    margin-left: 20vw;
+    margin-right: 20vw;
+  }
 }
-
-
 </style>
