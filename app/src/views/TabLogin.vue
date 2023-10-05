@@ -1,6 +1,7 @@
 <template>
   <ion-page class="responsive-body">
     <!--  -->
+    <!-- TODO kreiraj sliko za ozadje -->
     <img
       src="https://image.api.playstation.com/cdn/UP0146/CUSA04107_00/XFEn5Mk8QsgH7gB9iTEWMgg9LLHFRiuD.png"
       alt=""
@@ -8,41 +9,43 @@
     />
 
     <ion-content class="ion-padding">
-      <ion-label position="stacked">Elektronski naslov</ion-label>
-      <br />
-      <br />
-      <ion-item>
-        <ion-input
-          placeholder="Elektronski naslov"
-          fill="solid"
-          type="text"
-          required
-          v-model="email"
-          @keyup.enter="login()"
-        ></ion-input>
-      </ion-item>
-      <br />
-      <ion-item fill="solid">
-        <ion-label position="stacked">Geslo</ion-label>
-        <ion-input
-          placeholder="Geslo"
-          type="password"
-          required
-          v-model="geslo"
-          @keyup.enter="login()"
-        ></ion-input>
-      </ion-item>
-      <br />
-      <br />
-      <ion-button expand="full" @click.prevent="login()">Prijava</ion-button>
-      <p>Pozabljeno geslo</p>
+      <div class="centered-content">
+        <!-- TODO pomisli, ali je ta ozanaka sploh potrebna -->
+        <!-- <h3>Prijava</h3> -->
+        <ion-item>
+          <font-awesome-icon :icon="['fas', 'envelope']" />
+          <ion-input
+            placeholder="Elektronski naslov"
+            type="text"
+            expand="block"
+            required
+            v-model="email"
+            @keyup.enter="login()"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="ion-margin-vertical">
+          <font-awesome-icon :icon="['fas', 'lock']" />
+          <ion-input
+            placeholder="Geslo"
+            type="password"
+            required
+            v-model="geslo"
+            @keyup.enter="login()"
+          ></ion-input>
+        </ion-item>
+        <ion-button expand="block" @click.prevent="login()">Prijava</ion-button>
+
+        <!-- TODO dodaj password reset ??? -->
+        <ion-text color="primary">
+          <p @click.prevent="">Pozabljeno geslo</p>
+        </ion-text>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
 import {
-  IonLabel,
   IonPage,
   useIonRouter,
   IonInput,
@@ -58,7 +61,6 @@ import { useUporabnikStore } from "@/stores/uporabnikStore"
 
 export default defineComponent({
   components: {
-    IonLabel,
     IonPage,
     IonInput,
     IonContent,
@@ -116,6 +118,21 @@ export default defineComponent({
 img {
   height: 50vh;
   width: 100%;
+}
+
+.button {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  height: 2.8rem !important;
+}
+
+p {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.centered-content {
+  padding-top: 8vh;
 }
 </style>
 @/stores/uporabnikStore
