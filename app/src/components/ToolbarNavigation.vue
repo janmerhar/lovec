@@ -1,13 +1,14 @@
 <template>
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar class="responsive-toolbar">
       <ion-title size="large">Lovec</ion-title>
       <ion-buttons slot="secondary">
         <ion-button @click="() => router.push({ name: 'izkaznica' })">
           <!-- <font-awesome-icon icon="fa-solid fa-id-card " /> -->
           <img
-            src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60"
-            alt=""
+            :src="profile_picture"
+            alt="Profilna slika"
+            :class="{ 'active-tab': selectedTab === 'izkaznica' }"
           />
         </ion-button>
       </ion-buttons>
@@ -34,6 +35,17 @@ export default defineComponent({
     IonButtons,
     IonButton,
   },
+  data() {
+    return {
+      profile_picture:
+        "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60",
+    }
+  },
+  computed: {
+    selectedTab() {
+      return this.$route.name
+    },
+  },
   setup() {
     const router = useRouter()
     return { router }
@@ -47,6 +59,10 @@ img {
   height: 31px;
   object-fit: cover;
   border-radius: 50%;
-  border: 1px solid var(--ion-color-primary);
+  border: 1px solid var(--ion-color-step-600);
+}
+
+.active-tab {
+  border: 2px solid var(--ion-color-primary);
 }
 </style>
