@@ -1,25 +1,27 @@
 <template>
-  <ion-page>
+  <ion-page class="responsive-body">
     <!--  -->
-    <ion-header>
-      <ion-toolbar>
-        <ion-title size="large">Lovec</ion-title>
-      </ion-toolbar>
-      <!--  -->
-    </ion-header>
+    <img
+      src="https://image.api.playstation.com/cdn/UP0146/CUSA04107_00/XFEn5Mk8QsgH7gB9iTEWMgg9LLHFRiuD.png"
+      alt=""
+      srcset=""
+    />
+
     <ion-content class="ion-padding">
-      <h3 class="ion-text-center">Prijava v aplikacijo</h3>
+      <ion-label position="stacked">Elektronski naslov</ion-label>
       <br />
-      <ion-item fill="solid">
-        <ion-label position="stacked">Elektronski naslov</ion-label>
+      <br />
+      <ion-item>
         <ion-input
           placeholder="Elektronski naslov"
+          fill="solid"
           type="text"
           required
           v-model="email"
           @keyup.enter="login()"
         ></ion-input>
       </ion-item>
+      <br />
       <ion-item fill="solid">
         <ion-label position="stacked">Geslo</ion-label>
         <ion-input
@@ -31,7 +33,9 @@
         ></ion-input>
       </ion-item>
       <br />
+      <br />
       <ion-button expand="full" @click.prevent="login()">Prijava</ion-button>
+      <p>Pozabljeno geslo</p>
     </ion-content>
   </ion-page>
 </template>
@@ -44,9 +48,6 @@ import {
   IonInput,
   IonItem,
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
   IonButton,
 } from "@ionic/vue"
 
@@ -62,9 +63,6 @@ export default defineComponent({
     IonInput,
     IonContent,
     IonItem,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     IonButton,
   },
   setup() {
@@ -113,6 +111,11 @@ export default defineComponent({
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+img {
+  height: 50vh;
+  width: 100%;
 }
 </style>
 @/stores/uporabnikStore
