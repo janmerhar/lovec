@@ -22,28 +22,28 @@ http://ionicframework.com/docs/theming/ */
   --ion-background-color: #f3f4ef;
   --ion-background-color-rgb: 243, 244, 239;
 
-  --ion-text-color: #005b28;
-  --ion-text-color-rgb: 0, 91, 40;
+  --ion-text-color: #14080e;
+  --ion-text-color-rgb: 20, 8, 14;
 
-  --ion-color-step-50: #e7ece5;
-  --ion-color-step-100: #dbe5db;
-  --ion-color-step-150: #cfddd1;
-  --ion-color-step-200: #c2d5c7;
-  --ion-color-step-250: #b6cebd;
-  --ion-color-step-300: #aac6b3;
-  --ion-color-step-350: #9ebea9;
-  --ion-color-step-400: #92b79f;
-  --ion-color-step-450: #86af95;
-  --ion-color-step-500: #7aa88c;
-  --ion-color-step-550: #6da082;
-  --ion-color-step-600: #619878;
-  --ion-color-step-650: #55916e;
-  --ion-color-step-700: #498964;
-  --ion-color-step-750: #3d815a;
-  --ion-color-step-800: #317a50;
-  --ion-color-step-850: #247246;
-  --ion-color-step-900: #186a3c;
-  --ion-color-step-950: #0c6332;
+  --ion-color-step-50: #e8e8e4;
+  --ion-color-step-100: #dddcd9;
+  --ion-color-step-150: #d2d1cd;
+  --ion-color-step-200: #c6c5c2;
+  --ion-color-step-250: #bbb9b7;
+  --ion-color-step-300: #b0adab;
+  --ion-color-step-350: #a5a1a0;
+  --ion-color-step-400: #9a9695;
+  --ion-color-step-450: #8f8a8a;
+  --ion-color-step-500: #847e7f;
+  --ion-color-step-550: #787273;
+  --ion-color-step-600: #6d6668;
+  --ion-color-step-650: #625b5d;
+  --ion-color-step-700: #574f52;
+  --ion-color-step-750: #4c4346;
+  --ion-color-step-800: #41373b;
+  --ion-color-step-850: #352b30;
+  --ion-color-step-900: #2a2024;
+  --ion-color-step-950: #1f1419;
 
   --ion-color-primary: #005b28;
   --ion-color-primary-rgb: 0, 91, 40;
@@ -260,5 +260,43 @@ http://ionicframework.com/docs/theming/ */
     --ion-tab-bar-background: #1f1f1f;
 
     --ion-card-background: #1e1e1e;
+  }
+}
+
+/* 
+ * My custom variables 
+ */
+:root {
+  --border-rad: 8px;
+}
+
+ion-card {
+  border-radius: var(--border-rad);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1rem 0 1rem 0;
+}
+
+ion-fab-button {
+  --border-radius: var(--border-rad) !important;
+  width: 50px;
+  height: 50px;
+}
+
+@media (min-width: 1200px) {
+  .responsive-toolbar {
+    padding-left: 21vw;
+    padding-right: 21vw;
+  }
+
+  .responsive-body {
+    padding-left: 20vw;
+    padding-right: 20vw;
   }
 }
