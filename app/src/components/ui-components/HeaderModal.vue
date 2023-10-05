@@ -12,7 +12,7 @@
         <slot></slot>
       </ion-title>
 
-      <ion-buttons slot="end">
+      <ion-buttons slot="end" v-if="confirmButton">
         <ion-button @click.prevent="confirm()">
           <font-awesome-icon :icon="['fas', 'plus']" size="xl" />
         </ion-button>
