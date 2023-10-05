@@ -1,15 +1,7 @@
 <template>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button color="medium" @click="cancel">Prekliči</ion-button>
-      </ion-buttons>
-      <ion-title class="ion-text-center">Dodaj jago</ion-title>
-      <ion-buttons slot="end">
-        <ion-button @click="confirm">Potrdi</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <header-modal @cancel="cancel()" @confirm="confirm()">
+    Dodaj Jago
+  </header-modal>
   <ion-content class="ion-padding">
     <ion-item>
       <ion-label position="stacked">Your name</ion-label>
@@ -18,33 +10,27 @@
   </ion-content>
 </template>
 
-<script>
+<script lang="ts">
 import {
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
   IonItem,
   IonLabel,
   IonInput,
   modalController,
 } from "@ionic/vue"
+
 import { defineComponent } from "vue"
+
+import HeaderModal from "./ui-components/HeaderModal.vue"
 
 export default defineComponent({
   name: "ModalJagaAdd",
   components: {
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonButton,
     IonItem,
     IonLabel,
     IonInput,
+    HeaderModal,
   },
   data() {
     return {
