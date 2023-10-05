@@ -300,3 +300,47 @@ ion-fab-button {
     padding-right: 20vw;
   }
 }
+
+/* TOP AND TAB BARS */
+
+.active-tab {
+  color: var(--color-selected);
+}
+
+/* Underline */
+.active-tab > ion-label {
+  border-bottom: 1px solid var(--color-selected);
+}
+
+ion-tab-bar {
+  padding: 0px 0px;
+  border-radius: var(--border-rad) var(--border-rad) 0 0;
+}
+
+.header-md::after {
+  background-image: none !important;
+}
+
+ion-header {
+  /* border: 2px solid
+    var(
+      --ion-tab-bar-border-color,
+      var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.07)))
+    ); */
+
+  padding: 0;
+}
+
+ion-toolbar {
+  border: 1px solid
+    var(
+      --ion-tab-bar-border-color,
+      var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.07)))
+    );
+
+  border-radius: 0 0 var(--border-rad) var(--border-rad);
+}
+
+ion-label {
+  font-size: 0.9em;
+}
