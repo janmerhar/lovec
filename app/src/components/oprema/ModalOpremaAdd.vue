@@ -1,15 +1,7 @@
 <template>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button color="medium" @click="cancel()">Prekliči</ion-button>
-      </ion-buttons>
-      <ion-title class="ion-text-center">Vnesi opremo</ion-title>
-      <ion-buttons slot="end">
-        <ion-button @click="confirm()">Potrdi</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <header-modal @cancel="cancel()" @confirm="confirm()"
+    >Vnesi opremo</header-modal
+  >
   <!--  -->
   <ion-content class="ion-padding">
     <ion-item fill="solid">
@@ -17,7 +9,6 @@
       <ion-input
         placeholder="Oprema"
         type="text"
-        :clear-input="true"
         v-model="tip"
         required
       ></ion-input>
@@ -28,7 +19,6 @@
       <ion-input
         placeholder="Oprema"
         type="text"
-        :clear-input="true"
         v-model="naziv"
         required
       ></ion-input>
@@ -40,7 +30,7 @@
         label="Solid textarea"
         labelPlacement="floating"
         :auto-grow="true"
-        rows="6"
+        :rows="6"
         fill="solid"
         placeholder="Vnesi opis"
         v-model="stanje"
@@ -52,14 +42,9 @@
   <!--  -->
 </template>
 
-<script>
+<script lang="ts">
 import {
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
   IonItem,
   IonLabel,
   IonInput,
@@ -68,21 +53,19 @@ import {
 } from "@ionic/vue"
 import { defineComponent } from "vue"
 
+import HeaderModal from "@/components/ui-components/HeaderModal.vue"
+
 import { Oprema } from "@/entities/Oprema"
 
 export default defineComponent({
   name: "ModalOpremaAdd",
   components: {
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonButton,
     IonItem,
     IonLabel,
     IonInput,
     IonTextarea,
+    HeaderModal,
   },
   data() {
     return {
