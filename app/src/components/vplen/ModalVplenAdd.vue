@@ -4,16 +4,9 @@
   >
   <!--  -->
   <ion-content class="ion-padding">
-    <ion-item fill="outline" class="">
-      <ion-label position="stacked">Datum</ion-label>
-      <ion-input
-        placeholder="Datum"
-        type="date"
-        :clear-input="true"
-        v-model="datum"
-        required
-      ></ion-input>
-    </ion-item>
+    <datepicker-horizontal
+      @change="(novDatum) => updateDatum(novDatum)"
+    ></datepicker-horizontal>
     <br />
     <br />
     <ion-item fill="solid">
@@ -77,10 +70,13 @@ import {
   modalController,
 } from "@ionic/vue"
 
+import HeaderModal from "@/components/ui-components/HeaderModal.vue"
+import DatepickerHorizontal from "../ui-components/DatepickerHorizontal.vue"
+
 import { defineComponent } from "vue"
 
 import { Vplen } from "@/entities/Vplen"
-import HeaderModal from "@/components/ui-components/HeaderModal.vue"
+import { noAuto } from "@fortawesome/fontawesome-svg-core"
 
 export default defineComponent({
   name: "ModalVplenAdd",
@@ -91,6 +87,7 @@ export default defineComponent({
     IonLabel,
     IonInput,
     HeaderModal,
+    DatepickerHorizontal,
   },
   data() {
     return {
@@ -110,6 +107,10 @@ export default defineComponent({
     }
   },
   methods: {
+    updateDatum(novDatum: string) {
+      this.datum = novDatum
+    },
+
     addField() {
       this.vnosi.push({
         bolezen: "",
