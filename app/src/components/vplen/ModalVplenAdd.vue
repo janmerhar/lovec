@@ -14,19 +14,17 @@
       <ion-input
         placeholder="Žival"
         type="text"
-        :clear-input="true"
         v-model="zival"
         required
       ></ion-input>
     </ion-item>
     <br />
     <br />
-    <ion-item fill="outline" class="">
+    <ion-item fill="solid">
       <ion-label position="stacked">Teža</ion-label>
       <ion-input
         placeholder="Teža"
         type="number"
-        :clear-input="true"
         v-model="teza"
         required
       ></ion-input>
