@@ -344,3 +344,16 @@ ion-toolbar {
 ion-label {
   font-size: 0.9em;
 }
+
+/* Input form styling */
+ion-item {
+  border-radius: var(--border-rad);
+}
+
+ion-item > .svg-inline--fa {
+  margin-right: 0.8rem;
+}
+
+ion-button {
+  --border-radius: var(--border-rad);
+}
