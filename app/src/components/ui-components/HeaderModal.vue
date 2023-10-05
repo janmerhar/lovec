@@ -43,8 +43,8 @@ export default defineComponent({
   props: {
     confirmButton: {
       type: Boolean,
-      default: false,
-      required: true,
+      default: true,
+      required: false,
     },
   },
   emits: ["confirm", "cancel"],
