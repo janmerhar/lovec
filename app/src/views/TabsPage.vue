@@ -12,7 +12,11 @@
           :class="{ 'active-tab': selectedTab === 'jage' }"
           @click="clickOnTab('jage')"
         >
-          <font-awesome-icon icon="fa-solid fa-people-group" size="2x" />
+          <font-awesome-icon
+            :icon="['fas', 'people-group']"
+            size="xl"
+            fixed-width
+          />
           <ion-label>Jage</ion-label>
         </ion-tab-button>
 
@@ -21,17 +25,12 @@
           @click="clickOnTab('pripravniki')"
           :class="{ 'active-tab': selectedTab === 'pripravniki' }"
         >
-          <font-awesome-icon icon="fa-solid fa-address-book" size="2x" />
+          <font-awesome-icon
+            :icon="['fas', 'address-book']"
+            size="xl"
+            fixed-width
+          />
           <ion-label>Dnevniki</ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button
-          tab="vplen"
-          @click.prevent="clickOnTab('vplen')"
-          :class="{ 'active-tab': selectedTab === 'vplen' }"
-        >
-          <font-awesome-icon icon="fa-solid fa-paw" size="2x" />
-          <ion-label>Vplen</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
@@ -39,7 +38,11 @@
           @click.prevent="clickOnTab('opazovalnica')"
           :class="{ 'active-tab': selectedTab === 'opazovalnica' }"
         >
-          <font-awesome-icon icon="fa-solid fa-tower-observation" size="2x" />
+          <font-awesome-icon
+            :icon="['fas', 'tower-observation']"
+            size="xl"
+            fixed-width
+          />
           <ion-label>Opazovalnice</ion-label>
         </ion-tab-button>
 
@@ -48,8 +51,21 @@
           @click.prevent="clickOnTab('oprema')"
           :class="{ 'active-tab': selectedTab === 'oprema' }"
         >
-          <font-awesome-icon icon="fa-solid fa-person-rifle" size="2x" />
+          <font-awesome-icon
+            :icon="['fas', 'person-rifle']"
+            size="xl"
+            fixed-width
+          />
           <ion-label>Oprema</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button
+          tab="vplen"
+          @click.prevent="clickOnTab('vplen')"
+          :class="{ 'active-tab': selectedTab === 'vplen' }"
+        >
+          <font-awesome-icon :icon="['fas', 'paw']" size="xl" fixed-width />
+          <ion-label>Vplen</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
       <!-- End bottom tool bar -->
@@ -86,17 +102,15 @@ export default defineComponent({
     return { router }
   },
   data() {
-    return {
-      // TODO
-      // Tab highlits do not work inside Vue.js
-      // https://www.youtube.com/watch?v=DSx9WkaVCo8
-      selectedTab: "oprema",
-    }
+    return {}
+  },
+  computed: {
+    selectedTab() {
+      return this.$route.name
+    },
   },
   methods: {
     clickOnTab(tabName: string) {
-      this.selectedTab = tabName
-
       this.router.push({ name: tabName })
     },
   },
