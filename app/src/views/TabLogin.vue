@@ -44,7 +44,7 @@
   </ion-page>
 </template>
 
-<script>
+<script type="ts">
 import {
   IonPage,
   useIonRouter,
@@ -52,6 +52,7 @@ import {
   IonItem,
   IonContent,
   IonButton,
+  IonText
 } from "@ionic/vue"
 
 import { defineComponent } from "vue"
@@ -66,6 +67,7 @@ export default defineComponent({
     IonContent,
     IonItem,
     IonButton,
+    IonText
   },
   setup() {
     const router = useIonRouter()
@@ -132,7 +134,7 @@ p {
 }
 
 .centered-content {
-  padding-top: 8vh;
+  padding-top: 3vh;
 }
 </style>
 @/stores/uporabnikStore
