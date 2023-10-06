@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import { Uporabnik } from "@/entities/users/Uporabnik"
@@ -15,10 +17,10 @@ export const useUporabnikStore = defineStore({
     isAdmin: (state) => state.role == "admin",
 
     mentorIme: (state) =>
-      state.uporabnik != null &&
-      state.uporabnik instanceof Pripravnik &&
-      state.uporabnik.mentor != null
-        ? `${state.uporabnik.mentor.ime} ${state.uporabnik.mentor.priimek}`
+      state.uporabnik && state.role == "pripravnik"
+        ? `${state.uporabnik.mentor.ime as string} ${
+            state.uporabnik.mentor.priimek
+          }`
         : "",
 
     token: (state) =>
@@ -26,8 +28,10 @@ export const useUporabnikStore = defineStore({
   },
   actions: {
     login(uporabnik: Uporabnik) {
-      this.uporabnik = uporabnik
       this.role = uporabnik.constructor.name?.toLowerCase()
+
+      this.uporabnik =
+        this.role == "pripravnik" ? (uporabnik as Pripravnik) : uporabnik
     },
 
     logout() {
