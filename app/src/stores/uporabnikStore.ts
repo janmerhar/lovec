@@ -1,35 +1,40 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import { Uporabnik } from "@/entities/users/Uporabnik"
-import { Lovec } from "@/entities/users/Lovec"
 import { Pripravnik } from "@/entities/users/Pripravnik"
 
 export const useUporabnikStore = defineStore({
   id: "uporabnik",
   state: () => ({
     uporabnik: ref<Uporabnik | null>(null),
+    role: ref<string | null>(null),
   }),
   // https://www.bitovi.com/blog/how-to-get-started-with-pinia-in-vue
   getters: {
-    isMentor: (state) =>
-      state.uporabnik != null ? state.uporabnik instanceof Lovec : false,
+    isMentor: (state) => state.role == "lovec",
+    isAdmin: (state) => state.role == "admin",
+
     mentorIme: (state) =>
       state.uporabnik != null &&
       state.uporabnik instanceof Pripravnik &&
       state.uporabnik.mentor != null
         ? `${state.uporabnik.mentor.ime} ${state.uporabnik.mentor.priimek}`
         : "",
+
     token: (state) =>
       state.uporabnik != null ? state.uporabnik.jwt.token : "",
   },
   actions: {
     login(uporabnik: Uporabnik) {
       this.uporabnik = uporabnik
+      this.role = uporabnik.constructor.name?.toLowerCase()
     },
+
     logout() {
       this.uporabnik = null
       // Naredi logout call na server
     },
+
     // Tukaj lahko preverjam, ali je token se veljaven
     async isLoggedIn() {
       if (!this.uporabnik?.jwt.token) return false
