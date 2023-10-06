@@ -1,6 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <refresher-component :refresh="refresh"></refresher-component>
       <!-- Mentor -->
       <template v-if="uporabnikStore.isMentor">
         <h3 class="ion-text-center">Dnevniki za dan</h3>
@@ -78,6 +79,7 @@ import { ref } from "vue"
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
 import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescription.vue"
+import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 
 import { useUporabnikStore } from "@/stores/uporabnikStore"
 
@@ -88,10 +90,11 @@ export default defineComponent({
     IonPage,
     IonContent,
     FabButtonAdd,
-    CardDnevnikDescription: CardDnevnikDescription,
+    CardDnevnikDescription,
     IonLabel,
     IonItem,
     IonInput,
+    RefresherComponent,
   },
   data() {
     return {
@@ -117,6 +120,7 @@ export default defineComponent({
       })
       modal.present()
     },
+
     formatDateToString(date: string) {
       const datum = new Date(date)
       const formattedDate = datum.toLocaleDateString("sl-SI", {
@@ -128,7 +132,10 @@ export default defineComponent({
 
       return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
     },
+
+    //
     // Pripravnik
+    //
     async pripravnikDnevniki() {
       const dnevniki = await Dnevnik.fetchDnevnikiPripravnik(
         this.axios,
@@ -138,28 +145,42 @@ export default defineComponent({
       this.stran += 1
       this.dnevniki = dnevniki.data
     },
+
+    //
     // Mentor
+    //
     async mentorDnevniki() {
       const dnevniki = await Dnevnik.fetchDnevnikiMentor(this.axios, this.datum)
 
       this.dnevniki = []
       this.dnevniki = dnevniki.data
     },
+
     async spremeniStatus(izbranDnevnik: Dnevnik, status: string) {
       const result = await izbranDnevnik.spremeniStatus(status)
 
       await this.mentorDnevniki()
     },
+
+    async fetchDnevniki() {
+      // Mentor
+      if (this.uporabnikStore.isMentor) {
+        await this.mentorDnevniki()
+      }
+      // Pripravnik
+      else {
+        await this.pripravnikDnevniki()
+      }
+    },
+
+    async refresh(event: CustomEvent) {
+      await this.fetchDnevniki()
+
+      event.detail.complete()
+    },
   },
   async beforeMount() {
-    // Mentor
-    if (this.uporabnikStore.isMentor) {
-      await this.mentorDnevniki()
-    }
-    // Pripravnik
-    else {
-      await this.pripravnikDnevniki()
-    }
+    this.fetchDnevniki()
   },
 })
 </script>
