@@ -1,6 +1,8 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <refresher-component :refresh="refresh"></refresher-component>
+
       <h3 class="ion-text-center">Zgodovina vplenov</h3>
       <!-- Vplen cards -->
 
@@ -31,6 +33,7 @@ import CardVplen from "@/components/vplen/CardVplen.vue"
 
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
 import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"
+import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 
 import { Vplen } from "@/entities/Vplen"
 
@@ -40,6 +43,7 @@ export default defineComponent({
     IonContent,
     FabButtonAdd,
     CardVplen,
+    RefresherComponent,
   },
   data() {
     return {
@@ -60,6 +64,7 @@ export default defineComponent({
         await this.fetchVpleni()
       }
     },
+
     async openModalVplenDescription(datum: string) {
       const modal = await modalController.create({
         component: ModalVplenDescription,
@@ -69,6 +74,7 @@ export default defineComponent({
       })
       modal.present()
     },
+
     // TODO fix multiple requests
     // that duplicate data
     async fetchVpleni() {
@@ -81,6 +87,11 @@ export default defineComponent({
       }
 
       this.stran += 1
+    },
+
+    refresh(event: CustomEvent) {
+      this.fetchVpleni()
+      event.detail.complete()
     },
   },
   async beforeMount() {
