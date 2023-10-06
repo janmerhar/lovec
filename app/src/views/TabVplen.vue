@@ -89,8 +89,8 @@ export default defineComponent({
       this.stran += 1
     },
 
-    refresh(event: CustomEvent) {
-      this.fetchVpleni()
+    async refresh(event: CustomEvent) {
+      await this.fetchVpleni()
       event.detail.complete()
     },
   },
