@@ -8,7 +8,7 @@
       srcset=""
     />
 
-    <ion-content class="ion-padding">
+    <ion-content class="ion-padding" scroll-y="false">
       <div class="centered-content">
         <!-- TODO pomisli, ali je ta ozanaka sploh potrebna -->
         <!-- <h3>Prijava</h3> -->
@@ -134,7 +134,7 @@ p {
 }
 
 .centered-content {
-  padding-top: 3vh;
+  padding-top: 5vh;
 }
 </style>
 @/stores/uporabnikStore
