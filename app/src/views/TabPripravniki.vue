@@ -117,14 +117,22 @@ export default defineComponent({
     //
     // Pripravnik
     //
-    async pripravnikDnevniki() {
-      const dnevniki = await Dnevnik.fetchDnevnikiPripravnik(
-        this.axios,
-        this.stran
-      )
+    async pripravnikDnevnikiStran(stran: number): Promise<Dnevnik[]> {
+      const dnevniki = await Dnevnik.fetchDnevnikiPripravnik(this.axios, stran)
 
-      this.stran += 1
-      this.dnevniki = dnevniki.data
+      return dnevniki.data
+    },
+
+    async pripravnikDnevniki() {
+      const concatDnevniki: Dnevnik[] = []
+
+      for (let i = 1; i <= this.stran; i++) {
+        const dnevniki = await this.pripravnikDnevnikiStran(i)
+
+        concatDnevniki.push(...dnevniki)
+      }
+
+      this.dnevniki = concatDnevniki
     },
 
     //
@@ -155,7 +163,6 @@ export default defineComponent({
     },
 
     async refresh(event: CustomEvent) {
-      this.stran = 1
       await this.fetchDnevniki()
 
       event.detail.complete()
