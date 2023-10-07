@@ -48,12 +48,22 @@
           @click.prevent="openModalPripravnikAdd"
         ></fab-button-add>
       </template>
+
+      <infinite-scroll-component
+        :scroll="scroll"
+        v-if="!uporabnikStore.isMentor"
+      ></infinite-scroll-component>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { modalController, IonPage, IonContent } from "@ionic/vue"
+import {
+  modalController,
+  IonPage,
+  IonContent,
+  InfiniteScrollCustomEvent,
+} from "@ionic/vue"
 
 import { defineComponent } from "vue"
 import { ref } from "vue"
@@ -63,6 +73,7 @@ import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
 import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
+import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollComponent.vue"
 
 import { useUporabnikStore } from "@/stores/uporabnikStore"
 
@@ -76,6 +87,7 @@ export default defineComponent({
     CardDnevnikDescription,
     RefresherComponent,
     DatepickerHorizontal,
+    InfiniteScrollComponent,
   },
   data() {
     return {
@@ -133,6 +145,21 @@ export default defineComponent({
       }
 
       this.dnevniki = concatDnevniki
+      this.dnevniki = [...new Set(this.dnevniki)]
+    },
+
+    async pripravnikDnevnikiFetchNextPage() {
+      this.stran += 1
+
+      const dnevniki = await this.pripravnikDnevnikiStran(this.stran)
+
+      if (dnevniki.length === 0) {
+        this.stran = Math.max(this.stran - 1, 1)
+        return
+      }
+
+      this.dnevniki.push(...dnevniki)
+      this.dnevniki = [...new Set(this.dnevniki)]
     },
 
     //
@@ -172,6 +199,10 @@ export default defineComponent({
       this.datum = novDatum.toISOString().slice(0, 10)
 
       this.fetchDnevniki()
+    },
+
+    async scroll() {
+      await this.pripravnikDnevnikiFetchNextPage()
     },
   },
   async beforeMount() {
