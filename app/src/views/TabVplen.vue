@@ -20,6 +20,8 @@
         https://ionicframework.com/docs/api/infinite-scroll
        -->
       <fab-button-add @click.prevent="openModalVplenAdd"></fab-button-add>
+
+      <infinite-scroll-component :scroll="scroll"></infinite-scroll-component>
     </ion-content>
   </ion-page>
 </template>
@@ -34,6 +36,7 @@ import CardVplen from "@/components/vplen/CardVplen.vue"
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
 import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
+import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollComponent.vue"
 
 import { Vplen } from "@/entities/Vplen"
 
@@ -44,6 +47,7 @@ export default defineComponent({
     FabButtonAdd,
     CardVplen,
     RefresherComponent,
+    InfiniteScrollComponent,
   },
   data() {
     return {
@@ -75,23 +79,40 @@ export default defineComponent({
       modal.present()
     },
 
-    // TODO fix multiple requests
-    // that duplicate data
     async fetchVpleni() {
-      this.vpleni = []
+      const concatVpleni: Vplen[] = []
 
-      for (let i = 0; i < this.stran; i++) {
-        const vpleni = await Vplen.fetchVpleni(this.axios, 1)
+      for (let i = 1; i <= this.stran; i++) {
+        const vpleni = await Vplen.fetchVpleni(this.axios, i)
 
-        this.vpleni = this.vpleni.concat(vpleni.data)
+        concatVpleni.push(...vpleni.data)
       }
 
+      this.vpleni = [...new Set(concatVpleni)]
+    },
+
+    async fetchVpleniNextPage() {
       this.stran += 1
+
+      const vpleni = await Vplen.fetchVpleni(this.axios, this.stran)
+
+      if (vpleni.data.length === 0) {
+        this.stran = Math.max(this.stran - 1, 1)
+        return
+      }
+
+      this.vpleni.push(...vpleni.data)
+      this.vpleni = [...new Set(this.vpleni)]
     },
 
     async refresh(event: CustomEvent) {
       await this.fetchVpleni()
       event.detail.complete()
+    },
+
+    async scroll() {
+      console.log("scroll")
+      await this.fetchVpleniNextPage()
     },
   },
   async beforeMount() {
