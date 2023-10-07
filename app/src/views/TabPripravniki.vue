@@ -5,20 +5,9 @@
       <!-- Mentor -->
       <template v-if="uporabnikStore.isMentor">
         <h3 class="ion-text-center">Dnevniki za dan</h3>
-        <div class="ion-padding">
-          <ion-item fill="outline" class="">
-            <ion-label position="stacked">Datum</ion-label>
-            <ion-input
-              placeholder="Datum"
-              type="date"
-              :clear-input="true"
-              required
-              v-model="datum"
-              @ion-change="mentorDnevniki"
-            ></ion-input>
-          </ion-item>
-          <!-- <ion-button @click.prevent="mentorDnevniki"></ion-button> -->
-        </div>
+        <datepicker-horizontal
+          @change="(novDatum) => updateDatum(novDatum)"
+        ></datepicker-horizontal>
       </template>
 
       <!-- Pripravnik -->
@@ -64,14 +53,7 @@
 </template>
 
 <script lang="ts">
-import {
-  modalController,
-  IonPage,
-  IonContent,
-  IonLabel,
-  IonItem,
-  IonInput,
-} from "@ionic/vue"
+import { modalController, IonPage, IonContent } from "@ionic/vue"
 
 import { defineComponent } from "vue"
 import { ref } from "vue"
@@ -80,6 +62,7 @@ import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
 import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
+import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
 
 import { useUporabnikStore } from "@/stores/uporabnikStore"
 
@@ -91,10 +74,8 @@ export default defineComponent({
     IonContent,
     FabButtonAdd,
     CardDnevnikDescription,
-    IonLabel,
-    IonItem,
-    IonInput,
     RefresherComponent,
+    DatepickerHorizontal,
   },
   data() {
     return {
@@ -174,9 +155,16 @@ export default defineComponent({
     },
 
     async refresh(event: CustomEvent) {
+      this.stran = 1
       await this.fetchDnevniki()
 
       event.detail.complete()
+    },
+
+    async updateDatum(novDatum: Date) {
+      this.datum = novDatum.toISOString().slice(0, 10)
+
+      this.fetchDnevniki()
     },
   },
   async beforeMount() {
