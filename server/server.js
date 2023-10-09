@@ -22,9 +22,8 @@ const app = express()
 // Configure middlewares
 app.use(
   cors({
-    origin: process.env.VUE_APP_URL,
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
   })
 )
 app.use(express.json())
@@ -54,8 +53,8 @@ app.use((req, res, next) => {
 
 app.use(ErrorHandler)
 
-const key = readFileSync("./certs/key.key")
-const cert = readFileSync("./certs/cert.crt")
+const key = readFileSync("./certs/priv_and_pub.key")
+const cert = readFileSync("./certs/CA.crt")
 
 const options = {
   key,
