@@ -1,14 +1,10 @@
 <template>
   <ion-app>
     <ion-router-outlet />
-    <!-- 
-      TODO dodaj toast in poskusi dobiti event callerje
-      za toast, da ne bom tega povso posebej delal
-     -->
   </ion-app>
 </template>
 
-<script>
+<script lang="ts">
 import { IonApp, IonRouterOutlet } from "@ionic/vue"
 
 import { defineComponent } from "vue"
