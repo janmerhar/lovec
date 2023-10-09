@@ -1,10 +1,15 @@
-import { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from "@capacitor/cli"
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'app',
-  webDir: 'dist',
-  bundledWebRuntime: false
-};
+  appId: "com.janmerhar.lovec",
+  appName: "lovec",
+  webDir: "dist",
+  bundledWebRuntime: false,
+  plugins: {
+    CapacitorHttp: {
+      enabled: true,
+    },
+  },
+}
 
-export default config;
+export default config

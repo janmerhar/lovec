@@ -1,11 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Tab 1</ion-title>
-        </ion-toolbar>
-      </ion-header>
+      <refresher-component :refresh="refresh"></refresher-component>
 
       <card-jaga @join="openModalJagaDescription">banana</card-jaga>
       <card-jaga @join="openModalJagaDescription">ananab</card-jaga>
@@ -23,31 +19,24 @@
   </ion-page>
 </template>
 
-<script>
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  modalController,
-} from "@ionic/vue"
+<script lang="ts">
+import { IonPage, IonContent, modalController } from "@ionic/vue"
 
 import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
 import ModalJagaAdd from "@/components/ModalJagaAdd.vue"
 import ModalJagaDescription from "@/components/ModalJagaDescription.vue"
+import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 
 import { defineComponent } from "vue"
+
 export default defineComponent({
   components: {
     IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     FabButton,
     CardJaga,
+    RefresherComponent,
   },
   setup() {
     return { message: "", isOpen: false }
@@ -66,6 +55,7 @@ export default defineComponent({
         this.message = `Hello, ${data}!`
       }
     },
+
     async openModalJagaDescription() {
       console.warn("click ModalJagaDescription ")
       const modal = await modalController.create({
@@ -79,6 +69,12 @@ export default defineComponent({
       if (role === "confirm") {
         this.message = `Hello, ${data}!`
       }
+    },
+
+    async refresh(event: CustomEvent) {
+      setTimeout(() => {
+        event.detail.complete()
+      }, 2000)
     },
   },
 })

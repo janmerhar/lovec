@@ -132,11 +132,13 @@ export default {
   async beforeMount() {
     await this.setIcons()
   },
-  mounted() {
-    Geolocation.getCurrentPosition().then((res) => {
-      console.log(res.coords)
-      this.coordinates = [res.coords.latitude, res.coords.longitude]
+  async mounted() {
+    const res = await Geolocation.getCurrentPosition({
+      enableHighAccuracy: true,
     })
+
+    console.log(res.coords)
+    this.coordinates = [res.coords.latitude, res.coords.longitude]
   },
 }
 </script>

@@ -6,8 +6,11 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
 const httpLogger = require("./util/httpLogger")
-
+const https = require("https")
 const ErrorHandler = require("./util/ErrorHandler")
+
+const { readFileSync } = require("fs")
+
 // parse env variables
 require("dotenv").config()
 
@@ -17,7 +20,12 @@ const port = process.env.PORT || 9000
 const app = express()
 
 // Configure middlewares
-app.use(cors())
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+)
 app.use(express.json())
 app.use(httpLogger)
 
@@ -45,11 +53,20 @@ app.use((req, res, next) => {
 
 app.use(ErrorHandler)
 
+const key = readFileSync("./certs/priv_and_pub.key")
+const cert = readFileSync("./certs/CA.crt")
+
+const options = {
+  key,
+  cert,
+}
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then((result) => {
-    app.listen(port)
-    console.log(`http://localhost:${port}/api`)
+    https.createServer(options, app).listen(port, () => {
+      console.log(`https://localhost:${port}/api`)
+    })
   })
   .catch((err) => {
     console.log(err)

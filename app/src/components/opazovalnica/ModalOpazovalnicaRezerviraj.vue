@@ -1,15 +1,5 @@
 <template>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button color="medium" @click="cancel">Prekliči</ion-button>
-      </ion-buttons>
-      <ion-title class="ion-text-center">Izberi termin</ion-title>
-      <ion-buttons slot="end">
-        <ion-button @click="confirm">Potrdi</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-header @cancel="cancel()" @confirm="confirm()"></ion-header>
   <!--  -->
   <ion-content class="ion-padding">
     <h3>Prihod</h3>
@@ -41,51 +31,40 @@
   <!--  -->
 </template>
 
-<script>
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  modalController,
-  IonDatetime,
-} from "@ionic/vue"
+<script lang="ts">
+import { IonContent, IonHeader, modalController, IonDatetime } from "@ionic/vue"
 
 import { defineComponent } from "vue"
+
+import { Opazovalnica } from "@/entities/Opazovalnica"
 
 export default defineComponent({
   name: "ModalVplenAdd",
   components: {
     IonContent,
     IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonButton,
     IonDatetime,
   },
   data() {
     return {
-      zacetek: null,
-      konec: null,
+      zacetek: this.defaultDatetime(),
+      konec: this.defaultDatetime(),
     }
   },
   methods: {
     cancel() {
       return modalController.dismiss(null, "cancel")
     },
+
     async confirm() {
       // Check if zacetek is before konec
       if (this.zacetek >= this.konec) {
         return
       }
 
-      const result = await this.$attrs.opazovalnica.rezervirajOpazovalnico(
-        this.zacetek,
-        this.konec
-      )
+      const result = await (
+        this.$attrs.opazovalnica as Opazovalnica
+      ).rezervirajOpazovalnico(this.zacetek, this.konec)
       console.log(result)
 
       if (result.status == 200) {
@@ -94,7 +73,8 @@ export default defineComponent({
 
       return
     },
-    defaultDatetime() {
+
+    defaultDatetime(): string {
       const currentDate = new Date()
 
       const year = currentDate.getFullYear()
@@ -116,10 +96,6 @@ export default defineComponent({
 
       return dateString
     },
-  },
-  beforeMount() {
-    this.zacetek = this.defaultDatetime()
-    this.konec = this.defaultDatetime()
   },
 })
 </script>

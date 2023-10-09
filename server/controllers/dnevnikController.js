@@ -95,7 +95,7 @@ exports.postDnevnikVnesi = async (req, res, next) => {
     const { uporabnikId: pripravnikId, role } =
       await UporabnikFactory.JWTpayload(req)
 
-    if (role == "pripravnik") {
+    if (role == "lovec") {
       res.send(ResponseBuilder.unauthorized("Uporabnik nima pravic za to"))
       return
     }

@@ -1,7 +1,8 @@
 {
-  "name": "app",
+  "name": "lovec",
   "integrations": {
     "capacitor": {}
   },
-  "type": "vue"
+  "type": "vue",
+  "swipeBackEnabled": true
 }

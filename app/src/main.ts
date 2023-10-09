@@ -13,7 +13,7 @@ defineCustomElements(window)
 import axios from "axios"
 import VueAxios from "vue-axios"
 
-axios.defaults.baseURL = "http://localhost:1234"
+axios.defaults.baseURL = process.env.VUE_APP_API_URL
 axios.defaults.headers["Content-Type"] = "application/json"
 axios.defaults.headers["Authorization"] = ""
 
@@ -57,7 +57,9 @@ import { fab } from "@fortawesome/free-brands-svg-icons"
 library.add(fas, far, fab)
 
 const app = createApp(App)
-  .use(IonicVue)
+  .use(IonicVue, {
+    mode: "md",
+  })
   .use(router)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(VueAxios, axios)

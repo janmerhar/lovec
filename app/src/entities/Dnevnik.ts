@@ -67,9 +67,9 @@ export class Dnevnik {
 
   static async fetchDnevnikiMentor(
     axiosInstance: AxiosInstance,
-    mentorId: string
+    datum: string
   ): Promise<APIResponse<Dnevnik[]>> {
-    const dnevniki = await axiosInstance.get(`/dnevniki/mentor/${mentorId}`)
+    const dnevniki = await axiosInstance.get(`/dnevniki/mentor/${datum}`)
 
     dnevniki.data.data = dnevniki.data.data.map(
       (dnevnik: any) => new Dnevnik(axiosInstance, dnevnik)
@@ -102,7 +102,7 @@ export class Dnevnik {
     opis: string,
     delo: string
   ): Promise<APIResponse<Dnevnik>> {
-    const dnevnik = await axiosInstance.post("/dnevniki", {
+    const dnevnik = await axiosInstance.post("/dnevniki/dodaj", {
       datum,
       ure,
       opis,

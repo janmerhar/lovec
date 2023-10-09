@@ -12,7 +12,10 @@ module.exports = class Dnevnik {
 
   // Vrneta tabelo instanc Dnevnik
   static async fetchDnevnikiMentor(mentorId, datum) {
-    const dnevniki = await DnevnikModel.find({ mentor: mentorId, datum: datum })
+    const dnevniki = await DnevnikModel.find({
+      mentor: mentorId,
+      datum: new Date(datum),
+    })
       .populate("pripravnik", "_id ime priimek")
       .exec()
 
@@ -37,7 +40,7 @@ module.exports = class Dnevnik {
       pripravnik: pripravnikId,
       mentor: mentorId,
       status: "neobdelan",
-      datum,
+      datum: new Date(datum),
       ure,
       opis,
       delo,
