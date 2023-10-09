@@ -74,7 +74,6 @@ import DatepickerHorizontal from "../ui-components/DatepickerHorizontal.vue"
 import { defineComponent } from "vue"
 
 import { Vplen } from "@/entities/Vplen"
-import { noAuto } from "@fortawesome/fontawesome-svg-core"
 
 export default defineComponent({
   name: "ModalVplenAdd",
@@ -127,6 +126,11 @@ export default defineComponent({
       // throw new Error("Vnesi vse podatke")
       // }
 
+      // TODO
+      // ti mi ne vnasas bolezni
+      // in se na splosno cudno vedes
+      // ce ni bolezni, imam potem na ogledu vplenov dodatne tezave
+      // also mi vneses tabelo bolezni, ki ima prazna polja
       const bolezni = this.vnosi
         .filter((el) => el.hidden != false && el.bolezen != null)
         .map((el) => el.bolezen)
