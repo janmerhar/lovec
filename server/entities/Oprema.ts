@@ -1,6 +1,6 @@
-import OpremaModel from "@models/opremaModel"
+import OpremaModel, { IOprema } from "@models/opremaModel"
 
-module.exports = class Oprema {
+export default class Oprema {
   id: string
   lastnik: string
   naziv: string
@@ -24,8 +24,9 @@ module.exports = class Oprema {
     this.datum = datum
   }
 
-  static async fetchUporabnikOprema(uporabnikId: string) {
+  static async fetchUporabnikOprema(uporabnikId: string): Promise<IOprema[]> {
     const oprema = await OpremaModel.find({ lastnik: uporabnikId })
+
     return oprema
   }
 
@@ -34,23 +35,26 @@ module.exports = class Oprema {
     naziv: string,
     tip: string,
     stanje: string
-  ) {
+  ): Promise<IOprema> {
     const oprema = await OpremaModel.create({
       lastnik: lastnikId,
       naziv: naziv,
       tip: tip,
       stanje: stanje,
     })
+
     return oprema
   }
 
-  static async izbrisiOprema(uporabnikId: string, id: string) {
+  static async izbrisiOprema(
+    uporabnikId: string,
+    id: string
+  ): Promise<boolean> {
     const oprema = await OpremaModel.findOneAndDelete({
       _id: id,
       lastnik: uporabnikId,
     })
 
-    console.log(oprema)
-    return oprema
+    return !oprema
   }
 }
