@@ -1,7 +1,26 @@
-const mongoose = require("mongoose")
-const { Schema } = mongoose
+import mongoose, { Schema, Document, Model } from "mongoose"
 
-const uporabnikSchema = new Schema({
+export interface IUporabnik extends Document {
+  // Osebni podatki
+  ime: string
+  priimek: string
+  slika: string
+  rojstniDatum: Date
+  email: string
+  hash: string
+  // Deljenje na lovce ali pripravnike
+  role: string
+  // PRIPRAVNIK ONLY: Tip uporabnik, ki je lovec
+  mentor: Schema.Types.ObjectId
+  // MENTOR ONLY: Seznam pripravnikov, ki jih mentorira
+  pripravniki: Schema.Types.ObjectId[]
+  // Clanstvo v neki lovski druzini
+  druzina: Schema.Types.ObjectId
+  // Polje za osvezevanje JWT tokenov
+  refresh_token: string
+}
+
+const uporabnikSchema = new Schema<IUporabnik>({
   // Osebni podatki
   ime: { type: String, required: true },
   priimek: { type: String, required: true },
@@ -9,7 +28,7 @@ const uporabnikSchema = new Schema({
   rojstniDatum: { type: Date, required: true },
   email: {
     type: String,
-    index: { unique: true, dropDups: true },
+    // index: { unique: true, dropDups: true },
     required: true,
   },
   hash: { type: String, required: true },
@@ -32,4 +51,10 @@ const uporabnikSchema = new Schema({
   refresh_token: { type: String, required: false, default: null },
 })
 
-module.exports = mongoose.model("Uporabnik", uporabnikSchema, "Uporabniki")
+const UporabnikModel: Model<IUporabnik> = mongoose.model(
+  "Uporabnik",
+  uporabnikSchema,
+  "Uporabniki"
+)
+
+export default UporabnikModel
