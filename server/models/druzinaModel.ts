@@ -1,9 +1,12 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
 
+import { IRevir } from "./revirModel"
+import { IUporabnik } from "./uporabnikModel"
+
 export interface IDruzina extends Document {
   ime: string
-  revirji: Schema.Types.ObjectId[]
-  clani: Schema.Types.ObjectId[]
+  revirji: Schema.Types.ObjectId[] | IRevir[]
+  clani: Schema.Types.ObjectId[] | IUporabnik[]
 }
 
 const druzinaSchema = new Schema<IDruzina>({
