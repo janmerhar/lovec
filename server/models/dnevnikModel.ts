@@ -1,7 +1,16 @@
-const mongoose = require("mongoose")
-const { Schema } = mongoose
+import mongoose, { Schema, Document, Model } from "mongoose"
 
-const dnevnik = new Schema({
+export interface IDnevnik extends Document {
+  pripravnik: Schema.Types.ObjectId
+  mentor: Schema.Types.ObjectId
+  status: string
+  datum: Date
+  ure: number
+  opis: string
+  delo: string
+}
+
+const dnevnik = new Schema<IDnevnik>({
   pripravnik: { type: Schema.Types.ObjectId, ref: "Uporabnik", required: true },
   mentor: { type: Schema.Types.ObjectId, ref: "Uporabnik", required: true },
   // Mentor lahko potrdi ali zavrne dnevnik, kar lahko vidi tudi uporabnik
@@ -19,4 +28,10 @@ const dnevnik = new Schema({
   },
 })
 
-module.exports = mongoose.model("Dnevnik", dnevnik, "Dnevniki")
+const DnevnikModel: Model<IDnevnik> = mongoose.model(
+  "Dnevnik",
+  dnevnik,
+  "Dnevniki"
+)
+
+export default DnevnikModel
