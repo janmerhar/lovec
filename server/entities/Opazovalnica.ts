@@ -1,19 +1,27 @@
-const OpazovalnicaModel = require("../models/opazovalnicaModel")
+import OpazovalnicaModel, { IOpazovalnica } from "@models/opazovalnicaModel"
 
-module.exports = class Opazovalnica {
-  constructor(id, koordinate, obiski) {
+// TODO
+// naredi model za obiske,
+// saj je tako lazje opravljati z njimi
+
+export default class Opazovalnica {
+  id: string
+  koordinate: number[]
+  obiski: any[]
+
+  constructor(id: string, koordinate: number[], obiski: any[]) {
     this.id = id
     this.koordinate = koordinate
     this.obiski = obiski
   }
 
-  static async fetchOpazovalnica(id) {
+  static async fetchOpazovalnica(id: string): Promise<IOpazovalnica | null> {
     const opazovalnica = await OpazovalnicaModel.findById(id)
-    console.log(opazovalnica)
-    // return opazovalnica
+
+    return opazovalnica
   }
 
-  static async fetchOpazovalnice() {
+  static async fetchOpazovalnice(): Promise<IOpazovalnica[]> {
     const today = new Date()
     const timezoneOffset = -2
 
@@ -48,9 +56,14 @@ module.exports = class Opazovalnica {
     return result
   }
 
-  async fetchObiski(datum) {}
+  async fetchObiski(datum: string) {}
 
-  static async rezervirajOpazovalnico(uporabnikId, id, zacetek, konec) {
+  static async rezervirajOpazovalnico(
+    uporabnikId: string,
+    id: string,
+    zacetek: string,
+    konec: string
+  ) {
     const timezoneOffset = 2
 
     const adjustedZacetek = new Date(zacetek)
@@ -67,7 +80,7 @@ module.exports = class Opazovalnica {
       konec: adjustedKonec,
     }
 
-    const hasOverlap = existingDocument.obiski.some(
+    const hasOverlap = existingDocument?.obiski.some(
       (obisk) =>
         obisk.zacetek <= dataToAppend.konec &&
         obisk.konec >= dataToAppend.zacetek
