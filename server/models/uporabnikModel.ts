@@ -1,15 +1,19 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
 
-export interface IUporabnik extends Document {
-  // Osebni podatki
+const uporabnikRoles = ["pripravnik", "lovec", "admin"]
+
+export interface IUporabnikDetails extends Document {
   ime: string
   priimek: string
   slika: string
+  role: (typeof uporabnikRoles)[number]
+}
+
+export interface IUporabnik extends IUporabnikDetails {
+  // Osebni podatki
   rojstniDatum: Date
   email: string
   hash: string
-  // Deljenje na lovce ali pripravnike
-  role: string
   // PRIPRAVNIK ONLY: Tip uporabnik, ki je lovec
   mentor: Schema.Types.ObjectId
   // MENTOR ONLY: Seznam pripravnikov, ki jih mentorira
@@ -33,7 +37,11 @@ const uporabnikSchema = new Schema<IUporabnik>({
   },
   hash: { type: String, required: true },
   // Deljenje na lovce ali pripravnike
-  role: { type: String, enum: ["pripravnik", "lovec"], required: true },
+  role: {
+    type: String,
+    enum: uporabnikRoles,
+    required: true,
+  },
   // PRIPRAVNIK ONLY: Tip uporabnik, ki je lovec
   mentor: {
     type: Schema.Types.ObjectId,
