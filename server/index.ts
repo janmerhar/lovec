@@ -2,17 +2,18 @@
 import express, { Express, Request, Response, Application } from "express"
 import cors from "cors"
 
-const bodyParser = require("body-parser")
-const mongoose = require("mongoose")
+import bodyParser from "body-parser"
+import mongoose from "mongoose"
 
-import httpLogger from "./utils/httpLogger"
-const https = require("https")
-import ErrorHandler from "./utils/ErrorHandler"
+import httpLogger from "@utils/httpLogger"
+import https from "https"
+import ErrorHandler from "@utils/ErrorHandler"
 
 const { readFileSync } = require("fs")
 
 // parse env variables
-require("dotenv").config()
+import dotenv from "dotenv"
+dotenv.config()
 
 // Configuring port
 const port = process.env.PORT || 9000
@@ -62,7 +63,7 @@ const options = {
 }
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI as string)
   .then((_result: any) => {
     https.createServer(options, app).listen(port, () => {
       console.log(`https://192.168.64.109:${port}/api`)
@@ -72,4 +73,4 @@ mongoose
     console.log(err)
   })
 
-module.exports = app
+export = app
