@@ -1,14 +1,14 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
+import { IDruzina } from "./druzinaModel"
 
 export interface IRevir extends Document {
   ime: string
   koordinate: [number, number]
-  druzina: Schema.Types.ObjectId
+  druzina: Schema.Types.ObjectId | IDruzina
 }
 
 const revirSchema = new Schema<IRevir>({
   ime: { type: String, required: true },
-  // Dodaj subtype koordinata in maybe tudi revir sam po sebi
   koordinate: {
     type: [Number],
     required: true,
