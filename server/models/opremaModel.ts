@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document } from "mongoose"
+import { IUporabnikDetails } from "./uporabnikModel"
 
 export interface IOprema extends Document {
-  lastnik: Schema.Types.ObjectId
+  lastnik: Schema.Types.ObjectId | IUporabnikDetails
   naziv: string
   tip: string
   stanje: string
