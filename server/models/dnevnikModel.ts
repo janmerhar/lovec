@@ -1,8 +1,9 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
+import { IUporabnikDetails } from "@models/uporabnikModel"
 
 export interface IDnevnik extends Document {
-  pripravnik: Schema.Types.ObjectId
-  mentor: Schema.Types.ObjectId
+  pripravnik: Schema.Types.ObjectId | IUporabnikDetails
+  mentor: Schema.Types.ObjectId | IUporabnikDetails
   status: string
   datum: Date
   ure: number
