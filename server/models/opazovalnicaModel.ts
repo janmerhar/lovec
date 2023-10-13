@@ -1,10 +1,17 @@
-const mongoose = require("mongoose")
-const { Schema } = mongoose
+import mongoose, { Schema, Document, Model } from "mongoose"
 
-const koordinataSchema = require("./koordinataSchema")
+export interface IOpazovalnica extends Document {
+  koordinate: [number, number]
+  obiski: [
+    {
+      uporabnik: Schema.Types.ObjectId
+      zacetek: Date
+      konec: Date
+    }
+  ]
+}
 
-const opazovalnicaSchema = new Schema({
-  // tebe bom naredil samo array dveh koordinat
+const opazovalnicaSchema = new Schema<IOpazovalnica>({
   koordinate: {
     type: [Number],
     required: true,
@@ -25,8 +32,10 @@ const opazovalnicaSchema = new Schema({
   },
 })
 
-module.exports = mongoose.model(
+const OpazovalnicaModel: Model<IOpazovalnica> = mongoose.model(
   "Opazovalnica",
   opazovalnicaSchema,
   "Opazovalnice"
 )
+
+export default OpazovalnicaModel
