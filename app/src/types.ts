@@ -13,5 +13,6 @@ export type UporabnikDetails = {
   id: string
   ime: string
   priimek: string
+  slika: string
   role: string
 }
