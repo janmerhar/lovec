@@ -52,6 +52,7 @@ describe("uporabnikStore", () => {
     id: "2",
     ime: "imementor",
     priimek: "priimekmentor",
+    slika: "slika",
     role: "lovec",
   }
 
