@@ -1,13 +1,13 @@
 // Importing required modules
-const cors = require("cors")
-const express = require("express")
+import express, { Express, Request, Response, Application } from "express"
+import cors from "cors"
 
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
-const httpLogger = require("./util/httpLogger")
+import httpLogger from "./utils/httpLogger"
 const https = require("https")
-const ErrorHandler = require("./util/ErrorHandler")
+import ErrorHandler from "./utils/ErrorHandler"
 
 const { readFileSync } = require("fs")
 
@@ -47,7 +47,7 @@ app.use("/uporabnik", require("./routes/uporabnikRoutes"))
 app.use("/vpleni", require("./routes/vplenRoutes"))
 
 // Not found
-app.use((req, res, next) => {
+app.use((_req, res, _next) => {
   res.status(404).json({ message: "Not found" })
 })
 
@@ -63,12 +63,12 @@ const options = {
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then((result) => {
+  .then((_result: any) => {
     https.createServer(options, app).listen(port, () => {
-      console.log(`https://localhost:${port}/api`)
+      console.log(`https://192.168.64.109:${port}/api`)
     })
   })
-  .catch((err) => {
+  .catch((err: any) => {
     console.log(err)
   })
 
