@@ -1,6 +1,6 @@
 import DnevnikModel, { IDnevnik } from "@models/dnevnikModel"
 
-module.exports = class Dnevnik {
+export default class Dnevnik {
   dnevnikId: string
   pripravnikId: string
   mentorId: string
