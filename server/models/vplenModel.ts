@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
+import { IUporabnikDetails } from "./uporabnikModel"
 
 export interface IVplen extends Document {
-  uporabnik: Schema.Types.ObjectId
+  uporabnik: Schema.Types.ObjectId | IUporabnikDetails
   koordinate: [number, number]
   zival: string
   teza: number
