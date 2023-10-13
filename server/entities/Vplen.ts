@@ -1,8 +1,22 @@
-const VplenModel = require("../models/vplenModel")
-const mongoose = require("mongoose")
+import VplenModel, { IVplen } from "@models/vplenModel"
+import mongoose from "mongoose"
 
-module.exports = class Vplen {
-  constructor(id, uporabnikId, zival, teza, datum, bolezni) {
+export default class Vplen {
+  id: string
+  uporabnik: string
+  zival: string
+  teza: number
+  datum: string
+  bolezni: string[]
+
+  constructor(
+    id: string,
+    uporabnikId: string,
+    zival: string,
+    teza: number,
+    datum: string,
+    bolezni: string[]
+  ) {
     this.id = id
     this.uporabnik = uporabnikId
     this.zival = zival
@@ -11,8 +25,10 @@ module.exports = class Vplen {
     this.bolezni = bolezni
   }
 
-  // Prenasam samo po delih
-  static async fetchVpleni(uporabnikId, stran) {
+  static async fetchVpleni(
+    uporabnikId: string,
+    stran: number
+  ): Promise<IVplen[]> {
     const STRAN_SIZE = 10
 
     const pipeline = [
@@ -44,8 +60,10 @@ module.exports = class Vplen {
     return vpleni
   }
 
-  // Prenesem vse uporabnikove vplene za določen datum
-  static async fetchVpleniDatum(uporabnikId, datum) {
+  static async fetchVpleniDatum(
+    uporabnikId: string,
+    datum: string
+  ): Promise<IVplen[]> {
     const vpleni = await VplenModel.find({
       uporabnik: uporabnikId,
       datum: datum,
@@ -54,7 +72,13 @@ module.exports = class Vplen {
     return vpleni
   }
 
-  static async vnesiVplen(uporabnikId, zival, teza, datum, bolezni) {
+  static async vnesiVplen(
+    uporabnikId: string,
+    zival: string,
+    teza: number,
+    datum: string,
+    bolezni: string[]
+  ): Promise<IVplen> {
     const vplen = await VplenModel.create({
       uporabnik: uporabnikId,
       zival: zival,
