@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
 
 const uporabnikRoles = ["pripravnik", "lovec", "admin"]
+import { IDruzina } from "./druzinaModel"
 
 export interface IUporabnikDetails extends Document {
   ime: string
@@ -15,11 +16,11 @@ export interface IUporabnik extends IUporabnikDetails {
   email: string
   hash: string
   // PRIPRAVNIK ONLY: Tip uporabnik, ki je lovec
-  mentor: Schema.Types.ObjectId
+  mentor: Schema.Types.ObjectId | IUporabnik
   // MENTOR ONLY: Seznam pripravnikov, ki jih mentorira
   pripravniki: Schema.Types.ObjectId[]
   // Clanstvo v neki lovski druzini
-  druzina: Schema.Types.ObjectId
+  druzina: Schema.Types.ObjectId | IDruzina
   // Polje za osvezevanje JWT tokenov
   refresh_token: string
 }
