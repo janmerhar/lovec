@@ -3,7 +3,7 @@ import { IDruzina } from "./druzinaModel"
 
 export interface IRevir extends Document {
   ime: string
-  koordinate: [number, number]
+  koordinate: number[][][]
   druzina: Schema.Types.ObjectId | IDruzina
 }
 
