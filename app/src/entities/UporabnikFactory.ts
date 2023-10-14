@@ -33,7 +33,10 @@ export class UporabnikFactory {
     email: string,
     geslo: string
   ): Promise<APIResponse<Uporabnik | null>> {
-    const uporabnik = await axiosInstance.post("/login", { email, geslo })
+    const uporabnik = await axiosInstance.post("/uporabnik/login", {
+      email,
+      geslo,
+    })
 
     uporabnik.data.data = UporabnikFactory.createUporabnik(
       axiosInstance,
