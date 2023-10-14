@@ -1,4 +1,4 @@
-module.exports = class ResponseBuilder {
+export default class ResponseBuilder {
   status: number
   data: any
   message: string
