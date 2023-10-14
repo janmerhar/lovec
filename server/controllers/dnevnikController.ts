@@ -1,21 +1,26 @@
-const Dnevnik = require("../entities/Dnevnik")
+import Dnevnik from "@entities/Dnevnik"
+import Uporabnik from "@entities/Uporabnik"
 
-const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
+import ResponseBuilder from "@utils/ResponseBuilder"
 
-const ResponseBuilder = require("../util/ResponseBuilder")
+import { Request, Response, NextFunction, RequestHandler } from "express"
 
 //
 // Mentor
 //
 
 // Dnevnik za dnevnike prirpavnikov za nekega mentorja za neki dan
-exports.getDnevnikPripravniki = async (req, res, next) => {
+export const getDnevnikPripravniki: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { datum } = req.params
 
   try {
-    const { uporabnikId: mentorId, role } = await UporabnikFactory.JWTpayload(
-      req
-    )
+    // TODO
+    // @ts-ignore
+    const { uporabnikId: mentorId, role } = await Uporabnik.JWTpayload(req)
 
     if (role !== "lovec") {
       res.send(
@@ -32,13 +37,17 @@ exports.getDnevnikPripravniki = async (req, res, next) => {
   }
 }
 
-exports.patchSpremeniStatus = async (req, res, next) => {
+export const patchSpremeniStatus: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { dnevnikId, status } = req.body
 
   try {
-    const { uporabnikId: mentorId, role } = await UporabnikFactory.JWTpayload(
-      req
-    )
+    // TODO
+    // @ts-ignore
+    const { uporabnikId: mentorId, role } = await Uporabnik.JWTpayload(req)
 
     if (role !== "lovec") {
       res.send(
@@ -65,12 +74,17 @@ exports.patchSpremeniStatus = async (req, res, next) => {
 
 // Vpogled v svoj dnenvik za pripravnika
 // ta nima svojega dneva, temvec continuos scroll
-exports.getDnevnikPripravnik = async (req, res, next) => {
+export const getDnevnikPripravnik: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { stran } = req.params
 
   try {
-    const { uporabnikId: pripravnikId, role } =
-      await UporabnikFactory.JWTpayload(req)
+    // TODO
+    // @ts-ignore
+    const { uporabnikId: pripravnikId, role } = await Uporabnik.JWTpayload(req)
 
     if (role !== "pripravnik") {
       res.send(
@@ -79,7 +93,10 @@ exports.getDnevnikPripravnik = async (req, res, next) => {
       return
     }
 
-    const result = await Dnevnik.fetchDnevnikiPripravnik(pripravnikId, stran)
+    const result = await Dnevnik.fetchDnevnikiPripravnik(
+      pripravnikId,
+      parseInt(stran)
+    )
     res.send(ResponseBuilder.success(result))
   } catch (error) {
     // next("Prišlo je do napake pri pridobivanju dnevnika pripravnika")
@@ -87,13 +104,18 @@ exports.getDnevnikPripravnik = async (req, res, next) => {
   }
 }
 
-exports.postDnevnikVnesi = async (req, res, next) => {
+export const postDnevnikVnesi: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   // Dobim iz zahteve
   const { datum, ure, opis, delo } = req.body
 
   try {
-    const { uporabnikId: pripravnikId, role } =
-      await UporabnikFactory.JWTpayload(req)
+    // TODO
+    // @ts-ignore
+    const { uporabnikId: pripravnikId, role } = await Uporabnik.JWTpayload(req)
 
     if (role == "lovec") {
       res.send(ResponseBuilder.unauthorized("Uporabnik nima pravic za to"))
@@ -101,9 +123,9 @@ exports.postDnevnikVnesi = async (req, res, next) => {
     }
 
     // Dobim iz PB glede na uporabnikId
-    const { mentor: mentorId } = await UporabnikFactory.fetchUporabnik(
-      pripravnikId
-    )
+    // TODO
+    // @ts-ignore
+    const { mentor: mentorId } = await Uporabnik.fetchUporabnik(pripravnikId)
 
     const result = await Dnevnik.vnesiDnevnik(
       pripravnikId,
