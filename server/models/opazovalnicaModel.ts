@@ -1,10 +1,11 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
+import { IUporabnikDetails } from "./uporabnikModel"
 
 export interface IOpazovalnica extends Document {
   koordinate: [number, number]
   obiski: [
     {
-      uporabnik: Schema.Types.ObjectId
+      uporabnik: Schema.Types.ObjectId | IUporabnikDetails
       zacetek: Date
       konec: Date
     }
