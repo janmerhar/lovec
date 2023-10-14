@@ -1,12 +1,18 @@
-const Opazovalnica = require("../entities/Opazovalnica")
+import Opazovalnica from "@entities/Opazovalnica"
 
-const UporabnikFactory = require("../entities/UserRoles/UporabnikFactory")
+import Uporabnik from "@entities/Uporabnik"
 
-const ResponseBuilder = require("../util/ResponseBuilder")
+import ResponseBuilder from "@utils/ResponseBuilder"
+
+import { Request, Response, NextFunction, RequestHandler } from "express"
 
 // Vrnem vse podatke o neki opazovalnici
 // mogoce se samo omejim na dolocen casovni razpon obiskov
-exports.getOpazovalnica = async (req, res, next) => {
+export const getOpazovalnica: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { id } = req.params
 
   // await Opazovalnica.fetchOpazovalnica(id)
@@ -15,7 +21,11 @@ exports.getOpazovalnica = async (req, res, next) => {
 }
 
 // Vrnem samo koordinate vseh opazovalnic
-exports.getOpazovalnice = async (req, res, next) => {
+export const getOpazovalnice: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const result = await Opazovalnica.fetchOpazovalnice()
 
@@ -30,14 +40,22 @@ exports.getOpazovalnice = async (req, res, next) => {
 
 // v bistvu lahko vas uporabim za dnevni pregled zasedenosti opazovalnic
 // torej zgodovino in prihodnost
-exports.getObiski = async (req, res, next) => {
+export const getObiski: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.log("getUser")
   res.send("getUser")
 }
 
-exports.postRezerviraj = async (req, res, next) => {
+export const postRezerviraj: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const { uporabnikId } = await UporabnikFactory.JWTpayload(req)
+    const { uporabnikId } = await Uporabnik.JWTpayload(req)
     const { id } = req.params
 
     const { zacetek, konec } = req.body
@@ -50,12 +68,21 @@ exports.postRezerviraj = async (req, res, next) => {
     )
 
     res.send(ResponseBuilder.success(result))
-    // res.send("rezervacija")
   } catch (error) {
     next(error)
   }
 }
 
 // TODO !!!
-exports.odpovejRezervacijo = async (req, res, next) => {}
-exports.zasediOpazovalnico = async (req, res, next) => {}
+export const odpovejRezervacijo: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {}
+
+// TODO !!!
+export const zasediOpazovalnico: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {}
