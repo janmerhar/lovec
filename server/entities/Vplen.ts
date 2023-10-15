@@ -1,4 +1,5 @@
-import VplenModel, { IVplen } from "@models/vplenModel"
+import VplenModel from "@models/vplenModel"
+import { IVplen, IVplenDetails } from "@shared/types"
 import mongoose from "mongoose"
 
 export default class Vplen {
@@ -28,7 +29,7 @@ export default class Vplen {
   static async fetchVpleni(
     uporabnikId: string,
     stran: number
-  ): Promise<IVplen[]> {
+  ): Promise<IVplenDetails[]> {
     const STRAN_SIZE = 10
 
     const pipeline = [
