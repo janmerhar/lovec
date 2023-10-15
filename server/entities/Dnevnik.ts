@@ -1,4 +1,6 @@
-import DnevnikModel, { IDnevnik } from "@models/dnevnikModel"
+import DnevnikModel from "@models/dnevnikModel"
+import { IDnevnik, IUporabnikDetails } from "@shared/types"
+import { ObjectId } from "mongoose"
 
 export default class Dnevnik {
   dnevnikId: string
@@ -27,12 +29,15 @@ export default class Dnevnik {
   static async fetchDnevnikiMentor(
     mentorId: string,
     datum: string
-  ): Promise<IDnevnik[]> {
+  ): Promise<IDnevnik<ObjectId, IUporabnikDetails, ObjectId>[]> {
     const dnevniki = await DnevnikModel.find({
       mentor: mentorId,
       datum: new Date(datum),
     })
-      .populate({ path: "pripravnik", select: "_id ime priimek slika role" })
+      .populate<{ pripravnik: IUporabnikDetails }>({
+        path: "pripravnik",
+        select: "_id ime priimek slika role",
+      })
       .exec()
 
     return dnevniki
