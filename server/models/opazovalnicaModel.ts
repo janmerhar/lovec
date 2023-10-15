@@ -1,16 +1,5 @@
-import mongoose, { Schema, Document, Model } from "mongoose"
-import { IUporabnikDetails } from "./uporabnikModel"
-
-export interface IOpazovalnica extends Document {
-  koordinate: [number, number]
-  obiski: [
-    {
-      uporabnik: Schema.Types.ObjectId | IUporabnikDetails
-      zacetek: Date
-      konec: Date
-    }
-  ]
-}
+import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
+import { IOpazovalnica } from "@shared/types"
 
 const opazovalnicaSchema = new Schema<IOpazovalnica>({
   koordinate: {
@@ -40,3 +29,4 @@ const OpazovalnicaModel: Model<IOpazovalnica> = mongoose.model(
 )
 
 export default OpazovalnicaModel
+export type OpazovalnicaDocument = IOpazovalnica & Document
