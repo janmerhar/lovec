@@ -47,6 +47,11 @@ export interface IDruzina<I = ObjectId, R = ObjectId, C = ObjectId>
 
 /* Vplen */
 
+export interface IVplenDetails {
+  datum: Date
+  zivali: string[]
+}
+
 export interface IVplen<I = ObjectId, U = ObjectId> {
   _id: I
   uporabnik: U
@@ -100,6 +105,19 @@ export interface IOprema<I = ObjectId, L = ObjectId> {
 export interface IRevir<I = ObjectId, D = ObjectId> {
   _id: I
   ime: string
-  koordinate: number[][][]
+  koordinate: number[][]
   druzina: D
+}
+
+/* JWT */
+export type JWTDecoded = {
+  uporabnikId: string
+  role: string
+  iat: number
+  exp: number
+}
+
+export type JWTPayload = {
+  uporabnikId: string
+  role: string
 }
