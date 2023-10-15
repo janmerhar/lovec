@@ -1,13 +1,5 @@
-import mongoose, { Schema, Document, Model } from "mongoose"
-
-import { IRevir } from "./revirModel"
-import { IUporabnikDetails } from "./uporabnikModel"
-
-export interface IDruzina extends Document {
-  ime: string
-  revirji: Schema.Types.ObjectId[] | IRevir[]
-  clani: Schema.Types.ObjectId[] | IUporabnikDetails[]
-}
+import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
+import { IDruzina } from "@shared/types"
 
 const druzinaSchema = new Schema<IDruzina>({
   ime: {
@@ -15,13 +7,10 @@ const druzinaSchema = new Schema<IDruzina>({
     required: true,
   },
   revirji: [{ type: Schema.Types.ObjectId, ref: "Revir", required: true }],
-  clani: [{ type: Schema.Types.ObjectId, ref: "Uporabnik", required: false }],
+  clani: [{ type: Schema.Types.ObjectId, ref: "Uporabnik", required: true }],
 })
 
-const DruzinaModel: Model<IDruzina> = mongoose.model(
-  "Druzina",
-  druzinaSchema,
-  "Druzine"
-)
+const DruzinaModel = mongoose.model("Druzina", druzinaSchema, "Druzine")
 
 export default DruzinaModel
+export type DruzinaDocument = IDruzina & Document
