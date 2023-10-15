@@ -1,4 +1,6 @@
-import DruzinaModel, { IDruzina } from "@models/druzinaModel"
+import DruzinaModel from "@models/druzinaModel"
+import { IDruzina, IRevir, IUporabnikDetails } from "@shared/types"
+import { ObjectId } from "mongoose"
 
 export default class Druzina {
   id: string
@@ -19,18 +21,20 @@ export default class Druzina {
     return druzina
   }
 
-  static async fetchDruzine(): Promise<IDruzina[]> {
-    const druzine: IDruzina[] = await DruzinaModel.find()
-      .populate({
+  static async fetchDruzine(): Promise<
+    IDruzina<ObjectId, IRevir, IUporabnikDetails>[]
+  > {
+    const druzine = await DruzinaModel.find()
+      .populate<{ revirji: IRevir }>({
         path: "revirji",
         select: "",
       })
-      .populate({
+      .populate<{ clani: IUporabnikDetails }>({
         path: "clani",
         select: "_id ime priimek slika role",
       })
       .exec()
 
-    return druzine
+    return druzine as unknown as IDruzina<ObjectId, IRevir, IUporabnikDetails>[]
   }
 }
