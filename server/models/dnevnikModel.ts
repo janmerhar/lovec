@@ -1,15 +1,5 @@
-import mongoose, { Schema, Document, Model } from "mongoose"
-import { IUporabnikDetails } from "@models/uporabnikModel"
-
-export interface IDnevnik extends Document {
-  pripravnik: Schema.Types.ObjectId | IUporabnikDetails
-  mentor: Schema.Types.ObjectId | IUporabnikDetails
-  status: string
-  datum: Date
-  ure: number
-  opis: string
-  delo: string
-}
+import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
+import { IDnevnik } from "@shared/types"
 
 const dnevnik = new Schema<IDnevnik>({
   pripravnik: { type: Schema.Types.ObjectId, ref: "Uporabnik", required: true },
@@ -36,3 +26,4 @@ const DnevnikModel: Model<IDnevnik> = mongoose.model(
 )
 
 export default DnevnikModel
+export type DnevnikDocument = IDnevnik & Document
