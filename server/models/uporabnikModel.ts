@@ -1,29 +1,5 @@
-import mongoose, { Schema, Document, Model } from "mongoose"
-
-const uporabnikRoles = ["pripravnik", "lovec", "admin"]
-import { IDruzina } from "./druzinaModel"
-
-export interface IUporabnikDetails extends Document {
-  ime: string
-  priimek: string
-  slika: string
-  role: (typeof uporabnikRoles)[number]
-}
-
-export interface IUporabnik extends IUporabnikDetails {
-  // Osebni podatki
-  rojstniDatum: Date
-  email: string
-  hash: string
-  // PRIPRAVNIK ONLY: Tip uporabnik, ki je lovec
-  mentor: Schema.Types.ObjectId | IUporabnik
-  // MENTOR ONLY: Seznam pripravnikov, ki jih mentorira
-  pripravniki: Schema.Types.ObjectId[]
-  // Clanstvo v neki lovski druzini
-  druzina: Schema.Types.ObjectId | IDruzina
-  // Polje za osvezevanje JWT tokenov
-  refresh_token: string
-}
+import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
+import { IUporabnik, uporabnikRoles } from "@shared/types"
 
 const uporabnikSchema = new Schema<IUporabnik>({
   // Osebni podatki
@@ -67,3 +43,5 @@ const UporabnikModel: Model<IUporabnik> = mongoose.model(
 )
 
 export default UporabnikModel
+
+export type UporabnikDocument = IUporabnik & Document
