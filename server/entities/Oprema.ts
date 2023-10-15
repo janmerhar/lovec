@@ -1,4 +1,5 @@
-import OpremaModel, { IOprema } from "@models/opremaModel"
+import OpremaModel from "@models/opremaModel"
+import { IOprema } from "@shared/types"
 
 export default class Oprema {
   id: string
