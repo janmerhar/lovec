@@ -1,11 +1,5 @@
-import mongoose, { Schema, Document, Model } from "mongoose"
-import { IDruzina } from "./druzinaModel"
-
-export interface IRevir extends Document {
-  ime: string
-  koordinate: number[][][]
-  druzina: Schema.Types.ObjectId | IDruzina
-}
+import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
+import { IRevir } from "@shared/types"
 
 const revirSchema = new Schema<IRevir>({
   ime: { type: String, required: true },
@@ -23,3 +17,4 @@ const RevirModel: Model<IRevir> = mongoose.model(
 )
 
 export default RevirModel
+export type RevirDocument = IRevir & Document
