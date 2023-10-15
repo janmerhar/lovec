@@ -1,13 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose"
-import { IUporabnikDetails } from "./uporabnikModel"
-
-export interface IOprema extends Document {
-  lastnik: Schema.Types.ObjectId | IUporabnikDetails
-  naziv: string
-  tip: string
-  stanje: string
-  datum: Date
-}
+import mongoose, { Schema, Document, ObjectId } from "mongoose"
+import { IOprema } from "@shared/types"
 
 const opremaSchema = new Schema<IOprema>({
   lastnik: { type: Schema.Types.ObjectId, ref: "Uporabnik", required: false },
@@ -21,3 +13,4 @@ const opremaSchema = new Schema<IOprema>({
 const OpremaModel = mongoose.model<IOprema>("Oprema", opremaSchema, "Oprema")
 
 export default OpremaModel
+export type OpremaDocument = IOprema & Document
