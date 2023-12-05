@@ -9,8 +9,6 @@ import httpLogger from "@utils/httpLogger"
 import https from "https"
 import ErrorHandler from "@utils/ErrorHandler"
 
-const { readFileSync } = require("fs")
-
 // parse env variables
 import dotenv from "dotenv"
 dotenv.config()
@@ -62,20 +60,11 @@ app.use((_req, res, _next) => {
 
 app.use(ErrorHandler)
 
-const key = readFileSync("./certs/priv_and_pub.key")
-const cert = readFileSync("./certs/CA.crt")
-
-const options = {
-  key,
-  cert,
-}
-
 mongoose
   .connect(process.env.MONGO_URI as string)
   .then((_result: any) => {
-    https.createServer(options, app).listen(port, () => {
-      console.log(`https://192.168.64.109:${port}/api`)
-    })
+    app.listen(port)
+    console.log(`http://localhost:${port}/api`)
   })
   .catch((err: any) => {
     console.log(err)
