@@ -8,6 +8,7 @@ describe("Pripravnik class", () => {
       id: "2",
       ime: "imementor",
       priimek: "priimekmentor",
+      slika: "slika",
       role: "lovec",
     }
 
