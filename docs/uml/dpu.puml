@@ -43,8 +43,8 @@ rectangle "Lovec aplikacija" {
     usecase "Rezervacija opazovalnice" as ZemljevidOpazovalniceRezervacija
 
     ZemljevidAPI -left-> Zemljevid
-    Zemljevid <... ZemljevidOpazovalnice : <<include>>
-    Zemljevid <... ZemljevidRevirji : <<include>>
+    Zemljevid ...> ZemljevidOpazovalnice : <<include>>
+    Zemljevid ...> ZemljevidRevirji : <<include>>
     Zemljevid <... ZemljevidOpazovalniceRezervacija : <<extends>>
 
     ' Dnevniki za lovce
