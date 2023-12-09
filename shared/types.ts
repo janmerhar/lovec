@@ -109,6 +109,17 @@ export interface IRevir<I = ObjectId, D = ObjectId> {
   druzina: D
 }
 
+/* Sistemske spremenljivke */
+
+export interface ISistemskeSpremenljivke<I = ObjectId> {
+  _id: I
+  datum: Date
+  PAGE_SIZE: number
+  JAGA_MAX_MEMBERS: number
+  OBISK_MAX_LENGTH: number
+  USER_OBISKS_MAX_LENGTH: number
+}
+
 /* JWT */
 export type JWTDecoded = {
   uporabnikId: string
