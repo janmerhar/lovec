@@ -80,13 +80,14 @@ export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
 export interface IOpazovalnica<I = ObjectId, U = ObjectId> {
   _id: I
   koordinate: [number, number]
-  obiski: [
-    {
+
+/* Obisk */
+export interface IObisk<I = ObjectId, O = ObjectId, U = ObjectId> {
+  _id: I
+  opazovalnica: O
       uporabnik: U
       zacetek: Date
-      konec: Date
-    }
-  ]
+  konec?: Date
 }
 
 /* Oprema */
