@@ -109,6 +109,17 @@ export interface IRevir<I = ObjectId, D = ObjectId> {
   druzina: D
 }
 
+/* Jaga */
+
+export interface IJaga<I = ObjectId, O = ObjectId, U = ObjectId> {
+  _id: I
+  organizator: O
+  maxUdelezeni: number
+  udelezeni: U
+  lokacija: [[number]]
+  zacetek: Date
+}
+
 /* Sistemske spremenljivke */
 
 export interface ISistemskeSpremenljivke<I = ObjectId> {
