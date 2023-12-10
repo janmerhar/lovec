@@ -96,11 +96,13 @@ export interface IObisk<I = ObjectId, O = ObjectId, U = ObjectId> {
 
 /* Oprema */
 
+export const opremaTipDomain = ["puska", "nahrbtnik", "drugo"]
+
 export interface IOprema<I = ObjectId, L = ObjectId> {
   _id: I
   lastnik: L
   naziv: string
-  tip: string
+  tip: (typeof opremaTipDomain)[number]
   stanje: string
   datum: Date
 }
