@@ -76,6 +76,14 @@ export interface IVplen<I = ObjectId, U = ObjectId> {
 
 /* Dnevnik */
 
+export const deloDomain = [
+  "kidanje",
+  "pospravljanje",
+  "krmljenje",
+  "postavljanje krmišča",
+  "drugo",
+]
+
 export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
   _id: I
   pripravnik: P
@@ -84,7 +92,7 @@ export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
   datum: Date
   ure: number
   opis: string
-  delo: string
+  delo: (typeof deloDomain)[number]
 }
 
 /* Opazovalnica */
