@@ -76,6 +76,8 @@ export interface IVplen<I = ObjectId, U = ObjectId> {
 
 /* Dnevnik */
 
+export const statusDomain = ["potrjen", "zavrnjen", "neobdelan"]
+
 export const deloDomain = [
   "kidanje",
   "pospravljanje",
@@ -88,7 +90,7 @@ export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
   _id: I
   pripravnik: P
   mentor: M
-  status: string
+  status: (typeof statusDomain)[number]
   datum: Date
   ure: number
   opis: string
