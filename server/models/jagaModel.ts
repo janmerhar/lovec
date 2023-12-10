@@ -7,6 +7,10 @@ const jagaSchema = new Schema<IJaga>({
     ref: "Uporabnik",
     required: true,
   },
+  opis: {
+    type: String,
+    required: true,
+  },
   udelezeni: [
     { type: Schema.Types.ObjectId, ref: "Uporabnik", required: true },
   ],
