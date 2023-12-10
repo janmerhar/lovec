@@ -77,16 +77,20 @@ export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
 
 /* Opazovalnica */
 
-export interface IOpazovalnica<I = ObjectId, U = ObjectId> {
+export interface IOpazovalnica<I = ObjectId> {
   _id: I
+  ime: string
+  kapaciteta: number
+  prespanje: boolean
   koordinate: [number, number]
+}
 
 /* Obisk */
 export interface IObisk<I = ObjectId, O = ObjectId, U = ObjectId> {
   _id: I
   opazovalnica: O
-      uporabnik: U
-      zacetek: Date
+  uporabnik: U
+  zacetek: Date
   konec?: Date
 }
 
