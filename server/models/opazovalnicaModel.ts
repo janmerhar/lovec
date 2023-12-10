@@ -1,24 +1,22 @@
-import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
-import { IOpazovalnica } from "@shared/types"
+import mongoose, { Schema, Document, Model } from "mongoose"
+import type { IOpazovalnica } from "@shared/types"
 
 const opazovalnicaSchema = new Schema<IOpazovalnica>({
-  koordinate: {
-    type: [Number],
+  ime: {
+    type: String,
     required: true,
   },
-  obiski: {
-    type: [
-      {
-        uporabnik: {
-          type: Schema.Types.ObjectId,
-          ref: "Uporabnik",
-          required: true,
-        },
-        zacetek: { type: Date, required: true },
-        konec: { type: Date, required: false },
-      },
-    ],
-    required: false,
+  kapaciteta: {
+    type: Number,
+    required: true,
+  },
+  prespanje: {
+    type: Boolean,
+    required: true,
+  },
+  koordinate: {
+    type: [[Number]],
+    required: true,
   },
 })
 
