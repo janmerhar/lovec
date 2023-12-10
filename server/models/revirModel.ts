@@ -1,10 +1,10 @@
-import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
-import { IRevir } from "@shared/types"
+import mongoose, { Schema, Document, Model } from "mongoose"
+import type { IRevir } from "@shared/types"
 
 const revirSchema = new Schema<IRevir>({
   ime: { type: String, required: true },
   koordinate: {
-    type: [Number],
+    type: [[Number]],
     required: true,
   },
   druzina: { type: Schema.Types.ObjectId, ref: "Druzina", required: true },
