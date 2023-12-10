@@ -1,7 +1,5 @@
-import SistemskeSpremenljivke from "@entities/SistemskeSpremenljivke"
 import ResponseBuilder from "@utils/ResponseBuilder"
 
-import Uporabnik from "@entities/Uporabnik"
 import { Request, Response, NextFunction, RequestHandler } from "express"
 
 export const getSistemskeSpremenljivke: RequestHandler = async (
@@ -10,14 +8,6 @@ export const getSistemskeSpremenljivke: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const { role } = await Uporabnik.JWTpayload(req)
-    if (role !== "admin") {
-      res.send(
-        ResponseBuilder.unauthorized("Uporabnik nima pravic za to operacijo")
-      )
-      return
-    }
-
     const spremenljivke = req.app.get("spremenljivke")
 
     res.send(ResponseBuilder.success(spremenljivke))
@@ -39,14 +29,6 @@ export const postSistemskeSpremenljivke: RequestHandler = async (
   } = req.body
 
   try {
-    const { role } = await Uporabnik.JWTpayload(req)
-    if (role !== "admin") {
-      res.send(
-        ResponseBuilder.unauthorized("Uporabnik nima pravic za to operacijo")
-      )
-      return
-    }
-
     const spremenljivke = req.app.get("spremenljivke")
 
     const result = await spremenljivke.updateSistemskeSpremenljivke(
