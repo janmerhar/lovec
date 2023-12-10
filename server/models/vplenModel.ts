@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
-import { IVplen } from "@shared/types"
+import type { IVplen } from "@shared/types"
+import { zivalDomain, bolezenDomain } from "@shared/types"
 
 const vplenSchema = new Schema<IVplen>({
   uporabnik: {
@@ -13,14 +14,17 @@ const vplenSchema = new Schema<IVplen>({
   },
   zival: {
     type: String,
+    enum: zivalDomain,
     required: true,
   },
   teza: { type: Number, required: true },
   datum: { type: Date, required: true },
-  bolezni: {
-    type: [String],
-    required: false,
-  },
+  bolezni: [
+    {
+      type: String,
+      domain: bolezenDomain,
+    },
+  ],
 })
 
 const VplenModel: Model<IVplen> = mongoose.model("Vplen", vplenSchema, "Vpleni")
