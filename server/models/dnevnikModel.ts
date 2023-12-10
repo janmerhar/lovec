@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
-import { IDnevnik } from "@shared/types"
+import type { IDnevnik } from "@shared/types"
+import { deloDomain } from "@shared/types"
 
 const dnevnik = new Schema<IDnevnik>({
   pripravnik: { type: Schema.Types.ObjectId, ref: "Uporabnik", required: true },
@@ -15,6 +16,7 @@ const dnevnik = new Schema<IDnevnik>({
   opis: { type: String, required: true },
   delo: {
     type: String,
+    enum: deloDomain,
     required: true,
   },
 })
