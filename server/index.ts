@@ -43,6 +43,7 @@ import dnevnik from "@routes/dnevnikRoutes"
 import revir from "@routes/revirRoutes"
 import uporabnik from "@routes/uporabnikRoutes"
 import vplen from "@routes/vplenRoutes"
+import spremenljivke from "@routes/sistemskeSpremenljivkeRoutes"
 
 app.use("/", druzina)
 app.use("/druzine", druzina)
@@ -52,6 +53,14 @@ app.use("/dnevniki", dnevnik)
 app.use("/revirji", revir)
 app.use("/uporabnik", uporabnik)
 app.use("/vpleni", vplen)
+app.use("/spremenljivke", spremenljivke)
+
+import SistemskeSpremenljivke from "@entities/SistemskeSpremenljivke"
+
+// Nastavljanje sistemskih spremenljivk
+SistemskeSpremenljivke.createInstance().then((instance) => {
+  app.set("spremenljivke", instance)
+})
 
 // Not found
 app.use((_req, res, _next) => {
