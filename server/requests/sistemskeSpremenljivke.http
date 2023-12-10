@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:1234
+@token = 
+
+# @name postSpremenljivke
+POST {{baseUrl}}/spremenljivke/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "PAGE_SIZE": 10,
+    "JAGA_MAX_MEMBERS": 10,
+    "OBISK_MAX_LENGTH": 10,
+    "USER_OBISKS_MAX_LENGTH": 10
+}
+
+###
+
+# @name getSpremenljivke
+
+GET {{baseUrl}}/spremenljivke/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
