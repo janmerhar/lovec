@@ -47,19 +47,31 @@ export interface IDruzina<I = ObjectId, R = ObjectId, C = ObjectId>
 
 /* Vplen */
 
+export const zivalDomain = [
+  "srnjad",
+  "divjad",
+  "lisica",
+  "medved",
+  "volk",
+  "divji prašič",
+  "drugo",
+]
+
+export const bolezenDomain = ["steklina", "kuga", "drugo"]
+
 export interface IVplenDetails {
   datum: Date
-  zivali: string[]
+  zivali: (typeof zivalDomain)[number][]
 }
 
 export interface IVplen<I = ObjectId, U = ObjectId> {
   _id: I
   uporabnik: U
   koordinate: [number, number]
-  zival: string
+  zival: (typeof zivalDomain)[number]
   teza: number
   datum: Date
-  bolezni?: string[]
+  bolezni: (typeof bolezenDomain)[number][]
 }
 
 /* Dnevnik */
