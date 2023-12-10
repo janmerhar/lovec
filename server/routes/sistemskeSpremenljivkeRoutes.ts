@@ -1,4 +1,5 @@
 import express from "express"
+import { authUser } from "middleware/authUser"
 
 const sistemskeSpremenljivke = express.Router()
 
@@ -7,7 +8,11 @@ import {
   postSistemskeSpremenljivke,
 } from "@controllers/sistemskeSpremenljivkeController"
 
-sistemskeSpremenljivke.get("/", getSistemskeSpremenljivke)
-sistemskeSpremenljivke.post("/", postSistemskeSpremenljivke)
+sistemskeSpremenljivke.get(
+  "/",
+  authUser("admin", "lovec"),
+  getSistemskeSpremenljivke
+)
+sistemskeSpremenljivke.post("/", authUser("admin"), postSistemskeSpremenljivke)
 
 export default sistemskeSpremenljivke
