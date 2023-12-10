@@ -143,6 +143,7 @@ export interface IRevir<I = ObjectId, D = ObjectId> {
 export interface IJaga<I = ObjectId, O = ObjectId, U = ObjectId> {
   _id: I
   organizator: O
+  opis: string
   maxUdelezeni: number
   udelezeni: U
   lokacija: [[number]]
