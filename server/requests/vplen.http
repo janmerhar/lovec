@@ -1,8 +1,9 @@
 @baseUrl = http://localhost:1234
+@token = 
 
 ###
 
-@zival1 = jejz
+@zival1 = lisica
 @teza1 = 12
 @datum = 2023-07-15
 @bolezni = [ "bolezen1", "bolezen2" ]
@@ -10,6 +11,7 @@
 # @name postVplen
 POST {{baseUrl}}/vpleni/dodaj HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "zival": "{{zival1}}",
@@ -25,6 +27,7 @@ Content-Type: application/json
 # @name getVpleni
 GET {{baseUrl}}/vpleni/moji/{{stran2}} HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ###
 
@@ -34,3 +37,4 @@ Content-Type: application/json
 
 GET {{baseUrl}}/vpleni/{{datum3}} HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
