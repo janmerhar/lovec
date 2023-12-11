@@ -19,6 +19,10 @@ export default class ResponseBuilder {
     return new ResponseBuilder(200, data, "success")
   }
 
+  static notfound() {
+    return new ResponseBuilder(404, null, "not found")
+  }
+
   static error(message: string) {
     return new ResponseBuilder(500, null, message)
   }
