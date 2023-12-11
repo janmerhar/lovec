@@ -1,4 +1,4 @@
-import SistemskeSpremenljivkeModel from "@models/sistemskeSpremenljivke"
+import SistemskeSpremenljivkeModel from "@models/sistemskeSpremenljivkeModel"
 import type { ISistemskeSpremenljivke } from "@shared/types"
 import { ObjectId } from "mongoose"
 
@@ -79,7 +79,7 @@ export default class SistemskeSpremenljivke {
     JAGA_MAX_MEMBERS: number,
     OBISK_MAX_LENGTH: number,
     USER_OBISKS_MAX_LENGTH: number
-  ): Promise<ISistemskeSpremenljivke> {
+  ): Promise<SistemskeSpremenljivke> {
     const sistemskeSpremenljivke =
       await SistemskeSpremenljivke.insertSistemskeSpremenljivke(
         PAGE_SIZE,
@@ -95,6 +95,6 @@ export default class SistemskeSpremenljivke {
     this.OBISK_MAX_LENGTH = sistemskeSpremenljivke.OBISK_MAX_LENGTH
     this.USER_OBISKS_MAX_LENGTH = sistemskeSpremenljivke.USER_OBISKS_MAX_LENGTH
 
-    return sistemskeSpremenljivke
+    return this
   }
 }
