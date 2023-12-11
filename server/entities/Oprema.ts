@@ -35,7 +35,7 @@ export default class Oprema {
         opremaInstance.naziv,
         opremaInstance.tip,
         opremaInstance.stanje,
-        opremaInstance.datum.toString()
+        opremaInstance.datum.toISOString()
       )
     })
   }
@@ -59,7 +59,7 @@ export default class Oprema {
       oprema.naziv,
       oprema.tip,
       oprema.stanje,
-      oprema.datum.toString()
+      oprema.datum.toISOString()
     )
   }
 
