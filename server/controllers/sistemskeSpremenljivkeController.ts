@@ -1,45 +1,33 @@
 import ResponseBuilder from "@utils/ResponseBuilder"
 
-import { Request, Response, NextFunction, RequestHandler } from "express"
+import "reflect-metadata"
+import { Body, Get, Post, JsonController, Req } from "routing-controllers"
 
-export const getSistemskeSpremenljivke: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+import { SistemskeSpremenljivkeDTO } from "@controllers/dto/sistemske-spremenljivke/sistemske-spremenljivke.dto"
+
+@JsonController("/spremenljivke")
+export class SistemskeSpremenljivkeController {
+  @Get("/")
+  async getSistemskeSpremenljivke(@Req() req: any) {
     const spremenljivke = req.app.get("spremenljivke")
 
-    res.send(ResponseBuilder.success(spremenljivke))
-  } catch (error) {
-    next(error)
+    return ResponseBuilder.success(spremenljivke)
   }
-}
 
-export const postSistemskeSpremenljivke: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const {
-    PAGE_SIZE,
-    JAGA_MAX_MEMBERS,
-    OBISK_MAX_LENGTH,
-    USER_OBISKS_MAX_LENGTH,
-  } = req.body
-
-  try {
+  @Post("/")
+  async postSistemskeSpremenljivke(
+    @Req() req: any,
+    @Body() body: SistemskeSpremenljivkeDTO
+  ) {
     const spremenljivke = req.app.get("spremenljivke")
 
     const result = await spremenljivke.updateSistemskeSpremenljivke(
-      PAGE_SIZE,
-      JAGA_MAX_MEMBERS,
-      OBISK_MAX_LENGTH,
-      USER_OBISKS_MAX_LENGTH
+      body.PAGE_SIZE,
+      body.JAGA_MAX_MEMBERS,
+      body.OBISK_MAX_LENGTH,
+      body.USER_OBISKS_MAX_LENGTH
     )
 
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    next(error)
+    return ResponseBuilder.success(result)
   }
 }
