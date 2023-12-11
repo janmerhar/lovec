@@ -1,13 +1,23 @@
 import ResponseBuilder from "@utils/ResponseBuilder"
 
 import "reflect-metadata"
-import { Body, Get, Post, JsonController, Req } from "routing-controllers"
+import {
+  Body,
+  Get,
+  Post,
+  JsonController,
+  Req,
+  UseBefore,
+} from "routing-controllers"
 
 import { SistemskeSpremenljivkeDTO } from "@controllers/dto/sistemske-spremenljivke/sistemske-spremenljivke.dto"
+
+import { authUser } from "middleware/authUser"
 
 @JsonController("/spremenljivke")
 export class SistemskeSpremenljivkeController {
   @Get("/")
+  @UseBefore(authUser("admin"))
   async getSistemskeSpremenljivke(@Req() req: any) {
     const spremenljivke = req.app.get("spremenljivke")
 
@@ -15,6 +25,7 @@ export class SistemskeSpremenljivkeController {
   }
 
   @Post("/")
+  @UseBefore(authUser("admin"))
   async postSistemskeSpremenljivke(
     @Req() req: any,
     @Body() body: SistemskeSpremenljivkeDTO
