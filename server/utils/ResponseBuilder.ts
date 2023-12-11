@@ -1,3 +1,5 @@
+import { Document } from "mongoose"
+
 export default class ResponseBuilder {
   status: number
   data: any
@@ -10,7 +12,11 @@ export default class ResponseBuilder {
   }
 
   static success(data: any) {
-    return new ResponseBuilder(200, data, "Success")
+    if (data instanceof Document) {
+      data = data.toObject()
+    }
+
+    return new ResponseBuilder(200, data, "success")
   }
 
   static error(message: string) {
@@ -18,10 +24,10 @@ export default class ResponseBuilder {
   }
 
   static unauthorized(message: string) {
-    return new ResponseBuilder(400, null, message)
+    return new ResponseBuilder(401, null, message)
   }
 
   static token(token: string) {
-    return new ResponseBuilder(200, token, "Success")
+    return new ResponseBuilder(200, token, "success")
   }
 }
