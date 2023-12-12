@@ -37,4 +37,39 @@ export default class Druzina {
 
     return druzine as unknown as IDruzina<ObjectId, IRevir, IUporabnikDetails>[]
   }
+
+  static async dodajRevir(
+    druzinaId: string,
+    revirId: string
+  ): Promise<boolean> {
+    const druzina = await DruzinaModel.updateOne(
+      { _id: druzinaId },
+      { $push: { revirji: revirId } }
+    )
+
+    return true
+  }
+
+  static async odstraniRevir(
+    druzinaId: string,
+    revirId: string
+  ): Promise<boolean> {
+    const druzina = await DruzinaModel.updateOne(
+      { _id: druzinaId },
+      { $pull: { revirji: revirId } }
+    )
+
+    return true
+  }
+  // static async dodajClana(druzinaId: string, clanId: string) {}
+}
+
+export class DruzinaDetails {
+  id: string
+  ime: string
+
+  constructor(id: string, ime: string) {
+    this.id = id
+    this.ime = ime
+  }
 }
