@@ -38,6 +38,21 @@ export default class Druzina {
     return druzine as unknown as IDruzina<ObjectId, IRevir, IUporabnikDetails>[]
   }
 
+  static async insertDruzina(
+    ime: string,
+    revirji: string[],
+    clani: string[]
+  ): Promise<Druzina> {
+    const druzina = await DruzinaModel.create({ ime, revirji, clani })
+
+    return new Druzina(
+      druzina._id.toString(),
+      druzina.ime,
+      druzina.revirji.map((revir) => revir.toString()),
+      druzina.clani.map((clan) => clan.toString())
+    )
+  }
+
   static async dodajRevir(
     druzinaId: string,
     revirId: string
