@@ -3,10 +3,27 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { Request } from "express"
 
-//
-// TODO
-// add return datatypes
-// but first, create those types
+export class UporabnikDetails {
+  id: string
+  ime: string
+  priimek: string
+  slika: string
+  role: string
+
+  constructor(
+    id: string,
+    ime: string,
+    priimek: string,
+    slika: string,
+    role: string
+  ) {
+    this.id = id
+    this.ime = ime
+    this.priimek = priimek
+    this.slika = slika
+    this.role = role
+  }
+}
 
 export default class Uporabnik {
   static async login(email: string, password: string) {
@@ -26,7 +43,9 @@ export default class Uporabnik {
         role: uporabnik.role,
       })
 
-      let returnUporabnik = await Uporabnik.fetchUporabnik(uporabnik._id)
+      let returnUporabnik = await Uporabnik.fetchUporabnik(
+        uporabnik._id.toString()
+      )
 
       if (returnUporabnik == null) {
         return null
@@ -87,6 +106,36 @@ export default class Uporabnik {
     result.hash = undefined
 
     return result
+  }
+
+  static async odstraniClanstvoDruzine(uporabnikId: string): Promise<boolean> {
+    const result = await UporabnikModel.updateOne(
+      { _id: uporabnikId },
+      { druzina: null }
+    )
+
+    return result.modifiedCount > 0
+  }
+
+  static async odstraniVseClaneDruzine(druzinaId: string): Promise<boolean> {
+    const result = await UporabnikModel.updateMany(
+      { druzina: druzinaId },
+      { druzina: null }
+    )
+
+    return result.modifiedCount > 0
+  }
+
+  static async dodajClanstvoDruzine(
+    uporabnikId: string,
+    druzinaId: string
+  ): Promise<boolean> {
+    const result = await UporabnikModel.updateOne(
+      { _id: uporabnikId },
+      { druzina: druzinaId }
+    )
+
+    return result.modifiedCount > 0
   }
 
   //
