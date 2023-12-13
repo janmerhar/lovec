@@ -6,6 +6,7 @@ export default class Dnevnik<P = string, M = string> {
   id: string
   pripravnikId: P
   mentorId: M
+  datum: string
   delo: string
   ure: number
   opis: string
@@ -14,6 +15,7 @@ export default class Dnevnik<P = string, M = string> {
     id: string,
     pripravnikId: P,
     mentorId: M,
+    datum: string,
     delo: string,
     ure: number,
     opis: string
@@ -21,6 +23,7 @@ export default class Dnevnik<P = string, M = string> {
     this.id = id
     this.pripravnikId = pripravnikId
     this.mentorId = mentorId
+    this.datum = datum
     this.delo = delo
     this.ure = ure
     this.opis = opis
@@ -51,6 +54,7 @@ export default class Dnevnik<P = string, M = string> {
           dnevnik.pripravnik.role
         ),
         dnevnik.mentor.toString(),
+        dnevnik.datum.toISOString(),
         dnevnik.delo,
         dnevnik.ure,
         dnevnik.opis
@@ -98,6 +102,7 @@ export default class Dnevnik<P = string, M = string> {
       novDnevnik._id.toString(),
       novDnevnik.pripravnik.toString(),
       novDnevnik.mentor.toString(),
+      novDnevnik.datum.toISOString(),
       novDnevnik.delo,
       novDnevnik.ure,
       novDnevnik.opis
@@ -123,6 +128,7 @@ export default class Dnevnik<P = string, M = string> {
       posodobljenDnevnik._id.toString(),
       posodobljenDnevnik.pripravnik.toString(),
       posodobljenDnevnik.mentor.toString(),
+      posodobljenDnevnik.datum.toISOString(),
       posodobljenDnevnik.delo,
       posodobljenDnevnik.ure,
       posodobljenDnevnik.opis
