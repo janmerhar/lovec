@@ -15,7 +15,7 @@ const opazovalnicaSchema = new Schema<IOpazovalnica>({
     required: true,
   },
   koordinate: {
-    type: [[Number]],
+    type: [Number],
     required: true,
   },
 })
