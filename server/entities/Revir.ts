@@ -2,6 +2,18 @@ import RevirModel from "@models/revirModel"
 import { IDruzinaDetails } from "@shared/types"
 import Druzina, { DruzinaDetails } from "./Druzina"
 
+export class RevirDetails {
+  id: string
+  ime: string
+  koordinate: number[][]
+
+  constructor(id: string, ime: string, koordinate: number[][]) {
+    this.id = id
+    this.ime = ime
+    this.koordinate = koordinate
+  }
+}
+
 export default class Revir<D = string> {
   id: string
   ime: string
@@ -64,7 +76,7 @@ export default class Revir<D = string> {
       return false
     }
 
-    Druzina.odstraniRevir(revir.druzina.toString(), revir._id.toString())
+    Druzina.odstraniRevir(revir._id.toString())
 
     return true
   }
@@ -81,7 +93,7 @@ export default class Revir<D = string> {
       return null
     }
 
-    Druzina.odstraniRevir(originalRevir.druzina.toString(), id)
+    Druzina.odstraniRevir(id)
 
     const updatedRevir = await RevirModel.findByIdAndUpdate(id, {
       ime,
