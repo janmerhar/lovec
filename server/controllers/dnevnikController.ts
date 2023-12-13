@@ -3,141 +3,104 @@ import Uporabnik from "@entities/Uporabnik"
 
 import ResponseBuilder from "@utils/ResponseBuilder"
 
-import { Request, Response, NextFunction, RequestHandler } from "express"
+import {
+  Body,
+  Get,
+  Post,
+  UseBefore,
+  Delete,
+  Param,
+  Patch,
+  Req,
+  JsonController,
+} from "routing-controllers"
 
-//
-// Mentor
-//
+import { InsertDnevnikDTO } from "./dto/dnevnik/insert-dnevnik.dto"
 
-// Dnevnik za dnevnike prirpavnikov za nekega mentorja za neki dan
-export const getDnevnikPripravniki: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { datum } = req.params
+import { authUser } from "middleware/authUser"
 
-  try {
-    // TODO
-    // @ts-ignore
-    const { uporabnikId: mentorId, role } = await Uporabnik.JWTpayload(req)
-
-    if (role !== "lovec") {
-      res.send(
-        ResponseBuilder.unauthorized("Uporabnik nima pravic za to stran")
-      )
-      return
-    }
-
+@JsonController("/dnevniki")
+export class DnevnikController {
+  @Get("/mentor/:datum")
+  @UseBefore(authUser("lovec"))
+  async getDnevnikPripravniki(@Req() req: any, @Param("datum") datum: string) {
+    const { uporabnikId: mentorId } = await Uporabnik.JWTpayload(req)
     const result = await Dnevnik.fetchDnevnikiMentor(mentorId, datum)
 
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    next("Prišlo je do napake pri pridobivanju dnevnika pripravnikov")
+    return ResponseBuilder.success(result)
   }
-}
 
-export const patchSpremeniStatus: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { dnevnikId, status } = req.body
+  @Post("/")
+  @UseBefore(authUser("pripravnik"))
+  async postDnevnikVnesi(@Req() req: any, @Body() dnevnik: InsertDnevnikDTO) {
+    const { uporabnikId: pripravnikId } = await Uporabnik.JWTpayload(req)
 
-  try {
-    // TODO
-    // @ts-ignore
-    const { uporabnikId: mentorId, role } = await Uporabnik.JWTpayload(req)
+    const uporabnik = await Uporabnik.fetchUporabnik(pripravnikId)
 
-    if (role !== "lovec") {
-      res.send(
-        ResponseBuilder.unauthorized("Uporabnik nima pravic za to operacijo")
-      )
-      return
+    if (!uporabnik?.mentor) {
+      return ResponseBuilder.unauthorized("Uporabnik nima mentorja")
     }
-
-    const result = await Dnevnik.spremeniStatusDnevnik(
-      mentorId,
-      dnevnikId,
-      status
-    )
-
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    next("Prišlo je do napake pri spreminjanju statusa dnevnika")
-  }
-}
-
-//
-// Pripravnik
-//
-
-// Vpogled v svoj dnenvik za pripravnika
-// ta nima svojega dneva, temvec continuos scroll
-export const getDnevnikPripravnik: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { stran } = req.params
-
-  try {
-    // TODO
-    // @ts-ignore
-    const { uporabnikId: pripravnikId, role } = await Uporabnik.JWTpayload(req)
-
-    if (role !== "pripravnik") {
-      res.send(
-        ResponseBuilder.unauthorized("Uporabnik nima pravic za to stran")
-      )
-      return
-    }
-
-    const result = await Dnevnik.fetchDnevnikiPripravnik(
-      pripravnikId,
-      parseInt(stran)
-    )
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    // next("Prišlo je do napake pri pridobivanju dnevnika pripravnika")
-    next(error)
-  }
-}
-
-export const postDnevnikVnesi: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  // Dobim iz zahteve
-  const { datum, ure, opis, delo } = req.body
-
-  try {
-    // TODO
-    // @ts-ignore
-    const { uporabnikId: pripravnikId, role } = await Uporabnik.JWTpayload(req)
-
-    if (role == "lovec") {
-      res.send(ResponseBuilder.unauthorized("Uporabnik nima pravic za to"))
-      return
-    }
-
-    // Dobim iz PB glede na uporabnikId
-    // TODO
-    // @ts-ignore
-    const { mentor: mentorId } = await Uporabnik.fetchUporabnik(pripravnikId)
 
     const result = await Dnevnik.vnesiDnevnik(
       pripravnikId,
-      mentorId,
-      datum,
-      ure,
-      opis,
-      delo
+      uporabnik.mentor.id,
+      dnevnik.datum,
+      dnevnik.ure,
+      dnevnik.opis,
+      dnevnik.delo
     )
 
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    next("Prišlo je do napake pri vnašanju dnevnika")
+    return ResponseBuilder.success(result)
+  }
+
+  @Patch("/:dnevnikId/status/:status")
+  @UseBefore(authUser("lovec"))
+  async patchSpremeniStatus(
+    @Param("dnevnikId") dnevnikId: string,
+    @Param("status") status: string
+  ) {
+    const result = await Dnevnik.spremeniStatusDnevnik(dnevnikId, status)
+
+    return ResponseBuilder.success(result)
+  }
+
+  @Get("/pripravnik/:stran")
+  @UseBefore(authUser("pripravnik"))
+  async getDnevnikPripravnik(@Req() req: any, @Param("stran") stran: number) {
+    const { uporabnikId: pripravnikId } = await Uporabnik.JWTpayload(req)
+
+    const result = await Dnevnik.fetchDnevnikiPripravnik(pripravnikId, stran)
+
+    return ResponseBuilder.success(result)
+  }
+
+  @Delete("/admin/:dnevnikId")
+  @UseBefore(authUser("admin"))
+  async deleteDnevnik(@Param("dnevnikId") dnevnikId: string) {
+    const result = await Dnevnik.deleteDnevnik(dnevnikId)
+
+    return result ? ResponseBuilder.success(result) : ResponseBuilder.notfound()
+  }
+
+  @Get("/admin/mentor/:mentorId/:datum")
+  @UseBefore(authUser("admin"))
+  async adminGetDnevnikPripravniki(
+    @Param("mentorId") mentorId: string,
+    @Param("datum") datum: string
+  ) {
+    const result = await Dnevnik.fetchDnevnikiMentor(mentorId, datum)
+
+    return ResponseBuilder.success(result)
+  }
+
+  @Get("/admin/pripravnik/:pripravnikId/:stran")
+  @UseBefore(authUser("admin"))
+  async adminGetDnevnikPripravnik(
+    @Param("pripravnikId") pripravnikId: string,
+    @Param("stran") stran: number
+  ) {
+    const result = await Dnevnik.fetchDnevnikiPripravnik(pripravnikId, stran)
+
+    return ResponseBuilder.success(result)
   }
 }
