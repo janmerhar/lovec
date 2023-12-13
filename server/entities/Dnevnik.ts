@@ -10,6 +10,7 @@ export default class Dnevnik<P = string, M = string> {
   delo: string
   ure: number
   opis: string
+  status: string
 
   constructor(
     id: string,
@@ -18,7 +19,8 @@ export default class Dnevnik<P = string, M = string> {
     datum: string,
     delo: string,
     ure: number,
-    opis: string
+    opis: string,
+    status: string
   ) {
     this.id = id
     this.pripravnikId = pripravnikId
@@ -27,6 +29,7 @@ export default class Dnevnik<P = string, M = string> {
     this.delo = delo
     this.ure = ure
     this.opis = opis
+    this.status = status
   }
 
   static async fetchDnevnikiMentor(
@@ -57,7 +60,8 @@ export default class Dnevnik<P = string, M = string> {
         dnevnik.datum.toISOString(),
         dnevnik.delo,
         dnevnik.ure,
-        dnevnik.opis
+        dnevnik.opis,
+        dnevnik.status
       )
     })
   }
@@ -65,15 +69,46 @@ export default class Dnevnik<P = string, M = string> {
   static async fetchDnevnikiPripravnik(
     pripravnikId: string,
     stran: number
-  ): Promise<IDnevnik[]> {
+  ): Promise<Dnevnik<UporabnikDetails, UporabnikDetails>[]> {
     const STRAN_SIZE = 10
 
     const dnevniki = await DnevnikModel.find({ pripravnik: pripravnikId })
+      .populate<{ mentor: IUporabnikDetails }>(
+        "mentor",
+        "_id ime priimek slika role"
+      )
+      .populate<{ pripravnik: IUporabnikDetails }>(
+        "pripravnik",
+        "_id ime priimek slika role"
+      )
       .sort({ datum: -1 })
       .skip((stran - 1) * STRAN_SIZE)
       .limit(STRAN_SIZE)
 
-    return dnevniki
+    return dnevniki.map((dnevnik) => {
+      return new Dnevnik<UporabnikDetails, UporabnikDetails>(
+        dnevnik._id.toString(),
+        new UporabnikDetails(
+          dnevnik.pripravnik._id.toString(),
+          dnevnik.pripravnik.ime,
+          dnevnik.pripravnik.priimek,
+          dnevnik.pripravnik.slika,
+          dnevnik.pripravnik.role
+        ),
+        new UporabnikDetails(
+          dnevnik.mentor._id.toString(),
+          dnevnik.mentor.ime,
+          dnevnik.mentor.priimek,
+          dnevnik.mentor.slika,
+          dnevnik.mentor.role
+        ),
+        dnevnik.datum.toISOString(),
+        dnevnik.delo,
+        dnevnik.ure,
+        dnevnik.opis,
+        dnevnik.status
+      )
+    })
   }
 
   static async vnesiDnevnik(
@@ -105,17 +140,17 @@ export default class Dnevnik<P = string, M = string> {
       novDnevnik.datum.toISOString(),
       novDnevnik.delo,
       novDnevnik.ure,
-      novDnevnik.opis
+      novDnevnik.opis,
+      novDnevnik.status
     )
   }
 
   static async spremeniStatusDnevnik(
-    mentorId: string,
     dnevnikId: string,
     status: string
   ): Promise<Dnevnik | null> {
     const posodobljenDnevnik = await DnevnikModel.findOneAndUpdate(
-      { _id: dnevnikId, mentor: mentorId },
+      { _id: dnevnikId },
       { status: status },
       { new: true }
     )
@@ -131,7 +166,14 @@ export default class Dnevnik<P = string, M = string> {
       posodobljenDnevnik.datum.toISOString(),
       posodobljenDnevnik.delo,
       posodobljenDnevnik.ure,
-      posodobljenDnevnik.opis
+      posodobljenDnevnik.opis,
+      posodobljenDnevnik.status
     )
+  }
+
+  static async deleteDnevnik(dnevnikId: string): Promise<boolean> {
+    const result = await DnevnikModel.deleteOne({ _id: dnevnikId })
+
+    return result.deletedCount > 0
   }
 }
