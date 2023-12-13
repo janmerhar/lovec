@@ -3,7 +3,7 @@ import { deloDomain } from "@shared/types"
 
 export class InsertDnevnikDTO {
   @IsString()
-  datum: Date
+  datum: string
 
   @IsNumber()
   @Min(1)
