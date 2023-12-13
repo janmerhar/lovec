@@ -1,6 +1,6 @@
 import DnevnikModel from "@models/dnevnikModel"
 import { IDnevnik, IUporabnikDetails } from "@shared/types"
-import { ObjectId } from "mongoose"
+import { UporabnikDetails } from "./Uporabnik"
 
 export default class Dnevnik<P = string, M = string> {
   id: string
@@ -29,7 +29,7 @@ export default class Dnevnik<P = string, M = string> {
   static async fetchDnevnikiMentor(
     mentorId: string,
     datum: string
-  ): Promise<IDnevnik<ObjectId, IUporabnikDetails, ObjectId>[]> {
+  ): Promise<Dnevnik<UporabnikDetails, string>[]> {
     const dnevniki = await DnevnikModel.find({
       mentor: mentorId,
       datum: new Date(datum),
@@ -40,7 +40,22 @@ export default class Dnevnik<P = string, M = string> {
       })
       .exec()
 
-    return dnevniki
+    return dnevniki.map((dnevnik) => {
+      return new Dnevnik<UporabnikDetails, string>(
+        dnevnik._id.toString(),
+        new UporabnikDetails(
+          dnevnik.pripravnik._id.toString(),
+          dnevnik.pripravnik.ime,
+          dnevnik.pripravnik.priimek,
+          dnevnik.pripravnik.slika,
+          dnevnik.pripravnik.role
+        ),
+        dnevnik.mentor.toString(),
+        dnevnik.delo,
+        dnevnik.ure,
+        dnevnik.opis
+      )
+    })
   }
 
   static async fetchDnevnikiPripravnik(
@@ -93,13 +108,24 @@ export default class Dnevnik<P = string, M = string> {
     mentorId: string,
     dnevnikId: string,
     status: string
-  ): Promise<IDnevnik | null> {
+  ): Promise<Dnevnik | null> {
     const posodobljenDnevnik = await DnevnikModel.findOneAndUpdate(
       { _id: dnevnikId, mentor: mentorId },
       { status: status },
       { new: true }
     )
 
-    return posodobljenDnevnik ? posodobljenDnevnik : null
+    if (!posodobljenDnevnik) {
+      return null
+    }
+
+    return new Dnevnik(
+      posodobljenDnevnik._id.toString(),
+      posodobljenDnevnik.pripravnik.toString(),
+      posodobljenDnevnik.mentor.toString(),
+      posodobljenDnevnik.delo,
+      posodobljenDnevnik.ure,
+      posodobljenDnevnik.opis
+    )
   }
 }
