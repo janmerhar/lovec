@@ -2,18 +2,18 @@ import DnevnikModel from "@models/dnevnikModel"
 import { IDnevnik, IUporabnikDetails } from "@shared/types"
 import { ObjectId } from "mongoose"
 
-export default class Dnevnik {
+export default class Dnevnik<P = string, M = string> {
   dnevnikId: string
-  pripravnikId: string
-  mentorId: string
+  pripravnikId: P
+  mentorId: M
   delo: string
   ure: number
   opis: string
 
   constructor(
     dnevnikId: string,
-    pripravnikId: string,
-    mentorId: string,
+    pripravnikId: P,
+    mentorId: M,
     delo: string,
     ure: number,
     opis: string
@@ -64,7 +64,7 @@ export default class Dnevnik {
     ure: number,
     opis: string,
     delo: string
-  ): Promise<IDnevnik | null> {
+  ): Promise<Dnevnik | null> {
     const novDnevnik = await DnevnikModel.create({
       pripravnik: pripravnikId,
       mentor: mentorId,
@@ -75,7 +75,18 @@ export default class Dnevnik {
       delo,
     })
 
-    return novDnevnik ? novDnevnik : null
+    if (!novDnevnik) {
+      return null
+    }
+
+    return new Dnevnik(
+      novDnevnik._id.toString(),
+      novDnevnik.pripravnik.toString(),
+      novDnevnik.mentor.toString(),
+      novDnevnik.delo,
+      novDnevnik.ure,
+      novDnevnik.opis
+    )
   }
 
   static async spremeniStatusDnevnik(
