@@ -1,88 +1,66 @@
 import Opazovalnica from "@entities/Opazovalnica"
 
-import Uporabnik from "@entities/Uporabnik"
-
 import ResponseBuilder from "@utils/ResponseBuilder"
 
-import { Request, Response, NextFunction, RequestHandler } from "express"
+import {
+  Body,
+  Get,
+  Post,
+  UseBefore,
+  Delete,
+  Param,
+  Patch,
+  JsonController,
+} from "routing-controllers"
 
-// Vrnem vse podatke o neki opazovalnici
-// mogoce se samo omejim na dolocen casovni razpon obiskov
-export const getOpazovalnica: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { id } = req.params
+import { InsertOpazovalnicaDTO } from "./dto/opazovalnica/insert-opazovalnica.dto"
+import { authUser } from "middleware/authUser"
 
-  // await Opazovalnica.fetchOpazovalnica(id)
-  console.log("getUser")
-  res.send("getUser")
-}
-
-// Vrnem samo koordinate vseh opazovalnic
-export const getOpazovalnice: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+@JsonController("/opazovalnice")
+export class OpazovalnicaController {
+  @Get("/")
+  @UseBefore(authUser("pripravnik", "lovec", "admin"))
+  async getOpazovalnice() {
     const result = await Opazovalnica.fetchOpazovalnice()
 
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    next(error)
+    return ResponseBuilder.success(result)
   }
-}
 
-// Vas verjetno ne potrebujem, saj lahko samo (ponovno) fetcham opazovalnice
-// raje vas obdzim, saj bi drugace vsakic fetchal vse opazovalnice skupaj z vsemi obiski
-
-// v bistvu lahko vas uporabim za dnevni pregled zasedenosti opazovalnic
-// torej zgodovino in prihodnost
-export const getObiski: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  console.log("getUser")
-  res.send("getUser")
-}
-
-export const postRezerviraj: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
-    const { id } = req.params
-
-    const { zacetek, konec } = req.body
-
-    const result = await Opazovalnica.rezervirajOpazovalnico(
-      uporabnikId,
-      id,
-      zacetek,
-      konec
+  @Post("/")
+  @UseBefore(authUser("pripravnik", "lovec", "admin"))
+  async postOpazovalnica(@Body() opazovalnica: InsertOpazovalnicaDTO) {
+    const result = await Opazovalnica.addOpazovalnica(
+      opazovalnica.ime,
+      opazovalnica.kapaciteta,
+      opazovalnica.prespanje,
+      opazovalnica.koordinate
     )
 
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    next(error)
+    return ResponseBuilder.success(result)
+  }
+
+  @Patch("/admin/:opazovalnicaId")
+  @UseBefore(authUser("admin"))
+  async patchOpazovalnica(
+    @Param("opazovalnicaId") opazovalnicaId: string,
+    @Body() opazovalnica: InsertOpazovalnicaDTO
+  ) {
+    const result = await Opazovalnica.updateOpazovalnica(
+      opazovalnicaId,
+      opazovalnica.ime,
+      opazovalnica.kapaciteta,
+      opazovalnica.prespanje,
+      opazovalnica.koordinate
+    )
+
+    return result ? ResponseBuilder.success(result) : ResponseBuilder.notfound()
+  }
+
+  @Delete("/admin/:opazovalnicaId")
+  @UseBefore(authUser("admin"))
+  async deleteOpazovalnica(@Param("opazovalnicaId") opazovalnicaId: string) {
+    const result = await Opazovalnica.deleteOpazovalnica(opazovalnicaId)
+
+    return result ? ResponseBuilder.success(result) : ResponseBuilder.notfound()
   }
 }
-
-// TODO !!!
-export const odpovejRezervacijo: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {}
-
-// TODO !!!
-export const zasediOpazovalnico: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {}
