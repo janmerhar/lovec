@@ -3,7 +3,7 @@ import { IDnevnik, IUporabnikDetails } from "@shared/types"
 import { ObjectId } from "mongoose"
 
 export default class Dnevnik<P = string, M = string> {
-  dnevnikId: string
+  id: string
   pripravnikId: P
   mentorId: M
   delo: string
@@ -11,14 +11,14 @@ export default class Dnevnik<P = string, M = string> {
   opis: string
 
   constructor(
-    dnevnikId: string,
+    id: string,
     pripravnikId: P,
     mentorId: M,
     delo: string,
     ure: number,
     opis: string
   ) {
-    this.dnevnikId = dnevnikId
+    this.id = id
     this.pripravnikId = pripravnikId
     this.mentorId = mentorId
     this.delo = delo
