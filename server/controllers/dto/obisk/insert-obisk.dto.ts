@@ -5,9 +5,6 @@ export class InsertObiskDTO {
   opazovalnica: string
 
   @IsString()
-  uporabnik: string
-
-  @IsString()
   @IsOptional()
   zacetek?: string
 }
