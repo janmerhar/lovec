@@ -113,7 +113,7 @@ export interface IObisk<I = ObjectId, O = ObjectId, U = ObjectId> {
   opazovalnica: O
   uporabnik: U
   zacetek: Date
-  konec?: Date
+  konec: Date
 }
 
 /* Oprema */
