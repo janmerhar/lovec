@@ -91,7 +91,7 @@ export default class Obisk<O = string, U = string> {
         "_id ime priimek slika role"
       )
       .sort({ zacetek: -1 })
-      .skip(stran * PAGE_SIZE)
+      .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
     return result.map((obisk) => {
