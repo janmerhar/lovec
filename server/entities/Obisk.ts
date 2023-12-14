@@ -323,6 +323,35 @@ export default class Obisk<O = string, U = string> {
     )
   }
 
+  static async endUporabnikObisk(
+    uporabnikId: string,
+    datum: string = new Date().toISOString()
+  ): Promise<Obisk | null> {
+    const result = await ObiskModel.findOneAndUpdate(
+      {
+        uporabnik: uporabnikId,
+        konec: {
+          $gte: new Date(),
+        },
+      },
+      {
+        konec: datum,
+      }
+    )
+
+    if (!result) {
+      return null
+    }
+
+    return new Obisk(
+      result._id.toString(),
+      result.opazovalnica.toString(),
+      result.uporabnik.toString(),
+      result.zacetek.toString(),
+      result.konec.toString()
+    )
+  }
+
   static async endObisk(
     obiskId: string,
     konec: string = new Date().toString()
