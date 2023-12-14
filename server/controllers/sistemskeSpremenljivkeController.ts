@@ -13,13 +13,14 @@ import {
 import { SistemskeSpremenljivkeDTO } from "@controllers/dto/sistemske-spremenljivke/sistemske-spremenljivke.dto"
 
 import { authUser } from "middleware/authUser"
+import SistemskeSpremenljivke from "@entities/SistemskeSpremenljivke"
 
 @JsonController("/spremenljivke")
 export class SistemskeSpremenljivkeController {
   @Get("/")
   @UseBefore(authUser("admin"))
   async getSistemskeSpremenljivke(@Req() req: any) {
-    const spremenljivke = req.app.get("spremenljivke")
+    const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
     return ResponseBuilder.success(spremenljivke)
   }
@@ -30,7 +31,7 @@ export class SistemskeSpremenljivkeController {
     @Req() req: any,
     @Body() body: SistemskeSpremenljivkeDTO
   ) {
-    const spremenljivke = req.app.get("spremenljivke")
+    const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
     const result = await spremenljivke.updateSistemskeSpremenljivke(
       body.PAGE_SIZE,
