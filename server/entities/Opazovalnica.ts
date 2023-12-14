@@ -22,6 +22,22 @@ export default class Opazovalnica {
     this.koordinate = koordinate
   }
 
+  static async fetchOpazovalnica(id: string): Promise<Opazovalnica | null> {
+    const result = await OpazovalnicaModel.findById(id)
+
+    if (!result) {
+      return null
+    }
+
+    return new Opazovalnica(
+      result._id.toString(),
+      result.ime,
+      result.kapaciteta,
+      result.prespanje,
+      result.koordinate
+    )
+  }
+
   static async fetchOpazovalnice(): Promise<Opazovalnica[]> {
     const result = await OpazovalnicaModel.find()
 
