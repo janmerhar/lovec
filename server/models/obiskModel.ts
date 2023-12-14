@@ -18,7 +18,7 @@ const obiskSchema = new Schema<IObisk>({
   },
   konec: {
     type: Date,
-    required: false,
+    required: true,
   },
 })
 
