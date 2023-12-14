@@ -1,5 +1,4 @@
 import ObiskModel from "@models/obiskModel"
-import OpazovalnicaModel from "@models/opazovalnicaModel"
 import { IOpazovalnica, IUporabnikDetails } from "@shared/types"
 import Opazovalnica from "./Opazovalnica"
 import { UporabnikDetails } from "./Uporabnik"
@@ -27,13 +26,19 @@ export default class Obisk<O = string, U = string> {
 
   static async fetchObiski(
     opazovalnicaId: string,
-    datum: string
+    datum: string = new Date().toISOString()
   ): Promise<Obisk<Opazovalnica, UporabnikDetails>[]> {
+    const zacetek = new Date(datum)
+    zacetek.setHours(0, 0, 0, 0)
+
+    const konec = new Date()
+    konec.setDate(konec.getDate() + 1)
+
     const result = await ObiskModel.find({
       opazovalnica: opazovalnicaId,
       zacetek: {
-        $gte: new Date(datum),
-        $lt: new Date(datum).setDate(new Date(datum).getDate() + 1),
+        $gte: zacetek,
+        $lt: konec,
       },
     })
       .populate<{ opazovalnica: IOpazovalnica }>(
@@ -155,16 +160,21 @@ export default class Obisk<O = string, U = string> {
     )
   }
 
-  // TODO: make sure that date starts at midnight
   static async fetchUporabnikObiskiDatum(
     uporabnikId: string,
-    datum: string
+    datum: string = new Date().toISOString()
   ): Promise<Obisk<Opazovalnica, UporabnikDetails>[]> {
+    const zacetek = new Date(datum)
+    zacetek.setHours(0, 0, 0, 0)
+
+    const konec = new Date()
+    konec.setDate(konec.getDate() + 1)
+
     const result = await ObiskModel.find({
       uporabnik: uporabnikId,
       zacetek: {
-        $gte: new Date(datum),
-        $lt: new Date(datum).setDate(new Date(datum).getDate() + 1),
+        $gte: zacetek,
+        $lt: konec,
       },
     })
       .populate<{ opazovalnica: IOpazovalnica }>(
@@ -225,11 +235,10 @@ export default class Obisk<O = string, U = string> {
     opazovalnicaId: string,
     datetime: string = new Date().toISOString()
   ): Promise<Obisk<Opazovalnica, UporabnikDetails>[]> {
-    // moram gledati na obiske, ki trenutno se niso koncani
     const result = await ObiskModel.find({
       opazovalnica: opazovalnicaId,
       konec: {
-        $gte: new Date(),
+        $gte: datetime,
       },
     })
       .populate<{ opazovalnica: IOpazovalnica }>(
