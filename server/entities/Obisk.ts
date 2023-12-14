@@ -218,9 +218,8 @@ export default class Obisk<O = string, U = string> {
     return obiski.reduce((acc, obisk) => {
       return (
         acc +
-        new Date(
-          new Date(obisk.konec).getTime() - new Date(obisk.zacetek).getTime()
-        ).getMinutes()
+        (new Date(obisk.konec).getTime() - new Date(obisk.zacetek).getTime()) /
+          60000
       )
     }, 0)
   }
