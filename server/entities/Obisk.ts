@@ -155,6 +155,7 @@ export default class Obisk<O = string, U = string> {
     )
   }
 
+  // TODO: make sure that date starts at midnight
   static async fetchUporabnikObiskiDatum(
     uporabnikId: string,
     datum: string
@@ -200,7 +201,7 @@ export default class Obisk<O = string, U = string> {
 
   static async fetchUporabnikObiskiTotal(
     uporabnikId: string,
-    datum: string
+    datum: string = new Date().toISOString()
   ): Promise<number> {
     const obiski = await Obisk.fetchUporabnikObiskiDatum(uporabnikId, datum)
 
@@ -220,15 +221,63 @@ export default class Obisk<O = string, U = string> {
     return !!result
   }
 
-  static async opazovalnicaZasedenost(opazovalnicaId: string): Promise<number> {
-    const result = await OpazovalnicaModel.find({
-      _id: opazovalnicaId,
+  static async opazovalnicaZasedenost(
+    opazovalnicaId: string,
+    datetime: string = new Date().toISOString()
+  ): Promise<Obisk<Opazovalnica, UporabnikDetails>[]> {
+    // moram gledati na obiske, ki trenutno se niso koncani
+    const result = await ObiskModel.find({
+      opazovalnica: opazovalnicaId,
       konec: {
         $gte: new Date(),
       },
     })
+      .populate<{ opazovalnica: IOpazovalnica }>(
+        "opazovalnica",
+        "_id ime kapaciteta prespanje koordinate"
+      )
+      .populate<{ uporabnik: IUporabnikDetails }>(
+        "uporabnik",
+        "_id ime priimek slika role"
+      )
 
-    return result.length
+    return result.map((obisk) => {
+      return new Obisk<Opazovalnica, UporabnikDetails>(
+        obisk._id.toString(),
+        new Opazovalnica(
+          obisk.opazovalnica._id.toString(),
+          obisk.opazovalnica.ime,
+          obisk.opazovalnica.kapaciteta,
+          obisk.opazovalnica.prespanje,
+          obisk.opazovalnica.koordinate
+        ),
+        new UporabnikDetails(
+          obisk.uporabnik._id.toString(),
+          obisk.uporabnik.ime,
+          obisk.uporabnik.priimek,
+          obisk.uporabnik.slika,
+          obisk.uporabnik.role
+        ),
+        obisk.zacetek.toString(),
+        obisk.konec.toString()
+      )
+    })
+  }
+
+  static async isOpazovalnicaZasedena(
+    opazovalnicaId: string,
+    datetime: string = new Date().toISOString()
+  ): Promise<boolean> {
+    const result = await Obisk.opazovalnicaZasedenost(opazovalnicaId, datetime)
+
+    if (result.length === 0) {
+      return false
+    }
+
+    const maxZasedenost = result[0].opazovalnica.kapaciteta
+    const trenutnaZasedenost = result.length
+
+    return trenutnaZasedenost >= maxZasedenost
   }
 
   static async startObisk(
@@ -237,10 +286,13 @@ export default class Obisk<O = string, U = string> {
     zacetek: string,
     konec: string
   ): Promise<Obisk | null> {
-    const activeObisk = await Obisk.fetchUporabnikActiveObisk(uporabnikId)
+    const zasedenost = await Obisk.isOpazovalnicaZasedena(opazovalnicaId)
 
-    // TODO:
-    // preveri, ali ima se dovolj kvote za obiske
+    if (zasedenost) {
+      return null
+    }
+
+    const activeObisk = await Obisk.fetchUporabnikActiveObisk(uporabnikId)
 
     if (activeObisk) {
       return null
@@ -276,6 +328,7 @@ export default class Obisk<O = string, U = string> {
 
     return new Obisk(
       result._id.toString(),
+
       result.opazovalnica.toString(),
       result.uporabnik.toString(),
       result.zacetek.toString(),
