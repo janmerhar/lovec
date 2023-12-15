@@ -95,11 +95,15 @@ export default class Revir<D = string> {
 
     Druzina.odstraniRevir(id)
 
-    const updatedRevir = await RevirModel.findByIdAndUpdate(id, {
-      ime,
-      koordinate,
-      druzina,
-    })
+    const updatedRevir = await RevirModel.findByIdAndUpdate(
+      id,
+      {
+        ime,
+        koordinate,
+        druzina,
+      },
+      { new: true }
+    )
 
     if (!updatedRevir) {
       return null
