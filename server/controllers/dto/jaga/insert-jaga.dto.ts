@@ -2,15 +2,10 @@ import {
   IsArray,
   IsDateString,
   IsNumber,
-  IsOptional,
   IsString,
 } from "class-validator"
 
 export class InsertJagaDto {
-  @IsString()
-  @IsOptional()
-  organizator: string
-
   @IsString()
   naziv: string
 
