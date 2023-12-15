@@ -185,10 +185,7 @@ export class Jaga<O = string, U = string> {
         "organizator",
         "_id ime priimek slika role"
       )
-      .populate<{ udelezeni: IUporabnikDetails[] }>(
-        "udelezeni",
-        "_id ime priimek slika role"
-      )
+
       .sort({ zacetek: -1 })
       .limit(PAGE_SIZE)
 
