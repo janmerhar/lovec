@@ -34,6 +34,7 @@ export class Jaga<O = string, U = string> {
 
   static async insertJaga(
     organizator: string,
+    naziv: string,
     opis: string,
     udelezeni: string[],
     maxUdelezeni: number,
@@ -42,6 +43,7 @@ export class Jaga<O = string, U = string> {
   ): Promise<Jaga | null> {
     const result = await JagaModel.create({
       organizator,
+      naziv,
       opis,
       udelezeni,
       maxUdelezeni,
@@ -58,7 +60,7 @@ export class Jaga<O = string, U = string> {
       result.organizator.toString(),
       result.naziv,
       result.opis,
-      result.udelezeni.map((u) => u.toString()),
+      result.udelezeni.map((udelezeni) => udelezeni.toString()),
       result.maxUdelezeni,
       result.lokacija,
       result.zacetek.toString()
