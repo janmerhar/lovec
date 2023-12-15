@@ -3,11 +3,13 @@ import {
   IsDateString,
   IsInt,
   IsNumber,
+  IsOptional,
   IsString,
 } from "class-validator"
 
 export class InsertJagaDto {
   @IsString()
+  @IsOptional()
   organizator: string
 
   @IsString()
