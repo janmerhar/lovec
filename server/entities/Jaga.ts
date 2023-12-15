@@ -176,6 +176,7 @@ export class Jaga<O = string, U = string> {
 
   static async fetchJage(
     isActive: boolean,
+    stran: number,
     PAGE_SIZE: number = 10
   ): Promise<Jaga<UporabnikDetails, string>[]> {
     const zacetek = isActive ? { $gte: new Date() } : { $lt: new Date() }
@@ -187,6 +188,7 @@ export class Jaga<O = string, U = string> {
       )
 
       .sort({ zacetek: -1 })
+      .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
     return result.map((jaga) => {
