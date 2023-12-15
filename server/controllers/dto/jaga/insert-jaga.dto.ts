@@ -1,7 +1,6 @@
 import {
   IsArray,
   IsDateString,
-  IsInt,
   IsNumber,
   IsOptional,
   IsString,
@@ -21,9 +20,6 @@ export class InsertJagaDto {
   @IsArray()
   @IsString({ each: true })
   udelezeni: string[]
-
-  @IsInt()
-  maxUdelezeni: number
 
   @IsArray()
   @IsNumber({}, { each: true })
