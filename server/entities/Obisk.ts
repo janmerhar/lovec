@@ -355,9 +355,13 @@ export default class Obisk<O = string, U = string> {
     obiskId: string,
     konec: string = new Date().toString()
   ): Promise<Obisk | null> {
-    const result = await ObiskModel.findByIdAndUpdate(obiskId, {
-      konec: konec,
-    })
+    const result = await ObiskModel.findByIdAndUpdate(
+      obiskId,
+      {
+        konec: konec,
+      },
+      { new: true }
+    )
 
     if (!result) {
       return null
