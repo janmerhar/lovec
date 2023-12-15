@@ -69,19 +69,25 @@ export class Jaga<O = string, U = string> {
 
   static async updateJaga(
     id: string,
+    organizator: string,
+    naziv: string,
     opis: string,
     udelezeni: string[],
-    maxUdelezeni: number,
     lokacija: number[][],
     zacetek: string
   ): Promise<Jaga<UporabnikDetails, UporabnikDetails> | null> {
-    const result = await JagaModel.findByIdAndUpdate(id, {
-      opis,
-      udelezeni,
-      maxUdelezeni,
-      lokacija,
-      zacetek,
-    })
+    const result = await JagaModel.findByIdAndUpdate(
+      id,
+      {
+        organizator,
+        naziv,
+        opis,
+        udelezeni,
+        lokacija,
+        zacetek,
+      },
+      { new: true }
+    )
       .populate<{ organizator: IUporabnikDetails }>(
         "organizator",
         "_id ime priimek slika role"
@@ -265,7 +271,8 @@ export class Jaga<O = string, U = string> {
     )
   }
 
-  // leave(user)jaga
+  // fetchUporanikActiveJaga
+  // fetchUporabnikPastJage
   static async leaveJaga(
     jagaId: string,
     uporabnikId: string
