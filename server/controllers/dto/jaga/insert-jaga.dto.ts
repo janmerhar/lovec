@@ -13,6 +13,9 @@ export class InsertJagaDto {
   organizator: string
 
   @IsString()
+  naziv: string
+
+  @IsString()
   opis: string
 
   @IsArray()
