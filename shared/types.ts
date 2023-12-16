@@ -28,6 +28,7 @@ export interface IUporabnik<
   pripravniki: P[] | null
   // Clanstvo v neki lovski druzini
   druzina: D | null
+  isDeleted: boolean
   // Polje za osvezevanje JWT tokenov
   refresh_token: string
 }
