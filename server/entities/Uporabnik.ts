@@ -45,6 +45,7 @@ export default class Uporabnik<M = string, D = string> {
   mentor: M | null
   pripravniki: string[]
   druzina: D | null
+  isDeleted: boolean
   refresh_token: string | null
 
   constructor(
@@ -59,6 +60,7 @@ export default class Uporabnik<M = string, D = string> {
     mentor: M | null,
     pripravniki: string[],
     druzina: D | null,
+    isDeleted: boolean,
     refresh_token: string | null
   ) {
     this.id = id
@@ -72,6 +74,7 @@ export default class Uporabnik<M = string, D = string> {
     this.mentor = mentor
     this.pripravniki = pripravniki
     this.druzina = druzina
+    this.isDeleted = isDeleted
     this.refresh_token = refresh_token
   }
 
@@ -180,6 +183,7 @@ export default class Uporabnik<M = string, D = string> {
       result.druzina
         ? new DruzinaDetails(result.druzina._id.toString(), result.druzina.ime)
         : null,
+      result.isDeleted,
       result.refresh_token
     )
   }
