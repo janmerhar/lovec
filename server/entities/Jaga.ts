@@ -32,6 +32,7 @@ export class Jaga<O = string, U = string> {
     this.zacetek = zacetek
   }
 
+  // TODO: preverjanje, ali je dosti prostora
   static async insertJaga(
     organizator: string,
     naziv: string,
@@ -127,6 +128,18 @@ export class Jaga<O = string, U = string> {
     )
   }
 
+  static async deleteJagaOrganizator(
+    jagaId: string,
+    organizatorId: string
+  ): Promise<boolean> {
+    const result = await JagaModel.deleteOne({
+      _id: jagaId,
+      organizator: organizatorId,
+    })
+
+    return result.deletedCount > 0
+  }
+
   static async deleteJaga(id: string): Promise<boolean> {
     const result = await JagaModel.findByIdAndDelete(id)
 
@@ -217,6 +230,49 @@ export class Jaga<O = string, U = string> {
     })
   }
 
+  // Moram preverjati, ali je uporabnik tudi organizator
+  // to tudi steje kot clanstvo
+  // oz. te lahko dodam v udelezene, ob sami kreaciji jage lol
+  static async fetchUporabnikJage(
+    uporabnikId: string,
+    isActive: boolean,
+    stran: number,
+    PAGE_SIZE: number = 10
+  ): Promise<Jaga<UporabnikDetails, string>[]> {
+    const zacetek = isActive ? { $gte: new Date() } : { $lt: new Date() }
+
+    const result = await JagaModel.find({ udelezeni: uporabnikId, zacetek })
+      .populate<{ organizator: IUporabnikDetails }>(
+        "organizator",
+        "_id ime priimek slika role"
+      )
+
+      .sort({ zacetek: -1 })
+      .skip((stran - 1) * PAGE_SIZE)
+      .limit(PAGE_SIZE)
+
+    return result.map((jaga) => {
+      return new Jaga<UporabnikDetails, string>(
+        jaga._id.toString(),
+        new UporabnikDetails(
+          jaga.organizator._id.toString(),
+          jaga.organizator.ime,
+          jaga.organizator.priimek,
+          jaga.organizator.slika,
+          jaga.organizator.role
+        ),
+        jaga.naziv,
+        jaga.opis,
+        jaga.udelezeni.map((udelezeni) => udelezeni.toString()),
+        jaga.maxUdelezeni,
+        jaga.lokacija,
+        jaga.zacetek.toString()
+      )
+    })
+  }
+
+  // TODO: preveri, je uporabnik ze notri
+  // TODO: preveri, ce je jaga ze polna
   static async joinJaga(
     jagaId: string,
     uporabnikId: string
@@ -271,8 +327,7 @@ export class Jaga<O = string, U = string> {
     )
   }
 
-  // fetchUporanikActiveJaga
-  // fetchUporabnikPastJage
+  // TODO: tebe predelaj v boolean in vrni true/false
   static async leaveJaga(
     jagaId: string,
     uporabnikId: string
