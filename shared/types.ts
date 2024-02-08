@@ -177,5 +177,5 @@ export type JWTPayload = {
 }
 
 export interface IIsDeleted {
-  isDeleted: boolean
+  isDeleted?: boolean
 }
