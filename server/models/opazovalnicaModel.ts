@@ -32,4 +32,4 @@ const OpazovalnicaModel: Model<IOpazovalnica & IIsDeleted> = mongoose.model(
 )
 
 export default OpazovalnicaModel
-export type OpazovalnicaDocument = IOpazovalnica & Document
+export type OpazovalnicaDocument = IOpazovalnica & IIsDeleted & Document
