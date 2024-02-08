@@ -7,21 +7,22 @@ export default class Opazovalnica {
   kapaciteta: number
   prespanje: boolean
   koordinate: number[]
+  isDeleted: boolean
 
-  constructor(
-    id: string,
-    ime: string,
-    kapaciteta: number,
-    prespanje: boolean,
-    koordinate: number[]
-    // TODO: field isDeleted
-    // isDeleted: boolean
-  ) {
-    this.id = id
+  constructor({
+    _id,
+    ime,
+    kapaciteta,
+    prespanje,
+    koordinate,
+    isDeleted,
+  }: IOpazovalnica) {
+    this.id = _id.toString()
     this.ime = ime
     this.kapaciteta = kapaciteta
     this.prespanje = prespanje
     this.koordinate = koordinate
+    this.isDeleted = isDeleted
   }
 
   static async fetchOpazovalnica(id: string): Promise<Opazovalnica | null> {
@@ -31,26 +32,14 @@ export default class Opazovalnica {
       return null
     }
 
-    return new Opazovalnica(
-      result._id.toString(),
-      result.ime,
-      result.kapaciteta,
-      result.prespanje,
-      result.koordinate
-    )
+    return new Opazovalnica(result)
   }
 
   static async fetchOpazovalnice(): Promise<Opazovalnica[]> {
     const result = await OpazovalnicaModel.find()
 
     return result.map((opazovalnica) => {
-      return new Opazovalnica(
-        opazovalnica._id.toString(),
-        opazovalnica.ime,
-        opazovalnica.kapaciteta,
-        opazovalnica.prespanje,
-        opazovalnica.koordinate
-      )
+      return new Opazovalnica(opazovalnica)
     })
   }
 
@@ -67,13 +56,7 @@ export default class Opazovalnica {
       koordinate,
     })
 
-    return new Opazovalnica(
-      result._id.toString(),
-      result.ime,
-      result.kapaciteta,
-      result.prespanje,
-      result.koordinate
-    )
+    return new Opazovalnica(result)
   }
 
   static async updateOpazovalnica(
@@ -98,13 +81,7 @@ export default class Opazovalnica {
       return null
     }
 
-    return new Opazovalnica(
-      result._id.toString(),
-      result.ime,
-      result.kapaciteta,
-      result.prespanje,
-      result.koordinate
-    )
+    return new Opazovalnica(result)
   }
 
   static async deleteOpazovalnica(id: string): Promise<boolean> {
