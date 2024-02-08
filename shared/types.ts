@@ -9,7 +9,7 @@ export interface IIsDeleted {
 
 export const uporabnikRoles = ["pripravnik", "lovec", "admin"]
 
-export interface IUporabnikDetails<I = ObjectId> {
+export interface IUporabnikDetails<I = ObjectId> extends IIsDeleted {
   _id: I
   ime: string
   priimek: string
