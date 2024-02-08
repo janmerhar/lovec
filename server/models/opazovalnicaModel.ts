@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
-import type { IOpazovalnica, IIsDeleted } from "@shared/types"
+import type { IOpazovalnica } from "@shared/types"
 
-const opazovalnicaSchema = new Schema<IOpazovalnica & IIsDeleted>({
+const opazovalnicaSchema = new Schema<IOpazovalnica>({
   ime: {
     type: String,
     required: true,
@@ -25,11 +25,11 @@ const opazovalnicaSchema = new Schema<IOpazovalnica & IIsDeleted>({
   },
 })
 
-const OpazovalnicaModel: Model<IOpazovalnica & IIsDeleted> = mongoose.model(
+const OpazovalnicaModel: Model<IOpazovalnica> = mongoose.model(
   "Opazovalnica",
   opazovalnicaSchema,
   "Opazovalnice"
 )
 
 export default OpazovalnicaModel
-export type OpazovalnicaDocument = IOpazovalnica & IIsDeleted & Document
+export type OpazovalnicaDocument = IOpazovalnica & Document
