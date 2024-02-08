@@ -1,7 +1,6 @@
 import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
 import { uporabnikRoles } from "@shared/types"
 import type { IUporabnik, IIsDeleted } from "@shared/types"
-import IIs from "@shared/types"
 
 const uporabnikSchema = new Schema<IUporabnik & IIsDeleted>({
   // Osebni podatki
