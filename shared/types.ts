@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose"
 
 /* Common */
 export interface IIsDeleted {
-  isDeleted?: boolean
+  isDeleted: boolean
 }
 
 /* Uporabnik */
