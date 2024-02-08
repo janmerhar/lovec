@@ -14,6 +14,8 @@ export default class Opazovalnica {
     kapaciteta: number,
     prespanje: boolean,
     koordinate: number[]
+    // TODO: field isDeleted
+    // isDeleted: boolean
   ) {
     this.id = id
     this.ime = ime
@@ -106,7 +108,13 @@ export default class Opazovalnica {
   }
 
   static async deleteOpazovalnica(id: string): Promise<boolean> {
-    const result = await OpazovalnicaModel.findByIdAndDelete(id)
+    const result = await OpazovalnicaModel.findByIdAndUpdate(
+      id,
+      {
+        isDeleted: true,
+      },
+      { new: true }
+    )
 
     return !!result
   }
