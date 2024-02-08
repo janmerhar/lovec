@@ -1,7 +1,9 @@
 import mongoose, { Schema, Document, Model, ObjectId } from "mongoose"
-import { IUporabnik, uporabnikRoles } from "@shared/types"
+import { uporabnikRoles } from "@shared/types"
+import type { IUporabnik, IIsDeleted } from "@shared/types"
+import IIs from "@shared/types"
 
-const uporabnikSchema = new Schema<IUporabnik>({
+const uporabnikSchema = new Schema<IUporabnik & IIsDeleted>({
   // Osebni podatki
   ime: { type: String, required: true },
   priimek: { type: String, required: true },
@@ -34,9 +36,11 @@ const uporabnikSchema = new Schema<IUporabnik>({
   druzina: { type: Schema.Types.ObjectId, ref: "Druzina", required: false },
   // Polje za osvezevanje JWT tokenov
   refresh_token: { type: String, required: false, default: null },
+  // Polje za izbris uporabnika
+  isDeleted: { type: Boolean, default: false },
 })
 
-const UporabnikModel: Model<IUporabnik> = mongoose.model(
+const UporabnikModel: Model<IUporabnik & IIsDeleted> = mongoose.model(
   "Uporabnik",
   uporabnikSchema,
   "Uporabniki"
@@ -44,4 +48,4 @@ const UporabnikModel: Model<IUporabnik> = mongoose.model(
 
 export default UporabnikModel
 
-export type UporabnikDocument = IUporabnik & Document
+export type UporabnikDocument = IUporabnik & IIsDeleted & Document
