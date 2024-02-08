@@ -1,5 +1,10 @@
 import { ObjectId } from "mongoose"
 
+/* Common */
+export interface IIsDeleted {
+  isDeleted?: boolean
+}
+
 /* Uporabnik */
 
 export const uporabnikRoles = ["pripravnik", "lovec", "admin"]
@@ -100,7 +105,7 @@ export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
 
 /* Opazovalnica */
 
-export interface IOpazovalnica<I = ObjectId> {
+export interface IOpazovalnica<I = ObjectId> extends IIsDeleted {
   _id: I
   ime: string
   kapaciteta: number
@@ -174,8 +179,4 @@ export type JWTDecoded = {
 export type JWTPayload = {
   uporabnikId: string
   role: string
-}
-
-export interface IIsDeleted {
-  isDeleted?: boolean
 }
