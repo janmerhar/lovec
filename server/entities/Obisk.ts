@@ -54,13 +54,7 @@ export default class Obisk<O = string, U = string> {
     return result.map((obisk) => {
       return new Obisk<Opazovalnica, UporabnikDetails>(
         obisk._id.toString(),
-        new Opazovalnica(
-          obisk.opazovalnica._id.toString(),
-          obisk.opazovalnica.ime,
-          obisk.opazovalnica.kapaciteta,
-          obisk.opazovalnica.prespanje,
-          obisk.opazovalnica.koordinate
-        ),
+        new Opazovalnica(obisk.opazovalnica),
         new UporabnikDetails(
           obisk.uporabnik._id.toString(),
           obisk.uporabnik.ime,
@@ -97,13 +91,7 @@ export default class Obisk<O = string, U = string> {
     return result.map((obisk) => {
       return new Obisk<Opazovalnica, UporabnikDetails>(
         obisk._id.toString(),
-        new Opazovalnica(
-          obisk.opazovalnica._id.toString(),
-          obisk.opazovalnica.ime,
-          obisk.opazovalnica.kapaciteta,
-          obisk.opazovalnica.prespanje,
-          obisk.opazovalnica.koordinate
-        ),
+        new Opazovalnica(obisk.opazovalnica),
         new UporabnikDetails(
           obisk.uporabnik._id.toString(),
           obisk.uporabnik.ime,
@@ -141,13 +129,7 @@ export default class Obisk<O = string, U = string> {
 
     return new Obisk(
       result._id.toString(),
-      new Opazovalnica(
-        result.opazovalnica._id.toString(),
-        result.opazovalnica.ime,
-        result.opazovalnica.kapaciteta,
-        result.opazovalnica.prespanje,
-        result.opazovalnica.koordinate
-      ),
+      new Opazovalnica(result.opazovalnica),
       new UporabnikDetails(
         result.uporabnik._id.toString(),
         result.uporabnik.ime,
@@ -179,7 +161,7 @@ export default class Obisk<O = string, U = string> {
     })
       .populate<{ opazovalnica: IOpazovalnica }>(
         "opazovalnica",
-        "_id ime kapaciteta prespanje koordinate"
+        "_id ime kapaciteta prespanje koordinate isDeleted"
       )
       .populate<{ uporabnik: IUporabnikDetails }>(
         "uporabnik",
@@ -189,13 +171,7 @@ export default class Obisk<O = string, U = string> {
     return result.map((obisk) => {
       return new Obisk<Opazovalnica, UporabnikDetails>(
         obisk._id.toString(),
-        new Opazovalnica(
-          obisk.opazovalnica._id.toString(),
-          obisk.opazovalnica.ime,
-          obisk.opazovalnica.kapaciteta,
-          obisk.opazovalnica.prespanje,
-          obisk.opazovalnica.koordinate
-        ),
+        new Opazovalnica(obisk.opazovalnica),
         new UporabnikDetails(
           obisk.uporabnik._id.toString(),
           obisk.uporabnik.ime,
@@ -242,7 +218,7 @@ export default class Obisk<O = string, U = string> {
     })
       .populate<{ opazovalnica: IOpazovalnica }>(
         "opazovalnica",
-        "_id ime kapaciteta prespanje koordinate"
+        "_id ime kapaciteta prespanje koordinate isDeleted"
       )
       .populate<{ uporabnik: IUporabnikDetails }>(
         "uporabnik",
@@ -252,13 +228,7 @@ export default class Obisk<O = string, U = string> {
     return result.map((obisk) => {
       return new Obisk<Opazovalnica, UporabnikDetails>(
         obisk._id.toString(),
-        new Opazovalnica(
-          obisk.opazovalnica._id.toString(),
-          obisk.opazovalnica.ime,
-          obisk.opazovalnica.kapaciteta,
-          obisk.opazovalnica.prespanje,
-          obisk.opazovalnica.koordinate
-        ),
+        new Opazovalnica(obisk.opazovalnica),
         new UporabnikDetails(
           obisk.uporabnik._id.toString(),
           obisk.uporabnik.ime,
