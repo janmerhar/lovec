@@ -175,3 +175,7 @@ export type JWTPayload = {
   uporabnikId: string
   role: string
 }
+
+export interface IIsDeleted {
+  isDeleted: boolean
+}
