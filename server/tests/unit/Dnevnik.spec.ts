@@ -11,8 +11,6 @@ jest.mock("@models/dnevnikModel", () => ({
   create: jest.fn(),
   findOneAndUpdate: jest.fn(),
   deleteOne: jest.fn(),
-  populate: jest.fn(),
-  exec: jest.fn(),
 }))
 
 describe("Dnevnik", () => {
@@ -134,19 +132,138 @@ describe("Dnevnik", () => {
   })
 
   describe("fetchDnevnikiMentor", () => {
-    it("should fetch dnevniki for a mentor", () => {})
+    it("should fetch dnevniki for a mentor", async () => {
+      const mockDnevnikiData = [CreateDnevnikPripravnikStub()]
 
-    it("should fetch dnevniki for a mentor and a specific date", () => {})
+      // @ts-ignore
+      ;(DnevnikModel as jest.Mock).find.mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn().mockReturnValue(mockDnevnikiData),
+        }),
+      })
+
+      const dnevniki = await Dnevnik.fetchDnevnikiMentor(
+        "mockMentorId",
+        "mockDatum"
+      )
+
+      expect(dnevniki).toHaveLength(mockDnevnikiData.length)
+      expect(dnevniki[0]).toBeInstanceOf(Dnevnik)
+      expect(dnevniki[0].id).toEqual(mockDnevnikiData[0]._id.toString())
+      expect(dnevniki[0].pripravnikId).toBeInstanceOf(UporabnikDetails)
+      expect(dnevniki[0].pripravnikId.id).toEqual(
+        mockDnevnikiData[0].pripravnik._id.toString()
+      )
+      expect(dnevniki[0].pripravnikId.ime).toEqual(
+        mockDnevnikiData[0].pripravnik.ime
+      )
+      expect(dnevniki[0].pripravnikId.priimek).toEqual(
+        mockDnevnikiData[0].pripravnik.priimek
+      )
+      expect(dnevniki[0].pripravnikId.slika).toEqual(
+        mockDnevnikiData[0].pripravnik.slika
+      )
+      expect(dnevniki[0].pripravnikId.role).toEqual(
+        mockDnevnikiData[0].pripravnik.role
+      )
+      expect(dnevniki[0].mentorId).toEqual(
+        mockDnevnikiData[0].mentor.toString()
+      )
+      expect(dnevniki[0].datum).toEqual(mockDnevnikiData[0].datum.toISOString())
+      expect(dnevniki[0].delo).toEqual(mockDnevnikiData[0].delo)
+      expect(dnevniki[0].ure).toEqual(mockDnevnikiData[0].ure)
+      expect(dnevniki[0].opis).toEqual(mockDnevnikiData[0].opis)
+      expect(dnevniki[0].status).toEqual(mockDnevnikiData[0].status)
+    })
   })
 
   describe("fetchDnevnikiPripravnik", () => {
-    it("should fetch dnevniki for a pripravnik", () => {})
+    it("should fetch dnevniki for a pripravnik", async () => {
+      const mockDnevnikiData = [CreateDnevnikPripravnikMentorStub()]
 
-    it("should fetch dnevniki for a pripravnik and a specific date", () => {})
+      // @ts-ignore
+      ;(DnevnikModel as jest.Mock).find.mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValue({
+            sort: jest.fn().mockReturnValue({
+              skip: jest.fn().mockReturnValue({
+                limit: jest.fn().mockReturnValue(mockDnevnikiData),
+              }),
+            }),
+          }),
+        }),
+      })
+
+      const dnevniki = await Dnevnik.fetchDnevnikiPripravnik("", 1)
+
+      expect(dnevniki).toHaveLength(mockDnevnikiData.length)
+      expect(dnevniki[0]).toBeInstanceOf(Dnevnik)
+      expect(dnevniki[0].id).toEqual(mockDnevnikiData[0]._id.toString())
+      expect(dnevniki[0].pripravnikId).toBeInstanceOf(UporabnikDetails)
+      expect(dnevniki[0].pripravnikId.id).toEqual(
+        mockDnevnikiData[0].pripravnik._id.toString()
+      )
+      expect(dnevniki[0].pripravnikId.ime).toEqual(
+        mockDnevnikiData[0].pripravnik.ime
+      )
+      expect(dnevniki[0].pripravnikId.priimek).toEqual(
+        mockDnevnikiData[0].pripravnik.priimek
+      )
+      expect(dnevniki[0].pripravnikId.slika).toEqual(
+        mockDnevnikiData[0].pripravnik.slika
+      )
+      expect(dnevniki[0].pripravnikId.role).toEqual(
+        mockDnevnikiData[0].pripravnik.role
+      )
+      expect(dnevniki[0].mentorId).toBeInstanceOf(UporabnikDetails)
+      expect(dnevniki[0].mentorId.id).toEqual(
+        mockDnevnikiData[0].mentor._id.toString()
+      )
+      expect(dnevniki[0].mentorId.ime).toEqual(mockDnevnikiData[0].mentor.ime)
+      expect(dnevniki[0].mentorId.priimek).toEqual(
+        mockDnevnikiData[0].mentor.priimek
+      )
+      expect(dnevniki[0].mentorId.slika).toEqual(
+        mockDnevnikiData[0].mentor.slika
+      )
+      expect(dnevniki[0].mentorId.role).toEqual(mockDnevnikiData[0].mentor.role)
+      expect(dnevniki[0].datum).toEqual(mockDnevnikiData[0].datum.toISOString())
+      expect(dnevniki[0].delo).toEqual(mockDnevnikiData[0].delo)
+      expect(dnevniki[0].ure).toEqual(mockDnevnikiData[0].ure)
+      expect(dnevniki[0].opis).toEqual(mockDnevnikiData[0].opis)
+      expect(dnevniki[0].status).toEqual(mockDnevnikiData[0].status)
+    })
   })
 
   describe("vnesiDnevnik", () => {
-    it("should create a new dnevnik", () => {})
+    it("should create a new dnevnik", async () => {
+      const dnevnikStub = CreateDnevnikStub()
+
+      // @ts-ignore
+      ;(DnevnikModel as jest.Mock).create.mockReturnValue(dnevnikStub)
+
+      const dnevnik = await Dnevnik.vnesiDnevnik(
+        dnevnikStub.pripravnik.toString(),
+        dnevnikStub.mentor.toString(),
+        dnevnikStub.datum.toISOString(),
+        dnevnikStub.ure,
+        dnevnikStub.opis,
+        dnevnikStub.delo
+      )
+
+      expect(dnevnik).not.toBeNull()
+      if (dnevnik) {
+        expect(dnevnik).toBeInstanceOf(Dnevnik)
+        expect(dnevnik.id).toEqual(dnevnikStub._id.toString())
+        expect(dnevnik.pripravnikId).toEqual(dnevnikStub.pripravnik.toString())
+        expect(dnevnik.mentorId).toEqual(dnevnikStub.mentor.toString())
+        expect(dnevnik.datum).toEqual(dnevnikStub.datum.toISOString())
+        expect(dnevnik.delo).toEqual(dnevnikStub.delo)
+        expect(dnevnik.ure).toEqual(dnevnikStub.ure)
+        expect(dnevnik.opis).toEqual(dnevnikStub.opis)
+        expect(dnevnik.status).toEqual(dnevnikStub.status)
+      }
+    })
   })
 
   describe("spremeniDnevnikStatus", () => {
