@@ -1,5 +1,5 @@
 import DnevnikModel from "@models/dnevnikModel"
-import { IUporabnikDetails } from "@shared/types"
+import type { IUporabnikDetails } from "@shared/types"
 import { UporabnikDetails } from "./Uporabnik"
 
 export default class Dnevnik<P = string, M = string> {
