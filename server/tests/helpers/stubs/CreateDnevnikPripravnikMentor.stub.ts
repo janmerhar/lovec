@@ -1,13 +1,14 @@
 import type { IDnevnik, IUporabnikDetails } from "@shared/types"
+import mongoose from "mongoose"
 
-export const CreateDnevnikPripravnikStub = (): IDnevnik<
-  string,
-  IUporabnikDetails<string>,
-  IUporabnikDetails<string>
+export const CreateDnevnikPripravnikMentorStub = (): IDnevnik<
+  mongoose.Types.ObjectId,
+  IUporabnikDetails,
+  IUporabnikDetails
 > => ({
-  _id: "1",
+  _id: new mongoose.Types.ObjectId("65c78ca1a7f1d997defbe169"),
   pripravnik: {
-    _id: "1",
+    _id: new mongoose.Types.ObjectId("65c78f41a7f1d997defbe16a"),
     ime: "1",
     priimek: "1",
     slika: "1",
@@ -15,7 +16,7 @@ export const CreateDnevnikPripravnikStub = (): IDnevnik<
     isDeleted: false,
   },
   mentor: {
-    _id: "2",
+    _id: new mongoose.Types.ObjectId("65c78f64a7f1d997defbe16b"),
     ime: "2",
     priimek: "2",
     slika: "2",
