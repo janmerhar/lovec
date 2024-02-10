@@ -1,4 +1,4 @@
-import type { IDruzinaDetails } from "~/shared/types"
+import type { IDruzinaDetails } from "@shared/types"
 import mongoose from "mongoose"
 
 export const CreateDruzinaDetailsStub = (): IDruzinaDetails => {
