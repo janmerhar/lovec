@@ -1,4 +1,5 @@
 import Dnevnik from "@entities/Dnevnik"
+import DnevnikModel from "@models/dnevnikModel"
 import { UporabnikDetails } from "@entities/Uporabnik"
 
 import { CreateDnevnikStub } from "@stubs/CreateDnevnik.stub"
@@ -149,10 +150,43 @@ describe("Dnevnik", () => {
   })
 
   describe("spremeniDnevnikStatus", () => {
-    it("should update a dnevnik", () => {})
+    it("should update a dnevnik", async () => {
+      const dnevnikStub = CreateDnevnikStub()
+
+      // @ts-ignore
+      ;(DnevnikModel as jest.Mock).findOneAndUpdate.mockReturnValue(dnevnikStub)
+
+      const dnevnik = await Dnevnik.spremeniStatusDnevnik("id", "status")
+
+      expect(dnevnik).not.toBeNull()
+
+      if (dnevnik) {
+        expect(dnevnik).toBeInstanceOf(Dnevnik)
+        expect(dnevnik.id).toEqual(dnevnikStub._id.toString())
+        expect(dnevnik.pripravnikId).toEqual(dnevnikStub.pripravnik.toString())
+        expect(dnevnik.mentorId).toEqual(dnevnikStub.mentor.toString())
+        expect(dnevnik.datum).toEqual(dnevnikStub.datum.toISOString())
+        expect(dnevnik.delo).toEqual(dnevnikStub.delo)
+        expect(dnevnik.ure).toEqual(dnevnikStub.ure)
+        expect(dnevnik.opis).toEqual(dnevnikStub.opis)
+        expect(dnevnik.status).toEqual(dnevnikStub.status)
+      }
+    })
   })
 
   describe("deleteDnevnik", () => {
-    it("should delete a dnevnik", () => {})
+    it("should delete a dnevnik", async () => {
+      const dnevnikStub = CreateDnevnikStub()
+
+      // @ts-ignore
+      ;(DnevnikModel as jest.Mock).deleteOne.mockReturnValue({
+        deletedCount: 1,
+      })
+
+      const dnevnik = await Dnevnik.deleteDnevnik(dnevnikStub._id.toString())
+
+      expect(dnevnik).not.toBeNull()
+      expect(dnevnik).toEqual(true)
+    })
   })
 })
