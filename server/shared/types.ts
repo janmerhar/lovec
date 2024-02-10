@@ -44,6 +44,8 @@ export interface IUporabnik<
 export interface IDruzinaDetails<I = mongoose.Types.ObjectId> {
   _id: I
   ime: string
+  revirjiCount?: number
+  claniCount?: number
 }
 
 export interface IDruzina<
