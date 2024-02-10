@@ -1,10 +1,41 @@
 import Druzina, { DruzinaDetails } from "@entities/Druzina"
 
+import { CreateDruzinaDetailsStub } from "../helpers/stubs/CreateDruzinaDetails.stub"
+import { CreateDruzinaDetailsPartialStub } from "../helpers/stubs/CreateDruzinaDetailsPartial.stub"
+
 describe("DruzinaDetails", () => {
   describe("constructor", () => {
-    it.todo("should create a new instance of DruzinaDetails")
+    it("should create a new instance of DruzinaDetails", () => {
+      const druzinaDetailsStub = CreateDruzinaDetailsStub()
 
-    it.todo("should create a new partial instance of DruzinaDetails")
+      const druzina = new DruzinaDetails(
+        druzinaDetailsStub._id.toString(),
+        druzinaDetailsStub.ime,
+        druzinaDetailsStub.revirjiCount,
+        druzinaDetailsStub.claniCount
+      )
+
+      expect(druzina).toBeInstanceOf(DruzinaDetails)
+      expect(druzina.id).toEqual(druzinaDetailsStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaDetailsStub.ime)
+      expect(druzina.revirjiCount).toEqual(druzinaDetailsStub.revirjiCount)
+      expect(druzina.claniCount).toEqual(druzinaDetailsStub.claniCount)
+    })
+
+    it("should create a new partial instance of DruzinaDetails", () => {
+      const druzinaDetailsPartialStub = CreateDruzinaDetailsPartialStub()
+
+      const druzina = new DruzinaDetails(
+        druzinaDetailsPartialStub._id.toString(),
+        druzinaDetailsPartialStub.ime
+      )
+
+      expect(druzina).toBeInstanceOf(DruzinaDetails)
+      expect(druzina.id).toEqual(druzinaDetailsPartialStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaDetailsPartialStub.ime)
+      expect(druzina.revirjiCount).toBeUndefined()
+      expect(druzina.claniCount).toBeUndefined()
+    })
   })
 })
 describe("Druzina", () => {
