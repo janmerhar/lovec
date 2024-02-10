@@ -12,7 +12,9 @@
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@utils/*": ["utils/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@tests/*": ["tests/*"],
+      "@stubs/*": ["tests/helpers/stubs/*"]
     },
     "outDir": "./dist",
     "resolveJsonModule": true,
