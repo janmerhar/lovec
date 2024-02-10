@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose"
+import mongoose from "mongoose"
 
 /* Common */
 export interface IIsDeleted {
@@ -9,7 +9,8 @@ export interface IIsDeleted {
 
 export const uporabnikRoles = ["pripravnik", "lovec", "admin"]
 
-export interface IUporabnikDetails<I = ObjectId> extends IIsDeleted {
+export interface IUporabnikDetails<I = mongoose.Types.ObjectId>
+  extends IIsDeleted {
   _id: I
   ime: string
   priimek: string
@@ -18,10 +19,10 @@ export interface IUporabnikDetails<I = ObjectId> extends IIsDeleted {
 }
 
 export interface IUporabnik<
-  I = ObjectId,
-  M = ObjectId,
-  P = ObjectId,
-  D = ObjectId
+  I = mongoose.Types.ObjectId,
+  M = mongoose.Types.ObjectId,
+  P = mongoose.Types.ObjectId,
+  D = mongoose.Types.ObjectId
 > extends IUporabnikDetails<I> {
   // Osebni podatki
   rojstniDatum: Date | null
@@ -40,13 +41,16 @@ export interface IUporabnik<
 
 /* Druzina */
 
-export interface IDruzinaDetails<I = ObjectId> {
+export interface IDruzinaDetails<I = mongoose.Types.ObjectId> {
   _id: I
   ime: string
 }
 
-export interface IDruzina<I = ObjectId, R = ObjectId, C = ObjectId>
-  extends IDruzinaDetails<I> {
+export interface IDruzina<
+  I = mongoose.Types.ObjectId,
+  R = mongoose.Types.ObjectId,
+  C = mongoose.Types.ObjectId
+> extends IDruzinaDetails<I> {
   revirji: R[]
   clani: C[]
 }
@@ -70,7 +74,10 @@ export interface IVplenDetails {
   zivali: (typeof zivalDomain)[number][]
 }
 
-export interface IVplen<I = ObjectId, U = ObjectId> {
+export interface IVplen<
+  I = mongoose.Types.ObjectId,
+  U = mongoose.Types.ObjectId
+> {
   _id: I
   uporabnik: U
   koordinate: [number, number]
@@ -92,7 +99,11 @@ export const deloDomain = [
   "drugo",
 ]
 
-export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
+export interface IDnevnik<
+  I = mongoose.Types.ObjectId,
+  P = mongoose.Types.ObjectId,
+  M = mongoose.Types.ObjectId
+> {
   _id: I
   pripravnik: P
   mentor: M
@@ -105,7 +116,7 @@ export interface IDnevnik<I = ObjectId, P = ObjectId, M = ObjectId> {
 
 /* Opazovalnica */
 
-export interface IOpazovalnica<I = ObjectId> extends IIsDeleted {
+export interface IOpazovalnica<I = mongoose.Types.ObjectId> extends IIsDeleted {
   _id: I
   ime: string
   kapaciteta: number
@@ -114,7 +125,11 @@ export interface IOpazovalnica<I = ObjectId> extends IIsDeleted {
 }
 
 /* Obisk */
-export interface IObisk<I = ObjectId, O = ObjectId, U = ObjectId> {
+export interface IObisk<
+  I = mongoose.Types.ObjectId,
+  O = mongoose.Types.ObjectId,
+  U = mongoose.Types.ObjectId
+> {
   _id: I
   opazovalnica: O
   uporabnik: U
@@ -126,7 +141,10 @@ export interface IObisk<I = ObjectId, O = ObjectId, U = ObjectId> {
 
 export const opremaTipDomain = ["puska", "nahrbtnik", "drugo"]
 
-export interface IOprema<I = ObjectId, L = ObjectId> {
+export interface IOprema<
+  I = mongoose.Types.ObjectId,
+  L = mongoose.Types.ObjectId
+> {
   _id: I
   lastnik: L
   naziv: string
@@ -137,7 +155,10 @@ export interface IOprema<I = ObjectId, L = ObjectId> {
 
 /* Revir */
 
-export interface IRevir<I = ObjectId, D = ObjectId> {
+export interface IRevir<
+  I = mongoose.Types.ObjectId,
+  D = mongoose.Types.ObjectId
+> {
   _id: I
   ime: string
   koordinate: number[][]
@@ -146,7 +167,11 @@ export interface IRevir<I = ObjectId, D = ObjectId> {
 
 /* Jaga */
 
-export interface IJaga<I = ObjectId, O = ObjectId, U = ObjectId> {
+export interface IJaga<
+  I = mongoose.Types.ObjectId,
+  O = mongoose.Types.ObjectId,
+  U = mongoose.Types.ObjectId
+> {
   _id: I
   organizator: O
   naziv: string
@@ -159,7 +184,7 @@ export interface IJaga<I = ObjectId, O = ObjectId, U = ObjectId> {
 
 /* Sistemske spremenljivke */
 
-export interface ISistemskeSpremenljivke<I = ObjectId> {
+export interface ISistemskeSpremenljivke<I = mongoose.Types.ObjectId> {
   _id: I
   datum: Date
   PAGE_SIZE: number
