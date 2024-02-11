@@ -1,7 +1,5 @@
 import VplenModel from "@models/vplenModel"
-import Vplen from "@entities/Vplen"
-import type { IVplen, IVplenDetails } from "@shared/types"
-import mongoose from "mongoose"
+import Vplen, { VplenDetails } from "@entities/Vplen"
 
 import { CreateVplenStub } from "@stubs/CreateVplen.stub"
 import { CreateVplenDetailsStub } from "@stubs/CreateVplenDetails.stub"
@@ -12,6 +10,23 @@ jest.mock("@models/druzinaModel", () => ({
   create: jest.fn(),
   findOneAndDelete: jest.fn(),
 }))
+
+describe("VplenDetails", () => {
+  describe("constructor", () => {
+    it("should create an instance of VplenDetails", () => {
+      const vplenDetailsStub = CreateVplenDetailsStub()
+
+      const vplenDetails = new VplenDetails(
+        vplenDetailsStub.datum.toISOString(),
+        vplenDetailsStub.zivali
+      )
+
+      expect(vplenDetails).toBeInstanceOf(VplenDetails)
+      expect(vplenDetails.datum).toEqual(vplenDetailsStub.datum.toISOString())
+      expect(vplenDetails.zivali).toEqual(vplenDetailsStub.zivali)
+    })
+  })
+})
 
 describe("Vplen", () => {
   describe("constructor", () => {
@@ -56,6 +71,7 @@ describe("Vplen", () => {
       expect(vpleni.length).toEqual(vpleniStub.length)
 
       vpleni.forEach((vplen, index) => {
+        expect(vplen).toBeInstanceOf(VplenDetails)
         expect(vplen.datum).toEqual(vpleniStub[index].datum)
         expect(vplen.zivali).toEqual(vpleniStub[index].zivali)
       })

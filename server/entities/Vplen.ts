@@ -2,6 +2,16 @@ import VplenModel from "@models/vplenModel"
 import { IVplenDetails } from "@shared/types"
 import mongoose from "mongoose"
 
+export class VplenDetails {
+  datum: string
+  zivali: string[]
+
+  constructor(datum: string, zivali: string[]) {
+    this.datum = datum
+    this.zivali = zivali
+  }
+}
+
 export default class Vplen {
   id: string
   uporabnik: string
@@ -33,7 +43,7 @@ export default class Vplen {
     uporabnikId: string,
     stran: number,
     PAGE_SIZE: number
-  ): Promise<IVplenDetails[]> {
+  ): Promise<VplenDetails[]> {
     const pipeline = [
       {
         $match: {
@@ -55,12 +65,14 @@ export default class Vplen {
       },
     ]
 
-    const vpleni = await VplenModel.aggregate(pipeline)
+    const vpleni: IVplenDetails[] = await VplenModel.aggregate(pipeline)
       .sort({ datum: -1 })
       .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
-    return vpleni
+    return vpleni.map((vplen) => {
+      return new VplenDetails(vplen.datum.toISOString(), vplen.zivali)
+    })
   }
 
   static async fetchVpleniDatum(
