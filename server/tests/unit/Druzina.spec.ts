@@ -50,6 +50,7 @@ describe("DruzinaDetails", () => {
 jest.mock("@models/druzinaModel", () => ({
   findById: jest.fn(),
   aggregate: jest.fn(),
+  create: jest.fn(),
 }))
 
 describe("Druzina", () => {
@@ -275,7 +276,28 @@ describe("Druzina", () => {
   })
 
   describe("insertDruzina", () => {
-    it.todo("should insert a Druzina")
+    it("should insert a Druzina", async () => {
+      const druzinaStub = CreateDruzinaStub()
+
+      // @ts-ignore
+      ;(DruzinaModel as jest.Mock).create.mockReturnValue(druzinaStub)
+
+      const druzina = await Druzina.insertDruzina(
+        druzinaStub.ime,
+        druzinaStub.revirji.map((revir) => revir.toString()),
+        druzinaStub.clani.map((clan) => clan.toString())
+      )
+
+      expect(druzina).toBeInstanceOf(Druzina)
+      expect(druzina.id).toEqual(druzinaStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaStub.ime)
+      expect(druzina.revirji).toEqual(
+        druzinaStub.revirji.map((revir) => revir.toString())
+      )
+      expect(druzina.clani).toEqual(
+        druzinaStub.clani.map((clan) => clan.toString())
+      )
+    })
   })
 
   describe("dodajRevir", () => {
