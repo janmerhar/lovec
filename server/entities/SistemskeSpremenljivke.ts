@@ -41,7 +41,7 @@ export default class SistemskeSpremenljivke {
       await SistemskeSpremenljivke.fetchSistemskeSpremenljivke()
 
     return new SistemskeSpremenljivke(
-      sistemskeSpremenljivke._id,
+      sistemskeSpremenljivke._id.toString(),
       sistemskeSpremenljivke.datum,
       sistemskeSpremenljivke.PAGE_SIZE,
       sistemskeSpremenljivke.JAGA_MAX_MEMBERS,
