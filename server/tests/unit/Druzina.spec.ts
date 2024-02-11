@@ -166,7 +166,7 @@ describe("Druzina", () => {
 
       expect(druzina.revirji).toHaveLength(druzinaStub.revirji.length)
       druzina.revirji.forEach((revir, index) => {
-        expect(revir).toBeInstanceOf(Revir)
+        expect(revir).toBeInstanceOf(RevirDetails)
         expect(revir.id).toEqual(druzinaStub.revirji[index]._id.toString())
         expect(revir.ime).toEqual(druzinaStub.revirji[index].ime)
         expect(revir.koordinate).toEqual(druzinaStub.revirji[index].koordinate)
@@ -185,8 +185,61 @@ describe("Druzina", () => {
   })
 
   describe("fetchDruzina", () => {
-    it.todo("should fetch a Druzina")
-    it.todo("should return null if Druzina is not found")
+    it("should fetch a Druzina", async () => {
+      const druzinaStub = CreateDruzinaClaniRevirjiStub()
+
+      // @ts-ignore
+      ;(DruzinaModel as jest.Mock).findById.mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValue({
+            exec: jest.fn().mockReturnValue(druzinaStub),
+          }),
+        }),
+      })
+
+      const druzina = await Druzina.fetchDruzina(druzinaStub._id.toString())
+
+      if (!druzina) return
+
+      expect(druzina).toBeInstanceOf(Druzina)
+      expect(druzina.id).toEqual(druzinaStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaStub.ime)
+
+      expect(druzina.revirji).toHaveLength(druzinaStub.revirji.length)
+      druzina.revirji.forEach((revir, index) => {
+        expect(revir).toBeInstanceOf(RevirDetails)
+        expect(revir.id).toEqual(druzinaStub.revirji[index]._id.toString())
+        expect(revir.ime).toEqual(druzinaStub.revirji[index].ime)
+        expect(revir.koordinate).toEqual(druzinaStub.revirji[index].koordinate)
+      })
+
+      expect(druzina.clani).toHaveLength(druzinaStub.clani.length)
+      druzina.clani.forEach((clan, index) => {
+        expect(clan).toBeInstanceOf(UporabnikDetails)
+        expect(clan.id).toEqual(druzinaStub.clani[index]._id.toString())
+        expect(clan.ime).toEqual(druzinaStub.clani[index].ime)
+        expect(clan.priimek).toEqual(druzinaStub.clani[index].priimek)
+        expect(clan.slika).toEqual(druzinaStub.clani[index].slika)
+        expect(clan.role).toEqual(druzinaStub.clani[index].role)
+      })
+    })
+
+    it("should return null if Druzina is not found", async () => {
+      const druzinaStub: null = null
+
+      // @ts-ignore
+      ;(DruzinaModel as jest.Mock).findById.mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValue({
+            exec: jest.fn().mockReturnValue(druzinaStub),
+          }),
+        }),
+      })
+
+      const druzina = await Druzina.fetchDruzina("mockId")
+
+      expect(druzina).toBeNull()
+    })
   })
 
   describe("fetchDruzine", () => {
