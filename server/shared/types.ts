@@ -157,6 +157,12 @@ export interface IOprema<
 
 /* Revir */
 
+export interface IRevirDetails<I = mongoose.Types.ObjectId> {
+  _id: I
+  ime: string
+  koordinate: number[][]
+}
+
 export interface IRevir<
   I = mongoose.Types.ObjectId,
   D = mongoose.Types.ObjectId
