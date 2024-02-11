@@ -49,6 +49,7 @@ describe("DruzinaDetails", () => {
 
 jest.mock("@models/druzinaModel", () => ({
   findById: jest.fn(),
+  aggregate: jest.fn(),
 }))
 
 describe("Druzina", () => {
@@ -243,7 +244,34 @@ describe("Druzina", () => {
   })
 
   describe("fetchDruzine", () => {
-    it.todo("should fetch Druzine")
+    it("should fetch Druzine", async () => {
+      const druzineStub = [CreateDruzinaDetailsStub()]
+
+      // @ts-ignore
+      ;(DruzinaModel as jest.Mock).aggregate.mockReturnValue(druzineStub)
+
+      const druzine = await Druzina.fetchDruzine()
+
+      expect(druzine).toHaveLength(druzineStub.length)
+      druzine.forEach((druzina, index) => {
+        expect(druzina).toBeInstanceOf(DruzinaDetails)
+        expect(druzina.id).toEqual(druzineStub[index]._id.toString())
+        expect(druzina.ime).toEqual(druzineStub[index].ime)
+        expect(druzina.revirjiCount).toEqual(druzineStub[index].revirjiCount)
+        expect(druzina.claniCount).toEqual(druzineStub[index].claniCount)
+      })
+    })
+
+    it("should return empty array if no Druzine are found", async () => {
+      const druzineStub: DruzinaDetails[] = []
+
+      // @ts-ignore
+      ;(DruzinaModel as jest.Mock).aggregate.mockReturnValue(druzineStub)
+
+      const druzine = await Druzina.fetchDruzine()
+
+      expect(druzine).toHaveLength(druzineStub.length)
+    })
   })
 
   describe("insertDruzina", () => {
