@@ -72,7 +72,7 @@ describe("Vplen", () => {
 
       vpleni.forEach((vplen, index) => {
         expect(vplen).toBeInstanceOf(VplenDetails)
-        expect(vplen.datum).toEqual(vpleniStub[index].datum)
+        expect(vplen.datum).toEqual(vpleniStub[index].datum.toISOString())
         expect(vplen.zivali).toEqual(vpleniStub[index].zivali)
       })
     })
