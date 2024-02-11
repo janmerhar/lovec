@@ -1,7 +1,7 @@
 import Druzina, { DruzinaDetails } from "@entities/Druzina"
-// import { DruzinaModel } from "@models/druzinaModel"
+import DruzinaModel from "@models/druzinaModel"
 import { UporabnikDetails } from "@entities/Uporabnik"
-import Revir from "@entities/Revir"
+import { RevirDetails } from "@entities/Revir"
 
 import { CreateDruzinaDetailsStub } from "@stubs/CreateDruzinaDetails.stub"
 import { CreateDruzinaDetailsPartialStub } from "@stubs/CreateDruzinaDetailsPartial.stub"
@@ -48,10 +48,7 @@ describe("DruzinaDetails", () => {
 })
 
 jest.mock("@models/druzinaModel", () => ({
-  find: jest.fn(),
-  create: jest.fn(),
-  findOneAndUpdate: jest.fn(),
-  deleteOne: jest.fn(),
+  findById: jest.fn(),
 }))
 
 describe("Druzina", () => {
@@ -76,19 +73,30 @@ describe("Druzina", () => {
     it("should create a new revirji instance of Druzina", () => {
       const druzinaStub = CreateDruzinaRevirjiStub()
 
-      const druzina = new Druzina<Revir, string>(
+      const druzina = new Druzina<RevirDetails, string>(
         druzinaStub._id.toString(),
         druzinaStub.ime,
         druzinaStub.revirji.map((revir) => {
-          return new Revir(
+          return new RevirDetails(
             revir._id.toString(),
             revir.ime,
-            revir.koordinate,
-            revir.druzina.toString()
+            revir.koordinate
           )
         }),
         druzinaStub.clani.map((clan) => clan.toString())
       )
+
+      expect(druzina).toBeInstanceOf(Druzina)
+      expect(druzina.id).toEqual(druzinaStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaStub.ime)
+
+      expect(druzina.revirji).toHaveLength(druzinaStub.revirji.length)
+      druzina.revirji.forEach((revir, index) => {
+        expect(revir).toBeInstanceOf(RevirDetails)
+        expect(revir.id).toEqual(druzinaStub.revirji[index]._id.toString())
+        expect(revir.ime).toEqual(druzinaStub.revirji[index].ime)
+        expect(revir.koordinate).toEqual(druzinaStub.revirji[index].koordinate)
+      })
     })
 
     it("should create a new clani instance of Druzina", () => {
@@ -131,15 +139,14 @@ describe("Druzina", () => {
     it("should create a new revirji clani instance of Druzina", () => {
       const druzinaStub = CreateDruzinaClaniRevirjiStub()
 
-      const druzina = new Druzina<Revir, UporabnikDetails>(
+      const druzina = new Druzina<RevirDetails, UporabnikDetails>(
         druzinaStub._id.toString(),
         druzinaStub.ime,
         druzinaStub.revirji.map((revir) => {
-          return new Revir(
+          return new RevirDetails(
             revir._id.toString(),
             revir.ime,
-            revir.koordinate,
-            revir.druzina.toString()
+            revir.koordinate
           )
         }),
         druzinaStub.clani.map((clan) => {
@@ -163,9 +170,6 @@ describe("Druzina", () => {
         expect(revir.id).toEqual(druzinaStub.revirji[index]._id.toString())
         expect(revir.ime).toEqual(druzinaStub.revirji[index].ime)
         expect(revir.koordinate).toEqual(druzinaStub.revirji[index].koordinate)
-        expect(revir.druzina).toEqual(
-          druzinaStub.revirji[index].druzina.toString()
-        )
       })
 
       expect(druzina.clani).toHaveLength(druzinaStub.clani.length)
