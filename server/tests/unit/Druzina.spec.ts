@@ -1,7 +1,15 @@
 import Druzina, { DruzinaDetails } from "@entities/Druzina"
+// import { DruzinaModel } from "@models/druzinaModel"
+import { UporabnikDetails } from "@entities/Uporabnik"
+import Revir from "@entities/Revir"
 
-import { CreateDruzinaDetailsStub } from "../helpers/stubs/CreateDruzinaDetails.stub"
-import { CreateDruzinaDetailsPartialStub } from "../helpers/stubs/CreateDruzinaDetailsPartial.stub"
+import { CreateDruzinaDetailsStub } from "@stubs/CreateDruzinaDetails.stub"
+import { CreateDruzinaDetailsPartialStub } from "@stubs/CreateDruzinaDetailsPartial.stub"
+
+import { CreateDruzinaStub } from "@stubs/CreateDruzina.stub"
+import { CreateDruzinaRevirjiStub } from "@stubs/CreateDruzinaRevirji.stub"
+import { CreateDruzinaClaniStub } from "@stubs/CreateDruzinaClani.stub"
+import { CreateDruzinaClaniRevirjiStub } from "@stubs/CreateDruzinaClaniRevirji.stub"
 
 describe("DruzinaDetails", () => {
   describe("constructor", () => {
@@ -38,12 +46,138 @@ describe("DruzinaDetails", () => {
     })
   })
 })
+
+jest.mock("@models/druzinaModel", () => ({
+  find: jest.fn(),
+  create: jest.fn(),
+  findOneAndUpdate: jest.fn(),
+  deleteOne: jest.fn(),
+}))
+
 describe("Druzina", () => {
   describe("constructor", () => {
-    it.todo("should create a new instance of Druzina")
-    it.todo("should create a new revirji instance of Druzina")
-    it.todo("should create a new clani instance of Druzina")
-    it.todo("should create a new revirji clani instance of Druzina")
+    it("should create a new instance of Druzina", () => {
+      const druzinaStub = CreateDruzinaStub()
+
+      const druzina = new Druzina(
+        druzinaStub._id.toString(),
+        druzinaStub.ime,
+        druzinaStub.revirji,
+        druzinaStub.clani
+      )
+
+      expect(druzina).toBeInstanceOf(Druzina)
+      expect(druzina.id).toEqual(druzinaStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaStub.ime)
+      expect(druzina.revirji).toEqual(druzinaStub.revirji)
+      expect(druzina.clani).toEqual(druzinaStub.clani)
+    })
+
+    it("should create a new revirji instance of Druzina", () => {
+      const druzinaStub = CreateDruzinaRevirjiStub()
+
+      const druzina = new Druzina<Revir, string>(
+        druzinaStub._id.toString(),
+        druzinaStub.ime,
+        druzinaStub.revirji.map((revir) => {
+          return new Revir(
+            revir._id.toString(),
+            revir.ime,
+            revir.koordinate,
+            revir.druzina.toString()
+          )
+        }),
+        druzinaStub.clani.map((clan) => clan.toString())
+      )
+    })
+
+    it("should create a new clani instance of Druzina", () => {
+      const druzinaStub = CreateDruzinaClaniStub()
+
+      const druzina = new Druzina<string, UporabnikDetails>(
+        druzinaStub._id.toString(),
+        druzinaStub.ime,
+        druzinaStub.revirji.map((revir) => revir.toString()),
+        druzinaStub.clani.map((clan) => {
+          return new UporabnikDetails(
+            clan._id.toString(),
+            clan.ime,
+            clan.priimek,
+            clan.slika,
+            clan.role
+          )
+        })
+      )
+
+      expect(druzina).toBeInstanceOf(Druzina)
+      expect(druzina.id).toEqual(druzinaStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaStub.ime)
+      expect(druzina.revirji).toEqual(
+        druzinaStub.revirji.map((revir) => revir.toString())
+      )
+
+      expect(druzina.clani).toHaveLength(druzinaStub.clani.length)
+
+      druzina.clani.forEach((clan, index) => {
+        expect(clan).toBeInstanceOf(UporabnikDetails)
+        expect(clan.id).toEqual(druzinaStub.clani[index]._id.toString())
+        expect(clan.ime).toEqual(druzinaStub.clani[index].ime)
+        expect(clan.priimek).toEqual(druzinaStub.clani[index].priimek)
+        expect(clan.slika).toEqual(druzinaStub.clani[index].slika)
+        expect(clan.role).toEqual(druzinaStub.clani[index].role)
+      })
+    })
+
+    it("should create a new revirji clani instance of Druzina", () => {
+      const druzinaStub = CreateDruzinaClaniRevirjiStub()
+
+      const druzina = new Druzina<Revir, UporabnikDetails>(
+        druzinaStub._id.toString(),
+        druzinaStub.ime,
+        druzinaStub.revirji.map((revir) => {
+          return new Revir(
+            revir._id.toString(),
+            revir.ime,
+            revir.koordinate,
+            revir.druzina.toString()
+          )
+        }),
+        druzinaStub.clani.map((clan) => {
+          return new UporabnikDetails(
+            clan._id.toString(),
+            clan.ime,
+            clan.priimek,
+            clan.slika,
+            clan.role
+          )
+        })
+      )
+
+      expect(druzina).toBeInstanceOf(Druzina)
+      expect(druzina.id).toEqual(druzinaStub._id.toString())
+      expect(druzina.ime).toEqual(druzinaStub.ime)
+
+      expect(druzina.revirji).toHaveLength(druzinaStub.revirji.length)
+      druzina.revirji.forEach((revir, index) => {
+        expect(revir).toBeInstanceOf(Revir)
+        expect(revir.id).toEqual(druzinaStub.revirji[index]._id.toString())
+        expect(revir.ime).toEqual(druzinaStub.revirji[index].ime)
+        expect(revir.koordinate).toEqual(druzinaStub.revirji[index].koordinate)
+        expect(revir.druzina).toEqual(
+          druzinaStub.revirji[index].druzina.toString()
+        )
+      })
+
+      expect(druzina.clani).toHaveLength(druzinaStub.clani.length)
+      druzina.clani.forEach((clan, index) => {
+        expect(clan).toBeInstanceOf(UporabnikDetails)
+        expect(clan.id).toEqual(druzinaStub.clani[index]._id.toString())
+        expect(clan.ime).toEqual(druzinaStub.clani[index].ime)
+        expect(clan.priimek).toEqual(druzinaStub.clani[index].priimek)
+        expect(clan.slika).toEqual(druzinaStub.clani[index].slika)
+        expect(clan.role).toEqual(druzinaStub.clani[index].role)
+      })
+    })
   })
 
   describe("fetchDruzina", () => {
