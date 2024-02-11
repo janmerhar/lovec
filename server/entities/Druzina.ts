@@ -77,7 +77,7 @@ export default class Druzina<R = string, C = string> {
     )
   }
 
-  static async fetchDruzine(): Promise<any> {
+  static async fetchDruzine(): Promise<DruzinaDetails[]> {
     const druzine = await DruzinaModel.aggregate([
       {
         $project: {
