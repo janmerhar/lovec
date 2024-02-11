@@ -1,9 +1,9 @@
-import type { IDruzina, IRevir, IUporabnikDetails } from "@shared/types"
+import type { IDruzina, IRevirDetails, IUporabnikDetails } from "@shared/types"
 import mongoose from "mongoose"
 
 export const CreateDruzinaClaniRevirjiStub = (): IDruzina<
   mongoose.Types.ObjectId,
-  IRevir,
+  IRevirDetails,
   IUporabnikDetails
 > => ({
   _id: new mongoose.Types.ObjectId("65c80054921864fcfd09604f"),
@@ -13,7 +13,6 @@ export const CreateDruzinaClaniRevirjiStub = (): IDruzina<
       _id: new mongoose.Types.ObjectId("65c80054921864fcfd09604f"),
       ime: "revirIme",
       koordinate: [[1, 2]],
-      druzina: new mongoose.Types.ObjectId("65c80054921864fcfd09604f"),
     },
   ],
   clani: [
