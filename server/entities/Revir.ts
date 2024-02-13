@@ -27,7 +27,7 @@ export default class Revir<D = string> {
     this.druzina = druzina
   }
 
-  static async fetchRevirji(): Promise<any> {
+  static async fetchRevirji(): Promise<Revir<DruzinaDetails>[]> {
     const revirji = await RevirModel.find().populate<{
       druzina: IDruzinaDetails
     }>({
