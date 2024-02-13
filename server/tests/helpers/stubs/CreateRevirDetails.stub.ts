@@ -1,7 +1,7 @@
 import type { IRevir } from "@shared/types"
 import mongoose from "mongoose"
 
-export const CreateRevirStub = (): IRevir => ({
+export const CreateRevirDetailsStub = (): IRevir => ({
   _id: new mongoose.Types.ObjectId("65c80054921864fcfd09604f"),
   ime: "revirIme",
   koordinate: [
