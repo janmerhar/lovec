@@ -1,6 +1,6 @@
 import RevirModel from "@models/revirModel"
 import { IDruzinaDetails } from "@shared/types"
-import Druzina, { DruzinaDetails } from "./Druzina"
+import Druzina, { DruzinaDetails } from "@entities/Druzina"
 
 export class RevirDetails {
   id: string
