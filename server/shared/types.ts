@@ -9,8 +9,7 @@ export interface IIsDeleted {
 
 export const uporabnikRoles = ["pripravnik", "lovec", "admin"]
 
-export interface IUporabnikDetails<I = mongoose.Types.ObjectId>
-  extends IIsDeleted {
+export interface IUporabnikDetails<I = mongoose.Types.ObjectId> {
   _id: I
   ime: string
   priimek: string
@@ -23,7 +22,8 @@ export interface IUporabnik<
   M = mongoose.Types.ObjectId,
   P = mongoose.Types.ObjectId,
   D = mongoose.Types.ObjectId
-> extends IUporabnikDetails<I> {
+> extends IUporabnikDetails<I>,
+    IIsDeleted {
   // Osebni podatki
   rojstniDatum: Date | null
   email: string
@@ -34,7 +34,6 @@ export interface IUporabnik<
   pripravniki: P[] | null
   // Clanstvo v neki lovski druzini
   druzina: D | null
-  isDeleted: boolean
   // Polje za osvezevanje JWT tokenov
   refresh_token: string
 }
