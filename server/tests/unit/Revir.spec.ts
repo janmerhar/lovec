@@ -22,7 +22,7 @@ describe("RevirDetails", () => {
       expect(revirDetails.ime).toEqual(revirDetailsStub.ime)
       expect(revirDetails.koordinate).toEqual(revirDetailsStub.koordinate)
     })
-})
+  })
 })
 
 jest.mock("@models/revirModel", () => ({
@@ -55,14 +55,49 @@ describe("Revir", () => {
       expect(revir.druzina).toEqual(revirDetailsStub.druzina.toString())
     })
 
+    it.todo(
+      "should create an instance of Revir with a Druzina instance" /* () => {
+      const revirDruzinaStub = CreateRevirDruzinaStub()
+
+      //
+      // TODO: DruzinaDetails constructor apparently does not exist ???
+      //
+
+      const revir = new Revir<DruzinaDetails>(
+        revirDruzinaStub._id.toString(),
+        revirDruzinaStub.ime,
+        revirDruzinaStub.koordinate,
+        new DruzinaDetails(
+          revirDruzinaStub.druzina._id.toString(),
+          revirDruzinaStub.druzina.ime
+        )
+      )
+    }*/
+    )
   })
 
   describe("fetchRevirji", () => {
+    //
+    // TODO: DruzinaDetails constructor apparently does not exist ???
+    //
     it.todo("should return an array of Revir instances")
   })
 
   describe("vnesiRevir", () => {
-    it.todo("should create a new Revir instance")
+    it("should create a new Revir instance", async () => {
+      const revirDetailsStub = CreateRevirStub()
+      RevirModel.create = jest.fn().mockResolvedValue(revirDetailsStub)
+      const revir = await Revir.vnesiRevir(
+        revirDetailsStub.ime,
+        revirDetailsStub.koordinate,
+        revirDetailsStub.druzina.toString()
+      )
+      expect(revir).toBeInstanceOf(Revir)
+      expect(revir.id).toEqual(revirDetailsStub._id.toString())
+      expect(revir.ime).toEqual(revirDetailsStub.ime)
+      expect(revir.koordinate).toEqual(revirDetailsStub.koordinate)
+      expect(revir.druzina).toEqual(revirDetailsStub.druzina.toString())
+    })
   })
 
   describe("odstraniRevir", () => {
