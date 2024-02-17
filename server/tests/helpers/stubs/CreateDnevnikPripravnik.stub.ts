@@ -13,7 +13,6 @@ export const CreateDnevnikPripravnikStub = (): IDnevnik<
     priimek: "1",
     slika: "1",
     role: "1",
-    isDeleted: false,
   },
   mentor: new mongoose.Types.ObjectId("65c78f64a7f1d997defbe16b"),
   status: "drugo",
