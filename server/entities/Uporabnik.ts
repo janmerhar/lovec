@@ -103,7 +103,7 @@ export class UserLogin extends UporabnikDetails {
 // - jwt
 // - refresh token
 
-export default class Uporabnik<M = string, D = string> {
+export default class Uporabnik<M = string, P = string, D = string> {
   id: string
   ime: string
   priimek: string
@@ -113,7 +113,7 @@ export default class Uporabnik<M = string, D = string> {
   hash: string
   role: string
   mentor: M | null
-  pripravniki: string[]
+  pripravniki: P[] | null
   druzina: D | null
   isDeleted: boolean
   refresh_token: string | null
@@ -128,7 +128,7 @@ export default class Uporabnik<M = string, D = string> {
     hash: string,
     role: string,
     mentor: M | null,
-    pripravniki: string[],
+    pripravniki: P[] | null,
     druzina: D | null,
     isDeleted: boolean,
     refresh_token: string | null
@@ -217,7 +217,7 @@ export default class Uporabnik<M = string, D = string> {
 
   static async fetchUporabnik(
     uporabnikId: string
-  ): Promise<Uporabnik<UporabnikDetails, DruzinaDetails> | null> {
+  ): Promise<Uporabnik<UporabnikDetails, string, DruzinaDetails> | null> {
     const result = await UporabnikModel.findById(uporabnikId)
       .populate<{ mentor: IUporabnikDetails }>(
         "mentor",
@@ -230,7 +230,7 @@ export default class Uporabnik<M = string, D = string> {
       return null
     }
 
-    return new Uporabnik<UporabnikDetails, DruzinaDetails>(
+    return new Uporabnik<UporabnikDetails, string, DruzinaDetails>(
       result._id.toString(),
       result.ime,
       result.priimek,
@@ -248,7 +248,7 @@ export default class Uporabnik<M = string, D = string> {
             result.mentor.role
           )
         : null,
-      result.pripravniki ? result.pripravniki.map((id) => id.toString()) : [],
+      result.pripravniki ? result.pripravniki.map((id) => id.toString()) : null,
       result.druzina
         ? new DruzinaDetails(result.druzina._id.toString(), result.druzina.ime)
         : null,
