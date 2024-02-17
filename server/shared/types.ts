@@ -212,3 +212,8 @@ export type JWTPayload = {
   uporabnikId: string
   role: string
 }
+
+export type JWTTokenPair = {
+  accessToken: string
+  refreshToken: string
+}
