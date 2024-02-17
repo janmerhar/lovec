@@ -16,7 +16,6 @@ export const CreateDruzinaClaniStub = (): IDruzina<
       priimek: "priimek",
       slika: "slika",
       role: "role",
-      isDeleted: false,
     },
   ],
 })
