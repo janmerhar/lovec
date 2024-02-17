@@ -1,6 +1,11 @@
 import UporabnikModel from "@models/uporabnikModel"
 import { DruzinaDetails } from "@entities/Druzina"
-import type { IDruzinaDetails, IUporabnikDetails } from "@shared/types"
+import type {
+  IDruzinaDetails,
+  IUporabnikDetails,
+  JWTDecoded,
+  JWTPayload,
+} from "@shared/types"
 
 import type { Request } from "express"
 
@@ -153,9 +158,7 @@ export default class Uporabnik<M = string, D = string> {
     const geslo_verify = await bcrypt.compare(password, uporabnik.hash)
 
     if (geslo_verify) {
-      // TODO
-      // @ts-ignore
-      const token = await this.JWTcreate({
+      const token = this.JWTcreate({
         uporabnikId: uporabnik._id.toString(),
         role: uporabnik.role,
       })
@@ -292,7 +295,7 @@ export default class Uporabnik<M = string, D = string> {
   // JWT
   //
 
-  static async JWTcreate(payload: string) {
+  static JWTcreate(payload: JWTPayload): string {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
     })
@@ -300,7 +303,7 @@ export default class Uporabnik<M = string, D = string> {
     return token
   }
 
-  static JWTverify(req: Request) {
+  static JWTverify(req: Request): boolean {
     try {
       if (!req.headers.authorization) {
         return false
@@ -316,7 +319,7 @@ export default class Uporabnik<M = string, D = string> {
     }
   }
 
-  static JWTpayload(req: Request) {
+  static JWTpayload(req: Request): JWTPayload {
     try {
       if (!req.headers.authorization) {
         throw new Error("ERR_JWT_NO_TOKEN")
@@ -324,19 +327,26 @@ export default class Uporabnik<M = string, D = string> {
 
       const token = req.headers.authorization.split(" ")[1]
 
-      const payload = jwt.verify(token, process.env.JWT_SECRET as string)
+      const payload = jwt.verify(
+        token,
+        process.env.JWT_SECRET as string
+      ) as JWTDecoded
 
       return {
-        // TODO
-        // @ts-ignore
         uporabnikId: payload.uporabnikId,
-        // TODO
-        // @ts-ignore
         role: payload.role,
-      }
+      } as JWTPayload
     } catch (error) {
       throw new Error("ERR_JWT_INVALID_PAYLOAD")
     }
+  }
+
+  static JWTcreateRefreshToken(payload: JWTPayload): string {
+    const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
+      expiresIn: "90 days",
+    })
+
+    return token
   }
 
   static async JWTrefresh(req: Request) {}
