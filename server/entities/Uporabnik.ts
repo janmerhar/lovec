@@ -1,9 +1,11 @@
 import UporabnikModel from "@models/uporabnikModel"
+import { DruzinaDetails } from "@entities/Druzina"
+import type { IDruzinaDetails, IUporabnikDetails } from "@shared/types"
+
+import type { Request } from "express"
+
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { Request } from "express"
-import { DruzinaDetails } from "./Druzina"
-import type { IDruzinaDetails, IUporabnikDetails } from "@shared/types"
 
 export class UporabnikDetails {
   id: string
@@ -27,12 +29,75 @@ export class UporabnikDetails {
   }
 }
 
-export class UserProfile {}
+export class UserProfile extends UporabnikDetails {
+  id: string
+  ime: string
+  priimek: string
+  slika: string
+  role: string
 
-// manjka
-// mentordetails
-// pripravnikdetails
-// admin details
+  mentor: UporabnikDetails | null
+  pripravniki: UporabnikDetails[] | null
+  druzina: DruzinaDetails | null
+
+  isDeleted: boolean
+
+  constructor(
+    id: string,
+    ime: string,
+    priimek: string,
+    slika: string,
+    role: string,
+    mentor: UporabnikDetails | null,
+    pripravniki: UporabnikDetails[] | null,
+    druzina: DruzinaDetails | null,
+    isDeleted: boolean
+  ) {
+    super(id, ime, priimek, slika, role)
+
+    this.mentor = mentor
+    this.pripravniki = pripravniki
+    this.druzina = druzina
+    this.isDeleted = isDeleted
+  }
+}
+
+export class UserLogin extends UporabnikDetails {
+  id: string
+  ime: string
+  priimek: string
+  slika: string
+  role: string
+
+  token: string
+  refresh_token: string
+
+  constructor(
+    id: string,
+    ime: string,
+    priimek: string,
+    slika: string,
+    role: string,
+    token: string,
+    refresh_token: string
+  ) {
+    super(id, ime, priimek, slika, role)
+
+    this.token = token
+    this.refresh_token = refresh_token
+  }
+}
+
+// getUporabnik
+// - iskanje uporabnika po id/email
+
+// user profile
+// - dela ne glede na to ali je uporabnik admin / pripravnik / lovec
+
+// user login
+// - jwt
+// - refresh token
+
 export default class Uporabnik<M = string, D = string> {
   id: string
   ime: string
@@ -112,6 +177,7 @@ export default class Uporabnik<M = string, D = string> {
         token,
       }
     }
+
     return null
   }
 
@@ -188,6 +254,10 @@ export default class Uporabnik<M = string, D = string> {
     )
   }
 
+  //
+  // Druzina
+  //
+
   static async odstraniClanstvoDruzine(uporabnikId: string): Promise<boolean> {
     const result = await UporabnikModel.updateOne(
       { _id: uporabnikId },
@@ -221,6 +291,7 @@ export default class Uporabnik<M = string, D = string> {
   //
   // JWT
   //
+
   static async JWTcreate(payload: string) {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
@@ -229,7 +300,7 @@ export default class Uporabnik<M = string, D = string> {
     return token
   }
 
-  static async JWTverify(req: Request) {
+  static JWTverify(req: Request) {
     try {
       if (!req.headers.authorization) {
         return false
@@ -245,10 +316,10 @@ export default class Uporabnik<M = string, D = string> {
     }
   }
 
-  static async JWTpayload(req: Request) {
+  static JWTpayload(req: Request) {
     try {
       if (!req.headers.authorization) {
-        throw new Error("Napaka pri preverjanju JWT")
+        throw new Error("ERR_JWT_NO_TOKEN")
       }
 
       const token = req.headers.authorization.split(" ")[1]
@@ -264,7 +335,7 @@ export default class Uporabnik<M = string, D = string> {
         role: payload.role,
       }
     } catch (error) {
-      throw new Error("Napaka pri preverjanju JWT")
+      throw new Error("ERR_JWT_INVALID_PAYLOAD")
     }
   }
 
