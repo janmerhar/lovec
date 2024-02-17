@@ -22,7 +22,6 @@ export const CreateDruzinaClaniRevirjiStub = (): IDruzina<
       priimek: "priimek",
       slika: "slika",
       role: "role",
-      isDeleted: false,
     },
   ],
 })
