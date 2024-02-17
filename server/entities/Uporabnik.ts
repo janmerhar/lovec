@@ -60,6 +60,11 @@ export class UporabnikProfile extends UporabnikDetails {
   ) {
     super(id, ime, priimek, slika, role)
 
+    this.id = id
+    this.ime = ime
+    this.priimek = priimek
+    this.slika = slika
+    this.role = role
     this.mentor = mentor
     this.pripravniki = pripravniki
     this.druzina = druzina
@@ -184,6 +189,9 @@ export default class Uporabnik<M = string, P = string, D = string> {
     return null
   }
 
+  //
+  // TODO: popravi, da bo delovalo za vse uporabnike
+  //
   static async register(
     ime: string,
     priimek: string,
@@ -212,9 +220,13 @@ export default class Uporabnik<M = string, P = string, D = string> {
     // Tukaj samo vrnem true ali false
     // glede na to ali je bila registracija uspešna
     // Ce ni bila, se bo sprozila izjema, ki jo obravnavam v controllerju
+    // TODO: vrni registriranega uporabnika za vsak slucaj
     return true
   }
 
+  //
+  // TODO: tebe mogoce predelam v getchUserProfile
+  //
   static async fetchUporabnik(
     uporabnikId: string
   ): Promise<Uporabnik<UporabnikDetails, string, DruzinaDetails> | null> {
@@ -349,5 +361,15 @@ export default class Uporabnik<M = string, P = string, D = string> {
     return token
   }
 
-  static async JWTrefresh(req: Request) {}
+  //
+  // TODO:
+  //
+  static async JWTrefresh(refresh_token: string): Promise<string> {
+    /*
+     * 1. Preberi refresh token
+     * 2. Preveri ali je refresh token veljaven
+     * 3. Preveri ali je refresh token pripadal uporabniku
+     */
+    return ""
+  }
 }
