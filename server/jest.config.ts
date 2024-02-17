@@ -6,4 +6,7 @@ export default {
   testEnvironment: "node",
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
   modulePaths: ["<rootDir>"],
+  transform: {
+    "^.+\\.(t|j)sx?$": "@swc/jest",
+  },
 }
