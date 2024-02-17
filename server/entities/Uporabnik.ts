@@ -29,7 +29,7 @@ export class UporabnikDetails {
   }
 }
 
-export class UserProfile extends UporabnikDetails {
+export class UporabnikProfile extends UporabnikDetails {
   id: string
   ime: string
   priimek: string
