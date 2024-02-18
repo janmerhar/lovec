@@ -13,6 +13,7 @@ import type { Request } from "express"
 
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import { logout } from "../controllers/uporabnikController"
 
 export class UporabnikDetails {
   id: string
@@ -200,6 +201,12 @@ export default class Uporabnik<M = string, P = string, D = string> {
     )
   }
 
+  static async logout(uporabnikId: string): Promise<boolean> {
+    const result = await Uporabnik.deleteRefreshToken(uporabnikId)
+
+    return result
+  }
+
   static async register(
     ime: string,
     priimek: string,
@@ -383,6 +390,18 @@ export default class Uporabnik<M = string, P = string, D = string> {
     }
 
     return uporabnik
+  }
+
+  static async deleteRefreshToken(uporabnikId: string): Promise<boolean> {
+    const uporabnik = await UporabnikModel.findByIdAndUpdate(
+      uporabnikId,
+      {
+        refresh_token: null,
+      },
+      { new: true }
+    )
+
+    return !!uporabnik
   }
 
   static async fetchUserByRefreshToken(
