@@ -191,7 +191,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
       returnUporabnik.slika,
       returnUporabnik.role,
       token,
-      uporabnik.refresh_token
+      returnUporabnik.refresh_token
     )
   }
 
