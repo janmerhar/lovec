@@ -1,12 +1,8 @@
 // Importing required modules
-import express, { Express, Request, Response, Application } from "express"
-import cors from "cors"
-
-import bodyParser from "body-parser"
+import { createExpressServer } from "routing-controllers"
 import mongoose from "mongoose"
 
 import httpLogger from "@utils/httpLogger"
-import https from "https"
 import ErrorHandler from "@utils/ErrorHandler"
 
 // parse env variables
@@ -16,58 +12,34 @@ dotenv.config()
 // Configuring port
 const port = process.env.PORT || 9000
 
-const app = express()
+import path from "path"
 
-// Configure middlewares
-app.use(
-  cors({
+const app = createExpressServer({
+  cors: {
     origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  })
-)
-app.use(express.json())
+    methods: "GET,PUT,PATCH,POST,DELETE",
+  },
+  classTransformer: true,
+  controllers: [path.join(__dirname, "/controllers/*.ts")],
+})
+
 app.use(httpLogger)
-
-app.set("view engine", "html")
-
-app.use(bodyParser.urlencoded({ extended: true }))
-
-// Static folder
-app.use(express.static(__dirname + "/views/"))
-
-// Defining route middleware
-import druzina from "@routes/druzinaRoutes"
-import opazovalnica from "@routes/opazovalnicaRoutes"
-import oprema from "@routes/opremaRoutes"
-import dnevnik from "@routes/dnevnikRoutes"
-import revir from "@routes/revirRoutes"
-import uporabnik from "@routes/uporabnikRoutes"
-import vplen from "@routes/vplenRoutes"
-import spremenljivke from "@routes/sistemskeSpremenljivkeRoutes"
-
-app.use("/", druzina)
-app.use("/druzine", druzina)
-app.use("/opazovalnice", opazovalnica)
-app.use("/oprema", oprema)
-app.use("/dnevniki", dnevnik)
-app.use("/revirji", revir)
-app.use("/uporabnik", uporabnik)
-app.use("/vpleni", vplen)
-app.use("/spremenljivke", spremenljivke)
+app.use(ErrorHandler)
 
 import SistemskeSpremenljivke from "@entities/SistemskeSpremenljivke"
+import { NextFunction } from "express"
 
 // Nastavljanje sistemskih spremenljivk
-SistemskeSpremenljivke.createInstance().then((instance) => {
-  app.set("spremenljivke", instance)
+SistemskeSpremenljivke.createInstance().then((spremenljivke) => {
+  app.set("spremenljivke", spremenljivke)
 })
 
+// TODO: implement better solution
 // Not found
-app.use((_req, res, _next) => {
-  res.status(404).json({ message: "Not found" })
+app.use((_req: Request, res: Response, _next: NextFunction) => {
+  // @ts-ignore
+  if (!res.headersSent) res.status(404).json({ message: "route not found" })
 })
-
-app.use(ErrorHandler)
 
 mongoose
   .connect(process.env.MONGO_URI as string)
