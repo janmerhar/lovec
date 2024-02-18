@@ -25,10 +25,19 @@ export default class Oprema {
     this.datum = datum
   }
 
-  static async fetchUporabnikOprema(uporabnikId: string): Promise<IOprema[]> {
+  static async fetchUporabnikOprema(uporabnikId: string): Promise<Oprema[]> {
     const oprema = await OpremaModel.find({ lastnik: uporabnikId })
 
-    return oprema
+    return oprema.map((opremaInstance) => {
+      return new Oprema(
+        opremaInstance._id.toString(),
+        opremaInstance.lastnik.toString(),
+        opremaInstance.naziv,
+        opremaInstance.tip,
+        opremaInstance.stanje,
+        opremaInstance.datum.toISOString()
+      )
+    })
   }
 
   static async vnesiOprema(
@@ -36,15 +45,22 @@ export default class Oprema {
     naziv: string,
     tip: string,
     stanje: string
-  ): Promise<IOprema> {
-    const oprema = await OpremaModel.create({
+  ): Promise<Oprema> {
+    const oprema: IOprema = await OpremaModel.create({
       lastnik: lastnikId,
       naziv: naziv,
       tip: tip,
       stanje: stanje,
     })
 
-    return oprema
+    return new Oprema(
+      oprema._id.toString(),
+      oprema.lastnik.toString(),
+      oprema.naziv,
+      oprema.tip,
+      oprema.stanje,
+      oprema.datum.toISOString()
+    )
   }
 
   static async izbrisiOprema(
@@ -56,6 +72,6 @@ export default class Oprema {
       lastnik: uporabnikId,
     })
 
-    return !oprema
+    return oprema ? true : false
   }
 }

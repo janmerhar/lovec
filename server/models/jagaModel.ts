@@ -7,6 +7,10 @@ const jagaSchema = new Schema<IJaga>({
     ref: "Uporabnik",
     required: true,
   },
+  naziv: {
+    type: String,
+    required: true,
+  },
   opis: {
     type: String,
     required: true,

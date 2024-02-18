@@ -1,0 +1,93 @@
+@baseUrl = http://localhost:1234
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
+
+###
+
+@opazovalnica = 657b34bc84f99882402cf7df
+@zacetek = 2023-12-14T16:59:59.091Z
+
+# @name postObisk
+
+POST {{baseUrl}}/obiski HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "opazovalnica": "{{opazovalnica}}",
+    "zacetek": "{{zacetek}}"
+}
+
+###
+
+@stran = 1
+
+# @name getObiskiZgodovina
+
+GET {{baseUrl}}/obiski/uporabnik/{{stran}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+# @name getAktivniObisk
+
+GET {{baseUrl}}/obiski/aktivni HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+# @name ustaviObisk
+
+PATCH {{baseUrl}}/obiski/aktivni HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+# @name getObiskiKvota
+
+GET {{baseUrl}}/obiski/aktivni/kvota HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@opazovalnica = 657b34bc84f99882402cf7df
+@datum = 2023-12-14
+
+# @name getObiski
+
+GET {{baseUrl}}/obiski/opazovalnica/{{opazovalnica}}/{{datum}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@uporabnik = 643ea251ace3bb5f15f97a3c
+@stran = 1
+
+# @name adminGetObiskiUporabnik
+
+GET {{baseUrl}}/obiski/admin/uporabnik/{{uporabnik}}/{{stran}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@obisk = 657b3ad00e60587d751f0b0d
+
+# @name adminDeleteObisk
+
+DELETE {{baseUrl}}/obiski/admin/obisk/{{obisk}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}

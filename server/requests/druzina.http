@@ -1,21 +1,106 @@
 @baseUrl = http://localhost:1234
 
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
+
 ###
 
 @druzina1 = 643d8af94a20dd560693a6ff
 
-# @name getDruzina
+# @name getDruzine
 GET {{baseUrl}}/druzine/ HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ###
 
 @druzina2 = Francetovi
+@revirji2 = [ "6578b95e3c345db50c4b5a9d" ]
+@clani2 =  [ "643e9a14598d827be449b4c4a" ]
 
-# @name postDruzina
-POST {{baseUrl}}/druzine/dodaj HTTP/1.1
-content-type: application/json
+# @name adminPostDruzina
+POST {{baseUrl}}/druzine HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "ime": "{{druzina2}}"
+    "ime": "{{druzina2}}",
+    "revirji": {{revirji2}},
+    "clani": {{clani2}}
 }
+
+
+###
+
+@druzina3 = 6578d57d0f4b1ef419fcf94c
+@revirji3 = 6578b95e3c345db50c4b5a9d
+
+# adminDodajRevir
+
+PATCH {{baseUrl}}/druzine/{{druzina3}}/revir/{{revirji3}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@revirji4 = 6578b95e3c345db50c4b5a9d
+
+# adminOdstraniRevir
+DELETE {{baseUrl}}/druzine/{{druzina3}}/revir/{{revirji4}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@clani5 = 643e9a14598d827be449b4c4
+
+# @name adminOdstraniClana
+DELETE {{baseUrl}}/druzine/{{druzina3}}/clan/{{clani5}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@druzina6 = 643d8af94a20dd560693a6ff
+@clani6 = 643e9a14598d827be449b4c4
+
+# @name adminDodajClana
+POST {{baseUrl}}/druzine/{{druzina6}}/clan/{{clani6}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@druzina7 = 6578d57d0f4b1ef419fcf94c
+
+# @name getDruzina
+
+GET {{baseUrl}}/druzine/{{druzina7}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+# @name getDruzine
+
+GET {{baseUrl}}/druzine HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@druzina8 = 643d8af94a20dd560693a6ff
+
+# @name adminDeleteDruzina
+
+DELETE {{baseUrl}}/druzine/{{druzina8}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}

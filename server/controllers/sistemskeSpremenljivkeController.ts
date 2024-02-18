@@ -1,45 +1,45 @@
 import ResponseBuilder from "@utils/ResponseBuilder"
 
-import { Request, Response, NextFunction, RequestHandler } from "express"
+import "reflect-metadata"
+import {
+  Body,
+  Get,
+  Post,
+  JsonController,
+  Req,
+  UseBefore,
+} from "routing-controllers"
 
-export const getSistemskeSpremenljivke: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const spremenljivke = req.app.get("spremenljivke")
+import { SistemskeSpremenljivkeDTO } from "@controllers/dto/sistemske-spremenljivke/sistemske-spremenljivke.dto"
 
-    res.send(ResponseBuilder.success(spremenljivke))
-  } catch (error) {
-    next(error)
+import { authUser } from "middleware/authUser"
+import SistemskeSpremenljivke from "@entities/SistemskeSpremenljivke"
+
+@JsonController("/spremenljivke")
+export class SistemskeSpremenljivkeController {
+  @Get("/")
+  @UseBefore(authUser("admin"))
+  async getSistemskeSpremenljivke(@Req() req: any) {
+    const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
+
+    return ResponseBuilder.success(spremenljivke)
   }
-}
 
-export const postSistemskeSpremenljivke: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const {
-    PAGE_SIZE,
-    JAGA_MAX_MEMBERS,
-    OBISK_MAX_LENGTH,
-    USER_OBISKS_MAX_LENGTH,
-  } = req.body
-
-  try {
-    const spremenljivke = req.app.get("spremenljivke")
+  @Post("/")
+  @UseBefore(authUser("admin"))
+  async postSistemskeSpremenljivke(
+    @Req() req: any,
+    @Body() body: SistemskeSpremenljivkeDTO
+  ) {
+    const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
     const result = await spremenljivke.updateSistemskeSpremenljivke(
-      PAGE_SIZE,
-      JAGA_MAX_MEMBERS,
-      OBISK_MAX_LENGTH,
-      USER_OBISKS_MAX_LENGTH
+      body.PAGE_SIZE,
+      body.JAGA_MAX_MEMBERS,
+      body.OBISK_MAX_LENGTH,
+      body.USER_OBISKS_MAX_LENGTH
     )
 
-    res.send(ResponseBuilder.success(result))
-  } catch (error) {
-    next(error)
+    return ResponseBuilder.success(result)
   }
 }

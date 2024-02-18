@@ -1,15 +1,21 @@
 @baseUrl = http://localhost:1234
-@token = 
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
 
 ###
 
 @naziv1 = AR-15
-@tip1 = Avtomatska puška
+@tip1 = drugo
 @stanje1 = Kot novo
 
 
 # @name postOprema
-POST {{baseUrl}}/oprema/dodaj HTTP/1.1
+POST {{baseUrl}}/oprema HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -23,19 +29,36 @@ Authorization: Bearer {{token}}
 
 
 # @name getOprema
-GET {{baseUrl}}/oprema/uporabnik HTTP/1.1
+GET {{baseUrl}}/oprema HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
 
-@opremaId3 = 64b4667e1360b2211d48a3a4
+@opremaId3 = 6577579488ea7c5b72eedb02
 
 # @name deleteOprema
-DELETE {{baseUrl}}/oprema/izbrisi HTTP/0.1
+DELETE {{baseUrl}}/oprema/{{opremaId3}} HTTP/0.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
-{
-    "id": "{{opremaId3}}"
-}
+
+###
+
+# @name adminDeleteOprema
+
+@uporabnikId = 643ea251ace3bb5f15f97a3c
+@opremaId4 = 6520529bc7aaa9ae1403ca25
+
+DELETE {{baseUrl}}/oprema/{{uporabnikId}}/{{opremaId4}} HTTP/0.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### 
+
+# @name adminGetOprema
+
+@uporabnikId2 = 643e9a14598d827be449b4c4
+GET {{baseUrl}}/oprema/{{uporabnikId2}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
