@@ -13,7 +13,6 @@ import type { Request } from "express"
 
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { logout } from "../controllers/uporabnikController"
 
 export class UporabnikDetails {
   id: string
