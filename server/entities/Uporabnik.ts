@@ -334,6 +334,16 @@ export default class Uporabnik<M = string, P = string, D = string> {
     )
   }
 
+  static async deleteUporabnik(uporabnikId: string): Promise<boolean> {
+    const result = await UporabnikModel.findByIdAndUpdate(
+      uporabnikId,
+      { isDeleted: true },
+      { new: true }
+    )
+
+    return !!result
+  }
+
   //
   // Druzina
   //
