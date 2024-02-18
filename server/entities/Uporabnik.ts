@@ -334,6 +334,45 @@ export default class Uporabnik<M = string, P = string, D = string> {
     )
   }
 
+  static async searchUporabniki(
+    name: string,
+    stran: number,
+    PAGE_SIZE: number
+  ): Promise<UporabnikDetails[]> {
+    const result = await UporabnikModel.find({
+      $or: [
+        { ime: { $regex: new RegExp(`.*${name}.*`, "i") } },
+        { priimek: { $regex: new RegExp(`.*${name}.*`, "i") } },
+        {
+          $and: [
+            { ime: { $regex: new RegExp(`.*${name.split(" ")[0]}.*`, "i") } },
+            {
+              priimek: { $regex: new RegExp(`.*${name.split(" ")[1]}.*`, "i") },
+            },
+          ],
+        },
+      ],
+      isDeleted: {
+        $eq: false,
+      },
+    })
+      .select("_id ime priimek slika role")
+      .skip((stran - 1) * PAGE_SIZE)
+      .limit(PAGE_SIZE)
+      .exec()
+
+    return result.map(
+      (uporabnik) =>
+        new UporabnikDetails(
+          uporabnik._id.toString(),
+          uporabnik.ime,
+          uporabnik.priimek,
+          uporabnik.slika,
+          uporabnik.role
+        )
+    )
+  }
+
   static async deleteUporabnik(uporabnikId: string): Promise<boolean> {
     const result = await UporabnikModel.findByIdAndUpdate(
       uporabnikId,
