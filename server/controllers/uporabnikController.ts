@@ -167,4 +167,12 @@ export class UporabnikController {
       ? ResponseBuilder.success(result)
       : ResponseBuilder.notfound()
   }
+
+  @Delete("/:uporabnikId")
+  @UseBefore(authUser("admin"))
+  async deleteUporabnik(@Param("uporabnikId") uporabnikId: string) {
+    const result = await Uporabnik.deleteUporabnik(uporabnikId)
+
+    return result ? ResponseBuilder.success(result) : ResponseBuilder.notfound()
+  }
 }
