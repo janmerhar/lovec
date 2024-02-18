@@ -83,3 +83,18 @@ export const logout: RequestHandler = async (
   console.log("logout")
   res.send("logout")
 }
+import { LoginUporabnikDTO } from "./dto/uporabnik/login-uporabnik.dto"
+
+@JsonController("/uporabnik")
+export class UporabnikController {
+  @Post("/login")
+  async postLogin(@Body() login: LoginUporabnikDTO) {
+    const result = await Uporabnik.login(login.email, login.geslo)
+
+    if (result === null) {
+      return ResponseBuilder.unauthorized("ERR_LOGIN_INVALID_CREDENTIALS")
+    }
+
+    return ResponseBuilder.success(result)
+  }
+}
