@@ -1,8 +1,13 @@
 @baseUrl = http://localhost:1234
-@token = 
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
 
 ###
-
 
 # @name getOpazovalnice
 GET {{baseUrl}}/opazovalnice/ HTTP/1.1
@@ -11,40 +16,53 @@ Authorization: Bearer {{token}}
 
 ###
 
-@opazovalnica2 = 64c5c1897a82b54cc4d93fa2
+@ime2 = opa opa opazovalnica
+@kapaciteta2 = 23
+@prespanje2 = false
+@koordinate2 = [46.123, 15.123]
 
-# @name getOpazovalnica
-GET {{baseUrl}}/opazovalnice/{{opazovalnica2}} HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer {{token}}
+# @name postOpazovalnica
 
-###
-
-@opazovalnica3 = 64c5c1897a82b54cc4d93fa2
-@datum3 = 2021-04-01
-
-# @name getOpazovalnica
-GET {{baseUrl}}/opazovalnice/{{opazovalnica3}}/{{datum3}} HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-
-###
-
-@opazovalnica4 = 64c5c1c77a82b54cc4d93fbc
-@zacetek = 2023-07-31T00:40:06+02:00
-@konec = 2023-07-31T01:40:00+02:00
-
-# @name rezervirajOpazovalnico
-POST {{baseUrl}}/opazovalnice/{{opazovalnica4}}/rezerviraj HTTP/1.1
+POST {{baseUrl}}/opazovalnice/ HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "zacetek": "{{zacetek}}",
-    "konec": "{{konec}}"
+    "ime": "{{ime2}}",
+    "kapaciteta": {{kapaciteta2}},
+    "prespanje": {{prespanje2}},
+    "koordinate": {{koordinate2}}
 }
 
 ###
 
-# @name koncajrezervacijoOpazovalnico
+@opazovalnica3 = 65c4ebdff19a501c030663bb
+
+# @name adminDeleteOpazovalnica
+
+DELETE {{baseUrl}}/opazovalnice/admin/{{opazovalnica3}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@opazovalnica4 = 65c4ebdff19a501c030663bb
+@ime4 = opa nova opazovalnica
+@kapaciteta4 = 23
+@prespanje4 = false
+@koordinate4 = [46.123, 15.123]
+
+# @name adminPatchOpazovalnica
+
+PATCH {{baseUrl}}/opazovalnice/admin/{{opazovalnica4}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "ime": "{{ime4}}",
+    "kapaciteta": {{kapaciteta4}},
+    "prespanje": {{prespanje4}},
+    "koordinate": {{koordinate4}}
+}
+
+
