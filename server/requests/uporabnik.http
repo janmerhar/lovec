@@ -1,13 +1,19 @@
 @baseUrl = http://localhost:1234
-@token = 
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
 
 ###
 
-@email1 = jn@student.si
+@email1 = pripravnik
 @geslo1 = 123
 
 # @name postLogin
-POST {{baseUrl}}/login HTTP/1.1
+POST {{baseUrl}}/uporabnik/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -15,6 +21,29 @@ Content-Type: application/json
     "geslo": "{{geslo1}}"
 }
 
+###
+
+# @name postLogout
+
+POST {{baseUrl}}/uporabnik/logout HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG9yYWJuaWtJZCI6IjY0M2VhMjUxYWNlM2JiNWYxNWY5N2EzYyIsInJvbGUiOiJwcmlwcmF2bmlrIiwiaWF0IjoxNzA4MjUyMDcyLCJleHAiOjE3MTYwMjgwNzJ9.nGTQCv2qMxfXZS1Az4xPxj0t3ooh-Sa0HCHOHVJSFoc
+
+# @name postRefreshToken
+
+
+POST {{baseUrl}}/uporabnik/refresh HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "refresh_token": "{{refresh_token}}"
+}
 
 ###
 
@@ -40,9 +69,33 @@ Authorization: Bearer {{token}}
 }
 
 ###
-@id3 = 643e993545960e569b99ab64
+@id3 = 643ea251ace3bb5f15f97a3c
 
 # @name getUporabnik
 GET {{baseUrl}}/uporabnik/{{id3}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@stran6 = 1
+@query = jan novak
+
+# @name getUporabniki
+GET {{baseUrl}}/uporabnik/vsi/{{stran6}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "query": "{{query}}"
+}
+###
+
+@id7 = 643ea251ace3bb5f15f97a3c
+
+# @name deleteUporabnik
+
+DELETE {{baseUrl}}/uporabnik/{{id7}} HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
