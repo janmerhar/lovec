@@ -1,5 +1,6 @@
 import Uporabnik from "@entities/Uporabnik"
 import ResponseBuilder from "@utils/ResponseBuilder"
+import { Body, JsonController, Post, Req, UseBefore } from "routing-controllers"
 
 import { Request, Response, NextFunction, RequestHandler } from "express"
 
@@ -83,6 +84,8 @@ export const logout: RequestHandler = async (
   console.log("logout")
   res.send("logout")
 }
+import { authUser } from "middleware/authUser"
+
 import { LoginUporabnikDTO } from "./dto/uporabnik/login-uporabnik.dto"
 
 @JsonController("/uporabnik")
@@ -94,6 +97,23 @@ export class UporabnikController {
     if (result === null) {
       return ResponseBuilder.unauthorized("ERR_LOGIN_INVALID_CREDENTIALS")
     }
+
+    return ResponseBuilder.success(result)
+  }
+
+  @Post("/logout")
+  @UseBefore(authUser("lovec", "pripravnik", "admin"))
+  async postLogout(@Req() req: any) {
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
+
+    const result = await Uporabnik.logout(uporabnikId)
+
+    return ResponseBuilder.success(result)
+  }
+
+  @Post("/refresh")
+  async postRefreshToken(@Body() body: any) {
+    const result = await Uporabnik.JWTrefresh(body.refresh_token)
 
     return ResponseBuilder.success(result)
   }
