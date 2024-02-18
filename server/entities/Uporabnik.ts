@@ -153,7 +153,12 @@ export default class Uporabnik<M = string, P = string, D = string> {
     email: string,
     password: string
   ): Promise<UserLogin | null> {
-    const uporabnik = await UporabnikModel.findOne({ email }).exec()
+    const uporabnik = await UporabnikModel.findOne({
+      email,
+      isDeleted: {
+        $ne: true,
+      },
+    }).exec()
 
     if (uporabnik == null) {
       return null
