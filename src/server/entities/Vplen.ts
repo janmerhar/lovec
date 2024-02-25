@@ -6,8 +6,12 @@ export class VplenDetails {
   datum: string
   zivali: string[]
 
-  constructor(datum: string, zivali: string[]) {
-    this.datum = datum
+  constructor(datum: Date | string, zivali: string[]) {
+    if (datum instanceof Date) {
+      this.datum = datum.toISOString()
+    } else {
+      this.datum = datum
+    }
     this.zivali = zivali
   }
 }
@@ -27,7 +31,7 @@ export default class Vplen {
     koordinate: number[],
     zival: string,
     teza: number,
-    datum: string,
+    datum: Date | string,
     bolezni: string[]
   ) {
     this.id = id
@@ -35,7 +39,13 @@ export default class Vplen {
     this.koordinate = koordinate
     this.zival = zival
     this.teza = teza
-    this.datum = datum
+
+    if (datum instanceof Date) {
+      this.datum = datum.toISOString()
+    } else {
+      this.datum = datum
+    }
+
     this.bolezni = bolezni
   }
 
@@ -71,7 +81,7 @@ export default class Vplen {
       .limit(PAGE_SIZE)
 
     return vpleni.map((vplen) => {
-      return new VplenDetails(vplen.datum.toISOString(), vplen.zivali)
+      return new VplenDetails(vplen.datum, vplen.zivali)
     })
   }
 
@@ -91,7 +101,7 @@ export default class Vplen {
         vplenInstance.koordinate,
         vplenInstance.zival,
         vplenInstance.teza,
-        vplenInstance.datum.toISOString(),
+        vplenInstance.datum,
         vplenInstance.bolezni
       )
     })
@@ -120,7 +130,7 @@ export default class Vplen {
       vplen.koordinate,
       vplen.zival,
       vplen.teza,
-      vplen.datum.toISOString(),
+      vplen.datum,
       vplen.bolezni
     )
   }

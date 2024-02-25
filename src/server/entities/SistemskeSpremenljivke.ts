@@ -89,7 +89,7 @@ export default class SistemskeSpremenljivke {
       )
 
     this.id = sistemskeSpremenljivke._id.toString()
-    this.datum = sistemskeSpremenljivke.datum
+    this.datum = sistemskeSpremenljivke.datum as Date
     this.PAGE_SIZE = sistemskeSpremenljivke.PAGE_SIZE
     this.JAGA_MAX_MEMBERS = sistemskeSpremenljivke.JAGA_MAX_MEMBERS
     this.OBISK_MAX_LENGTH = sistemskeSpremenljivke.OBISK_MAX_LENGTH
