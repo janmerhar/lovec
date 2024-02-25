@@ -307,12 +307,21 @@ export default class Uporabnik<M = string, P = string, D = string> {
       return null
     }
 
+    let rojstniDatum: string = ""
+
+    if (result.rojstniDatum) {
+      rojstniDatum =
+        result.rojstniDatum instanceof Date
+          ? result.rojstniDatum.toISOString()
+          : result.rojstniDatum
+    }
+
     return new Uporabnik<UporabnikDetails, string, DruzinaDetails>(
       result._id.toString(),
       result.ime,
       result.priimek,
       result.slika,
-      result.rojstniDatum ? result.rojstniDatum.toISOString() : "",
+      rojstniDatum,
       result.email,
       result.hash,
       result.role,
