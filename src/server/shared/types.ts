@@ -25,7 +25,7 @@ export interface IUporabnik<
 > extends IUporabnikDetails<I>,
     IIsDeleted {
   // Osebni podatki
-  rojstniDatum: Date | null
+  rojstniDatum: Date | string | null
   email: string
   hash: string
   // PRIPRAVNIK ONLY: Tip uporabnik, ki je lovec
@@ -71,7 +71,7 @@ export const zivalDomain = [
 export const bolezenDomain = ["steklina", "kuga", "drugo"]
 
 export interface IVplenDetails {
-  datum: Date
+  datum: Date | string
   zivali: (typeof zivalDomain)[number][]
 }
 
@@ -84,7 +84,7 @@ export interface IVplen<
   koordinate: [number, number]
   zival: (typeof zivalDomain)[number]
   teza: number
-  datum: Date
+  datum: Date | string
   bolezni: (typeof bolezenDomain)[number][]
 }
 
@@ -109,7 +109,7 @@ export interface IDnevnik<
   pripravnik: P
   mentor: M
   status: (typeof statusDomain)[number]
-  datum: Date
+  datum: Date | string
   ure: number
   opis: string
   delo: (typeof deloDomain)[number]
@@ -134,8 +134,8 @@ export interface IObisk<
   _id: I
   opazovalnica: O
   uporabnik: U
-  zacetek: Date
-  konec: Date
+  zacetek: Date | string
+  konec: Date | string
 }
 
 /* Oprema */
@@ -151,7 +151,7 @@ export interface IOprema<
   naziv: string
   tip: (typeof opremaTipDomain)[number]
   stanje: string
-  datum: Date
+  datum: Date | string
 }
 
 /* Revir */
@@ -186,14 +186,14 @@ export interface IJaga<
   maxUdelezeni: number
   udelezeni: U[]
   lokacija: [[number]]
-  zacetek: Date
+  zacetek: Date | string
 }
 
 /* Sistemske spremenljivke */
 
 export interface ISistemskeSpremenljivke<I = mongoose.Types.ObjectId> {
   _id: I
-  datum: Date
+  datum: Date | string
   PAGE_SIZE: number
   JAGA_MAX_MEMBERS: number
   OBISK_MAX_LENGTH: number
