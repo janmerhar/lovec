@@ -15,14 +15,19 @@ export default class Oprema {
     naziv: string,
     tip: string,
     stanje: string,
-    datum: string
+    datum: Date | string
   ) {
     this.id = id
     this.lastnik = lastnikId
     this.naziv = naziv
     this.tip = tip
     this.stanje = stanje
-    this.datum = datum
+
+    if (datum instanceof Date) {
+      this.datum = datum.toISOString()
+    } else {
+      this.datum = datum
+    }
   }
 
   static async fetchUporabnikOprema(uporabnikId: string): Promise<Oprema[]> {
@@ -35,7 +40,7 @@ export default class Oprema {
         opremaInstance.naziv,
         opremaInstance.tip,
         opremaInstance.stanje,
-        opremaInstance.datum.toISOString()
+        opremaInstance.datum
       )
     })
   }
@@ -59,7 +64,7 @@ export default class Oprema {
       oprema.naziv,
       oprema.tip,
       oprema.stanje,
-      oprema.datum.toISOString()
+      oprema.datum
     )
   }
 
