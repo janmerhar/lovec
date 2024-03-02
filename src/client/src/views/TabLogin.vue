@@ -33,7 +33,9 @@
             @keyup.enter="loginRedirect"
           ></ion-input>
         </ion-item>
-        <ion-button expand="block" @click.prevent="logout">Prijava</ion-button>
+        <ion-button expand="block" @click.prevent="loginRedirect"
+          >Prijava</ion-button
+        >
 
         <!-- TODO dodaj password reset ??? -->
         <ion-text color="primary">
