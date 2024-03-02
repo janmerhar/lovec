@@ -1,6 +1,3 @@
 module.exports = {
-  lintOnSave: false,
-  devServer: {
-    https: true,
-  },
+  lintOnSave: true,
 }
