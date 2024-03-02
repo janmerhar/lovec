@@ -8,7 +8,7 @@
       srcset=""
     />
 
-    <ion-content class="ion-padding" scroll-y="false">
+    <ion-content class="ion-padding" :scroll-y="false">
       <div class="centered-content">
         <!-- TODO pomisli, ali je ta ozanaka sploh potrebna -->
         <!-- <h3>Prijava</h3> -->
@@ -20,7 +20,7 @@
             expand="block"
             required
             v-model="email"
-            @keyup.enter="login()"
+            @keyup.enter="loginRedirect"
           ></ion-input>
         </ion-item>
         <ion-item class="ion-margin-vertical">
@@ -30,10 +30,10 @@
             type="password"
             required
             v-model="geslo"
-            @keyup.enter="login()"
+            @keyup.enter="loginRedirect"
           ></ion-input>
         </ion-item>
-        <ion-button expand="block" @click.prevent="login()">Prijava</ion-button>
+        <ion-button expand="block" @click.prevent="logout">Prijava</ion-button>
 
         <!-- TODO dodaj password reset ??? -->
         <ion-text color="primary">
@@ -44,7 +44,7 @@
   </ion-page>
 </template>
 
-<script type="ts">
+<script setup lang="ts">
 import {
   IonPage,
   useIonRouter,
@@ -52,62 +52,27 @@ import {
   IonItem,
   IonContent,
   IonButton,
-  IonText
+  IonText,
 } from "@ionic/vue"
 
-import { defineComponent } from "vue"
+import { ref } from "vue"
+import { useLoginStore } from "@/stores/useLoginStore"
 
-import { UporabnikFactory } from "@/entities/UporabnikFactory"
-import { useUporabnikStore } from "@/stores/uporabnikStore"
+const email = ref<string>("")
+const geslo = ref<string>("")
 
-export default defineComponent({
-  components: {
-    IonPage,
-    IonInput,
-    IonContent,
-    IonItem,
-    IonButton,
-    IonText
-  },
-  setup() {
-    const router = useIonRouter()
-    const uporabnikStore = useUporabnikStore()
+const { login, logout } = useLoginStore()
+const router = useIonRouter()
 
-    return { router, uporabnikStore }
-  },
-  data() {
-    return {
-      email: "",
-      geslo: "",
-    }
-  },
-  methods: {
-    async login() {
-      const uporabnik = await UporabnikFactory.login(
-        this.axios,
-        this.email,
-        this.geslo
-      )
+const loginRedirect = async () => {
+  // TODO: check fields
+  const result = await login(email.value, geslo.value)
 
-      if (uporabnik.status == 200) {
-        console.log("Prijava uspesna")
-        // Update store
-        this.uporabnikStore.login(uporabnik.data)
-
-        // Set Bearer token
-        this.axios.defaults.headers.Authorization =
-          "Bearer " + uporabnik.data.jwt.token
-
-        // console.log(this.axios.defaults.headers.Authorization)
-        // Redirect to home pageq
-        this.router.push({ name: "pripravniki" })
-      }
-      // TODO
-      // Alert wrong login data
-      // send reponse text from "message" attribute
-    },
-  },
-})
+  if (result) {
+    router.push({ name: "jage" })
+  }
+  // TODO: sicer izpiši napako
+}
 </script>
 
 <style scoped>
@@ -137,4 +102,3 @@ p {
   padding-top: 5vh;
 }
 </style>
-@/stores/uporabnikStore
