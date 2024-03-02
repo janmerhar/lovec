@@ -59,23 +59,20 @@ export const useLoginStore = defineStore("login", () => {
     return false
   }
 
-  const token = computed({
-    get: () => uporabnik.value?.token,
-    set: (val: string | undefined) => {
-      if (uporabnik.value && val !== undefined) {
-        uporabnik.value.token = val
-      }
-    },
-  })
+  const token = computed(() => uporabnik.value?.token)
+  const refreshToken = computed(() => uporabnik.value?.refresh_token)
 
-  const refreshToken = computed({
-    get: () => uporabnik.value?.refresh_token,
-    set: (val: string | undefined) => {
-      if (uporabnik.value && val !== undefined) {
-        uporabnik.value.refresh_token = val
-      }
-    },
-  })
+  const updateToken = (token: string) => {
+    if (uporabnik.value) {
+      uporabnik.value.token = token
+    }
+  }
+
+  const updateRefreshToken = (refreshToken: string) => {
+    if (uporabnik.value) {
+      uporabnik.value.refresh_token = refreshToken
+    }
+  }
 
   return {
     uporabnik,
@@ -84,5 +81,7 @@ export const useLoginStore = defineStore("login", () => {
     isLogged,
     token,
     refreshToken,
+    updateToken,
+    updateRefreshToken,
   }
 })
