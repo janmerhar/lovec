@@ -149,44 +149,19 @@ SubTabPripravniki --> CardDnevnikDescription
 
 package Factory{
   Class Uporabnik<<entity>> {
-    -ime: String
-    -priimek: String
-    -slika: String
-    -rojstniDatum: Date
-    -email: String
-    -geslo: String
-    -druzina: Druzina
-    -token: String
-' 
-    +getIme(): String
-    +getPriimek(): String
-    +getSlika(): String
-    +getRojstniDatum(): Date
-    +getEmail(): String
-    +getDruzina(): Druzina
-' 
-    +getToken(): String
-    +setToken(token: String): void
-  }
 
-  Class UporabnikFactory<<control>>{
-    +createUporabnik(): Uporabnik
-    +loginUporabnik(email: String, geslo: String): Uporabnik
-  }
+package Stores {
+  Class useLoginStore<<Store>> {
+    + uporabnik: Uporabnik
+    + isLogged: boolean
 
-  Class Lovec<<entity>>{
-    -role: String
-    -pripravniki: Pripravnik[]
-  }
-
-  Class Pripravnik<<entity>> {
-    -role: String
-    -mentor: Lovec
+    + login(): boolean
+    + logout(): boolean
+    + getToken(): string
+    + getRefreshToken(): string
+    + updateToken(): void
+    + updateRefreshToken(): void
   }
 }
-
-Lovec --|> Uporabnik
-Pripravnik --|> Uporabnik
-UporabnikFactory --> Uporabnik
 
 @enduml
