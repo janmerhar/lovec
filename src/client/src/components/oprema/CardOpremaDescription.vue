@@ -12,7 +12,7 @@
     <ion-card-content>
       {{ oprema.stanje }}
     </ion-card-content>
-    <ion-button fill="clear" @click.prevent="$emit('izbrisi', oprema)"
+    <ion-button fill="clear" @click.prevent="$emit('izbrisi', oprema.id)"
       >Izbriši</ion-button
     >
   </ion-card>
@@ -29,7 +29,7 @@ import {
 } from "@ionic/vue"
 
 import { defineComponent } from "vue"
-import { Oprema } from "@/entities/Oprema"
+import { Oprema } from "@/types"
 
 export default defineComponent({
   components: {
@@ -41,11 +41,15 @@ export default defineComponent({
     IonButton,
   },
   props: {
-    oprema: { type: Oprema, required: true },
+    oprema: {
+      type: Object as () => Oprema,
+      required: true,
+    },
   },
   emits: ["izbrisi"],
   methods: {
-    formatDate(date: Date) {
+    formatDate(datum: string) {
+      const date = new Date(datum)
       const day = date.getDate()
       const month = date.getMonth() + 1
       const year = date.getFullYear()
