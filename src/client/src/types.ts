@@ -17,6 +17,8 @@ export type JWTTokenPair = {
   refreshToken: string
 }
 
+/* Uporabnik */
+
 export type UporabnikLogin = {
   id: string
   ime: string
@@ -26,4 +28,14 @@ export type UporabnikLogin = {
 
   token: string
   refresh_token: string
+}
+
+/* Oprema */
+export interface Oprema {
+  id: string
+  lastnik: string
+  naziv: string
+  tip: string
+  stanje: string
+  datum: Date
 }
