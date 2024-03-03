@@ -32,7 +32,7 @@ export class JagaController {
   @Get("/pretekle/:stran")
   @UseBefore(authUser("pripravnik", "lovec"))
   async getPretekleJage(@Req() req: any, @Param("stran") stran: number) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
@@ -49,7 +49,7 @@ export class JagaController {
   @Get("/aktivne/:stran")
   @UseBefore(authUser("pripravnik", "lovec"))
   async getAktivneJage(@Req() req: any, @Param("stran") stran: number) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
@@ -74,7 +74,7 @@ export class JagaController {
   @Post("/")
   @UseBefore(authUser("pripravnik", "lovec"))
   async postJaga(@Req() req: any, @Body() jaga: InsertJagaDto) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
@@ -94,7 +94,7 @@ export class JagaController {
   @Patch("/jaga/:jaga/pridruzi/")
   @UseBefore(authUser("pripravnik", "lovec"))
   async pridruziJagi(@Req() req: any, @Param("jaga") jagaId: string) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Jaga.joinJaga(jagaId, uporabnikId)
 
@@ -104,7 +104,7 @@ export class JagaController {
   @Patch("/jaga/:jaga/odstrani/")
   @UseBefore(authUser("pripravnik", "lovec"))
   async odstraniIzJage(@Req() req: any, @Param("jaga") jagaId: string) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Jaga.leaveJaga(jagaId, uporabnikId)
 
@@ -130,7 +130,7 @@ export class JagaController {
   @Delete("/jaga/:jaga")
   @UseBefore(authUser("pripravnik", "lovec"))
   async deleteJaga(@Req() req: any, @Param("jaga") jagaId: string) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = Jaga.deleteJagaOrganizator(jagaId, uporabnikId)
 

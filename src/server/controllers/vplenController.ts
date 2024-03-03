@@ -23,7 +23,7 @@ export class VplenController {
   @Post("/")
   @UseBefore(authUser("pripravnik", "lovec"))
   async postVplen(@Req() req: any, @Body() vplen: InsertVplenDTO) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Vplen.vnesiVplen(
       uporabnikId,
@@ -42,7 +42,7 @@ export class VplenController {
   async getVpleni(@Req() req: any, @Param("stran") stran: number) {
     const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Vplen.fetchVpleni(
       uporabnikId,
@@ -56,7 +56,7 @@ export class VplenController {
   @Get("/:datum")
   @UseBefore(authUser("pripravnik", "lovec"))
   async getVplen(@Req() req: any, @Param("datum") datum: string) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Vplen.fetchVpleniDatum(uporabnikId, datum)
 
@@ -66,7 +66,7 @@ export class VplenController {
   @Delete("/:vplen")
   @UseBefore(authUser("pripravnik", "lovec"))
   async deleteVplen(@Req() req: any, @Param("vplen") vplenId: string) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Vplen.izbrisiVplen(uporabnikId, vplenId)
 

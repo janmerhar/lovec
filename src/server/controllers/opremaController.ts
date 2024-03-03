@@ -20,8 +20,9 @@ import { authUser } from "middleware/authUser"
 export class OpremaController {
   @Post("/")
   @UseBefore(authUser("pripravnik", "lovec"))
+  // TODO: add body validation
   async postOprema(@Req() req: any, @Body() body: any) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
     const { naziv, tip, stanje } = body
     console.log(uporabnikId, naziv, tip, stanje)
 
@@ -34,7 +35,7 @@ export class OpremaController {
   @Delete("/:oprema")
   @UseBefore(authUser("pripravnik", "lovec"))
   async deleteOprema(@Req() req: any, @Param("oprema") oprema: string) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Oprema.izbrisiOprema(uporabnikId, oprema)
 
@@ -44,7 +45,7 @@ export class OpremaController {
   @Get("/")
   @UseBefore(authUser("pripravnik", "lovec"))
   async getOprema(@Req() req: any) {
-    const { uporabnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Oprema.fetchUporabnikOprema(uporabnikId)
 

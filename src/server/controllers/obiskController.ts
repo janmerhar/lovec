@@ -22,7 +22,7 @@ export class ObiskController {
   @Post("/")
   @UseBefore(authUser("pripravnik", "lovec"))
   async postObiskVnesi(@Req() req: any, @Body() obisk: InsertObiskDTO) {
-    const { uporabnikId: uporabnik } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: uporabnik } = Uporabnik.JWTpayload(req)
 
     const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
     const kvota = spremenljivke.USER_OBISKS_MAX_LENGTH
@@ -56,7 +56,7 @@ export class ObiskController {
   @Get("/uporabnik/:stran")
   @UseBefore(authUser("pripravnik", "lovec"))
   async getPretekliObiski(@Req() req: any, @Param("stran") stran: number) {
-    const { uporabnikId: uporabnik } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: uporabnik } = Uporabnik.JWTpayload(req)
 
     const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 
@@ -72,7 +72,7 @@ export class ObiskController {
   @Get("/aktivni")
   @UseBefore(authUser("pripravnik", "lovec"))
   async getAktivniObiski(@Req() req: any) {
-    const { uporabnikId: uporabnik } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: uporabnik } = Uporabnik.JWTpayload(req)
 
     const result = await Obisk.fetchUporabnikActiveObisk(uporabnik)
 
@@ -82,7 +82,7 @@ export class ObiskController {
   @Patch("/aktivni")
   @UseBefore(authUser("pripravnik", "lovec"))
   async patchZakljuciObisk(@Req() req: any) {
-    const { uporabnikId: uporabnik } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: uporabnik } = Uporabnik.JWTpayload(req)
 
     const result = await Obisk.endUporabnikObisk(uporabnik)
 
@@ -94,7 +94,7 @@ export class ObiskController {
   @Get("/aktivni/kvota")
   @UseBefore(authUser("pripravnik", "lovec"))
   async getKvotaObiskov(@Req() req: any) {
-    const { uporabnikId: uporabnik } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: uporabnik } = Uporabnik.JWTpayload(req)
 
     const spremenljivke: SistemskeSpremenljivke = req.app.get("spremenljivke")
 

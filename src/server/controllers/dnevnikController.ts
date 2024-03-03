@@ -24,7 +24,7 @@ export class DnevnikController {
   @Get("/mentor/:datum")
   @UseBefore(authUser("lovec"))
   async getDnevnikPripravniki(@Req() req: any, @Param("datum") datum: string) {
-    const { uporabnikId: mentorId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: mentorId } = Uporabnik.JWTpayload(req)
     const result = await Dnevnik.fetchDnevnikiMentor(mentorId, datum)
 
     return ResponseBuilder.success(result)
@@ -33,7 +33,7 @@ export class DnevnikController {
   @Post("/")
   @UseBefore(authUser("pripravnik"))
   async postDnevnikVnesi(@Req() req: any, @Body() dnevnik: InsertDnevnikDTO) {
-    const { uporabnikId: pripravnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: pripravnikId } = Uporabnik.JWTpayload(req)
 
     const uporabnik = await Uporabnik.fetchUporabnik(pripravnikId)
 
@@ -67,7 +67,7 @@ export class DnevnikController {
   @Get("/pripravnik/:stran")
   @UseBefore(authUser("pripravnik"))
   async getDnevnikPripravnik(@Req() req: any, @Param("stran") stran: number) {
-    const { uporabnikId: pripravnikId } = await Uporabnik.JWTpayload(req)
+    const { uporabnikId: pripravnikId } = Uporabnik.JWTpayload(req)
 
     const result = await Dnevnik.fetchDnevnikiPripravnik(pripravnikId, stran)
 
