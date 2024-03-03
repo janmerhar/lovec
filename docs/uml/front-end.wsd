@@ -150,6 +150,16 @@ SubTabPripravniki --> CardDnevnikDescription
 package Factory{
   Class Uporabnik<<entity>> {
 
+
+  Class Oprema<<entity>> {
+    id: string
+    lastnik: string
+    naziv: string
+    tip: string
+    stanje: string
+    datum: string
+  }
+
 package Stores {
   Class useLoginStore<<Store>> {
     + uporabnik: Uporabnik
@@ -162,6 +172,21 @@ package Stores {
     + updateToken(): void
     + updateRefreshToken(): void
   }
+
+  Class useOpremaStore<<Store>> {
+    + oprema: Oprema[]
+    
+    + getOprema(): Oprema[]
+    + deleteOprema(): boolean
+    + postOprema(): Oprema | null
+    + adminGetOprema(): Oprema[]
+    + adminDeleteOprema(): boolean
+  }
+
+  useOpremaStore *.. Oprema: uses
+  useOpremaStore *.. useRequest: uses
+}
+
   Class "useRequest<T>"<<Composable>> {
     - baseUrl: string
 
