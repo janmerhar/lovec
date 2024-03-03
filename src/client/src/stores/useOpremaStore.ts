@@ -21,8 +21,20 @@ export const useOpremaStore = defineStore("oprema", () => {
     return null
   }
 
+  const deleteOprema = async (opremaId: string): Promise<boolean> => {
+    const response = await request.delete<boolean>(`/oprema/${opremaId}`)
+
+    if (response) {
+      return response.data
+    }
+
+    return false
+  }
+
+
   return {
     oprema,
     getOprema,
+    deleteOprema,
   }
 })
