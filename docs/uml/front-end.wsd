@@ -162,6 +162,17 @@ package Stores {
     + updateToken(): void
     + updateRefreshToken(): void
   }
+  Class "useRequest<T>"<<Composable>> {
+    - baseUrl: string
+
+    - requestLong(): CapacitorHTTP
+    - createAuthenticatedRequest(): CapacitorHTTP
+    - refreshTokenCall(): JWTTokenPair
+    + request(): T
+  }
+
+  useRequest *.. useLoginStore: uses
+  useRequest *.. JWTTokenPair: uses
 }
 
 @enduml
