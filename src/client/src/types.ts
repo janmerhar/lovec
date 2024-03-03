@@ -37,5 +37,5 @@ export interface Oprema {
   naziv: string
   tip: string
   stanje: string
-  datum: Date
+  datum: string
 }
