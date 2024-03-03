@@ -4,23 +4,26 @@ import type { HttpResponse, HttpOptions } from "@capacitor/core"
 
 import { useLoginStore } from "@/stores/useLoginStore"
 import type { APIResponse, JWTTokenPair } from "@/types"
+import { storeToRefs } from "pinia"
 
 export const useRequest = () => {
   const baseURL = ref<string>(`${process.env.VUE_APP_API_URL}`)
+
+  const loginStore = useLoginStore()
 
   const requestLong = async (
     method: string,
     url: string,
     options: HttpOptions
   ) => {
-    const { token } = useLoginStore()
+    const { token } = storeToRefs(loginStore)
     const requestOptions = Object.assign(
       {},
       {
         url: baseURL.value,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token.value}`,
         },
       },
       options,
@@ -35,7 +38,7 @@ export const useRequest = () => {
 
   const refreshTokenCall =
     async (): Promise<APIResponse<JWTTokenPair> | null> => {
-      const { refreshToken } = useLoginStore()
+      const { refreshToken } = loginStore
 
       if (!refreshToken) {
         return null
@@ -82,12 +85,12 @@ export const useRequest = () => {
       // In case refresh is not successful
       // we are logging out the user
       if (refresh == null) {
-        const { logout } = useLoginStore()
+        const { logout } = loginStore
         logout()
         return null
       }
 
-      const { updateToken, updateRefreshToken } = useLoginStore()
+      const { updateToken, updateRefreshToken } = loginStore
       updateToken(refresh.data?.accessToken)
       updateRefreshToken(refresh.data?.refreshToken)
 
