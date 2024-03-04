@@ -64,10 +64,13 @@ export const useRequest = () => {
     }
 
   const createAuthenticatedRequest = (method: string) => {
+    // TODO: mogoce ne bi rad vracal null, ker mi to pokvari veliko stvari
+    // https://www.dhiwise.com/post/typescript-error-handling-pitfalls-and-how-to-avoid-them
+    // raje vrzem error...
     return async <T>(
       url: string,
       options: HttpOptions = { url: "" }
-    ): Promise<APIResponse<T> | null> => {
+    ): Promise<APIResponse<T>> => {
       // Making request for the first time
       const result = await requestLong(method, url, options)
 
@@ -77,7 +80,7 @@ export const useRequest = () => {
 
       // Refreshing token
       if (result.data.status != 401) {
-        return null
+        throw new Error("TOKEN_NON_EXISTENT")
       }
 
       const refresh = await refreshTokenCall()
@@ -87,7 +90,7 @@ export const useRequest = () => {
       if (refresh == null) {
         const { logout } = loginStore
         logout()
-        return null
+        throw new Error("TOKEN_REFRESH_FAILED")
       }
 
       const { updateToken, updateRefreshToken } = loginStore
