@@ -1,45 +1,58 @@
 import { defineStore } from "pinia"
-import { ref } from "vue"
+import { computed, ComputedRef } from "vue"
 import type { Oprema } from "@/types"
 
 import { useRequest } from "@/composables/useRequest"
+import { usePagination } from "@/composables/usePagination"
 
-export const useOpremaStore = defineStore("oprema", () => {
-  const { request } = useRequest()
+export const useOpremaStore = defineStore(
+  "oprema",
+  () => {
+    const { request } = useRequest()
 
-  const oprema = ref<Oprema[]>([])
+    const getOprema = async (): Promise<Oprema[]> => {
+      const response = await request.get<Oprema[]>("/oprema")
 
-  const getOprema = async (): Promise<Oprema[]> => {
-    const response = await request.get<Oprema[]>("/oprema")
-
-    oprema.value = response.data as Oprema[]
-
-    return response.data
-  }
-
-  const deleteOprema = async (opremaId: string): Promise<boolean> => {
-    const response = await request.delete<boolean>(`/oprema/${opremaId}`)
-
-    if (response) {
       return response.data
     }
 
-    return false
+    const deleteOprema = async (opremaId: string): Promise<boolean> => {
+      const response = await request.delete<boolean>(`/oprema/${opremaId}`)
+
+      if (response) {
+        return response.data
+      }
+
+      return false
+    }
+
+    const { items, fetchMore, refreshPagination } = usePagination<Oprema>(
+      getOprema,
+      true
+    )
+
+    //   const postOprema = async (naziv: string, tip: string, stanje: string) => {}
+
+    //   const adminGetOprema = async (uporabnikId: string) => {}
+
+    //   const adminDeleteOprema = async (uporabnikId: string, opremaId: string) => {}
+
+    const opremaVariable = items
+    const oprema: ComputedRef<Oprema[]> = computed(() => opremaVariable.value)
+
+    return {
+      oprema,
+      opremaVariable,
+      fetchMore,
+      refreshPagination,
+      getOprema,
+      deleteOprema,
+      // postOprema,
+      // adminGetOprema,
+      // adminDeleteOprema,
+    }
+  },
+  {
+    persist: true,
   }
-
-  //   const postOprema = async (naziv: string, tip: string, stanje: string) => {}
-
-  //   const adminGetOprema = async (uporabnikId: string) => {}
-
-  //   const adminDeleteOprema = async (uporabnikId: string, opremaId: string) => {}
-
-  return {
-    oprema,
-    getOprema,
-    deleteOprema,
-    // postOprema,
-    // adminGetOprema,
-    // adminDeleteOprema,
-  }
-  // TODO: make it perssistant
-})
+)
