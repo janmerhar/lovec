@@ -198,6 +198,17 @@ package Stores {
 
   useRequest *.. useLoginStore: uses
   useRequest *.. JWTTokenPair: uses
+
+  Class "usePagination<T>"<<Composable>> {
+    + usePagination<T>(fetchFunctionTemplate: (page?: number) => T[], isSinglePage: boolean)
+    + items: T[]
+
+    - page: number
+    - isMore: boolean
+
+    + fetchMore(): void 
+    + refresh(): void
+  }
 }
 
 @enduml
