@@ -41,6 +41,7 @@ export interface Oprema {
 }
 
 /* Vplen */
+
 export interface VplenDetails {
   datum: string
   zivali: string[]
@@ -54,4 +55,14 @@ export interface Vplen {
   teza: number
   datum: string
   bolezni: string[]
+}
+
+/* Opazovalnica */
+
+export interface Opazovalnica {
+  id: string
+  ime: string
+  kapaciteta: number
+  prespanje: number
+  koordinate: number[]
 }
