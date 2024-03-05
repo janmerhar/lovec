@@ -39,3 +39,19 @@ export interface Oprema {
   stanje: string
   datum: string
 }
+
+/* Vplen */
+export interface VplenDetails {
+  datum: string
+  zivali: string[]
+}
+
+export interface Vplen {
+  id: string
+  uporabnik: string
+  koordinate: number[]
+  zival: string
+  teza: number
+  datum: string
+  bolezni: string[]
+}
