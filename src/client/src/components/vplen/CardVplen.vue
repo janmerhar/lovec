@@ -1,8 +1,10 @@
 <template>
   <ion-card :button="true">
     <ion-card-header>
-      <ion-card-subtitle>{{ lovec }}</ion-card-subtitle>
-      <ion-card-title>{{ formatDateToString(datum) }}</ion-card-title>
+      <!-- TODO: popravi tole -->
+      <!-- MOGOCE, razmisli -->
+      <ion-card-subtitle>Lovec lovec -- todo</ion-card-subtitle>
+      <ion-card-title>{{ formatDateToString(vplen.datum) }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -33,7 +35,7 @@ import {
 
 import { defineComponent } from "vue"
 
-import { Vplen } from "@/entities/Vplen"
+import type { VplenDetails } from "@/types"
 
 export default defineComponent({
   components: {
@@ -48,16 +50,8 @@ export default defineComponent({
     IonLabel,
   },
   props: {
-    datum: {
-      type: String,
-      required: true,
-    },
-    lovec: {
-      type: String,
-      required: true,
-    },
     vplen: {
-      type: Array as () => Vplen[],
+      type: Object as () => VplenDetails,
       required: true,
     },
   },
