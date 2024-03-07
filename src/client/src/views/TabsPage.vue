@@ -9,63 +9,58 @@
       <ion-tab-bar slot="bottom">
         <ion-tab-button
           tab="jage"
-          :class="{ 'active-tab': selectedTab === 'jage' }"
+          :class="selectedTabStyle('jage')"
           @click="clickOnTab('jage')"
         >
           <font-awesome-icon
             :icon="['fas', 'people-group']"
-            size="xl"
+            size="2xl"
             fixed-width
           />
-          <ion-label>Jage</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
           tab="pripravniki"
           @click="clickOnTab('pripravniki')"
-          :class="{ 'active-tab': selectedTab === 'pripravniki' }"
+          :class="selectedTabStyle('pripravniki')"
         >
           <font-awesome-icon
             :icon="['fas', 'address-book']"
-            size="xl"
+            size="2xl"
             fixed-width
           />
-          <ion-label>Dnevniki</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
           tab="opazovalnica"
           @click.prevent="clickOnTab('opazovalnica')"
-          :class="{ 'active-tab': selectedTab === 'opazovalnica' }"
+          :class="selectedTabStyle('opazovalnica')"
         >
           <font-awesome-icon
             :icon="['fas', 'tower-observation']"
-            size="xl"
+            size="2xl"
             fixed-width
           />
-          <ion-label>Opazovalnice</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
           tab="oprema"
           @click.prevent="clickOnTab('oprema')"
-          :class="{ 'active-tab': selectedTab === 'oprema' }"
+          :class="selectedTabStyle('oprema')"
         >
           <font-awesome-icon
             :icon="['fas', 'person-rifle']"
-            size="xl"
+            size="2xl"
             fixed-width
           />
-          <ion-label>Oprema</ion-label>
         </ion-tab-button>
 
         <ion-tab-button
           tab="vplen"
           @click.prevent="clickOnTab('vplen')"
-          :class="{ 'active-tab': selectedTab === 'vplen' }"
+          :class="selectedTabStyle('vplen')"
         >
-          <font-awesome-icon :icon="['fas', 'paw']" size="xl" fixed-width />
-          <ion-label>Vplen</ion-label>
+          <font-awesome-icon :icon="['fas', 'paw']" size="2xl" fixed-width />
         </ion-tab-button>
       </ion-tab-bar>
       <!-- End bottom tool bar -->
@@ -73,48 +68,39 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonLabel,
   IonPage,
   IonRouterOutlet,
   useIonRouter,
 } from "@ionic/vue"
 import ToolbarNavigation from "@/components/ToolbarNavigation.vue"
 
-import { defineComponent } from "vue"
+import { computed } from "vue"
+import { useRoute } from "vue-router"
 
-export default defineComponent({
-  components: {
-    IonTabBar,
-    IonTabButton,
-    IonTabs,
-    IonLabel,
-    IonPage,
-    IonRouterOutlet,
-    ToolbarNavigation,
-  },
-  setup() {
-    const router = useIonRouter()
-    return { router }
-  },
-  data() {
-    return {}
-  },
-  computed: {
-    selectedTab() {
-      return this.$route.name
-    },
-  },
-  methods: {
-    clickOnTab(tabName: string) {
-      this.router.push({ name: tabName })
-    },
-  },
+// TODO: naredi composable
+const router = useIonRouter()
+const route = useRoute()
+
+const selectedTab = computed(() => {
+  return route.name
 })
+
+const selectedTabStyle = (selectedValue: string) => {
+  return {
+    "active-tab":
+      typeof selectedTab.value == "string" &&
+      selectedTab.value === selectedValue,
+  }
+}
+
+const clickOnTab = (tabName: string) => {
+  router.push({ name: tabName })
+}
 </script>
 
 <style scoped>
