@@ -3,14 +3,16 @@
     <ion-tabs>
       <!-- Top tool bar -->
       <toolbar-navigation></toolbar-navigation>
+
       <!-- Component view -->
       <ion-router-outlet></ion-router-outlet>
+
       <!-- Bootom tool bar -->
       <ion-tab-bar slot="bottom">
         <ion-tab-button
           tab="jage"
           :class="selectedTabStyle('jage')"
-          @click="clickOnTab('jage')"
+          @click="redirectTo('jage')"
         >
           <font-awesome-icon
             :icon="['fas', 'people-group']"
@@ -21,7 +23,7 @@
 
         <ion-tab-button
           tab="pripravniki"
-          @click="clickOnTab('pripravniki')"
+          @click="redirectTo('pripravniki')"
           :class="selectedTabStyle('pripravniki')"
         >
           <font-awesome-icon
@@ -33,7 +35,7 @@
 
         <ion-tab-button
           tab="opazovalnica"
-          @click.prevent="clickOnTab('opazovalnica')"
+          @click.prevent="redirectTo('opazovalnica')"
           :class="selectedTabStyle('opazovalnica')"
         >
           <font-awesome-icon
@@ -45,7 +47,7 @@
 
         <ion-tab-button
           tab="oprema"
-          @click.prevent="clickOnTab('oprema')"
+          @click.prevent="redirectTo('oprema')"
           :class="selectedTabStyle('oprema')"
         >
           <font-awesome-icon
@@ -57,7 +59,7 @@
 
         <ion-tab-button
           tab="vplen"
-          @click.prevent="clickOnTab('vplen')"
+          @click.prevent="redirectTo('vplen')"
           :class="selectedTabStyle('vplen')"
         >
           <font-awesome-icon :icon="['fas', 'paw']" size="2xl" fixed-width />
@@ -75,32 +77,12 @@ import {
   IonTabs,
   IonPage,
   IonRouterOutlet,
-  useIonRouter,
 } from "@ionic/vue"
 import ToolbarNavigation from "@/components/ToolbarNavigation.vue"
 
-import { computed } from "vue"
-import { useRoute } from "vue-router"
+import { useTabNavigation } from "@/composables/useTabNavigation"
 
-// TODO: naredi composable
-const router = useIonRouter()
-const route = useRoute()
-
-const selectedTab = computed(() => {
-  return route.name
-})
-
-const selectedTabStyle = (selectedValue: string) => {
-  return {
-    "active-tab":
-      typeof selectedTab.value == "string" &&
-      selectedTab.value === selectedValue,
-  }
-}
-
-const clickOnTab = (tabName: string) => {
-  router.push({ name: tabName })
-}
+const { selectedTabStyle, redirectTo } = useTabNavigation()
 </script>
 
 <style scoped>
