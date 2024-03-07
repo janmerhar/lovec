@@ -38,9 +38,7 @@ export const useRequest = () => {
 
   const refreshTokenCall =
     async (): Promise<APIResponse<JWTTokenPair> | null> => {
-      const { refreshToken } = loginStore
-
-      if (!refreshToken) {
+      if (!loginStore.refreshToken) {
         return null
       }
 
@@ -50,7 +48,7 @@ export const useRequest = () => {
           "Content-Type": "application/json",
         },
         data: {
-          refresh_token: refreshToken,
+          refresh_token: loginStore.refreshToken,
         },
       }
 
