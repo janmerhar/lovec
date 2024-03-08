@@ -46,7 +46,7 @@ export const usePagination = <T>(
     return null
   }
 
-  const refreshPagination = async () => {
+  const refreshPagination = async (event?: CustomEvent) => {
     // Saving total pages fetched
     const page_count = page.value
 
@@ -58,6 +58,11 @@ export const usePagination = <T>(
     // Refetching only pages that were already fetched
     for (let i = 1; i <= page_count; i++) {
       await fetchMore()
+    }
+
+    // Checking if loading spinner is created by ion-infinite-scroll
+    if (event) {
+      event.detail.complete()
     }
   }
 
