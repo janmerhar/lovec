@@ -4,7 +4,7 @@ import _ from "lodash"
 export type DeleteFunction<T> = (data: T) => Promise<boolean>
 export const useCRUD = <T>(items: Ref<T[]>) => {
 
-  const createItem = <I>(call: CreateFunction<I, T>) => {
+  const createItem = <I>(call: CreateFunction<I, T>, addToStart = false) => {
     return async <T>(data: I): Promise<T | null> => {
       // in case it fails, add to queue
       const result = await call(data)
@@ -14,7 +14,11 @@ export const useCRUD = <T>(items: Ref<T[]>) => {
       }
 
       // in case it fails, add to queue
+      if (addToStart) {
       items.value.unshift(result)
+      } else {
+        items.value.push(result)
+      }
 
       return result as T
     }
