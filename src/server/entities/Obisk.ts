@@ -24,6 +24,38 @@ export default class Obisk<O = string, U = string> {
     this.konec = konec
   }
 
+  private static async fetchObisk(
+    obiskId: string
+  ): Promise<Obisk<Opazovalnica, UporabnikDetails> | null> {
+    const result = await ObiskModel.findById(obiskId)
+      .populate<{ opazovalnica: IOpazovalnica }>(
+        "opazovalnica",
+        "_id ime kapaciteta prespanje koordinate"
+      )
+      .populate<{ uporabnik: IUporabnikDetails }>(
+        "uporabnik",
+        "_id ime priimek slika role"
+      )
+
+    if (!result) {
+      return null
+    }
+
+    return new Obisk(
+      result._id.toString(),
+      new Opazovalnica(result.opazovalnica),
+      new UporabnikDetails(
+        result.uporabnik._id.toString(),
+        result.uporabnik.ime,
+        result.uporabnik.priimek,
+        result.uporabnik.slika,
+        result.uporabnik.role
+      ),
+      result.zacetek.toString(),
+      result.konec.toString()
+    )
+  }
+
   static async fetchObiski(
     opazovalnicaId: string,
     datum: string = new Date().toISOString()
@@ -88,6 +120,7 @@ export default class Obisk<O = string, U = string> {
       .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
+    console.log(result)
     return result.map((obisk) => {
       return new Obisk<Opazovalnica, UporabnikDetails>(
         obisk._id.toString(),
@@ -263,7 +296,7 @@ export default class Obisk<O = string, U = string> {
     uporabnikId: string,
     zacetek: string,
     konec: string
-  ): Promise<Obisk | null> {
+  ): Promise<Obisk<Opazovalnica, UporabnikDetails> | null> {
     const zasedenost = await Obisk.isOpazovalnicaZasedena(opazovalnicaId)
 
     if (zasedenost) {
@@ -283,19 +316,19 @@ export default class Obisk<O = string, U = string> {
       konec: konec,
     })
 
-    return new Obisk(
-      result._id.toString(),
-      result.opazovalnica.toString(),
-      result.uporabnik.toString(),
-      result.zacetek.toString(),
-      result.konec.toString()
-    )
+    if (!result) {
+      return null
+    }
+
+    const resultPopulated = await Obisk.fetchObisk(result._id.toString())
+
+    return resultPopulated
   }
 
   static async endUporabnikObisk(
     uporabnikId: string,
     datum: string = new Date().toISOString()
-  ): Promise<Obisk | null> {
+  ): Promise<Obisk<Opazovalnica, UporabnikDetails> | null> {
     const result = await ObiskModel.findOneAndUpdate(
       {
         uporabnik: uporabnikId,
@@ -312,19 +345,15 @@ export default class Obisk<O = string, U = string> {
       return null
     }
 
-    return new Obisk(
-      result._id.toString(),
-      result.opazovalnica.toString(),
-      result.uporabnik.toString(),
-      result.zacetek.toString(),
-      result.konec.toString()
-    )
+    const resultPopulated = await Obisk.fetchObisk(result._id.toString())
+
+    return resultPopulated
   }
 
   static async endObisk(
     obiskId: string,
     konec: string = new Date().toString()
-  ): Promise<Obisk | null> {
+  ): Promise<Obisk<Opazovalnica, UporabnikDetails> | null> {
     const result = await ObiskModel.findByIdAndUpdate(
       obiskId,
       {
@@ -337,13 +366,8 @@ export default class Obisk<O = string, U = string> {
       return null
     }
 
-    return new Obisk(
-      result._id.toString(),
+    const resultPopulated = await Obisk.fetchObisk(result._id.toString())
 
-      result.opazovalnica.toString(),
-      result.uporabnik.toString(),
-      result.zacetek.toString(),
-      result.konec.toString()
-    )
+    return resultPopulated
   }
 }
