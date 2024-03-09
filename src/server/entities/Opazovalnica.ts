@@ -35,8 +35,8 @@ export default class Opazovalnica {
     return new Opazovalnica(result)
   }
 
-  static async fetchOpazovalnice(): Promise<Opazovalnica[]> {
-    const result = await OpazovalnicaModel.find()
+  static async fetchOpazovalnice(isDeleted = false): Promise<Opazovalnica[]> {
+    const result = await OpazovalnicaModel.find({ isDeleted })
 
     return result.map((opazovalnica) => {
       return new Opazovalnica(opazovalnica)
