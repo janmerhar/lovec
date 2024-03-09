@@ -1,9 +1,10 @@
 import { defineStore } from "pinia"
-import type { Opazovalnica } from "@/types"
+import { ComputedRef, computed } from "vue"
+import type { InsertOpazovalnica, Opazovalnica } from "@/types"
 
 import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
-import { ComputedRef, computed } from "vue"
+import { useCRUD } from "@/composables/useCRUD"
 
 export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
   const { request } = useRequest()
@@ -25,9 +26,35 @@ export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
     () => opazovalniceVariable.value
   )
 
+  const createOpazovalnica = async (
+    opazovalnica: InsertOpazovalnica
+  ): Promise<Opazovalnica> => {
+    const response = await request.post<Opazovalnica>("/opazovalnice/", {
+      url: "",
+      data: opazovalnica,
+    })
+
+    return response.data
+  }
+
+  const deleteOpazovalnica = async (
+    opazovalnica: Opazovalnica
+  ): Promise<boolean> => {
+    const response = await request.delete<boolean>(
+      `/opazovalnice/admin/${opazovalnica.id}`
+    )
+
+    return response.data
+  }
+
+  const crud = useCRUD<Opazovalnica>(opazovalniceVariable)
+  const { createItem, deleteItem } = crud
+
   return {
     opazovalnice,
     fetchMore,
     refreshPagination,
+    createItem: createItem(createOpazovalnica),
+    deleteItem: deleteItem(deleteOpazovalnica),
   }
 })
