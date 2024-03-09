@@ -120,7 +120,6 @@ export default class Obisk<O = string, U = string> {
       .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
-    console.log(result)
     return result.map((obisk) => {
       return new Obisk<Opazovalnica, UporabnikDetails>(
         obisk._id.toString(),
