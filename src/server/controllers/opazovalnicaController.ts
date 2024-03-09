@@ -21,13 +21,13 @@ export class OpazovalnicaController {
   @Get("/")
   @UseBefore(authUser("pripravnik", "lovec", "admin"))
   async getOpazovalnice() {
-    const result = await Opazovalnica.fetchOpazovalnice()
+    const result = await Opazovalnica.fetchOpazovalnice(false)
 
     return ResponseBuilder.success(result)
   }
 
   @Post("/")
-  @UseBefore(authUser("pripravnik", "lovec", "admin"))
+  @UseBefore(authUser("admin"))
   async postOpazovalnica(@Body() opazovalnica: InsertOpazovalnicaDTO) {
     const result = await Opazovalnica.addOpazovalnica(
       opazovalnica.ime,
