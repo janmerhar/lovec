@@ -87,6 +87,14 @@ export interface Vplen {
   bolezni: string[]
 }
 
+export interface InsertVplen {
+  koordinate: number[]
+  zival: string
+  teza: number
+  datum: string
+  bolezni: string[]
+}
+
 /* Opazovalnica */
 
 export interface Opazovalnica {
