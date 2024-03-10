@@ -31,6 +31,10 @@ export default class ResponseBuilder {
     return new ResponseBuilder(401, null, message)
   }
 
+  static forbidden(message: string) {
+    return new ResponseBuilder(403, null, message)
+  }
+
   static token(token: string) {
     return new ResponseBuilder(200, token, "success")
   }
