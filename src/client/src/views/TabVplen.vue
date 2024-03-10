@@ -13,7 +13,7 @@
         <card-vplen
           lovec="Ime dobi iz store-a"
           :vplen="vplen"
-          @click="() => {}"
+          @click="openModalVplenDescription(vplen)"
         ></card-vplen>
       </template>
 
@@ -42,6 +42,8 @@ import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollComponent.vue"
 
+import type { VplenDetails } from "@/types"
+
 import { useVplenDetailsStore } from "@/stores/useVplenDetailsStore"
 
 const vplenDetailsStore = useVplenDetailsStore()
@@ -50,6 +52,16 @@ const { fetchMore, refreshPagination } = vplenDetailsStore
 const refresh = async (event: CustomEvent) => {
   await refreshPagination()
   event.detail.complete()
+}
+
+const openModalVplenDescription = async (selection: VplenDetails) => {
+  const modal = await modalController.create({
+    component: ModalVplenDescription,
+    componentProps: {
+      selection: selection,
+    },
+  })
+  modal.present()
 }
 
 onBeforeMount(async () => {
