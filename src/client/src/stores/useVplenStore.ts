@@ -1,48 +1,55 @@
 import { defineStore } from "pinia"
-import { ref } from "vue"
+import { ComputedRef, computed, ref } from "vue"
 import type { Vplen, VplenDetails } from "@/types"
 
 import { useRequest } from "@/composables/useRequest"
+import { usePagination } from "@/composables/usePagination"
 
 export const useVplenStore = defineStore("vplen", () => {
   const { request } = useRequest()
 
-  const vpleniDetails = ref<VplenDetails[]>([])
-  const vpleni = ref<Vplen[]>([])
+  const selectedVplenDetails = ref<VplenDetails | null>(null)
 
-  const postVplen = async () => {
-    return
+  const getVplenDetails = async (datum: string): Promise<VplenDetails[]> => {
+    const response = await request.get<VplenDetails[]>(`/vpleni/${datum}`)
+
+    return response.data
   }
 
-  const getVpleni = async (stran: number): Promise<VplenDetails[] | null> => {
-    const response = await request.get<VplenDetails[]>(`/vpleni/moji/${stran}`)
-
-    if (response) {
-      vpleniDetails.value = response.data as VplenDetails[]
-
-      return response.data
+  const getCurrentVplenDetails = async (): Promise<VplenDetails[]> => {
+    if (!selectedVplenDetails.value) {
+      return []
     }
 
-    return null
+    const result = await getVplenDetails(selectedVplenDetails.value.datum)
+
+    return result
   }
 
-  const getVplen = async (datum: string) => {
-    const response = await request.get<Vplen[]>(`/vpleni/${datum}`)
+  //
+  // Pagination
+  //
 
-    if (response) {
-      vpleni.value = response.data as Vplen[]
+  const { items, fetchMore, refreshPagination } = usePagination<VplenDetails>(
+    getCurrentVplenDetails,
+    true
+  )
 
-      return response.data
-    }
+  const vpleniVariable = items
+  const vpleni: ComputedRef<VplenDetails[]> = computed(
+    () => vpleniVariable.value
+  )
 
-    return null
+  const setVplenDetails = async (newVplenDetails: VplenDetails) => {
+    selectedVplenDetails.value = newVplenDetails
+
+    await refreshPagination()
   }
-
 
   return {
-    vpleniDetails,
     vpleni,
-    getVpleni,
-    getVplen,
+    setVplenDetails,
+    fetchMore,
+    refreshPagination,
   }
 })
