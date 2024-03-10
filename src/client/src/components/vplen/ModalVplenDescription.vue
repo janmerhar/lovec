@@ -4,67 +4,40 @@
   >
   <!--  -->
   <ion-content class="ion-padding">
-    <h3 class="ion-text-center ion-padding-bottom">
-      {{ formatDateToString($attrs.datum as string) }}
-    </h3>
+    <h3 class="ion-text-center ion-padding-bottom">Datum</h3>
 
-    <template v-for="vplen in vpleni" :key="vplen.id">
+    <template v-for="vplen in vplenStore.vpleni" :key="vplen.id">
       <card-vplen-description :vplen="vplen"></card-vplen-description>
     </template>
   </ion-content>
   <!--  -->
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { IonContent, modalController } from "@ionic/vue"
-import { defineComponent, ref } from "vue"
+import { onMounted, useAttrs } from "vue"
 
 import CardVplenDescription from "@/components/vplen/CardVplenDescription.vue"
 import HeaderModal from "@/components/ui-components/HeaderModal.vue"
 
-import { Vplen } from "@/entities/Vplen"
+const cancel = () => {
+  return modalController.dismiss(null, "cancel")
+}
 
-export default defineComponent({
-  name: "ModalVplenDescription",
-  components: {
-    IonContent,
-    CardVplenDescription,
-    HeaderModal,
-  },
-  data() {
-    return {
-      vpleni: ref<Vplen[]>([]),
-    }
-  },
-  methods: {
-    cancel() {
-      return modalController.dismiss(null, "cancel")
-    },
+const confirm = () => {
+  return modalController.dismiss(null, "confirm")
+}
 
-    confirm() {
-      return modalController.dismiss(null, "confirm")
-    },
+import { useVplenStore } from "@/stores/useVplenStore"
+import { VplenDetails } from "@/types"
 
-    formatDateToString(date: string) {
-      const datum = new Date(date)
-      const formattedDate = datum.toLocaleDateString("sl-SI", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
+const vplenStore = useVplenStore()
 
-      return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
-    },
+const { setVplenDetails } = vplenStore
 
-    async fetchVplenPodrobnosti(datum: string) {
-      const vpleni = await Vplen.fetchVplen(this.axios, datum)
+const attrs = useAttrs()
 
-      this.vpleni = vpleni.data
-    },
-  },
-  async beforeMount() {
-    await this.fetchVplenPodrobnosti(this.$attrs.datum as string)
-  },
+onMounted(async () => {
+  await setVplenDetails(attrs.selection as VplenDetails)
 })
 </script>
