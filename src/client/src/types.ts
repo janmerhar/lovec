@@ -93,7 +93,14 @@ export interface Opazovalnica {
   id: string
   ime: string
   kapaciteta: number
-  prespanje: number
+  prespanje: boolean
+  koordinate: number[]
+}
+
+export interface InsertOpazovalnica {
+  ime: string
+  kapaciteta: number
+  prespanje: boolean
   koordinate: number[]
 }
 
@@ -107,3 +114,24 @@ export interface Obisk {
   konec: string
 }
 
+export interface InsertObisk {
+  opazovalnica: string
+  zacetek?: string
+}
+
+
+/* Druzina */
+
+export interface DruzinaDetails {
+  id: string
+  ime: string
+  revirjiCount?: number
+  claniCount?: number
+}
+
+export interface Druzina<R = string, C = string> {
+  id: string
+  ime: string
+  revirji: R[]
+  clani: C[]
+}
