@@ -11,9 +11,7 @@ import TabIzkaznica from "@/views/TabIzkaznica.vue"
 import TabPripravniki from "@/views/TabPripravniki.vue"
 import TabVplen from "@/views/TabVplen.vue"
 import TabLogin from "@/views/TabLogin.vue"
-
-// const uporabnikStore = uporabnikStore()
-// console.log(uporabnikStore.token)
+import TabMentor from "@/views/TabMentor.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -45,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "pripravniki",
         name: "pripravniki",
         component: TabPripravniki,
+      },
+      {
+        path: "mentor",
+        name: "mentor",
+        component: TabMentor,
       },
       {
         path: "vplen",
