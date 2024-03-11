@@ -127,6 +127,19 @@ export interface InsertObisk {
   zacetek?: string
 }
 
+/* Jaga */
+
+// TODO: popravi, da bo organizator in udelezeni UporabnikDetails
+export interface Jaga<O = string, U = string> {
+  id: string
+  organizator: O
+  naziv: string
+  opis: string
+  udelezeni: U[]
+  maxUdelezeni: number
+  lokacija: number[][]
+  zacetek: string
+}
 
 /* Druzina */
 
@@ -142,4 +155,24 @@ export interface Druzina<R = string, C = string> {
   ime: string
   revirji: R[]
   clani: C[]
+}
+
+/* Dnevnik */
+
+export interface Dnevnik {
+  id: string
+  pripravnikId: UporabnikDetails
+  mentorId: UporabnikDetails
+  datum: string
+  delo: string
+  ure: number
+  opis: string
+  status: string
+}
+
+export interface InsertDnevnik {
+  datum: string
+  ure: number
+  opis: string
+  delo: string
 }
