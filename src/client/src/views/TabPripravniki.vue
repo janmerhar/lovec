@@ -1,63 +1,41 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <refresher-component :refresh="refresh"></refresher-component>
-      <!-- Mentor -->
-      <template v-if="uporabnikStore.isMentor">
-        <h3 class="ion-text-center">Dnevniki za dan</h3>
-        <datepicker-horizontal
-          @change="(novDatum) => updateDatum(novDatum)"
-        ></datepicker-horizontal>
-      </template>
+      <refresher-component :refresh="refreshPagination"></refresher-component>
 
       <!-- Pripravnik -->
-      <template v-else>
-        <h3 class="ion-text-center">Dnevniki</h3>
-      </template>
+      <h3 class="ion-text-center">Dnevniki</h3>
       <!--  -->
-      <template v-for="dnevnik in dnevniki" :key="dnevnik.id">
-        <template v-if="uporabnikStore.isMentor">
-          <card-dnevnik-description
-            :subtitle="formatDateToString(dnevnik.datum)"
-            :title="`${dnevnik.pripravnik.ime} ${dnevnik.pripravnik.priimek}`"
-            :showButtons="uporabnikStore.isMentor"
-            :dnevnik="dnevnik"
-            @accept="
-              (izbranDnevnik) => spremeniStatus(izbranDnevnik, 'potrjen')
-            "
-            @reject="
-              (izbranDnevnik) => spremeniStatus(izbranDnevnik, 'zavrnjen')
-            "
-          ></card-dnevnik-description>
-        </template>
-
-        <template v-else>
-          <card-dnevnik-description
-            :subtitle="'Mentor ' + uporabnikStore.mentorIme"
-            :title="formatDateToString(dnevnik.datum)"
-            :showButtons="uporabnikStore.isMentor"
-            :dnevnik="dnevnik"
-          ></card-dnevnik-description>
-        </template>
+      <template v-for="dnevnik in pripravnikStore.dnevniki" :key="dnevnik.id">
+        <card-dnevnik-description
+          :subtitle="'Mentor '"
+          :title="dnevnik.datum"
+          :showButtons="false"
+          :dnevnik="dnevnik"
+        ></card-dnevnik-description>
       </template>
       <!--  -->
 
-      <!-- Gumb samo za pripravnika, da vnese porocilo -->
-      <template v-if="!uporabnikStore.isMentor">
-        <fab-button-add
-          @click.prevent="openModalPripravnikAdd"
-        ></fab-button-add>
-      </template>
+      <fab-button-add
+        @click.prevent="
+          createItem({
+            datum: new Date().toISOString(),
+            delo: 'drugo',
+            opis: 'Nov opis',
+            ure: 1,
+          })
+        "
+      ></fab-button-add>
 
       <infinite-scroll-component
-        :scroll="scroll"
-        v-if="!uporabnikStore.isMentor"
+        :scroll="fetchMore"
+        v-if="true"
       ></infinite-scroll-component>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   modalController,
   IonPage,
@@ -65,148 +43,37 @@ import {
   InfiniteScrollCustomEvent,
 } from "@ionic/vue"
 
-import { defineComponent } from "vue"
+import { defineComponent, onBeforeMount } from "vue"
 import { ref } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
 import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
-import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
 import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollComponent.vue"
 
-import { useUporabnikStore } from "@/stores/uporabnikStore"
+//
+// Nova koda
+//
 
-import { Dnevnik } from "@/entities/Dnevnik"
+import { usePripravnikDnevnikStore } from "@/stores/usePripravnikDnevnikStore"
 
-export default defineComponent({
-  components: {
-    IonPage,
-    IonContent,
-    FabButtonAdd,
-    CardDnevnikDescription,
-    RefresherComponent,
-    DatepickerHorizontal,
-    InfiniteScrollComponent,
-  },
-  data() {
-    return {
-      datum: new Date().toISOString().slice(0, 10),
-      dnevniki: ref<Dnevnik[]>([]),
-      stran: 1,
-    }
-  },
-  setup() {
-    const uporabnikStore = useUporabnikStore()
+const pripravnikStore = usePripravnikDnevnikStore()
+const { fetchMore, refreshPagination, createItem } = pripravnikStore
 
-    return {
-      uporabnikStore,
-    }
-  },
-  methods: {
-    async openModalPripravnikAdd() {
-      const modal = await modalController.create({
-        component: ModalDnevnikAdd,
-        componentProps: {
-          mentorIme: this.uporabnikStore.mentorIme,
-        },
-      })
-      modal.present()
-    },
-
-    formatDateToString(date: string) {
-      const datum = new Date(date)
-      const formattedDate = datum.toLocaleDateString("sl-SI", {
-        weekday: "long",
-        day: "numeric",
-        month: "numeric",
-        year: "numeric",
-      })
-
-      return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
-    },
-
-    //
-    // Pripravnik
-    //
-    async pripravnikDnevnikiStran(stran: number): Promise<Dnevnik[]> {
-      const dnevniki = await Dnevnik.fetchDnevnikiPripravnik(this.axios, stran)
-
-      return dnevniki.data
-    },
-
-    async pripravnikDnevniki() {
-      const concatDnevniki: Dnevnik[] = []
-
-      for (let i = 1; i <= this.stran; i++) {
-        const dnevniki = await this.pripravnikDnevnikiStran(i)
-
-        concatDnevniki.push(...dnevniki)
-      }
-
-      this.dnevniki = concatDnevniki
-      this.dnevniki = [...new Set(this.dnevniki)]
-    },
-
-    async pripravnikDnevnikiFetchNextPage() {
-      this.stran += 1
-
-      const dnevniki = await this.pripravnikDnevnikiStran(this.stran)
-
-      if (dnevniki.length === 0) {
-        this.stran = Math.max(this.stran - 1, 1)
-        return
-      }
-
-      this.dnevniki.push(...dnevniki)
-      this.dnevniki = [...new Set(this.dnevniki)]
-    },
-
-    //
-    // Mentor
-    //
-    async mentorDnevniki() {
-      const dnevniki = await Dnevnik.fetchDnevnikiMentor(this.axios, this.datum)
-
-      this.dnevniki = []
-      this.dnevniki = dnevniki.data
-    },
-
-    async spremeniStatus(izbranDnevnik: Dnevnik, status: string) {
-      const result = await izbranDnevnik.spremeniStatus(status)
-
-      await this.mentorDnevniki()
-    },
-
-    async fetchDnevniki() {
-      // Mentor
-      if (this.uporabnikStore.isMentor) {
-        await this.mentorDnevniki()
-      }
-      // Pripravnik
-      else {
-        await this.pripravnikDnevniki()
-      }
-    },
-
-    async refresh(event: CustomEvent) {
-      await this.fetchDnevniki()
-
-      event.detail.complete()
-    },
-
-    async updateDatum(novDatum: Date) {
-      this.datum = novDatum.toISOString().slice(0, 10)
-
-      this.fetchDnevniki()
-    },
-
-    async scroll() {
-      await this.pripravnikDnevnikiFetchNextPage()
-    },
-  },
-  async beforeMount() {
-    this.fetchDnevniki()
-  },
+onBeforeMount(async () => {
+  await fetchMore()
 })
+
+// export default defineComponent({
+//   methods: {
+//     async openModalPripravnikAdd() {
+//       const modal = await modalController.create({
+//         component: ModalDnevnikAdd,
+//         componentProps: {
+//           mentorIme: this.uporabnikStore.mentorIme,
+//         },
+//       })
+//       modal.present()
+//     },
 </script>
