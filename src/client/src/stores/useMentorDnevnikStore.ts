@@ -1,4 +1,4 @@
-import { defineStore } from "pinia"
+import { defineStore, storeToRefs } from "pinia"
 import { computed, ref } from "vue"
 import type { Dnevnik } from "@/types"
 
@@ -6,16 +6,16 @@ import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
 import type { FetchFunction } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
+import { useSelect } from "@/composables/useSelect"
 
 export const useMentorDnevnikStore = defineStore("mentorDnevnik", () => {
   const { request } = useRequest()
 
-  const datum = ref<string>(new Date().toISOString().split("T")[0])
-
-  const setDatum = async (newDatum: string) => {
-    datum.value = newDatum
-    await refreshPagination()
-  }
+  //
+  // select
+  //
+  const select = useSelect<string>(new Date().toISOString().split("T")[0])
+  const { selectedItem, selectItem } = select
 
   const getDnevnikiDatum = async (datum: string): Promise<Dnevnik[]> => {
     const response = await request.get<Dnevnik[]>(`/dnevniki/mentor/${datum}`)
@@ -24,7 +24,11 @@ export const useMentorDnevnikStore = defineStore("mentorDnevnik", () => {
   }
 
   const getDnevniki = async (): Promise<Dnevnik[]> => {
-    return getDnevnikiDatum(datum.value)
+    if (!selectedItem.value) {
+      return []
+    }
+
+    return getDnevnikiDatum(selectedItem.value)
   }
 
   //
@@ -78,7 +82,8 @@ export const useMentorDnevnikStore = defineStore("mentorDnevnik", () => {
     dnevniki,
     fetchMore,
     refreshPagination,
-    datum,
+    selectedItem,
+    selectItem: selectItem(refreshPagination),
     updateItemPotrjen: updateItem(updateDnevnikPotrjen),
     updateItemZavrnjen: updateItem(updateDnevnikZavrnjen),
   }
