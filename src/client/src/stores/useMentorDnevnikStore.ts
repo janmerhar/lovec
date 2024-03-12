@@ -51,7 +51,7 @@ export const useMentorDnevnikStore = defineStore("mentorDnevnik", () => {
     }
 
     const response = await request.patch<Dnevnik>(
-      `/dnevniki/${oldVal.id}/potrjen`
+      `/dnevniki/${oldVal.id}/status/potrjen`
     )
 
     return response.data
@@ -65,7 +65,7 @@ export const useMentorDnevnikStore = defineStore("mentorDnevnik", () => {
     }
 
     const response = await request.patch<Dnevnik>(
-      `/dnevniki/${oldVal.id}/zavrnjen`
+      `/dnevniki/${oldVal.id}/status/zavrnjen`
     )
 
     return response.data
