@@ -129,14 +129,22 @@ export interface InsertObisk {
 
 /* Jaga */
 
-// TODO: popravi, da bo organizator in udelezeni UporabnikDetails
-export interface Jaga<O = string, U = string> {
+export interface Jaga {
   id: string
-  organizator: O
+  organizator: UporabnikDetails
   naziv: string
   opis: string
-  udelezeni: U[]
+  udelezeni: UporabnikDetails[]
   maxUdelezeni: number
+  lokacija: number[][]
+  zacetek: string
+}
+
+export interface InsertJaga {
+  organizator: string
+  naziv: string
+  opis: string
+  udelezeni: string[]
   lokacija: number[][]
   zacetek: string
 }
