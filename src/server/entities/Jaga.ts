@@ -33,6 +33,9 @@ export class Jaga<O = string, U = string> {
   }
 
   // TODO: preverjanje, ali je dosti prostora
+  // TODO: preverjanje, ali je uporabnik ze notri
+  // uporabi mongodb "triggerje"
+  // https://stackoverflow.com/questions/43124366/how-to-trigger-a-function-whenever-a-mongoose-document-is-updated
   static async insertJaga(
     organizator: string,
     naziv: string,
@@ -41,7 +44,10 @@ export class Jaga<O = string, U = string> {
     maxUdelezeni: number,
     lokacija: number[][],
     zacetek: string
-  ): Promise<Jaga | null> {
+    // TODO: za vse metode, ki vracajo jago
+    // naredi tako, da bodo vedno uporabniki in organizatorji
+    // poulated
+  ): Promise<Jaga<UporabnikDetails, UporabnikDetails> | null> {
     const result = await JagaModel.create({
       organizator,
       naziv,
@@ -56,16 +62,9 @@ export class Jaga<O = string, U = string> {
       return null
     }
 
-    return new Jaga(
-      result._id.toString(),
-      result.organizator.toString(),
-      result.naziv,
-      result.opis,
-      result.udelezeni.map((udelezeni) => udelezeni.toString()),
-      result.maxUdelezeni,
-      result.lokacija,
-      result.zacetek.toString()
-    )
+    const populatedResult = await Jaga.fetchJaga(result._id.toString())
+
+    return populatedResult
   }
 
   static async updateJaga(
@@ -197,7 +196,7 @@ export class Jaga<O = string, U = string> {
     isActive: boolean,
     stran: number,
     PAGE_SIZE: number = 10
-  ): Promise<Jaga<UporabnikDetails, string>[]> {
+  ): Promise<Jaga<UporabnikDetails, UporabnikDetails>[]> {
     const zacetek = isActive ? { $gte: new Date() } : { $lt: new Date() }
 
     const result = await JagaModel.find({ zacetek })
@@ -205,13 +204,16 @@ export class Jaga<O = string, U = string> {
         "organizator",
         "_id ime priimek slika role"
       )
-
+      .populate<{ udelezeni: IUporabnikDetails[] }>(
+        "udelezeni",
+        "_id ime priimek slika role"
+      )
       .sort({ zacetek: -1 })
       .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
     return result.map((jaga) => {
-      return new Jaga<UporabnikDetails, string>(
+      return new Jaga<UporabnikDetails, UporabnikDetails>(
         jaga._id.toString(),
         new UporabnikDetails(
           jaga.organizator._id.toString(),
@@ -222,7 +224,16 @@ export class Jaga<O = string, U = string> {
         ),
         jaga.naziv,
         jaga.opis,
-        jaga.udelezeni.map((udelezeni) => udelezeni.toString()),
+        jaga.udelezeni.map(
+          (udelezeni) =>
+            new UporabnikDetails(
+              udelezeni._id.toString(),
+              udelezeni.ime,
+              udelezeni.priimek,
+              udelezeni.slika,
+              udelezeni.role
+            )
+        ),
         jaga.maxUdelezeni,
         jaga.lokacija,
         jaga.zacetek.toString()
@@ -238,7 +249,7 @@ export class Jaga<O = string, U = string> {
     isActive: boolean,
     stran: number,
     PAGE_SIZE: number = 10
-  ): Promise<Jaga<UporabnikDetails, string>[]> {
+  ): Promise<Jaga<UporabnikDetails, UporabnikDetails>[]> {
     const zacetek = isActive ? { $gte: new Date() } : { $lt: new Date() }
 
     const result = await JagaModel.find({ udelezeni: uporabnikId, zacetek })
@@ -246,13 +257,16 @@ export class Jaga<O = string, U = string> {
         "organizator",
         "_id ime priimek slika role"
       )
-
+      .populate<{ udelezeni: IUporabnikDetails[] }>(
+        "udelezeni",
+        "_id ime priimek slika role"
+      )
       .sort({ zacetek: -1 })
       .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
     return result.map((jaga) => {
-      return new Jaga<UporabnikDetails, string>(
+      return new Jaga<UporabnikDetails, UporabnikDetails>(
         jaga._id.toString(),
         new UporabnikDetails(
           jaga.organizator._id.toString(),
@@ -263,7 +277,16 @@ export class Jaga<O = string, U = string> {
         ),
         jaga.naziv,
         jaga.opis,
-        jaga.udelezeni.map((udelezeni) => udelezeni.toString()),
+        jaga.udelezeni.map(
+          (udelezeni) =>
+            new UporabnikDetails(
+              udelezeni._id.toString(),
+              udelezeni.ime,
+              udelezeni.priimek,
+              udelezeni.slika,
+              udelezeni.role
+            )
+        ),
         jaga.maxUdelezeni,
         jaga.lokacija,
         jaga.zacetek.toString()
