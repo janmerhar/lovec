@@ -1,7 +1,7 @@
 <template>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button>
-      <ion-icon :icon="add"></ion-icon>
+    <ion-fab-button color="tertiary">
+      <ion-icon :icon="add" size="large"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </template>
@@ -25,3 +25,10 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+ion-fab-button,
+ion-fag {
+  --border-radius: 100000rem;
+}
+</style>
