@@ -23,8 +23,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "login",
     component: TabLogin,
   },
+  //
+  // Admin routes
+  //
   {
-    path: "/tabs/",
+    // mogoce preimenujem tabs v user ali pa uporabnik
+    path: "/user/",
     name: "tabs",
     component: TabsPage,
     redirect: { name: "oprema" },
@@ -71,6 +75,74 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  //
+  // Admin routes
+  //
+  {
+    path: "/admin",
+    name: "admin",
+    component: () => import("@/views/admin/TabsPageAdmin.vue"),
+    redirect: { name: "oprema" },
+    children: [
+      {
+        path: "druzine",
+        name: "admin_druzine",
+        component: async () => import("@/views/admin/TabAdminDruzine.vue"),
+      },
+      {
+        path: "jage",
+        name: "admin_jage",
+        component: async () => import("@/views/admin/TabAdminJage.vue"),
+      },
+      {
+        path: "sistem",
+        name: "admin_sistem",
+        component: async () => import("@/views/admin/TabAdminSistem.vue"),
+      },
+      {
+        path: "uporabniki",
+        name: "admin_uporabniki",
+        component: async () => import("@/views/admin/TabAdminUporabniki.vue"),
+      },
+      {
+        path: "oprema",
+        name: "admin_oprema",
+        component: async () =>
+          import("@/views/admin/TabAdminUporabnikOprema.vue"),
+      },
+      {
+        path: "profil",
+        name: "admin_profil",
+        component: async () =>
+          import("@/views/admin/TabAdminUporabnikProfil.vue"),
+      },
+      {
+        path: "vpleni",
+        name: "admin_vpleni",
+        component: async () =>
+          import("@/views/admin/TabAdminUporabnikVpleni.vue"),
+      },
+      // Zemljevid
+      {
+        path: "zemljevid",
+        name: "admin_zemljevid",
+        component: async () => import("@/views/admin/TabAdminZemljevid.vue"),
+      },
+      {
+        path: "zemljevid/opazovalnice",
+        name: "admin_opazovalnice",
+        component: async () => import("@/views/admin/TabAdminOpazovalnice.vue"),
+      },
+      {
+        path: "zemljevid/revirji",
+        name: "admin_revirji",
+        component: async () => import("@/views/admin/TabAdminRevirji.vue"),
+      },
+    ],
+  },
+  //
+  // Page not found
+  //
   { path: "/:pathMatch(.*)*", redirect: { name: "login" } },
 ]
 
