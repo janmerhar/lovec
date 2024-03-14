@@ -24,7 +24,8 @@ http://ionicframework.com/docs/theming/ */
  * https://huemint.com/brand-3/#palette=eae6ea-005b28-595a5b-75c758
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 /** Ionic CSS Variables **/
 :root {
@@ -111,7 +112,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-tint: #d7e0d5;
 
   /* Custom font */
-  --ion-font-family: "Roboto Slab", sans-serif;
+  --ion-font-family: "Roboto", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -293,9 +294,13 @@ h6 {
 }
 
 ion-fab-button {
-  --border-radius: var(--border-rad) !important;
-  width: 50px;
-  height: 50px;
+  --border-radius: 100000rem !important;
+  width: 64px;
+  height: 64px;
+}
+
+body {
+  font-family: var(--ion-font-family);
 }
 
 @media (min-width: 1200px) {
