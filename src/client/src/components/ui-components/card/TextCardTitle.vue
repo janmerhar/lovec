@@ -7,6 +7,7 @@
       margin-bottom: 0rem;
       font-weight: 800;
       letter-spacing: 2px;
+      color: var(--ion-text-color);
     "
   >
     <slot></slot>
