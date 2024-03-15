@@ -2,14 +2,12 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <refresher-component :refresh="refreshPagination"></refresher-component>
-      <!--  -->
       <h3 class="ion-text-center">Evidenca opreme</h3>
-      <!--  -->
 
       <template v-for="elOprema in opremaStore.oprema" :key="elOprema.id">
         <card-oprema
           :oprema="elOprema"
-          @izbrisi="(oprema: Oprema) => deleteItem(oprema)"
+          @izbrisi="() => deleteItem(elOprema)"
         ></card-oprema>
       </template>
       <!--  -->
