@@ -3,18 +3,10 @@
     <ion-content :fullscreen="true">
       <refresher-component :refresh="refreshPagination"></refresher-component>
 
-      <!-- Pripravnik -->
       <h3 class="ion-text-center">Dnevniki</h3>
-      <!--  -->
       <template v-for="dnevnik in pripravnikStore.dnevniki" :key="dnevnik.id">
-        <card-dnevnik-description
-          :subtitle="'Mentor '"
-          :title="dnevnik.datum"
-          :showButtons="false"
-          :dnevnik="dnevnik"
-        ></card-dnevnik-description>
+        <card-dnevnik-description :dnevnik="dnevnik"></card-dnevnik-description>
       </template>
-      <!--  -->
 
       <fab-button-add
         @click.prevent="
@@ -36,15 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import {
-  modalController,
-  IonPage,
-  IonContent,
-  InfiniteScrollCustomEvent,
-} from "@ionic/vue"
+import { modalController, IonPage, IonContent } from "@ionic/vue"
 
-import { defineComponent, onBeforeMount } from "vue"
-import { ref } from "vue"
+import { onBeforeMount } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import ModalDnevnikAdd from "@/components/pripravniki/ModalDnevnikAdd.vue"
