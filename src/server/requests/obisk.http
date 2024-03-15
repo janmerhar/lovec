@@ -9,8 +9,8 @@
 
 ###
 
-@opazovalnica = 657b34bc84f99882402cf7df
-@zacetek = 2023-12-14T16:59:59.091Z
+@opazovalnica0 = 65ec796db398de44959b3821
+@zacetek0 = 2023-12-14T16:59:59.091Z
 
 # @name postObisk
 
@@ -19,8 +19,8 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "opazovalnica": "{{opazovalnica}}",
-    "zacetek": "{{zacetek}}"
+    "opazovalnica": "{{opazovalnica0}}",
+    "zacetek": "{{zacetek0}}"
 }
 
 ###
