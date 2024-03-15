@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
+    <ion-content>
       <refresher-component :refresh="refreshPagination"></refresher-component>
 
       <ion-button @click="updateItemPotrjen(mentorStore.dnevniki[0])"
@@ -8,18 +8,16 @@
       >
       <ion-button @click="selectItem('2019-01-02')">change datum</ion-button>
 
-      <!-- Pripravnik -->
       <h3 class="ion-text-center">Dnevniki</h3>
-      <!--  -->
+
       <template v-for="dnevnik in mentorStore.dnevniki" :key="dnevnik.id">
         <card-dnevnik-description
-          :subtitle="'Mentor '"
-          :title="dnevnik.datum"
-          :showButtons="true"
           :dnevnik="dnevnik"
+          :show-buttons="true"
+          @accept="() => {}"
+          @reject="() => {}"
         ></card-dnevnik-description>
       </template>
-      <!--  -->
 
       <infinite-scroll-component
         :scroll="fetchMore"
