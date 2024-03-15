@@ -6,17 +6,24 @@ import ResponseBuilder from "@utils/ResponseBuilder"
 export const authUser = (...roles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { role } = await Uporabnik.JWTpayload(req)
+      const { role } = Uporabnik.JWTpayload(req)
 
+      // User is not authorized
+      // Torej uporabnik nima pravilne vloge
       if (roles.indexOf(role) === -1) {
         return res
-          .status(401)
-          .send(ResponseBuilder.unauthorized("Unauthorized"))
+          .status(403)
+          .send(ResponseBuilder.forbidden("ERR_USER_ROLE_NOT_AUTHORIZED"))
       } else {
         next()
       }
     } catch (err) {
-      return res.status(401).send(ResponseBuilder.unauthorized("Unauthorized"))
+      return (
+        res
+          .status(401)
+          // @ts-ignore
+          .send(ResponseBuilder.unauthorized(err.message as string))
+      )
     }
   }
 }
