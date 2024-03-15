@@ -66,9 +66,22 @@ export const usePagination = <T>(
     }
   }
 
+  const reset = async (): Promise<T[] | null> => {
+    // Resetting page
+    items.value = []
+    page.value = 1
+    isMore.value = true
+
+    // Fetching first page
+    const result = await fetchMore()
+
+    return result
+  }
+
   return {
     items,
     fetchMore,
     refreshPagination,
+    reset,
   }
 }
