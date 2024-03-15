@@ -8,40 +8,18 @@
     </template>
 
     <template #right-side>
-      <!-- manjka uporabnik in user icon -->
-      <p
-        style="
-          margin-bottom: -5px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 0.875rem;
-          color: var(--ion-color-medium);
-        "
+      <text-username
+        :url="'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60'"
       >
-        <img
-          src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60"
-          style="
-            width: 30px;
-            height: 30px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 1px solid var(--ion-color-step-600);
-          "
-        />
         {{ dnevnik.pripravnikId.ime }} {{ dnevnik.pripravnikId.priimek }}
-      </p>
+      </text-username>
 
       <text-card-title> {{ dnevnik.delo }} </text-card-title>
       <text-card-subtitle>
         {{ dnevnik.datum }} · {{ dnevnik.ure }} ur
       </text-card-subtitle>
 
-      <text-card-body>
-        {{ dnevnik.opis }} Lorem ipsum dolor, sit amet consectetur adipisicing
-        elit. Reiciendis doloribus est, ipsa eveniet blanditiis quidem explicabo
-        vero repellat perspiciatis distinctio?</text-card-body
-      >
+      <text-card-body> {{ dnevnik.opis }} </text-card-body>
       <button-row>
         <button-round
           v-if="showButtons"
@@ -65,6 +43,7 @@ import TextCardBody from "@/components/ui-components/card/TextCardBody.vue"
 import TextCardSubtitle from "@/components/ui-components/card/TextCardSubtitle.vue"
 import ButtonRound from "@/components/ui-components/button/ButtonRound.vue"
 import ButtonRow from "@/components/ui-components/button/ButtonRow.vue"
+import TextUsername from "@/components/ui-components/text/TextUsername.vue"
 
 import type { Dnevnik } from "@/types"
 
