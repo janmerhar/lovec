@@ -17,9 +17,9 @@
       />
     </div>
     <div style="position: absolute; top: 0.5rem; right: 0.5rem">
-      <ion-button color="danger" style="border-radius: 10000000"
-        ><font-awesome-icon :icon="['fas', 'trash']" size="xl" fixed-width
-      /></ion-button>
+      <ion-button @click="emit('izbrisi')" color="danger">
+        <font-awesome-icon :icon="['fas', 'trash']" size="xl" fixed-width />
+      </ion-button>
     </div>
     <div
       style="
@@ -60,42 +60,32 @@
   </ion-card>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { IonCard } from "@ionic/vue"
+import type { Oprema } from "@/types"
 
-import { defineComponent } from "vue"
-import { Oprema } from "@/types"
-
-export default defineComponent({
-  components: {
-    IonCard,
-  },
-  props: {
-    oprema: {
-      type: Object as () => Oprema,
-      required: true,
-    },
-  },
-  emits: ["izbrisi"],
-  methods: {
-    formatDate(datum: string) {
-      const date = new Date(datum)
-      const day = date.getDate()
-      const month = date.getMonth() + 1
-      const year = date.getFullYear()
-
-      return `${day}. ${month}. ${year}`
-    },
+defineProps({
+  oprema: {
+    type: Object as () => Oprema,
+    required: true,
   },
 })
+
+const emit = defineEmits(["izbrisi"])
+
+const formatDate = (datum: string) => {
+  const date = new Date(datum)
+  const day = date.getDate()
+  const month = date.getMonth() + 1
+  const year = date.getFullYear()
+
+  return `${day}. ${month}. ${year}`
+}
 </script>
 
 <style scoped>
 .carousel {
-  /* width: 20rem; */
-  /* height: 15rem; */
   min-height: 10rem;
-  /* max-height: 13rem; */
   object-fit: cover;
   object-position: 50% 20%;
 }
