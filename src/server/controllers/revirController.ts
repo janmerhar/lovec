@@ -51,9 +51,6 @@ export class RevirController {
   @Patch("/:id")
   @UseBefore(authUser("admin"))
   async updateRevir(@Param("id") id: string, @Body() revir: InsertRevirDTO) {
-    console.log(id)
-    console.log(revir)
-
     const result = await Revir.updateRevir(
       id,
       revir.ime,
