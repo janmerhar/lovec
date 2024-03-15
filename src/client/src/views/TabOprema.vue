@@ -1,82 +1,50 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <refresher-component :refresh="refresh"></refresher-component>
+      <refresher-component :refresh="refreshPagination"></refresher-component>
       <!--  -->
       <h3 class="ion-text-center">Evidenca opreme</h3>
       <!--  -->
 
-      <template v-for="elOprema in oprema" :key="elOprema.id">
-        <card-oprema-description
+      <template v-for="elOprema in opremaStore.oprema" :key="elOprema.id">
+        <card-oprema
           :oprema="elOprema"
-          @izbrisi="(deleteOprema) => izbrisi(deleteOprema)"
-        ></card-oprema-description>
+          @izbrisi="(oprema: Oprema) => deleteItem(oprema)"
+        ></card-oprema>
       </template>
       <!--  -->
-      <fab-button-add @click.prevent="openModalOpremaAdd"></fab-button-add>
+      <fab-button-add
+        @click.prevent='
+          () => {
+            createItem({
+              tip: "drugo",
+              naziv: "Nova oprema",
+              stanje: "Novo",
+              datum: new Date().toISOString(),
+            } as Oprema)
+          }
+        '
+      ></fab-button-add>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
-import { IonPage, IonContent, modalController } from "@ionic/vue"
+<script setup lang="ts">
+import { IonPage, IonContent } from "@ionic/vue"
 
-import { defineComponent } from "vue"
-import { ref } from "vue"
+import { onBeforeMount } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
-import ModalOpremaAdd from "@/components/oprema/ModalOpremaAdd.vue"
-import CardOpremaDescription from "@/components/oprema/CardOpremaDescription.vue"
+import CardOprema from "@/components/oprema/CardOprema.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 
-import { Oprema } from "@/entities/Oprema"
+import { useOpremaStore } from "@/stores/useOpremaStore"
+import type { Oprema } from "@/types"
 
-export default defineComponent({
-  components: {
-    IonPage,
-    IonContent,
-    FabButtonAdd,
-    CardOpremaDescription,
-    RefresherComponent,
-  },
-  data() {
-    return {
-      oprema: ref<Oprema[]>([]),
-    }
-  },
-  methods: {
-    async openModalOpremaAdd() {
-      const modal = await modalController.create({
-        component: ModalOpremaAdd,
-      })
-      modal.present()
+const opremaStore = useOpremaStore()
+const { fetchMore, refreshPagination, createItem, deleteItem } = opremaStore
 
-      const { data, role } = await modal.onWillDismiss()
-
-      if (role === "confirm") {
-        // this.oprema.push(data)
-        console.log("123")
-      }
-    },
-
-    async fetchUporabnikOprema() {
-      const result = await Oprema.fetchOprema(this.axios)
-
-      this.oprema = result.data
-    },
-
-    async izbrisi(oprema: Oprema) {
-      await oprema.izbrisiOprema()
-      await this.fetchUporabnikOprema()
-    },
-
-    async refresh(event: CustomEvent) {
-      await this.fetchUporabnikOprema()
-      event.detail.complete()
-    },
-  },
-  async beforeMount() {
-    await this.fetchUporabnikOprema()
-  },
+onBeforeMount(async () => {
+  await fetchMore()
 })
 </script>
