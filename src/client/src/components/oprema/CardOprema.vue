@@ -8,34 +8,21 @@
     </template>
 
     <template #right-top>
-      <ion-button
-        @click="emit('izbrisi')"
-        color="danger"
-        style="width: 40px; height: 40px"
-      >
+      <button-round color="danger" @click="emit('izbrisi')">
         <font-awesome-icon :icon="['fas', 'trash']" size="xl" fixed-width />
-      </ion-button>
+      </button-round>
     </template>
 
     <template #right-side>
-      <h3
-        style="
-          font-size: 1.3rem;
-          text-transform: uppercase;
-          padding-bottom: 0rem;
-          margin-bottom: 0rem;
-          font-weight: 800;
-          letter-spacing: 2px;
-          widows: 65%;
-        "
-      >
+      <text-card-title style="width: 65%">
         {{ oprema.naziv }}
-      </h3>
+      </text-card-title>
 
-      <p style="width: 14rem; line-height: 1.6; font-weight: 500">
+      <text-card-body>
         {{ oprema.stanje }}
-      </p>
-      <p style="color: var(--ion-color-medium); font-weight: 500">
+      </text-card-body>
+
+      <text-card-subtitle>
         <span
           ><font-awesome-icon
             :icon="['fas', 'calendar-days']"
@@ -44,13 +31,17 @@
             style="padding-right: 0.3rem"
         /></span>
         {{ formatDate(oprema.datum) }}
-      </p>
+      </text-card-subtitle>
     </template></card-horizontal
   >
 </template>
 
 <script setup lang="ts">
 import CardHorizontal from "@/components/ui-components/card/CardHorizontal.vue"
+import TextCardTitle from "@/components/ui-components/card/TextCardTitle.vue"
+import TextCardSubtitle from "@/components/ui-components/card/TextCardSubtitle.vue"
+import TextCardBody from "@/components/ui-components/card/TextCardBody.vue"
+import ButtonRound from "@/components/ui-components/button/ButtonRound.vue"
 import type { Oprema } from "@/types"
 
 defineProps({
@@ -77,9 +68,5 @@ const formatDate = (datum: string) => {
   min-height: 10rem;
   object-fit: cover;
   object-position: 50% 20%;
-}
-
-ion-button {
-  --border-radius: 100000rem;
 }
 </style>
