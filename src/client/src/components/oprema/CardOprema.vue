@@ -11,7 +11,6 @@
     "
   >
     <div style="display: inline-block; width: 40%">
-      <!-- TODO: porihtaj slike -->
       <img
         class="carousel"
         src="https://t3.ftcdn.net/jpg/02/75/74/58/360_F_275745846_slBI2EsTudIShef6hMliS6Oa123tC9Zv.jpg"
