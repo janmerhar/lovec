@@ -1,43 +1,32 @@
 <template>
-  <ion-card
-    style="
-      display: flex !important;
-      align-items: center;
-      flex-direction: row;
-      position: relative;
-      gap: 1rem;
-      border-radius: 20px;
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    "
-  >
-    <div style="display: inline-block; width: 40%">
+  <card-horizontal>
+    <template #left-side>
       <img
         class="carousel"
         src="https://t3.ftcdn.net/jpg/02/75/74/58/360_F_275745846_slBI2EsTudIShef6hMliS6Oa123tC9Zv.jpg"
       />
-    </div>
-    <div style="position: absolute; top: 0.5rem; right: 0.5rem">
-      <ion-button @click="emit('izbrisi')" color="danger">
+    </template>
+
+    <template #right-top>
+      <ion-button
+        @click="emit('izbrisi')"
+        color="danger"
+        style="width: 40px; height: 40px"
+      >
         <font-awesome-icon :icon="['fas', 'trash']" size="xl" fixed-width />
       </ion-button>
-    </div>
-    <div
-      style="
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        height: 100%;
-        min-height: 10rem;
-      "
-    >
+    </template>
+
+    <template #right-side>
       <h3
         style="
-          font-size: 1.5rem;
+          font-size: 1.3rem;
           text-transform: uppercase;
           padding-bottom: 0rem;
           margin-bottom: 0rem;
           font-weight: 800;
           letter-spacing: 2px;
+          widows: 65%;
         "
       >
         {{ oprema.naziv }}
@@ -56,12 +45,12 @@
         /></span>
         {{ formatDate(oprema.datum) }}
       </p>
-    </div>
-  </ion-card>
+    </template></card-horizontal
+  >
 </template>
 
 <script setup lang="ts">
-import { IonCard } from "@ionic/vue"
+import CardHorizontal from "@/components/ui-components/card/CardHorizontal.vue"
 import type { Oprema } from "@/types"
 
 defineProps({
