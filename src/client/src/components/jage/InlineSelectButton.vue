@@ -14,5 +14,6 @@ defineProps({
 <style scoped>
 ion-button {
   --border-radius: 1000000px !important;
+  text-transform: uppercase;
 }
 </style>
