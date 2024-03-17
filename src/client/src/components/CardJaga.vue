@@ -1,44 +1,43 @@
 <template>
-  <ion-card :button="true">
-    <ion-card-header>
-      <ion-card-subtitle>Lovec, ki vodi jago</ion-card-subtitle>
-      <ion-card-title><slot></slot></ion-card-title>
-    </ion-card-header>
+  <card-normal>
+    <text-card-subtitle>
+      <icon-username-inline :uporabnik="jaga.organizator">
+        ·
+        <span
+          ><font-awesome-icon
+            :icon="['fas', 'calendar-days']"
+            size="xl"
+            fixed-width
+            style="padding-right: 0.3rem"
+        /></span>
+        {{ jaga.zacetek }}
+      </icon-username-inline>
+    </text-card-subtitle>
+    <text-card-title>{{ jaga.naziv }}</text-card-title>
+    <text-card-body> {{ jaga.opis }} </text-card-body>
 
-    <ion-card-content>
-      Podrobnossti jage... Here's a small text description for the card content.
-      Nothing more, nothing less.
-    </ion-card-content>
-    <ion-button fill="clear" @click.prevent="$emit('join')"
-      >Pridruži</ion-button
-    >
-    <ion-button fill="clear" @click.prevent="$emit('delete')"
-      >Izbriši</ion-button
-    >
-  </ion-card>
+    <div>
+      <template v-for="udelezeni in jaga.udelezeni" :key="udelezeni.id">
+        <icon-user-picture :url="udelezeni.slika"></icon-user-picture>
+      </template>
+    </div>
+  </card-normal>
 </template>
 
-<script lang="ts">
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent,
-  IonButton,
-} from "@ionic/vue"
-import { defineComponent } from "vue"
+<script setup lang="ts">
+import CardNormal from "@/components/ui-components/card/CardNormal.vue"
+import TextCardTitle from "@/components/ui-components/card/TextCardTitle.vue"
+import TextCardSubtitle from "@/components/ui-components/card/TextCardSubtitle.vue"
+import TextCardBody from "@/components/ui-components/card/TextCardBody.vue"
+import IconUserPicture from "@/components/ui-components/misc/IconUserPicture.vue"
+import IconUsernameInline from "@/components/ui-components/misc/IconUsernameInline.vue"
 
-export default defineComponent({
-  components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardContent,
-    IonButton,
+import type { Jaga } from "@/types"
+
+defineProps({
+  jaga: {
+    type: Object as () => Jaga,
+    required: true,
   },
-  props: [],
-  emits: ["join", "delete"],
 })
 </script>
