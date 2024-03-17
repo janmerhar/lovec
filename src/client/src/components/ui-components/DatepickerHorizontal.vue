@@ -42,72 +42,65 @@
   </ion-grid>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { IonGrid, IonRow, IonCol } from "@ionic/vue"
 
-import { defineComponent, ref } from "vue"
+import { onBeforeMount, ref } from "vue"
 
-export default defineComponent({
-  components: {
-    IonGrid,
-    IonRow,
-    IonCol,
-  },
-  emits: ["change"],
-  data() {
-    return {
-      selectedDate: ref<Date>(new Date()),
-      dates: ref<Date[]>([]),
-    }
-  },
-  methods: {
-    getWeekDates(inputDate: Date) {
-      const currentDate = inputDate
-      const weekDates = []
+const emit = defineEmits(["change"])
 
-      const currentDayOfWeek = currentDate.getDay()
+const selectedDate = ref<Date>(new Date())
+const dates = ref<Date[]>([])
 
-      const firstDayOfWeek = new Date(currentDate)
-      const daysUntilMonday =
-        (currentDayOfWeek === 0 ? 7 : currentDayOfWeek) - 1
-      firstDayOfWeek.setDate(currentDate.getDate() - daysUntilMonday)
+function getWeekDates(inputDate: Date) {
+  const currentDate = inputDate
+  const weekDates = []
 
-      for (let i = 0; i < 7; i++) {
-        const date = new Date(firstDayOfWeek)
-        date.setDate(firstDayOfWeek.getDate() + i)
-        weekDates.push(new Date(date))
-      }
+  const currentDayOfWeek = currentDate.getDay()
 
-      return weekDates
-    },
+  const firstDayOfWeek = new Date(currentDate)
+  const daysUntilMonday = (currentDayOfWeek === 0 ? 7 : currentDayOfWeek) - 1
+  firstDayOfWeek.setDate(currentDate.getDate() - daysUntilMonday)
 
-    setWeekDates(inputDate: Date) {
-      this.dates = this.getWeekDates(inputDate)
-    },
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(firstDayOfWeek)
+    date.setDate(firstDayOfWeek.getDate() + i)
+    weekDates.push(new Date(date))
+  }
 
-    moveForward() {
-      const baseDate = this.dates[0]
-      baseDate.setDate(baseDate.getDate() + 7)
+  return weekDates
+}
 
-      this.setWeekDates(baseDate)
-    },
+function setWeekDates(inputDate: Date) {
+  dates.value = getWeekDates(inputDate)
+}
 
-    moveBackward() {
-      const baseDate = this.dates[0]
-      baseDate.setDate(baseDate.getDate() - 7)
+function moveForward() {
+  const baseDate = dates.value[0]
+  baseDate.setDate(baseDate.getDate() + 7)
 
-      this.setWeekDates(baseDate)
-    },
+  setWeekDates(baseDate)
+}
 
-    changeDate(selectedDate: Date) {
-      this.selectedDate = selectedDate
+function moveBackward() {
+  const baseDate = dates.value[0]
+  baseDate.setDate(baseDate.getDate() - 7)
 
-      this.$emit("change", selectedDate)
-    },
-  },
-  mounted() {
-    this.setWeekDates(new Date())
-  },
+  setWeekDates(baseDate)
+}
+
+function changeDate(date: Date) {
+  selectedDate.value = date
+
+  const stringDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`
+
+  emit("change", stringDate)
+}
+
+onBeforeMount(() => {
+  setWeekDates(new Date())
 })
 </script>
 
