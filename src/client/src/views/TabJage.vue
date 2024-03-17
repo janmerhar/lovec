@@ -1,9 +1,17 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
-      <ion-button @click="selectItem(1)">select 1</ion-button>
-      <ion-button @click="selectItem(2)">select 2</ion-button>
-      <ion-button @click="selectItem(3)">select 3</ion-button>
+    <ion-content>
+      <inline-select-category>
+        <inline-select-button :color="buttonColor(1)" @click="selectItem(1)"
+          >AKTIVNE</inline-select-button
+        >
+        <inline-select-button :color="buttonColor(2)" @click="selectItem(2)"
+          >PRETEKLE</inline-select-button
+        >
+        <inline-select-button :color="buttonColor(3)" @click="selectItem(3)"
+          >MOJE</inline-select-button
+        >
+      </inline-select-category>
 
       <refresher-component :refresh="refreshPagination"></refresher-component>
 
@@ -24,12 +32,21 @@ import CardJaga from "@/components/CardJaga.vue"
 import ModalJagaAdd from "@/components/ModalJagaAdd.vue"
 import ModalJagaDescription from "@/components/ModalJagaDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
+import InlineSelectCategory from "@/components/jage/InlineSelectCategory.vue"
+import InlineSelectButton from "@/components/jage/InlineSelectButton.vue"
 
 import { useJagaStore } from "@/stores/useJagaStore"
 import { onBeforeMount } from "vue"
+import { storeToRefs } from "pinia"
 
 const jagaStore = useJagaStore()
 const { refreshPagination, selectItem } = jagaStore
+
+const buttonColor = (mode: number) => {
+  const { selectedItem } = storeToRefs(jagaStore)
+
+  return selectedItem.value === mode ? "tertiary" : "primary"
+}
 
 onBeforeMount(async () => {
   await refreshPagination()
