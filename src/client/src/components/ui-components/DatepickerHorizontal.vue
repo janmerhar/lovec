@@ -1,9 +1,9 @@
 <template>
   <ion-grid>
     <ion-row>
-      <ion-col>{{
-        dates[0]?.toLocaleString(undefined, { month: "long" })
-      }}</ion-col>
+      <ion-col>
+        {{ useDate(dates[0]).getMonth() }}
+      </ion-col>
     </ion-row>
 
     <!-- Puscica za naprej -->
@@ -23,14 +23,11 @@
         @click.prevent="changeDate(date)"
       >
         <div :class="{ weekend: index + 1 >= 6 }">
-          {{
-            date
-              .toLocaleDateString(undefined, { weekday: "short" })
-              .toUpperCase()
-          }}
+          {{ useDate(date).getWeekdayShort().toUpperCase() }}
         </div>
+
         <div class="day">
-          {{ date.getDate() }}
+          {{ useDate(date).getDayNumber() }}
         </div>
       </ion-col>
 
@@ -46,13 +43,14 @@
 import { IonGrid, IonRow, IonCol } from "@ionic/vue"
 
 import { onBeforeMount, ref } from "vue"
+import { useDate } from "@/composables/useDate"
 
 const emit = defineEmits(["change"])
 
 const selectedDate = ref<Date>(new Date())
 const dates = ref<Date[]>([])
 
-function getWeekDates(inputDate: Date) {
+const getWeekDates = (inputDate: Date) => {
   const currentDate = inputDate
   const weekDates = []
 
@@ -71,30 +69,28 @@ function getWeekDates(inputDate: Date) {
   return weekDates
 }
 
-function setWeekDates(inputDate: Date) {
+const setWeekDates = (inputDate: Date) => {
   dates.value = getWeekDates(inputDate)
 }
 
-function moveForward() {
+const moveForward = () => {
   const baseDate = dates.value[0]
   baseDate.setDate(baseDate.getDate() + 7)
 
   setWeekDates(baseDate)
 }
 
-function moveBackward() {
+const moveBackward = () => {
   const baseDate = dates.value[0]
   baseDate.setDate(baseDate.getDate() - 7)
 
   setWeekDates(baseDate)
 }
 
-function changeDate(date: Date) {
+const changeDate = (date: Date) => {
   selectedDate.value = date
 
-  const stringDate = `${date.getFullYear()}-${(date.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`
+  const stringDate = useDate(date).isoDate()
 
   emit("change", stringDate)
 }
