@@ -1,73 +1,60 @@
 <template>
-  <ion-card :button="true">
-    <ion-card-header>
-      <!-- TODO: popravi tole -->
-      <!-- MOGOCE, razmisli -->
-      <ion-card-subtitle>Lovec lovec -- todo</ion-card-subtitle>
-      <ion-card-title>{{ formatDateToString(vplen.datum) }}</ion-card-title>
-    </ion-card-header>
+  <card-normal>
+    <text-card-body>
+      <text-card-subtitle>
+        <icon-username-inline
+          :uporabnik="vplen.uporabnik"
+        ></icon-username-inline>
+      </text-card-subtitle>
 
-    <ion-card-content>
-      <ion-list lines="none">
-        <ion-item v-for="(zival, index) in vplen" :key="index">
-          <ion-label>
-            {{ zival }}
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-    <ion-button fill="clear" @click.prevent="$emit('view')">Več</ion-button>
-  </ion-card>
+      <text-card-title>
+        <span
+          ><font-awesome-icon
+            :icon="['fas', 'calendar-days']"
+            size="xl"
+            fixed-width
+            style="padding-right: 0.3rem"
+        /></span>
+        <!-- TODO: premisli, kako tocno naj prikazem datum in to naredi vse v eni funkciji -->
+        {{ useDate(vplen.datum).isoDate() }}
+      </text-card-title>
+
+      <div style="padding-top: 1rem">
+        <!-- TODO: dodaj ko dobim ikone -->
+        <icon-user-picture
+          :url="'https://static01.nyt.com/images/2023/10/12/science/00sci-deer/00sci-deer-facebookJumbo.jpg'"
+        ></icon-user-picture>
+        <icon-user-picture
+          :url="'https://static01.nyt.com/images/2023/10/12/science/00sci-deer/00sci-deer-facebookJumbo.jpg'"
+        ></icon-user-picture>
+        <icon-user-picture
+          :url="'https://upload.wikimedia.org/wikipedia/commons/7/71/2010-kodiak-bear-1.jpg'"
+        ></icon-user-picture>
+        <icon-user-picture
+          :url="'https://upload.wikimedia.org/wikipedia/commons/3/30/Vulpes_vulpes_ssp_fulvus.jpg'"
+        ></icon-user-picture>
+      </div>
+    </text-card-body>
+  </card-normal>
 </template>
 
-<script lang="ts">
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent,
-  IonButton,
-  IonList,
-  IonItem,
-  IonLabel,
-} from "@ionic/vue"
-
-import { defineComponent } from "vue"
-
+<script setup lang="ts">
+import { defineProps } from "vue"
 import type { VplenDetails } from "@/types"
 
-export default defineComponent({
-  components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardContent,
-    IonButton,
-    IonList,
-    IonItem,
-    IonLabel,
-  },
-  props: {
-    vplen: {
-      type: Object as () => VplenDetails,
-      required: true,
-    },
-  },
-  emits: ["view"],
-  methods: {
-    formatDateToString(date: string) {
-      const datum = new Date(date)
-      const formattedDate = datum.toLocaleDateString(undefined, {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
+import CardNormal from "@/components/ui-components/card/CardNormal.vue"
+import TextCardTitle from "@/components/ui-components/card/TextCardTitle.vue"
+import TextCardSubtitle from "@/components/ui-components/card/TextCardSubtitle.vue"
+import TextCardBody from "@/components/ui-components/card/TextCardBody.vue"
+import IconUserPicture from "@/components/ui-components/misc/IconUserPicture.vue"
+import IconUsernameInline from "@/components/ui-components/misc/IconUsernameInline.vue"
 
-      return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
-    },
+import { useDate } from "@/composables/useDate"
+
+defineProps({
+  vplen: {
+    type: Object as () => VplenDetails,
+    required: true,
   },
 })
 </script>
