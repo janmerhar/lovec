@@ -13,6 +13,7 @@ import {
   Delete,
   Param,
 } from "routing-controllers"
+import { InsertOpremaDTO } from "./dto/oprema/insert-oprema.dto"
 
 import { authUser } from "middleware/authUser"
 
@@ -20,14 +21,11 @@ import { authUser } from "middleware/authUser"
 export class OpremaController {
   @Post("/")
   @UseBefore(authUser("pripravnik", "lovec"))
-  // TODO: add body validation
-  async postOprema(@Req() req: any, @Body() body: any) {
+  async postOprema(@Req() req: any, @Body() body: InsertOpremaDTO) {
     const { uporabnikId } = Uporabnik.JWTpayload(req)
     const { naziv, tip, stanje } = body
-    console.log(uporabnikId, naziv, tip, stanje)
 
     const result = await Oprema.vnesiOprema(uporabnikId, naziv, tip, stanje)
-    console.log(result)
 
     return ResponseBuilder.success(result)
   }
