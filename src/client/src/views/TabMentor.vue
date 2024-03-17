@@ -14,8 +14,8 @@
         <card-dnevnik-description
           :dnevnik="dnevnik"
           :show-buttons="true"
-          @accept="() => {}"
-          @reject="() => {}"
+          @accept="updateItemPotrjen(dnevnik)"
+          @reject="updateItemZavrnjen(dnevnik)"
         ></card-dnevnik-description>
       </template>
 
@@ -43,8 +43,13 @@ import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollCo
 import { useMentorDnevnikStore } from "@/stores/useMentorDnevnikStore"
 
 const mentorStore = useMentorDnevnikStore()
-const { fetchMore, refreshPagination, updateItemPotrjen, selectItem } =
-  mentorStore
+const {
+  fetchMore,
+  refreshPagination,
+  updateItemPotrjen,
+  updateItemZavrnjen,
+  selectItem,
+} = mentorStore
 
 onBeforeMount(async () => {
   await fetchMore()
