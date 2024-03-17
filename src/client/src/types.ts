@@ -75,6 +75,7 @@ export interface InsertOprema {
 export interface VplenDetails {
   datum: string
   zivali: string[]
+  uporabnik: UporabnikDetails
 }
 
 export interface Vplen {
