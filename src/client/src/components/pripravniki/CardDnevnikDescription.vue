@@ -1,5 +1,5 @@
 <template>
-  <card-horizontal>
+  <card-horizontal :class="cardColor(dnevnik)">
     <template #left-side>
       <img
         class="carousel"
@@ -8,9 +8,7 @@
     </template>
 
     <template #right-side>
-      <text-username
-        :url="'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60'"
-      >
+      <text-username :url="dnevnik.pripravnikId.slika">
         {{ dnevnik.pripravnikId.ime }} {{ dnevnik.pripravnikId.priimek }}
       </text-username>
 
@@ -20,15 +18,12 @@
       </text-card-subtitle>
 
       <text-card-body> {{ dnevnik.opis }} </text-card-body>
-      <button-row>
-        <button-round
-          v-if="showButtons"
-          color="success"
-          @click="emit('accept')"
-        >
+
+      <button-row v-if="showButtons && isNeobdelan(dnevnik)">
+        <button-round color="success" @click="emit('accept')">
           <font-awesome-icon :icon="['fas', 'check']" size="xl" fixed-width />
         </button-round>
-        <button-round v-if="showButtons" color="danger" @click="emit('reject')">
+        <button-round color="danger" @click="emit('reject')">
           <font-awesome-icon :icon="['fas', 'times']" size="xl" fixed-width />
         </button-round>
       </button-row>
@@ -59,23 +54,26 @@ defineProps({
 })
 
 const emit = defineEmits(["accept", "reject"])
+
+const isNeobdelan = (dnevnik: Dnevnik) => dnevnik.status === "neobdelan"
+
+const cardColor = (dnevnik: Dnevnik) => {
+  if (dnevnik.status === "potrjen") {
+    return ["potrjen"]
+  }
+  if (dnevnik.status === "zavrnjen") {
+    return ["zavrnjen"]
+  }
+}
 </script>
 
 <style scoped>
-/* #afafaf */
-/* #e74c3c  */
-
-ion-list {
-  padding: 0;
+.potrjen {
+  --background: var(--ion-color-success-tint);
 }
 
-.neobdelan {
-  background-color: #afafaf !important;
-  --background: #afafaf;
-}
 .zavrnjen {
-  background-color: #e74c3c !important;
-  --background: #e74c3c;
+  --background: var(--ion-color-danger-tint);
 }
 
 .carousel {
