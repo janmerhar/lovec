@@ -1,4 +1,5 @@
 import { ref, UnwrapRef } from "vue"
+import _ from "lodash"
 
 export type FetchFunction<T> = (page?: number) => Promise<T[]>
 
@@ -35,8 +36,9 @@ export const usePagination = <T>(
       if (result.length === 0) {
         isMore.value = false
       } else {
-        // TODO: fix this monstrosity of a type cast
         items.value = [...(items.value as T[]), ...result] as UnwrapRef<T[]>
+        items.value = _.uniqWith(items.value, _.isEqual)
+
         page.value += 1
       }
 
