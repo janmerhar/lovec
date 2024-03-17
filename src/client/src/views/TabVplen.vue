@@ -10,17 +10,12 @@
         v-for="vplen in vplenDetailsStore.vpleniDetails"
         :key="new Date(vplen.datum).getTime()"
       >
-        <card-vplen
-          lovec="Ime dobi iz store-a"
+        <card-vplen-details
           :vplen="vplen"
           @click="openModalVplenDescription(vplen)"
-        ></card-vplen>
+        ></card-vplen-details>
       </template>
 
-      <!-- TODO
-        Implementiraj infinite scroll
-        https://ionicframework.com/docs/api/infinite-scroll
-       -->
       <fab-button-add @click.prevent=""></fab-button-add>
 
       <infinite-scroll-component
@@ -35,7 +30,7 @@ import { IonPage, IonContent, modalController } from "@ionic/vue"
 import { onBeforeMount } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
-import CardVplen from "@/components/vplen/CardVplen.vue"
+import CardVplenDetails from "@/components/vplen/CardVplenDetails.vue"
 
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
 import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"
