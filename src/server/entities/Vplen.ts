@@ -1,18 +1,25 @@
 import VplenModel from "@models/vplenModel"
-import { IVplenDetails } from "@shared/types"
+import { IUporabnikDetails, IVplenDetails } from "@shared/types"
 import mongoose from "mongoose"
+import { UporabnikDetails } from "./Uporabnik"
 
 export class VplenDetails {
   datum: string
   zivali: string[]
+  uporabnik: IUporabnikDetails
 
-  constructor(datum: Date | string, zivali: string[]) {
+  constructor(
+    datum: Date | string,
+    zivali: string[],
+    uporabnik: IUporabnikDetails
+  ) {
     if (datum instanceof Date) {
       this.datum = datum.toISOString()
     } else {
       this.datum = datum
     }
     this.zivali = zivali
+    this.uporabnik = uporabnik
   }
 }
 
@@ -61,15 +68,32 @@ export default class Vplen {
         },
       },
       {
+        $lookup: {
+          from: "Uporabniki", // ensure this is the correct collection name
+          localField: "uporabnik",
+          foreignField: "_id",
+          as: "uporabnik",
+        },
+      },
+      {
+        $unwind: "$uporabnik", // this will flatten the uporabnik array
+      },
+      {
         $group: {
           _id: { $dateToString: { format: "%Y-%m-%d", date: "$datum" } },
           zivali: { $push: "$zival" },
+          uporabnik: { $first: "$uporabnik" }, // add this line
         },
       },
       {
         $project: {
           datum: "$_id",
           zivali: 1,
+          "uporabnik._id": 1,
+          "uporabnik.ime": 1,
+          "uporabnik.priimek": 1,
+          "uporabnik.slika": 1,
+          "uporabnik.role": 1,
           _id: 0,
         },
       },
@@ -80,8 +104,26 @@ export default class Vplen {
       .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
+    console.log(vpleni)
+
     return vpleni.map((vplen) => {
-      return new VplenDetails(vplen.datum, vplen.zivali)
+      return new VplenDetails(
+        vplen.datum,
+        vplen.zivali,
+        // @ts-ignore
+        new UporabnikDetails(
+          // @ts-ignore
+          vplen.uporabnik._id.toString(),
+          // @ts-ignore
+          vplen.uporabnik.ime,
+          // @ts-ignore
+          vplen.uporabnik.priimek,
+          // @ts-ignore
+          vplen.uporabnik.slika,
+          // @ts-ignore
+          vplen.uporabnik.role
+        )
+      )
     })
   }
 
@@ -115,6 +157,7 @@ export default class Vplen {
     datum: string,
     bolezni: string[]
   ): Promise<Vplen> {
+    // TODO: popravi datum, da bo ob 00.00 na podan dan
     const vplen = await VplenModel.create({
       uporabnik: uporabnikId,
       koordinate: koordinate,
