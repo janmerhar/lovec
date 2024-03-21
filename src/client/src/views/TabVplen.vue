@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
+    <ion-content>
       <refresher-component :refresh="refresh"></refresher-component>
 
       <h3 class="ion-text-center">Zgodovina vplenov</h3>
@@ -12,11 +12,13 @@
       >
         <card-vplen-details
           :vplen="vplen"
-          @click="openModalVplenDescription(vplen)"
+          @click="redirectTo('vplen_id', { id: vplen.datum })"
         ></card-vplen-details>
       </template>
 
-      <fab-button-add @click.prevent=""></fab-button-add>
+      <fab-button-add
+        @click.prevent="openModal(ModalVplenAdd)"
+      ></fab-button-add>
 
       <infinite-scroll-component
         :scroll="fetchMore"
@@ -33,11 +35,8 @@ import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import CardVplenDetails from "@/components/vplen/CardVplenDetails.vue"
 
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
-import ModalVplenDescription from "@/components/vplen/ModalVplenDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollComponent.vue"
-
-import type { VplenDetails } from "@/types"
 
 import { useVplenDetailsStore } from "@/stores/useVplenDetailsStore"
 
@@ -49,17 +48,13 @@ const refresh = async (event: CustomEvent) => {
   event.detail.complete()
 }
 
-const openModalVplenDescription = async (selection: VplenDetails) => {
-  const modal = await modalController.create({
-    component: ModalVplenDescription,
-    componentProps: {
-      selection: selection,
-    },
-  })
-  modal.present()
-}
-
 onBeforeMount(async () => {
   await fetchMore()
 })
+
+import { useModal } from "@/composables/useModal"
+
+const { openModal } = useModal()
+import { useTabNavigation } from "@/composables/useTabNavigation"
+const { redirectTo } = useTabNavigation()
 </script>
