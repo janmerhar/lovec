@@ -18,8 +18,8 @@ export const useTabNavigation = () => {
     }
   }
 
-  const redirectTo = (tabName: string) => {
-    router.push({ name: tabName })
+  const redirectTo = (tabName: string, routeParams?: object) => {
+    router.push({ name: tabName, params: routeParams })
   }
 
   return {
