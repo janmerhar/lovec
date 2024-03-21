@@ -10,6 +10,7 @@ import TabOprema from "@/views/TabOprema.vue"
 import TabIzkaznica from "@/views/TabIzkaznica.vue"
 import TabPripravniki from "@/views/TabPripravniki.vue"
 import TabVplen from "@/views/TabVplen.vue"
+import SubTabVplenDatum from "@/views/SubTabVplenDatum.vue"
 import TabLogin from "@/views/TabLogin.vue"
 import TabMentor from "@/views/TabMentor.vue"
 
@@ -57,6 +58,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "vplen",
         name: "vplen",
         component: TabVplen,
+      },
+      {
+        path: "vplen/:id",
+        name: "vplen_id",
+        component: SubTabVplenDatum,
       },
       {
         path: "opazovalnica",
