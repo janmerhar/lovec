@@ -16,16 +16,18 @@
       <refresher-component :refresh="refreshPagination"></refresher-component>
 
       <template v-for="jaga in jagaStore.jage" :key="jaga.id">
-        <card-jaga :jaga="jaga">banana</card-jaga>
+        <card-jaga :jaga="jaga" @click="openModal(ModalJagaDescription)"
+          >banana</card-jaga
+        >
       </template>
 
-      <fab-button @click.prevent="() => {}"></fab-button>
+      <fab-button @click.prevent="openModal(ModalJagaAdd)"></fab-button>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent, modalController, IonButton } from "@ionic/vue"
+import { IonPage, IonContent } from "@ionic/vue"
 
 import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
@@ -38,9 +40,12 @@ import InlineSelectButton from "@/components/jage/InlineSelectButton.vue"
 import { useJagaStore } from "@/stores/useJagaStore"
 import { onBeforeMount } from "vue"
 import { storeToRefs } from "pinia"
+import { useModal } from "@/composables/useModal"
 
 const jagaStore = useJagaStore()
 const { refreshPagination, selectItem } = jagaStore
+
+const { openModal } = useModal()
 
 const buttonColor = (mode: number) => {
   const { selectedItem } = storeToRefs(jagaStore)
@@ -51,37 +56,4 @@ const buttonColor = (mode: number) => {
 onBeforeMount(async () => {
   await refreshPagination()
 })
-
-// export default defineComponent({
-//   methods: {
-//     async openModalJagaAdd() {
-//       console.warn("click ModalJagaAdd")
-//       const modal = await modalController.create({
-//         component: ModalJagaAdd,
-//       })
-//       modal.present()
-
-//       const { data, role } = await modal.onWillDismiss()
-
-//       if (role === "confirm") {
-//         this.message = `Hello, ${data}!`
-//       }
-//     },
-
-//     async openModalJagaDescription() {
-//       console.warn("click ModalJagaDescription ")
-//       const modal = await modalController.create({
-//         component: ModalJagaDescription,
-//       })
-//       modal.dismiss()
-//       modal.present()
-
-//       const { data, role } = await modal.onWillDismiss()
-
-//       if (role === "confirm") {
-//         this.message = `Hello, ${data}!`
-//       }
-//     },
-//   },
-// })
 </script>
