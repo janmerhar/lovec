@@ -7,21 +7,12 @@
       <template v-for="elOprema in opremaStore.oprema" :key="elOprema.id">
         <card-oprema
           :oprema="elOprema"
-          @izbrisi="() => deleteItem(elOprema)"
+          @izbrisi="deleteItem(elOprema)"
         ></card-oprema>
       </template>
-      <!--  -->
+
       <fab-button-add
-        @click.prevent='
-          () => {
-            createItem({
-              tip: "drugo",
-              naziv: "Nova oprema",
-              stanje: "Novo",
-              datum: new Date().toISOString(),
-            } as Oprema)
-          }
-        '
+        @click.prevent="openModal(ModalOpremaAdd)"
       ></fab-button-add>
     </ion-content>
   </ion-page>
@@ -35,12 +26,14 @@ import { onBeforeMount } from "vue"
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import CardOprema from "@/components/oprema/CardOprema.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
+import ModalOpremaAdd from "@/components/oprema/ModalOpremaAdd.vue"
 
 import { useOpremaStore } from "@/stores/useOpremaStore"
-import type { Oprema } from "@/types"
+import { useModal } from "@/composables/useModal"
 
 const opremaStore = useOpremaStore()
-const { fetchMore, refreshPagination, createItem, deleteItem } = opremaStore
+const { fetchMore, refreshPagination, deleteItem } = opremaStore
+const { openModal } = useModal()
 
 onBeforeMount(async () => {
   await fetchMore()
