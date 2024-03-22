@@ -9,14 +9,7 @@
       </template>
 
       <fab-button-add
-        @click.prevent="
-          createItem({
-            datum: new Date().toISOString(),
-            delo: 'drugo',
-            opis: 'Nov opis',
-            ure: 1,
-          })
-        "
+        @click.prevent="openModal(ModalDnevnikAdd)"
       ></fab-button-add>
 
       <infinite-scroll-component
@@ -28,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { modalController, IonPage, IonContent } from "@ionic/vue"
+import { IonPage, IonContent } from "@ionic/vue"
 
 import { onBeforeMount } from "vue"
 
@@ -38,28 +31,14 @@ import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescript
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollComponent.vue"
 
-//
-// Nova koda
-//
-
 import { usePripravnikDnevnikStore } from "@/stores/usePripravnikDnevnikStore"
+import { useModal } from "@/composables/useModal"
 
 const pripravnikStore = usePripravnikDnevnikStore()
-const { fetchMore, refreshPagination, createItem } = pripravnikStore
+const { fetchMore, refreshPagination } = pripravnikStore
+const { openModal } = useModal()
 
 onBeforeMount(async () => {
   await fetchMore()
 })
-
-// export default defineComponent({
-//   methods: {
-//     async openModalPripravnikAdd() {
-//       const modal = await modalController.create({
-//         component: ModalDnevnikAdd,
-//         componentProps: {
-//           mentorIme: this.uporabnikStore.mentorIme,
-//         },
-//       })
-//       modal.present()
-//     },
 </script>
