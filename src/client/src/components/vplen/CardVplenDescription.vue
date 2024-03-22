@@ -1,55 +1,82 @@
 <template>
-  <ion-card class="ion-no-margin ion-no-padding ion-margin-bottom">
-    <ion-card-header
-      class="ion-no-padding ion-padding-horizontal ion-padding-top"
-    >
-      <ion-card-title>{{ vplen.zival }}</ion-card-title>
-      <ion-card-subtitle>{{ vplen.teza }}</ion-card-subtitle>
-    </ion-card-header>
-    <!--  -->
-    <ion-card-content>
-      <ion-list>
-        <!--  -->
-        <ion-item v-for="(bolezen, index) in vplen.bolezni" :key="index">
-          <ion-thumbnail slot="start">
-            <font-awesome-icon icon="fa-solid fa-square-virus" size="3x" />
-          </ion-thumbnail>
-          <ion-label>{{ bolezen }}</ion-label>
-        </ion-item>
-        <!--  -->
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <card-horizontal>
+    <template #left-side>
+      <img
+        class="carousel"
+        src="https://i.natgeofe.com/n/9b97e60e-e8db-4961-853b-d68ba28d7629/red-fox_thumb_square.JPG?w=136&h=136"
+      />
+    </template>
+
+    <template #right-top>
+      <button-round color="danger" @click="emit('izbrisi')">
+        <font-awesome-icon :icon="['fas', 'trash']" size="xl" fixed-width />
+      </button-round>
+    </template>
+
+    <template #right-side>
+      <text-card-title style="width: 65%">
+        {{ vplen.zival }}
+      </text-card-title>
+
+      <text-card-body>
+        <div>
+          <span
+            ><font-awesome-icon
+              :icon="['fas', 'weight-hanging']"
+              size="xl"
+              fixed-width
+              style="padding-right: 0.3rem"
+          /></span>
+          {{ vplen.teza }} kg
+        </div>
+
+        <div>
+          <span
+            ><font-awesome-icon
+              :icon="['fas', 'compass']"
+              size="xl"
+              fixed-width
+              style="padding-right: 0.3rem"
+          /></span>
+          Koordinate
+        </div>
+
+        <div>
+          <span
+            ><font-awesome-icon
+              :icon="['fas', 'weight-hanging']"
+              size="xl"
+              fixed-width
+              style="padding-right: 0.3rem"
+          /></span>
+          {{
+            vplen.bolezni.join(", ").charAt(0).toUpperCase() +
+            vplen.bolezni.join(", ").slice(1) +
+            "."
+          }}
+        </div>
+      </text-card-body>
+    </template>
+  </card-horizontal>
 </template>
 
-<script lang="ts">
-import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonThumbnail,
-  IonItem,
-  IonList,
-  IonLabel,
-} from "@ionic/vue"
-import { defineComponent } from "vue"
+<script setup lang="ts">
+import CardHorizontal from "@/components/ui-components/card/CardHorizontal.vue"
+import TextCardTitle from "@/components/ui-components/card/TextCardTitle.vue"
+import TextCardSubtitle from "@/components/ui-components/card/TextCardSubtitle.vue"
+import TextCardBody from "@/components/ui-components/card/TextCardBody.vue"
+import ButtonRound from "@/components/ui-components/button/ButtonRound.vue"
 
-export default defineComponent({
-  components: {
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonThumbnail,
-    IonItem,
-    IonList,
-    IonLabel,
+import type { Vplen } from "@/types"
+
+defineProps({
+  vplen: {
+    type: Object as () => Vplen,
+    required: true,
   },
-  props: ["vplen"],
 })
+
+const emit = defineEmits(["izbrisi"])
 </script>
 
 <style scoped>
