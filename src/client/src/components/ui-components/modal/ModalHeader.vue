@@ -40,4 +40,8 @@ defineProps({
   letter-spacing: 1px;
   font-weight: 500;
 }
+
+ion-toolbar {
+  --min-height: 65px;
+}
 </style>
