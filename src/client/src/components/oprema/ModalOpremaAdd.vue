@@ -1,7 +1,8 @@
 <template>
-  <header-modal @cancel="cancel()" @confirm="confirm()"
-    >Vnesi opremo</header-modal
-  >
+  <modal-header
+    @cancel="useModal().cancelModal"
+    @confirm="useModal().confirmModal"
+  ></modal-header>
   <!--  -->
   <ion-content class="ion-padding">
     <ion-item fill="solid">
@@ -42,66 +43,21 @@
   <!--  -->
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   IonContent,
   IonItem,
   IonLabel,
   IonInput,
-  modalController,
   IonTextarea,
 } from "@ionic/vue"
-import { defineComponent } from "vue"
 
-import HeaderModal from "@/components/ui-components/HeaderModal.vue"
+import { ref } from "vue"
 
-import { Oprema } from "@/entities/Oprema"
+import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
+import { useModal } from "@/composables/useModal"
 
-export default defineComponent({
-  name: "ModalOpremaAdd",
-  components: {
-    IonContent,
-    IonItem,
-    IonLabel,
-    IonInput,
-    IonTextarea,
-    HeaderModal,
-  },
-  data() {
-    return {
-      naziv: "",
-      tip: "",
-      stanje: "",
-    }
-  },
-  methods: {
-    //
-    // TODO noce vrniti podatkov ko enkrat vnesem opremo, vnese mi pa jo
-    //
-    async vnesiOprema() {
-      // TODO
-      // preverjane, ali podatki obstajajo
-
-      const result = await Oprema.insertOprema(
-        this.axios,
-        this.naziv,
-        this.tip,
-        this.stanje
-      )
-
-      return result
-    },
-    cancel() {
-      return modalController.dismiss(null, "cancel")
-    },
-    async confirm() {
-      const oprema = await this.vnesiOprema()
-
-      if (oprema.status === 200) {
-        return modalController.dismiss(null, "confirm")
-      }
-      // TODO obvesti o napaki pri vnasanju
-    },
-  },
-})
+const naziv = ref("")
+const tip = ref("")
+const stanje = ref("")
 </script>
