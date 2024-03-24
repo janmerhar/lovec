@@ -1,14 +1,10 @@
 <template>
   <ion-header>
-    <ion-toolbar class="responsive-toolbar">
+    <ion-toolbar color="primary" class="responsive-toolbar">
       <ion-title size="large">Lovec</ion-title>
       <ion-buttons slot="secondary">
         <ion-button @click="redirectTo('izkaznica')">
-          <img
-            :src="profile_picture"
-            alt="Profilna slika"
-            :class="selectedTabStyle('izkaznica')"
-          />
+          <img :src="uporabnik?.slika" :class="selectedTabStyle('izkaznica')" />
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -24,15 +20,12 @@ import {
   IonButton,
 } from "@ionic/vue"
 
-import { ref } from "vue"
-
+import { useLoginStore } from "@/stores/useLoginStore"
 import { useTabNavigation } from "@/composables/useTabNavigation"
+import { storeToRefs } from "pinia"
 
 const { selectedTabStyle, redirectTo } = useTabNavigation()
-
-const profile_picture = ref<string>(
-  "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60"
-)
+const { uporabnik } = storeToRefs(useLoginStore())
 </script>
 
 <style scoped>
@@ -44,7 +37,7 @@ img {
   border: 1px solid var(--ion-color-step-600);
 }
 
-.active-tab {
-  border: 2px solid var(--ion-color-primary);
+.header-md::after {
+  background-image: none !important;
 }
 </style>
