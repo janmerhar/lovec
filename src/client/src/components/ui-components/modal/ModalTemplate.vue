@@ -7,6 +7,10 @@
   </ion-content>
 </template>
 
+<script setup lang="ts">
+import { IonContent } from "@ionic/vue"
+</script>
+
 <style scoped>
 .modal-body {
   width: 100%;
