@@ -1,5 +1,5 @@
 <template>
-  <tab-template>
+  <tab-template :refresh="refreshPagination">
     <template #header>
       <tab-header>Jage</tab-header>
     </template>
@@ -15,8 +15,6 @@
           >MOJE</inline-select-button
         >
       </inline-select-category>
-
-      <refresher-component :refresh="refreshPagination"></refresher-component>
 
       <template v-for="jaga in jagaStore.jage" :key="jaga.id">
         <card-jaga :jaga="jaga" @click="openModal(ModalJagaDescription)"
@@ -34,7 +32,6 @@ import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
 import ModalJagaAdd from "@/components/ModalJagaAdd.vue"
 import ModalJagaDescription from "@/components/ModalJagaDescription.vue"
-import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 import InlineSelectCategory from "@/components/jage/InlineSelectCategory.vue"
 import InlineSelectButton from "@/components/jage/InlineSelectButton.vue"
 import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
