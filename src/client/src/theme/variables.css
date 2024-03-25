@@ -282,3 +282,23 @@ http://ionicframework.com/docs/theming/ */
 .active-tab {
   color: var(--color-selected);
 }
+
+/* TOP AND TAB BARS */
+
+.active-tab {
+  color: var(--color-selected);
+}
+
+ion-tab-bar {
+  padding: 0px 0px;
+  border-radius: var(--border-rad) var(--border-rad) 0 0;
+}
+
+/* Background */
+ion-router-outlet {
+  --ion-background-color: var(--ion-color-primary) !important;
+}
+
+ion-tab-bar {
+  --ion-background-color: var(--ion-background-color-rgb);
+}
