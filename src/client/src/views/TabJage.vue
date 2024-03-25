@@ -1,6 +1,9 @@
 <template>
-  <ion-page>
-    <ion-content>
+  <tab-template>
+    <template #header>
+      <tab-header>Jage</tab-header>
+    </template>
+    <template #body>
       <inline-select-category>
         <inline-select-button :color="buttonColor(1)" @click="selectItem(1)"
           >AKTIVNE</inline-select-button
@@ -22,13 +25,11 @@
       </template>
 
       <fab-button @click.prevent="openModal(ModalJagaAdd)"></fab-button>
-    </ion-content>
-  </ion-page>
+    </template>
+  </tab-template>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent } from "@ionic/vue"
-
 import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
 import ModalJagaAdd from "@/components/ModalJagaAdd.vue"
@@ -36,6 +37,8 @@ import ModalJagaDescription from "@/components/ModalJagaDescription.vue"
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 import InlineSelectCategory from "@/components/jage/InlineSelectCategory.vue"
 import InlineSelectButton from "@/components/jage/InlineSelectButton.vue"
+import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
+import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 
 import { useJagaStore } from "@/stores/useJagaStore"
 import { onBeforeMount } from "vue"
