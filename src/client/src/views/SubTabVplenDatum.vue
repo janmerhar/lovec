@@ -1,13 +1,9 @@
 <template>
-  <ion-page>
-    <ion-content>
-      <refresher-component
-        :refresh="vplenStore.refreshPagination"
-      ></refresher-component>
-
-      <h3 class="ion-text-center">Vpleni za dam ena dva tri</h3>
-      <!-- Vplen cards -->
-
+  <tab-template :scroll="fetchMore" :refresh="refreshPagination">
+    <template #header>
+      <tab-header>Zgodovina vplenov</tab-header>
+    </template>
+    <template #body>
       <template v-for="vplen in vplenStore.vpleni" :key="vplen.id">
         <card-vplen-description :vplen="vplen"></card-vplen-description>
       </template>
@@ -15,19 +11,19 @@
       <fab-button-add
         @click.prevent="openModal(ModalVplenAdd)"
       ></fab-button-add>
-    </ion-content>
-  </ion-page>
+    </template>
+  </tab-template>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent } from "@ionic/vue"
 import { onBeforeMount } from "vue"
 
 import FabButtonAdd from "@/components/FabButtonAdd.vue"
 import CardVplenDescription from "@/components/vplen/CardVplenDescription.vue"
+import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
+import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
-import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
 
 import { useVplenStore } from "@/stores/useVplenStore"
 import { useRoute } from "vue-router"
@@ -40,7 +36,7 @@ const { openModal } = useModal()
 const vplenDetailsStore = useVplenDetailsStore()
 const vplenStore = useVplenStore()
 
-const { setVplenDetails } = vplenStore
+const { setVplenDetails, refreshPagination, fetchMore } = vplenStore
 
 const route = useRoute()
 
