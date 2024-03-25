@@ -19,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+import type { PropType } from "vue"
 import { IonPage, IonContent } from "@ionic/vue"
 
 import RefresherComponent from "@/components/ui-components/RefresherComponent.vue"
@@ -26,15 +27,15 @@ import InfiniteScrollComponent from "@/components/ui-components/InfiniteScrollCo
 
 defineProps({
   refresh: {
-    type: Function,
-    default: (): void => {
-      // do nothing
+    type: Function as PropType<(event: CustomEvent) => any>,
+    default: async (event: CustomEvent) => {
+      event.detail.complete()
     },
   },
   scroll: {
     type: Function,
     default: () => {
-      // do nothing
+      return null
     },
   },
 })
