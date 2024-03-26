@@ -1,19 +1,19 @@
 <template>
   <tab-template :refresh="refreshPagination">
     <template #header>
-      <tab-header>Jage</tab-header>
+      <tab-header>{{ $t("jaga.tab.header") }}</tab-header>
     </template>
     <template #body>
       <inline-select-category>
-        <inline-select-button :color="buttonColor(1)" @click="selectItem(1)"
-          >AKTIVNE</inline-select-button
-        >
-        <inline-select-button :color="buttonColor(2)" @click="selectItem(2)"
-          >PRETEKLE</inline-select-button
-        >
-        <inline-select-button :color="buttonColor(3)" @click="selectItem(3)"
-          >MOJE</inline-select-button
-        >
+        <inline-select-button :color="buttonColor(1)" @click="selectItem(1)">{{
+          $t("jaga.tab.headerOptions.active")
+        }}</inline-select-button>
+        <inline-select-button :color="buttonColor(2)" @click="selectItem(2)">{{
+          $t("jaga.tab.headerOptions.past")
+        }}</inline-select-button>
+        <inline-select-button :color="buttonColor(3)" @click="selectItem(3)">{{
+          $t("jaga.tab.headerOptions.mine")
+        }}</inline-select-button>
       </inline-select-category>
 
       <template v-for="jaga in jagaStore.jage" :key="jaga.id">
