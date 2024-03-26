@@ -28,6 +28,7 @@ import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 
 import { useOpremaStore } from "@/stores/useOpremaStore"
 import { useModal } from "@/composables/useModal"
+import { useAlert } from "@/composables/useAlert"
 
 const opremaStore = useOpremaStore()
 const { fetchMore, refreshPagination, deleteItem } = opremaStore

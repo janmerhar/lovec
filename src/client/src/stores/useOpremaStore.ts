@@ -5,6 +5,10 @@ import type { InsertOprema, Oprema } from "@/types"
 import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
+import { useAlert } from "@/composables/useAlert"
+
+import i18n from "@/locales/i18n"
+const { t } = i18n.global
 
 export const useOpremaStore = defineStore(
   "oprema",
@@ -43,12 +47,23 @@ export const useOpremaStore = defineStore(
     const crud = useCRUD<Oprema>(opremaVariable)
     const { createItem, deleteItem } = crud
 
+    const toastDelete = async (oprema: Oprema) => {
+      const call = async () => await deleteItem(deleteOprema)(oprema)
+
+      const { successToastAction } = useAlert()
+
+      await successToastAction(
+        call,
+        t("oprema.crud.delete.success", { name: oprema.naziv })
+      )
+    }
+
     return {
       oprema,
       fetchMore,
       refreshPagination,
       getOprema,
-      deleteItem: deleteItem(deleteOprema),
+      deleteItem: toastDelete,
       createItem: createItem(createOprema),
     }
   },
