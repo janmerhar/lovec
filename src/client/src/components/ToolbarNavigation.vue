@@ -1,7 +1,9 @@
 <template>
   <ion-header>
     <ion-toolbar color="primary" class="responsive-toolbar">
-      <ion-title size="large">Lovec</ion-title>
+      <ion-title size="large">{{
+        $t("framework.toolbarNavigation.appName")
+      }}</ion-title>
       <ion-buttons slot="secondary">
         <ion-button @click="redirectTo('izkaznica')">
           <img :src="uporabnik?.slika" :class="selectedTabStyle('izkaznica')" />
