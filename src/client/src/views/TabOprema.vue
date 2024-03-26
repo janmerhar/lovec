@@ -1,7 +1,7 @@
 <template>
   <tab-template :refresh="refreshPagination">
     <template #header>
-      <tab-header> asdfl;jasfd</tab-header>
+      <tab-header>{{ $t("oprema.tab.header") }}</tab-header>
     </template>
     <template #body>
       <template v-for="elOprema in opremaStore.oprema" :key="elOprema.id">
@@ -28,7 +28,6 @@ import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 
 import { useOpremaStore } from "@/stores/useOpremaStore"
 import { useModal } from "@/composables/useModal"
-import { useAlert } from "@/composables/useAlert"
 
 const opremaStore = useOpremaStore()
 const { fetchMore, refreshPagination, deleteItem } = opremaStore
