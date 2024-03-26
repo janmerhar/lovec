@@ -57,16 +57,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons"
 library.add(fas, far, fab)
 
 // Locales
-import { createI18n } from "vue-i18n"
-import si from "@/locales/si"
-
-const i18n = createI18n({
-  locale: "si",
-  messages: {
-    si,
-  },
-  legacy: false,
-})
+import i18n from "@/locales/i18n"
 
 const app = createApp(App)
   .use(IonicVue, {
