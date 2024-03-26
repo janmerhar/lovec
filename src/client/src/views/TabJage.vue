@@ -16,11 +16,13 @@
         }}</inline-select-button>
       </inline-select-category>
 
-      <template v-for="jaga in jagaStore.jage" :key="jaga.id">
-        <card-jaga :jaga="jaga" @click="openModal(ModalJagaDescription)"
-          >banana</card-jaga
-        >
-      </template>
+      <TransitionGroup name="list" tag="ul">
+        <li v-for="jaga in jagaStore.jage" :key="jaga.id">
+          <card-jaga :jaga="jaga" @click="openModal(ModalJagaDescription)"
+            >banana</card-jaga
+          >
+        </li>
+      </TransitionGroup>
 
       <fab-button @click.prevent="openModal(ModalJagaAdd)"></fab-button>
     </template>

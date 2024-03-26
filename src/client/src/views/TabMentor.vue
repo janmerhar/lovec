@@ -13,14 +13,16 @@
         @change="(datum) => selectItem(datum)"
       ></datepicker-horizontal>
 
-      <template v-for="dnevnik in mentorStore.dnevniki" :key="dnevnik.id">
-        <card-dnevnik-description
-          :dnevnik="dnevnik"
-          :show-buttons="true"
-          @accept="updateItemPotrjen(dnevnik)"
-          @reject="updateItemZavrnjen(dnevnik)"
-        ></card-dnevnik-description>
-      </template>
+      <TransitionGroup name="list" tag="ul">
+        <li v-for="dnevnik in mentorStore.dnevniki" :key="dnevnik.id">
+          <card-dnevnik-description
+            :dnevnik="dnevnik"
+            :show-buttons="true"
+            @accept="updateItemPotrjen(dnevnik)"
+            @reject="updateItemZavrnjen(dnevnik)"
+          ></card-dnevnik-description>
+        </li>
+      </TransitionGroup>
     </template>
   </tab-template>
 </template>

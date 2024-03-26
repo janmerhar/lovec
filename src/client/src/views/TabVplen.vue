@@ -4,15 +4,17 @@
       <tab-header>Zgodovina vplenov</tab-header>
     </template>
     <template #body>
-      <template
-        v-for="vplen in vplenDetailsStore.vpleniDetails"
-        :key="new Date(vplen.datum).getTime()"
-      >
-        <card-vplen-details
-          :vplen="vplen"
-          @click="redirectTo('vplen_id', { id: vplen.datum })"
-        ></card-vplen-details>
-      </template>
+      <TransitionGroup name="list" tag="ul">
+        <li
+          v-for="vplen in vplenDetailsStore.vpleniDetails"
+          :key="new Date(vplen.datum).getTime()"
+        >
+          <card-vplen-details
+            :vplen="vplen"
+            @click="redirectTo('vplen_id', { id: vplen.datum })"
+          ></card-vplen-details>
+        </li>
+      </TransitionGroup>
 
       <fab-button-add
         @click.prevent="openModal(ModalVplenAdd)"

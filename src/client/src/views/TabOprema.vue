@@ -4,12 +4,15 @@
       <tab-header>{{ $t("oprema.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <template v-for="elOprema in opremaStore.oprema" :key="elOprema.id">
-        <card-oprema
-          :oprema="elOprema"
-          @izbrisi="deleteItem(elOprema)"
-        ></card-oprema>
-      </template>
+      <TransitionGroup name="list" tag="ul">
+        <li v-for="elOprema in opremaStore.oprema" :key="elOprema.id">
+          <card-oprema
+            :oprema="elOprema"
+            @izbrisi="deleteItem(elOprema)"
+          ></card-oprema>
+        </li>
+      </TransitionGroup>
+
       <fab-button-add
         @click.prevent="openModal(ModalOpremaAdd)"
       ></fab-button-add>

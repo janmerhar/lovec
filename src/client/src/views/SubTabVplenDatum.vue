@@ -4,9 +4,14 @@
       <tab-header>{{ $t("vplenDatum.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <template v-for="vplen in vplenStore.vpleni" :key="vplen.id">
-        <card-vplen-description :vplen="vplen"></card-vplen-description>
-      </template>
+      <TransitionGroup name="list" tag="ul">
+        <li v-for="vplen in vplenStore.vpleni" :key="vplen.id">
+          <card-vplen-description
+            :vplen="vplen"
+            @izbrisi="deleteItem(vplen)"
+          ></card-vplen-description>
+        </li>
+      </TransitionGroup>
 
       <fab-button-add
         @click.prevent="openModal(ModalVplenAdd)"
@@ -35,7 +40,7 @@ const { openModal } = useModal()
 const vplenDetailsStore = useVplenDetailsStore()
 const vplenStore = useVplenStore()
 
-const { setVplenDetails, refreshPagination, fetchMore } = vplenStore
+const { setVplenDetails, refreshPagination, fetchMore, deleteItem } = vplenStore
 
 const route = useRoute()
 

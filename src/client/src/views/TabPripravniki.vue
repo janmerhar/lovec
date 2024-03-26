@@ -4,9 +4,13 @@
       <tab-header>{{ $t("pripravniki.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <template v-for="dnevnik in pripravnikStore.dnevniki" :key="dnevnik.id">
-        <card-dnevnik-description :dnevnik="dnevnik"></card-dnevnik-description>
-      </template>
+      <TransitionGroup name="list" tag="ul">
+        <li v-for="dnevnik in pripravnikStore.dnevniki" :key="dnevnik.id">
+          <card-dnevnik-description
+            :dnevnik="dnevnik"
+          ></card-dnevnik-description>
+        </li>
+      </TransitionGroup>
 
       <fab-button-add
         @click.prevent="openModal(ModalDnevnikAdd)"
