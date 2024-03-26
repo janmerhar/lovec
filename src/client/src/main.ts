@@ -61,7 +61,7 @@ import { createI18n } from "vue-i18n"
 import si from "@/locales/si"
 
 const i18n = createI18n({
-  locale: "en",
+  locale: "si",
   messages: {
     si,
   },
