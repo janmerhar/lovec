@@ -5,6 +5,10 @@ import type { InsertVplen, Vplen, VplenDetails } from "@/types"
 import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
+import { useAlert } from "@/composables/useAlert"
+
+import i18n from "@/locales/i18n"
+const { t } = i18n.global
 
 export const useVplenStore = defineStore("vplen", () => {
   const { request } = useRequest()
@@ -39,6 +43,9 @@ export const useVplenStore = defineStore("vplen", () => {
   const vpleniVariable = items
   const vpleni: ComputedRef<Vplen[]> = computed(() => vpleniVariable.value)
 
+  // TODO: naredi tako, da lahko podam samo datum
+  // TODO: naredi tudi fetch samo za en datum
+
   const setVplenDetails = async (newVplenDetails: VplenDetails) => {
     selectedVplenDetails.value = newVplenDetails
 
@@ -67,12 +74,22 @@ export const useVplenStore = defineStore("vplen", () => {
   const crud = useCRUD<Vplen>(vpleniVariable)
   const { createItem, deleteItem } = crud
 
+  const toastDelete = async (vplen: Vplen) => {
+    const call = async () => await deleteItem(deleteVplen)(vplen)
+
+    const { successToastAction } = useAlert()
+
+    await successToastAction(
+      call,
+      t("vplenDatum.crud.delete.success", { name: vplen.zival })
+    )
+  }
   return {
     vpleni,
     setVplenDetails,
     fetchMore,
     refreshPagination,
     createItem: createItem(createVplen),
-    deleteItem: deleteItem(deleteVplen),
+    deleteItem: toastDelete,
   }
 })

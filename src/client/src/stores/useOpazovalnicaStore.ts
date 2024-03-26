@@ -5,7 +5,10 @@ import type { InsertOpazovalnica, Opazovalnica } from "@/types"
 import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
+import { useAlert } from "@/composables/useAlert"
 
+import i18n from "@/locales/i18n"
+const { t } = i18n.global
 export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
   const { request } = useRequest()
 
@@ -50,11 +53,22 @@ export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
   const crud = useCRUD<Opazovalnica>(opazovalniceVariable)
   const { createItem, deleteItem } = crud
 
+  const toastDelete = async (opazovalnica: Opazovalnica) => {
+    const call = async () => await deleteItem(deleteOpazovalnica)(opazovalnica)
+
+    const { successToastAction } = useAlert()
+
+    await successToastAction(
+      call,
+      t("opazovalnice.crud.delete.success", { name: opazovalnica.ime })
+    )
+  }
+
   return {
     opazovalnice,
     fetchMore,
     refreshPagination,
     createItem: createItem(createOpazovalnica),
-    deleteItem: deleteItem(deleteOpazovalnica),
+    deleteItem: toastDelete,
   }
 })
