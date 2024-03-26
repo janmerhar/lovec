@@ -56,6 +56,18 @@ import { fab } from "@fortawesome/free-brands-svg-icons"
 /* add icons to the library */
 library.add(fas, far, fab)
 
+// Locales
+import { createI18n } from "vue-i18n"
+import si from "@/locales/si"
+
+const i18n = createI18n({
+  locale: "en",
+  messages: {
+    si,
+  },
+  legacy: false,
+})
+
 const app = createApp(App)
   .use(IonicVue, {
     mode: "md",
@@ -64,6 +76,7 @@ const app = createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(VueAxios, axios)
   .use(pinia)
+  .use(i18n)
 
 router.isReady().then(() => {
   app.mount("#app")
