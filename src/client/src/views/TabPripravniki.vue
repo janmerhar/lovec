@@ -1,7 +1,7 @@
 <template>
   <tab-template :refresh="refreshPagination" :scroll="fetchMore">
     <template #header>
-      <tab-header>Dnevniki</tab-header>
+      <tab-header>{{ $t("pripravniki.tab.header") }}</tab-header>
     </template>
     <template #body>
       <template v-for="dnevnik in pripravnikStore.dnevniki" :key="dnevnik.id">

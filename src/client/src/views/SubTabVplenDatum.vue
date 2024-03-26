@@ -1,7 +1,7 @@
 <template>
   <tab-template :scroll="fetchMore" :refresh="refreshPagination">
     <template #header>
-      <tab-header>Zgodovina vplenov</tab-header>
+      <tab-header>{{ $t("vplenDatum.tab.header") }}</tab-header>
     </template>
     <template #body>
       <template v-for="vplen in vplenStore.vpleni" :key="vplen.id">
@@ -30,7 +30,6 @@ import { useRoute } from "vue-router"
 import { useVplenDetailsStore } from "@/stores/useVplenDetailsStore"
 import { useModal } from "@/composables/useModal"
 import { useTabNavigation } from "@/composables/useTabNavigation"
-import { useDate } from "@/composables/useDate"
 const { openModal } = useModal()
 
 const vplenDetailsStore = useVplenDetailsStore()
