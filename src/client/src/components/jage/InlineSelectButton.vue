@@ -3,6 +3,8 @@
 </template>
 
 <script setup lang="ts">
+import { IonButton } from "@ionic/vue"
+
 defineProps({
   color: {
     type: String,
