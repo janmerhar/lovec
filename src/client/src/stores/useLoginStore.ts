@@ -13,9 +13,13 @@ export const useLoginStore = defineStore(
     const isLogged = computed(() => uporabnik.value !== null)
 
     const login = async (email: string, geslo: string): Promise<boolean> => {
-      if (isLogged.value) {
-        return true
-      }
+      // TODO: check if this helps
+      // if (isLogged.value) {
+      //   return true
+      // }
+
+      // TODO: naredi reset
+      uporabnik.value = null
 
       const response: HttpResponse = await CapacitorHttp.post({
         url: `${process.env.VUE_APP_API_URL}/uporabnik/login`,
@@ -76,6 +80,10 @@ export const useLoginStore = defineStore(
       }
     }
 
+    const isPripravnik = computed(() => uporabnik.value?.role === "pripravnik")
+    const isLovec = computed(() => uporabnik.value?.role === "lovec")
+    const isAdmin = computed(() => uporabnik.value?.role === "admin")
+
     return {
       uporabnik,
       login,
@@ -85,6 +93,11 @@ export const useLoginStore = defineStore(
       refreshToken,
       updateToken,
       updateRefreshToken,
+
+      // Role getters
+      isPripravnik,
+      isLovec,
+      isAdmin,
     }
   },
   {

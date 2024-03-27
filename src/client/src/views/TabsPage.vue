@@ -21,17 +21,33 @@
           />
         </ion-tab-button>
 
-        <ion-tab-button
-          tab="pripravniki"
-          @click="redirectTo('pripravniki')"
-          :class="selectedTabStyle('pripravniki')"
-        >
-          <font-awesome-icon
-            :icon="['fas', 'address-book']"
-            size="2xl"
-            fixed-width
-          />
-        </ion-tab-button>
+        <template v-if="isPripravnik">
+          <ion-tab-button
+            tab="pripravniki"
+            @click="redirectTo('pripravniki')"
+            :class="selectedTabStyle('pripravniki')"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'address-book']"
+              size="2xl"
+              fixed-width
+            />
+          </ion-tab-button>
+        </template>
+
+        <template v-if="isLovec">
+          <ion-tab-button
+            tab="mentor"
+            @click="redirectTo('mentor')"
+            :class="selectedTabStyle('mentor')"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'address-book']"
+              size="2xl"
+              fixed-width
+            />
+          </ion-tab-button>
+        </template>
 
         <ion-tab-button
           tab="opazovalnica"
@@ -81,7 +97,10 @@ import {
 import ToolbarNavigation from "@/components/ToolbarNavigation.vue"
 
 import { useTabNavigation } from "@/composables/useTabNavigation"
+import { useLoginStore } from "@/stores/useLoginStore"
+import { storeToRefs } from "pinia"
 
+const { isPripravnik, isLovec } = storeToRefs(useLoginStore())
 const { selectedTabStyle, redirectTo } = useTabNavigation()
 </script>
 
