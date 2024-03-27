@@ -17,12 +17,14 @@
       </inline-select-category>
 
       <TransitionGroup name="list" tag="ul">
-        <li v-for="jaga in jagaStore.jage" :key="jaga.id">
+        <li v-for="jaga in jage" :key="jaga.id">
           <card-jaga :jaga="jaga" @click="openModal(ModalJagaDescription)"
             >banana</card-jaga
           >
         </li>
       </TransitionGroup>
+
+      <tab-no-elements :elements="jage"></tab-no-elements>
 
       <fab-button @click.prevent="openModal(ModalJagaAdd)"></fab-button>
     </template>
@@ -38,6 +40,7 @@ import InlineSelectCategory from "@/components/jage/InlineSelectCategory.vue"
 import InlineSelectButton from "@/components/jage/InlineSelectButton.vue"
 import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
 import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
+import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
 
 import { useJagaStore } from "@/stores/useJagaStore"
 import { onBeforeMount } from "vue"
@@ -46,6 +49,7 @@ import { useModal } from "@/composables/useModal"
 
 const jagaStore = useJagaStore()
 const { refreshPagination, selectItem } = jagaStore
+const { jage } = storeToRefs(jagaStore)
 
 const { openModal } = useModal()
 

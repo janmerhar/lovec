@@ -4,7 +4,7 @@
       <tab-header>{{ $t("mentor.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <ion-button @click="updateItemPotrjen(mentorStore.dnevniki[0])"
+      <ion-button @click="updateItemPotrjen(dnevniki[0])"
         >update dnevnik</ion-button
       >
       <ion-button @click="selectItem('2019-01-02')">change datum</ion-button>
@@ -23,6 +23,8 @@
           ></card-dnevnik-description>
         </li>
       </TransitionGroup>
+
+      <tab-no-elements :elements="dnevniki"></tab-no-elements>
     </template>
   </tab-template>
 </template>
@@ -34,8 +36,11 @@ import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizonta
 import CardDnevnikDescription from "@/components/pripravniki/CardDnevnikDescription.vue"
 import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
 import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
+import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
 
 import { useMentorDnevnikStore } from "@/stores/useMentorDnevnikStore"
+import { storeToRefs } from "pinia"
+const { dnevniki } = storeToRefs(useMentorDnevnikStore())
 
 const mentorStore = useMentorDnevnikStore()
 const {
