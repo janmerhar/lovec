@@ -60,13 +60,13 @@ library.add(fas, far, fab)
 import i18n from "@/locales/i18n"
 
 const app = createApp(App)
+  .use(pinia)
   .use(IonicVue, {
     mode: "md",
   })
   .use(router)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(VueAxios, axios)
-  .use(pinia)
   .use(i18n)
 
 router.isReady().then(() => {
