@@ -90,7 +90,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "tabs",
     component: TabsPage,
     redirect: { name: "oprema" },
-    beforeEnter: allowIsRole(["pripravnik", "lovec"]),
+    beforeEnter: allowIsRole(["pripravnik", "lovec"], "login"),
     children: [
       {
         path: "jage",
