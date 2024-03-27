@@ -302,3 +302,21 @@ ion-router-outlet {
 ion-tab-bar {
   --ion-background-color: var(--ion-background-color-rgb);
 }
+
+/* Transition effect */
+/* https://vuejs.org/guide/built-ins/transition-group */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
