@@ -11,55 +11,58 @@
 
     <!--  -->
     <template #body>
-      <ion-item fill="solid">
-        <ion-label position="stacked">Tip</ion-label>
-        <ion-input
-          placeholder="Oprema"
+      <datepicker-horizontal></datepicker-horizontal>
+
+      <Form
+        :validation-schema="opremaAddSchema"
+        @submit="useOpremaStore().createItem(insertOprema)"
+      >
+        <Field name="naziv" type="text" v-model="insertOprema.naziv" />
+        <ErrorMessage name="naziv" />
+        <br />
+
+        <Field as="select" name="tip" v-model="insertOprema.tip">
+          <option v-for="tip in opremaTipDomain" :key="tip" :value="tip">
+            {{ tip }}
+          </option>
+        </Field>
+        <ErrorMessage name="tip" />
+        <br />
+
+        <Field
+          as="textarea"
+          name="stanje"
           type="text"
-          v-model="tip"
-          required
-        ></ion-input>
-      </ion-item>
-      <br />
-      <ion-item fill="solid">
-        <ion-label position="stacked">Naziv</ion-label>
-        <ion-input
-          placeholder="Oprema"
-          type="text"
-          v-model="naziv"
-          required
-        ></ion-input>
-      </ion-item>
-      <br />
-      <ion-item fill="solid">
-        <ion-label position="stacked">Opis</ion-label>
-        <ion-textarea
-          label="Solid textarea"
-          labelPlacement="floating"
-          :auto-grow="true"
-          :rows="6"
-          fill="solid"
-          placeholder="Vnesi opis"
-          v-model="stanje"
-        ></ion-textarea>
-      </ion-item>
-      <!--  -->
-      <br />
+          rows="5"
+          v-model="insertOprema.stanje"
+        />
+        <ErrorMessage name="stanje" />
+
+        <button type="submit">{{ $t("login.tab.input.submit") }}</button>
+      </Form>
     </template>
     <!--  -->
   </modal-template>
 </template>
 
 <script setup lang="ts">
-import { IonItem, IonLabel, IonInput, IonTextarea } from "@ionic/vue"
-
 import { ref } from "vue"
 
 import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
 import { useModal } from "@/composables/useModal"
 
-const naziv = ref("")
-const tip = ref("")
-const stanje = ref("")
+import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
+import { Form, Field, ErrorMessage } from "vee-validate"
+import { opremaAddSchema } from "@/text-validation/opremaSchemas"
+import { useOpremaStore } from "@/stores/useOpremaStore"
+import type { InsertOprema } from "@/types"
+import { opremaTipDomain } from "@/types"
+
+const insertOprema = ref<InsertOprema>({
+  naziv: "",
+  tip: "",
+  stanje: "",
+  datum: "2024-03-29",
+})
 </script>
