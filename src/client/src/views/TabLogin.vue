@@ -1,79 +1,52 @@
 <template>
-  <ion-page class="responsive-body">
-    <!--  -->
-    <!-- TODO kreiraj sliko za ozadje -->
-    <img
-      src="https://image.api.playstation.com/cdn/UP0146/CUSA04107_00/XFEn5Mk8QsgH7gB9iTEWMgg9LLHFRiuD.png"
-      alt=""
-      srcset=""
-    />
+  <tab-template>
+    <template #header>
+      <img src="" class="center" />
+    </template>
+    <template #body>
+      <Form :validation-schema="loginSchema" @submit="loginRedirect">
+        <Field name="email" type="email" v-model="inputData.email" />
+        <ErrorMessage name="email" />
+        <br />
+        <Field name="password" type="password" v-model="inputData.password" />
+        <ErrorMessage name="password" />
 
-    <ion-content class="ion-padding" :scroll-y="false">
-      <div class="centered-content">
-        <!-- TODO pomisli, ali je ta ozanaka sploh potrebna -->
-        <!-- <h3>Prijava</h3> -->
-        <ion-item>
-          <font-awesome-icon :icon="['fas', 'envelope']" />
-          <ion-input
-            placeholder="Elektronski naslov"
-            type="text"
-            expand="block"
-            required
-            v-model="email"
-            @keyup.enter="loginRedirect"
-          ></ion-input>
-        </ion-item>
-        <ion-item class="ion-margin-vertical">
-          <font-awesome-icon :icon="['fas', 'lock']" />
-          <ion-input
-            placeholder="Geslo"
-            type="password"
-            required
-            v-model="geslo"
-            @keyup.enter="loginRedirect"
-          ></ion-input>
-        </ion-item>
-        <ion-button expand="block" @click.prevent="loginRedirect"
-          >Prijava</ion-button
-        >
-
-        <!-- TODO dodaj password reset ??? -->
-        <ion-text color="primary">
-          <p @click.prevent="">Pozabljeno geslo</p>
-        </ion-text>
-      </div>
-    </ion-content>
-  </ion-page>
+        <button type="submit">{{ $t("login.tab.input.submit") }}</button>
+      </Form>
+    </template>
+  </tab-template>
 </template>
 
 <script setup lang="ts">
-import {
-  IonPage,
-  useIonRouter,
-  IonInput,
-  IonItem,
-  IonContent,
-  IonButton,
-  IonText,
-} from "@ionic/vue"
+import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
 
-import { ref } from "vue"
 import { useLoginStore } from "@/stores/useLoginStore"
+import { useTabNavigation } from "@/composables/useTabNavigation"
+import { useAlert } from "@/composables/useAlert"
+import i18n from "@/locales/i18n"
 
-const email = ref<string>("")
-const geslo = ref<string>("")
+const t = i18n.global.t
 
-const { login, logout } = useLoginStore()
-const router = useIonRouter()
+import { Form, Field, ErrorMessage } from "vee-validate"
+import { loginSchema } from "@/text-validation/loginSchemas"
+
+// Initial values
+const inputData = {
+  email: "",
+  password: "",
+}
+
+const { login } = useLoginStore()
+const { redirectTo } = useTabNavigation()
 
 const loginRedirect = async () => {
-  // TODO: check fields
-  const result = await login(email.value, geslo.value)
+  const result = await login(inputData.email, inputData.password)
 
   if (result) {
-    router.push({ name: "jage" })
+    redirectTo("oprema")
+  } else {
+    useAlert().errorToast(t("login.tab.alert.loginError"))
   }
-  // TODO: sicer izpiši napako
 }
 </script>
 
