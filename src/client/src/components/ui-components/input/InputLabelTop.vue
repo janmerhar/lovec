@@ -29,14 +29,22 @@
 </style>
 
 <style>
-#ilt-input > input {
+#ilt-input > input,
+#ilt-input > textarea,
+#ilt-input > select {
   width: 100%;
   color: var(--ion-text-color);
   background-color: var(--ion-color-step-150);
   border: 1px solid var(--ion-color-step-250);
   border-radius: 10px;
   height: 2rem;
-  padding: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+#ilt-input > textarea {
+  height: auto;
+  padding: 0.5rem;
 }
 
 #ilt-error > span[role="alert"] {
