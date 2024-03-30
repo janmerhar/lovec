@@ -3,13 +3,25 @@
     <template #header>
       <modal-header
         @cancel="useModal().cancelModal"
-        @confirm="useModal().confirmModal"
+        @confirm="
+          submitForm(
+            usePripravnikDnevnikStore().createItem,
+            insertDnevnik,
+            $t('pripravniki.dnevnik.crud.create.success', {
+              name: insertDnevnik.delo,
+            })
+          )
+        "
         >Vnesi dnevnik</modal-header
       >
     </template>
-    <datepicker-horizontal class="ion-margin-bottom"></datepicker-horizontal>
     <template #body>
+      <datepicker-horizontal
+        @change="(datum) => (insertDnevnik.datum = datum)"
+        class="ion-margin-bottom"
+      ></datepicker-horizontal>
       <Form
+        ref="form"
         :validation-schema="dnevnikAddSchema"
         @submit="usePripravnikDnevnikStore().createItem(insertDnevnik)"
       >
@@ -57,11 +69,17 @@ import { dnevnikAddSchema } from "@/text-validation/dnevnikSchemas"
 import type { InsertDnevnik } from "@/types"
 import { deloDomain } from "@/types"
 import { usePripravnikDnevnikStore } from "@/stores/usePripravnikDnevnikStore"
+import { useDate } from "../../composables/useDate"
 
 const insertDnevnik = ref<InsertDnevnik>({
-  datum: "2024-03-29",
+  datum: useDate(new Date()).isoDate(),
   delo: "",
   ure: 0,
   opis: "",
 })
+
+const form = ref<HTMLFormElement | null>(null)
+
+import { useFormControl } from "@/composables/useFormControl"
+const { submitForm } = useFormControl(form)
 </script>
