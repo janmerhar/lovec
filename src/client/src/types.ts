@@ -1,3 +1,4 @@
+// TODO: preveri, kako in kaj s tem
 export type APIResponse<T = any> = {
   status: number
   data: T
@@ -54,20 +55,22 @@ export interface UporabnikProfile extends UporabnikDetails {
 }
 
 /* Oprema */
+
+export const opremaTipDomain = ["puska", "nahrbtnik", "drugo"]
+
 export interface Oprema {
   id: string
   lastnik: string
   naziv: string
-  tip: string
+  tip: (typeof opremaTipDomain)[number]
   stanje: string
   datum: string
 }
 
 export interface InsertOprema {
   naziv: string
-  tip: string
+  tip: (typeof opremaTipDomain)[number]
   stanje: string
-  datum: string
 }
 
 /* Vplen */
@@ -168,20 +171,30 @@ export interface Druzina<R = string, C = string> {
 
 /* Dnevnik */
 
+export const statusDomain = ["potrjen", "zavrnjen", "neobdelan"]
+
+export const deloDomain = [
+  "kidanje",
+  "pospravljanje",
+  "krmljenje",
+  "postavljanje krmišča",
+  "drugo",
+]
+
 export interface Dnevnik {
   id: string
   pripravnikId: UporabnikDetails
   mentorId: UporabnikDetails
   datum: string
-  delo: string
+  delo: (typeof deloDomain)[number]
   ure: number
   opis: string
-  status: string
+  status: (typeof statusDomain)[number]
 }
 
 export interface InsertDnevnik {
   datum: string
   ure: number
   opis: string
-  delo: string
+  delo: (typeof deloDomain)[number]
 }
