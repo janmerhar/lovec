@@ -19,30 +19,52 @@
     <!--  -->
     <template #body>
       <Form ref="form" :validation-schema="opremaAddSchema">
-        <Field name="naziv" type="text" v-model="insertOprema.naziv" />
-        <ErrorMessage name="naziv" />
-        <br />
+        <input-label-top>
+          <template #label>
+            {{ $t("oprema.crud.categories.naziv") }}
+          </template>
+          <template #input>
+            <Field name="naziv" type="text" v-model="insertOprema.naziv" />
+          </template>
+          <template #error>
+            <ErrorMessage name="naziv" />
+          </template>
+        </input-label-top>
 
-        <div>
-          <Field as="select" name="tip" v-model="insertOprema.tip">
-            <option v-for="tip in opremaTipDomain" :key="tip" :value="tip">
-              {{ tip }}
-            </option>
-          </Field>
-          <ErrorMessage name="tip" />
-        </div>
-        <br />
+        <input-label-top>
+          <template #label>
+            {{ $t("oprema.crud.categories.tip") }}
+          </template>
+          <template #input>
+            <Field as="select" name="tip" v-model="insertOprema.tip">
+              <option v-for="tip in opremaTipDomain" :key="tip" :value="tip">
+                {{ tip }}
+              </option>
+            </Field>
+          </template>
+          <template #error>
+            <ErrorMessage name="tip" />
+          </template>
+        </input-label-top>
 
-        <Field
-          as="textarea"
-          name="stanje"
-          type="text"
-          rows="5"
-          v-model="insertOprema.stanje"
-        />
-        <ErrorMessage name="stanje" />
+        <input-label-top>
+          <template #label>
+            {{ $t("oprema.crud.categories.stanje") }}
+          </template>
+          <template #input>
+            <Field
+              as="textarea"
+              name="stanje"
+              type="text"
+              rows="5"
+              v-model="insertOprema.stanje"
+            />
+          </template>
+          <template #error>
+            <ErrorMessage name="stanje" />
+          </template>
+        </input-label-top>
       </Form>
-      <button type="submit">{{ $t("oprema.crud.create.button") }}</button>
     </template>
     <!--  -->
   </modal-template>
@@ -53,6 +75,7 @@ import { ref } from "vue"
 
 import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
+import InputLabelTop from "@/components/ui-components/input/InputLabelTop.vue"
 import { useModal } from "@/composables/useModal"
 
 import { Form, Field, ErrorMessage } from "vee-validate"
