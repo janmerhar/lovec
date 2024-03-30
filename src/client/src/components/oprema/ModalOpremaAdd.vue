@@ -2,31 +2,35 @@
   <modal-template>
     <template #header>
       <modal-header
-        @cancel="useModal().cancelModal"
-        @confirm="useModal().confirmModal"
         :confirm-button="true"
-        >blabalbalbj
+        @cancel="useModal().cancelModal"
+        @confirm="
+          submitForm(
+            useOpremaStore().createItem,
+            insertOprema,
+            $t('oprema.crud.create.success', { name: insertOprema.naziv })
+          )
+        "
+      >
+        {{ $t("oprema.crud.create.header") }}
       </modal-header>
     </template>
 
     <!--  -->
     <template #body>
-      <datepicker-horizontal></datepicker-horizontal>
-
-      <Form
-        :validation-schema="opremaAddSchema"
-        @submit="useOpremaStore().createItem(insertOprema)"
-      >
+      <Form ref="form" :validation-schema="opremaAddSchema">
         <Field name="naziv" type="text" v-model="insertOprema.naziv" />
         <ErrorMessage name="naziv" />
         <br />
 
-        <Field as="select" name="tip" v-model="insertOprema.tip">
-          <option v-for="tip in opremaTipDomain" :key="tip" :value="tip">
-            {{ tip }}
-          </option>
-        </Field>
-        <ErrorMessage name="tip" />
+        <div>
+          <Field as="select" name="tip" v-model="insertOprema.tip">
+            <option v-for="tip in opremaTipDomain" :key="tip" :value="tip">
+              {{ tip }}
+            </option>
+          </Field>
+          <ErrorMessage name="tip" />
+        </div>
         <br />
 
         <Field
@@ -37,9 +41,8 @@
           v-model="insertOprema.stanje"
         />
         <ErrorMessage name="stanje" />
-
-        <button type="submit">{{ $t("login.tab.input.submit") }}</button>
       </Form>
+      <button type="submit">{{ $t("oprema.crud.create.button") }}</button>
     </template>
     <!--  -->
   </modal-template>
@@ -52,7 +55,6 @@ import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
 import { useModal } from "@/composables/useModal"
 
-import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
 import { Form, Field, ErrorMessage } from "vee-validate"
 import { opremaAddSchema } from "@/text-validation/opremaSchemas"
 import { useOpremaStore } from "@/stores/useOpremaStore"
@@ -63,6 +65,10 @@ const insertOprema = ref<InsertOprema>({
   naziv: "",
   tip: "",
   stanje: "",
-  datum: "2024-03-29",
 })
+
+const form = ref<HTMLFormElement | null>(null)
+
+import { useFormControl } from "@/composables/useFormControl"
+const { submitForm } = useFormControl(form)
 </script>
