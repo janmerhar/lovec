@@ -15,7 +15,10 @@
       style="padding-left: 1rem"
       @click.prevent="moveBackward()"
     >
-      <font-awesome-icon :icon="['fas', 'chevron-left']" />
+      <font-awesome-icon
+        style="transform: translateX(-40%)"
+        :icon="['fas', 'chevron-left']"
+      />
     </div>
 
     <template v-for="(date, index) in dates" :key="index">
@@ -36,12 +39,11 @@
     </template>
 
     <!-- Puscica za nazaj -->
-    <div
-      class="arrow bubble"
-      style="padding-right: 1rem; text-align: center"
-      @click.prevent="moveForward()"
-    >
-      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+    <div class="arrow bubble" @click.prevent="moveForward()">
+      <font-awesome-icon
+        style="transform: translateX(80%)"
+        :icon="['fas', 'chevron-right']"
+      />
     </div>
   </div>
 </template>
