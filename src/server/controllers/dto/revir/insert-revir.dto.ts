@@ -1,13 +1,13 @@
 import { ArrayNotEmpty, IsArray, IsString } from "class-validator"
 
 export class InsertRevirDTO {
-  @IsString()
+  @IsString({ message: "ime" })
   ime: string
 
-  @IsArray()
+  @IsArray({ message: "koordinate" })
   @ArrayNotEmpty()
   koordinate: number[][]
 
-  @IsString()
+  @IsString({ message: "druzina" })
   druzina: string
 }

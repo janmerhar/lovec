@@ -1,9 +1,10 @@
-import { IsString } from "class-validator"
+import { IsString, Min } from "class-validator"
 
 export class LoginUporabnikDTO {
-  @IsString()
+  @IsString({ message: "email" })
   email: string
 
-  @IsString()
+  @IsString({ message: "geslo" })
+  @Min(8, { message: "geslo" })
   geslo: string
 }

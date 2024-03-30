@@ -1,12 +1,12 @@
 import { IsArray, IsString } from "class-validator"
 
 export class InsertDruzinaDTO {
-  @IsString()
+  @IsString({ message: "ime" })
   ime: string
 
-  @IsArray()
+  @IsArray({ message: "revirji" })
   revirji: string[] = []
 
-  @IsArray()
+  @IsArray({ message: "clani" })
   clani: string[] = []
 }

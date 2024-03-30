@@ -1,10 +1,10 @@
 import { IsOptional, IsString } from "class-validator"
 
 export class InsertObiskDTO {
-  @IsString()
+  @IsString({ message: "opazovalnica" })
   opazovalnica: string
 
-  @IsString()
+  @IsString({ message: "zacetek" })
   @IsOptional()
   zacetek?: string
 }

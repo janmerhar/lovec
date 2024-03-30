@@ -7,19 +7,19 @@ import {
 } from "class-validator"
 
 export class InsertOpazovalnicaDTO {
-  @IsString()
+  @IsString({ message: "ime" })
   @IsNotEmpty()
   ime: string
 
-  @IsNumber()
+  @IsNumber({}, { message: "kapaciteta" })
   @IsNotEmpty()
   kapaciteta: number
 
-  @IsBoolean()
+  @IsBoolean({ message: "prespanje" })
   @IsNotEmpty()
   prespanje: boolean
 
-  @IsArray()
+  @IsArray({ message: "koordinate" })
   @IsNotEmpty()
   koordinate: number[]
 }

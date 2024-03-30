@@ -2,17 +2,17 @@ import { IsIn, IsNumber, IsString, Min } from "class-validator"
 import { deloDomain } from "@shared/types"
 
 export class InsertDnevnikDTO {
-  @IsString()
+  @IsString({ message: "datum" })
   datum: string
 
-  @IsNumber()
-  @Min(1)
+  @IsNumber({}, { message: "ure" })
+  @Min(1, { message: "MIN" })
   ure: number
 
-  @IsString()
+  @IsString({ message: "opis" })
   opis: string
 
-  @IsString()
-  @IsIn(deloDomain)
+  @IsString({ message: "delo" })
+  @IsIn(deloDomain, { message: "DOMAIN" })
   delo: string
 }

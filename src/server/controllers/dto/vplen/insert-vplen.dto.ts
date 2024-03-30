@@ -11,19 +11,19 @@ import {
 import { zivalDomain, bolezenDomain } from "@shared/types"
 
 export class InsertVplenDTO {
-  @IsArray()
+  @IsArray({ message: "koordinate" })
   @ArrayNotEmpty()
   koordinate: number[]
 
-  @IsString()
+  @IsString({ message: "zival" })
   @IsIn(zivalDomain)
   zival: string
 
-  @IsNumber()
-  @Min(1)
+  @IsNumber({}, { message: "teza" })
+  @Min(1, { message: "MIN" })
   teza: number
 
-  @IsDateString()
+  @IsDateString({}, { message: "datum" })
   datum: string
 
   @ArrayMinSize(0)

@@ -7,25 +7,25 @@ import {
 } from "class-validator"
 
 export class InsertJagaDto {
-  @IsString()
+  @IsString({ message: "organizator" })
   @IsOptional()
   organizator: string
 
-  @IsString()
+  @IsString({ message: "naziv" })
   naziv: string
 
-  @IsString()
+  @IsString({ message: "opis" })
   opis: string
 
-  @IsArray()
+  @IsArray({ message: "udelezeni" })
   @IsString({ each: true })
   udelezeni: string[]
 
-  @IsArray()
+  @IsArray({ message: "lokacija" })
   @IsNumber({}, { each: true })
   lokacija: number[][]
 
-  @IsString()
-  @IsDateString()
+  @IsString({ message: "zacetek" })
+  @IsDateString({}, { message: "zacetek" })
   zacetek: string
 }
