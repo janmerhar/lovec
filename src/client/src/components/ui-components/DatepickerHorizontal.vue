@@ -1,47 +1,52 @@
 <template>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        {{ useDate(dates[0]).getMonth() }}
-      </ion-col>
-    </ion-row>
-
+  <h4
+    style="
+      text-transform: capitalize;
+      padding-left: 0.5rem;
+      margin-bottom: 0.5rem;
+    "
+  >
+    {{ useDate(dates[0]).getMonth() }}
+  </h4>
+  <div style="display: flex; justify-content: space-between">
     <!-- Puscica za naprej -->
-    <ion-row>
-      <ion-col @click.prevent="moveBackward()">
-        <font-awesome-icon :icon="['fas', 'chevron-left']"
-      /></ion-col>
+    <div
+      class="arrow bubble"
+      style="padding-left: 1rem"
+      @click.prevent="moveBackward()"
+    >
+      <font-awesome-icon :icon="['fas', 'chevron-left']" />
+    </div>
 
-      <!-- Array za prikaz dni -->
-      <ion-col
-        v-for="(date, index) in dates"
-        :key="index"
-        class="date-box"
-        :class="{
-          selected: date.toDateString() == selectedDate.toDateString(),
-        }"
-        @click.prevent="changeDate(date)"
-      >
-        <div :class="{ weekend: index + 1 >= 6 }">
-          {{ useDate(date).getWeekdayShort().toUpperCase() }}
-        </div>
-
-        <div class="day">
+    <template v-for="(date, index) in dates" :key="index">
+      <div @click.prevent="changeDate(date)">
+        <div
+          class="day text-center bubble"
+          :class="{
+            selected: date.toDateString() == selectedDate.toDateString(),
+          }"
+        >
           {{ useDate(date).getDayNumber() }}
         </div>
-      </ion-col>
 
-      <!-- Puscica za nazaj -->
-      <ion-col @click.prevent="moveForward()">
-        <font-awesome-icon :icon="['fas', 'chevron-right']"
-      /></ion-col>
-    </ion-row>
-  </ion-grid>
+        <div :class="{ weekend: index + 1 >= 6 }" class="day-name text-center">
+          {{ useDate(date).getWeekdayShort().toUpperCase()[0] }}
+        </div>
+      </div>
+    </template>
+
+    <!-- Puscica za nazaj -->
+    <div
+      class="arrow bubble"
+      style="padding-right: 1rem; text-align: center"
+      @click.prevent="moveForward()"
+    >
+      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { IonGrid, IonRow, IonCol } from "@ionic/vue"
-
 import { onBeforeMount, ref } from "vue"
 import { useDate } from "@/composables/useDate"
 
@@ -116,8 +121,7 @@ ion-col {
 }
 
 .selected {
-  background-color: var(--ion-color-primary);
-  color: var(--ion-color-light);
+  background-color: var(--ion-color-danger) !important;
 }
 
 .day {
@@ -125,9 +129,36 @@ ion-col {
 
   padding-top: 0.45rem;
   padding-bottom: 0.45rem;
+  cursor: pointer;
 }
 
+.day-name {
+  font-size: 0.8rem;
+}
 .weekend {
   color: var(--ion-color-danger);
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.bubble {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-light);
+  border-radius: 50%;
+  /* TODO */
+  width: 35px;
+  height: 35px;
 }
 </style>
