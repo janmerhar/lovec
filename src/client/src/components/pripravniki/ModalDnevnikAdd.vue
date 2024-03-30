@@ -12,7 +12,7 @@
             })
           )
         "
-        >Vnesi dnevnik</modal-header
+        >{{ $t("pripravniki.crud.create.header") }}</modal-header
       >
     </template>
     <template #body>
@@ -25,31 +25,48 @@
         :validation-schema="dnevnikAddSchema"
         @submit="usePripravnikDnevnikStore().createItem(insertDnevnik)"
       >
-        <Field as="select" name="delo" v-model="insertDnevnik.delo">
-          <option v-for="delo in deloDomain" :key="delo" :value="delo">
-            {{ delo }}
-          </option>
-        </Field>
-        <ErrorMessage name="delo" />
-        <br />
+        <input-label-top>
+          <template #label>
+            {{ $t("pripravniki.crud.categories.delo") }}
+          </template>
+          <template #input>
+            <Field as="select" name="delo" v-model="insertDnevnik.delo">
+              <option v-for="delo in deloDomain" :key="delo" :value="delo">
+                {{ delo }}
+              </option>
+            </Field>
+          </template>
+          <template #error><ErrorMessage name="delo" /></template>
+        </input-label-top>
 
-        <Field name="ure" type="number" v-model="insertDnevnik.ure" />
-        <ErrorMessage name="ure" />
-        <br />
+        <input-label-top>
+          <template #label>{{
+            $t("pripravniki.crud.categories.ure")
+          }}</template>
+          <template #input>
+            <Field name="ure" type="number" v-model="insertDnevnik.ure" />
+          </template>
+          <template #error>
+            <ErrorMessage name="ure" />
+          </template>
+        </input-label-top>
 
-        <Field
-          as="textarea"
-          name="opis"
-          type="text"
-          rows="5"
-          v-model="insertDnevnik.opis"
-        />
-        <ErrorMessage name="opis" />
-        <br />
-
-        <button type="submit">
-          {{ $t("pripravniki.crud.create.button") }}
-        </button>
+        <input-label-top>
+          <template #label>
+            {{ $t("pripravniki.crud.categories.opis") }}
+          </template>
+          <template #input>
+            <Field
+              as="textarea"
+              name="opis"
+              type="text"
+              rows="5"
+              v-model="insertDnevnik.opis"
+          /></template>
+          <template #error>
+            <ErrorMessage name="opis" />
+          </template>
+        </input-label-top>
       </Form>
     </template>
   </modal-template>
@@ -59,6 +76,7 @@
 import { ref } from "vue"
 
 import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
+import InputLabelTop from "@/components/ui-components/input/InputLabelTop.vue"
 
 import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
@@ -69,7 +87,7 @@ import { dnevnikAddSchema } from "@/text-validation/dnevnikSchemas"
 import type { InsertDnevnik } from "@/types"
 import { deloDomain } from "@/types"
 import { usePripravnikDnevnikStore } from "@/stores/usePripravnikDnevnikStore"
-import { useDate } from "../../composables/useDate"
+import { useDate } from "@/composables/useDate"
 
 const insertDnevnik = ref<InsertDnevnik>({
   datum: useDate(new Date()).isoDate(),
