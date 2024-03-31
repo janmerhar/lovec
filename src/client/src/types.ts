@@ -75,6 +75,18 @@ export interface InsertOprema {
 
 /* Vplen */
 
+export const zivalDomain = [
+  "srnjad",
+  "divjad",
+  "lisica",
+  "medved",
+  "volk",
+  "divji prašič",
+  "drugo",
+]
+
+export const bolezenDomain = ["steklina", "kuga", "drugo"]
+
 export interface VplenDetails {
   datum: string
   zivali: string[]
@@ -85,18 +97,18 @@ export interface Vplen {
   id: string
   uporabnik: string
   koordinate: number[]
-  zival: string
+  zival: (typeof zivalDomain)[number]
   teza: number
   datum: string
-  bolezni: string[]
+  bolezni: (typeof bolezenDomain)[number][]
 }
 
 export interface InsertVplen {
   koordinate: number[]
-  zival: string
+  zival: (typeof zivalDomain)[number]
   teza: number
   datum: string
-  bolezni: string[]
+  bolezni: (typeof bolezenDomain)[number][]
 }
 
 /* Opazovalnica */
