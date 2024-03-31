@@ -1,162 +1,123 @@
 <template>
   <modal-template>
     <template #header>
-      <header-modal
+      <modal-header
         :confirm-button="true"
-        @cancel="cancel()"
-        @confirm="confirm()"
-        >Vnesi vplen</header-modal
+        @cancel="useModal().cancelModal"
+        @confirm="
+          submitForm(
+            useVplenStore().createItem,
+            insertVplen,
+            $t('vplenDatum.crud.create.success', { name: insertVplen.zival })
+          )
+        "
       >
+        {{ $t("vplenDatum.crud.create.header") }}
+      </modal-header>
     </template>
+    <!--  -->
     <template #body>
-      <!--  -->
       <datepicker-horizontal
-        @change="(novDatum) => updateDatum(novDatum)"
+        @change="(novDatum) => (insertVplen.datum = novDatum)"
       ></datepicker-horizontal>
-      <br />
-      <br />
-      <ion-item fill="solid">
-        <ion-label position="stacked">Žival</ion-label>
-        <ion-input
-          placeholder="Žival"
-          type="text"
-          v-model="zival"
-          required
-        ></ion-input>
-      </ion-item>
-      <br />
-      <br />
-      <ion-item fill="solid">
-        <ion-label position="stacked">Teža</ion-label>
-        <ion-input
-          placeholder="Teža"
-          type="number"
-          v-model="teza"
-          required
-        ></ion-input>
-      </ion-item>
-      <br />
-      <!--  -->
-      <template v-for="(vnos, index) in vnosi" :key="index">
-        <template v-if="!vnos.hidden">
-          <ion-item fill="solid">
-            <ion-label position="stacked">Morebitne bolezni</ion-label>
-            <ion-input
-              placeholder="Morebitna bolezen"
-              type="text"
-              :clear-input="true"
-              v-model="vnosi[index].bolezen"
-              required
-            ></ion-input>
-          </ion-item>
 
-          <div class="ion-text-end">
-            <ion-button size="small" @click="removeField(index)"
-              >Odstrani vnos</ion-button
-            >
-          </div>
-        </template>
-      </template>
-      <!--  -->
-      <br />
-      <ion-button expand="block" @click="addField()">Dodaj bolezen</ion-button>
-      <!--  -->
+      <Form ref="form" :validation-schema="vplenAddSchema">
+        <input-label-top>
+          <template #label>
+            {{ $t("vplenDatum.crud.categories.zival") }}
+          </template>
+          <template #input>
+            <Field as="select" name="zival" v-model="insertVplen.zival">
+              <option v-for="zival in zivalDomain" :key="zival" :value="zival">
+                {{ zival }}
+              </option>
+            </Field>
+          </template>
+          <template #error>
+            <ErrorMessage name="zival" />
+          </template>
+        </input-label-top>
+
+        <input-label-top>
+          <template #label>{{
+            $t("vplenDatum.crud.categories.teza")
+          }}</template>
+          <template #input>
+            <Field name="teza" type="number" v-model="insertVplen.teza" />
+          </template>
+          <template #error>
+            <ErrorMessage name="teza" />
+          </template>
+        </input-label-top>
+
+        <input-label-top>
+          <template #label>
+            {{ $t("vplenDatum.crud.categories.bolezni") }}
+          </template>
+        </input-label-top>
+
+        <!-- TODO: dodaj delete button, razmisli, input-right ?? -->
+        <FieldArray name="bolezni">
+          <input-label-top
+            v-for="(bolezen, index) in insertVplen.bolezni"
+            :key="index"
+          >
+            <template #input>
+              <Field
+                as="select"
+                :name="`bolezni[${index}]`"
+                v-model="insertVplen.bolezni[index]"
+              >
+                <option
+                  v-for="bolezen in bolezenDomain"
+                  :key="bolezen"
+                  :value="bolezen"
+                >
+                  {{ bolezen }}
+                </option>
+              </Field>
+            </template>
+            <template #error>
+              <ErrorMessage :name="`bolezni[${index}]`" />
+            </template>
+          </input-label-top>
+        </FieldArray>
+
+        <!--  -->
+      </Form>
+
+      <button-wide @click="insertVplen.bolezni.push('')">Dodaj</button-wide>
     </template>
   </modal-template>
 </template>
 
-<script lang="ts">
-import {
-  IonButton,
-  IonItem,
-  IonLabel,
-  IonInput,
-  modalController,
-} from "@ionic/vue"
+<script setup lang="ts">
+import { ref } from "vue"
 
-import HeaderModal from "@/components/ui-components/HeaderModal.vue"
-import DatepickerHorizontal from "../ui-components/DatepickerHorizontal.vue"
+import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
+import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
 import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
+import InputLabelTop from "@/components/ui-components/input/InputLabelTop.vue"
+import ButtonWide from "@/components/ui-components/button/ButtonWide.vue"
+import { useModal } from "@/composables/useModal"
 
-import { defineComponent } from "vue"
+import { Form, Field, ErrorMessage, FieldArray } from "vee-validate"
+import type { InsertVplen } from "@/types"
+import { vplenAddSchema } from "@/text-validation/vplenSchemas"
+import { useVplenStore } from "@/stores/useVplenStore"
+import { useDate } from "@/composables/useDate"
 
-import { Vplen } from "@/entities/Vplen"
-
-export default defineComponent({
-  name: "ModalVplenAdd",
-  components: {
-    IonButton,
-    IonItem,
-    IonLabel,
-    IonInput,
-    HeaderModal,
-    DatepickerHorizontal,
-    ModalTemplate,
-  },
-  data() {
-    return {
-      name: "krneki podatek, ki se vrne",
-      //
-      // TODO premisli, kako bi to naredil
-      // koordinate: [0, 0],
-      datum: new Date().toISOString().slice(0, 10),
-      zival: "",
-      teza: 0,
-      vnosi: [
-        {
-          bolezen: "",
-          hidden: false,
-        },
-      ],
-    }
-  },
-  methods: {
-    updateDatum(novDatum: string) {
-      this.datum = novDatum
-    },
-
-    addField() {
-      this.vnosi.push({
-        bolezen: "",
-        hidden: false,
-      })
-    },
-    removeField(index: number) {
-      this.vnosi[index].hidden = true
-    },
-    cancel() {
-      return modalController.dismiss(null, "cancel")
-    },
-    async confirm() {
-      // TODO preverjanje, ali so vsi podatki vneseni
-      // if (!(this.datum && this.zival && this.teza && this.vnosi)) {
-      // throw new Error("Vnesi vse podatke")
-      // }
-
-      // TODO
-      // ti mi ne vnasas bolezni
-      // in se na splosno cudno vedes
-      // ce ni bolezni, imam potem na ogledu vplenov dodatne tezave
-      // also mi vneses tabelo bolezni, ki ima prazna polja
-      const bolezni = this.vnosi
-        .filter((el) => el.hidden != false && el.bolezen != null)
-        .map((el) => el.bolezen)
-
-      await Vplen.insertVplen(
-        this.axios,
-        this.zival,
-        this.teza,
-        this.datum,
-        bolezni
-      )
-
-      return modalController.dismiss(null, "confirm")
-    },
-    async fetchVpleni() {
-      const vpleni = await Vplen.fetchVpleni(this.axios, 1)
-
-      console.log(vpleni)
-    },
-  },
+const insertVplen = ref<InsertVplen>({
+  koordinate: ["123", "123"],
+  zival: "",
+  teza: 0,
+  datum: useDate(new Date()).isoDate(),
+  bolezni: ["", ""],
 })
+
+const form = ref<HTMLFormElement | null>(null)
+
+import { useFormControl } from "@/composables/useFormControl"
+import { zivalDomain, bolezenDomain } from "@/types"
+const { submitForm } = useFormControl(form)
 </script>
