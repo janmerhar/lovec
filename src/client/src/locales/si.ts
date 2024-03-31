@@ -44,6 +44,11 @@ export default {
         success: "Oprema {name} uspešno izbrisana",
         failure: "Oprema {name} ni bila izbrisana",
       },
+      categories: {
+        naziv: "Naziv",
+        tip: "Tip",
+        stanje: "Stanje",
+      },
     },
   },
   pripravniki: {
@@ -74,10 +79,21 @@ export default {
       header: "Vpleni datum",
     },
     crud: {
-      create: {},
+      create: {
+        header: "Vnesi vplen",
+        button: "Vpleni",
+        success: "Vplen {name} uspešno dodan",
+      },
       delete: {
         success: "Vplen {name} uspešno izbrisan",
         failure: "Vplen {name} ni bila izbrisan",
+      },
+      categories: {
+        kooridnate: "Koordinate",
+        zival: "Žival",
+        teza: "Teža",
+        datum: "Datum",
+        bolezni: "Bolezni",
       },
     },
   },
@@ -86,6 +102,40 @@ export default {
     delete: {
       success: "Opazovalnica {name} uspešno izbrisana",
       failure: "Opazovalnica {name} ni bila izbrisana",
+    },
+  },
+  izkaznica: {
+    tab: {
+      header: "Izkaznica",
+      sections: {
+        personalData: "Osebni podatki",
+        mentor: "Mentor",
+        apprentice: "Pripravnik",
+        apprentices: "Pripravniki",
+        preferences: "Preference",
+        theme: "Tema",
+        language: "Jezik",
+      },
+    },
+    crud: {
+      create: {
+        header: "Vnesi izkaznico",
+        button: "Vnesi",
+        success: "Izkaznica {name} uspešno dodana",
+      },
+      delete: {
+        success: "Izkaznica {name} uspešno izbrisana",
+        failure: "Izkaznica {name} ni bila izbrisana",
+      },
+      categories: {
+        ime: "Ime",
+        priimek: "Priimek",
+        druzina: "Družina",
+        role: "Vloga",
+        mentor: "Mentor",
+        pripravniki: "Pripravniki",
+        preference: "Preference",
+      },
     },
   },
 }
