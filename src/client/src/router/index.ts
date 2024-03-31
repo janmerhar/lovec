@@ -47,7 +47,6 @@ const allowIsRole = (roles: string[], redirect?: string) => {
     const isAllowed = roles.some((role) => checkRole(role))
 
     if (isAllowed) {
-      console.log("isAllowed")
       next()
     } else if (redirect) {
       next({ name: redirect })
@@ -144,7 +143,7 @@ const routes: Array<RouteRecordRaw> = [
         beforeEnter: allowIsRole(["pripravnik", "lovec"]),
       },
       {
-        path: "izkaznica",
+        path: "izkaznica/:id?",
         name: "izkaznica",
         component: TabIzkaznica,
         beforeEnter: allowIsRole(["pripravnik", "lovec"]),
