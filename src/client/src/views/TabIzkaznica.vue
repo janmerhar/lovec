@@ -1,31 +1,146 @@
 <template>
-  <ion-page>
-    <ion-content class="ion-padding-horizontal">
-      <h1 class="ion-text-center">Izkaznica</h1>
+  <tab-template
+    :refresh="
+      async (e) => {
+        await selectItem(uporabnikId)
+        e.detail.complete()
+      }
+    "
+  >
+    <template #header>
+      <tab-header>{{ $t("izkaznica.tab.header") }}</tab-header>
+    </template>
+    <template #body>
+      <image-profile> </image-profile>
 
-      <grid-izkaznica :profile_picture="profile_picture"></grid-izkaznica>
+      <!--  -->
+      <list-container>
+        <template #title>
+          <list-title>
+            {{ $t("izkaznica.tab.sections.personalData") }}
+            <!-- TODO: ti si samo za admina i guess -->
+            <!-- <template #end>uredi</template> -->
+          </list-title>
+        </template>
 
-      <ion-button expand="full">Odjava iz aplikacije</ion-button>
-    </ion-content>
-  </ion-page>
+        <template #default>
+          <list-item>
+            <template #title>
+              {{ $t("izkaznica.crud.categories.role") }}
+            </template>
+            <template #value>
+              {{ selectedUporabnik?.role }}
+            </template>
+          </list-item>
+
+          <list-item v-if="selectedUporabnik?.role == 'pripravnik'">
+            <template #title>
+              {{ $t("izkaznica.crud.categories.mentor") }}
+            </template>
+            <template #value>
+              {{ selectedUporabnik?.mentor?.ime }}
+              {{ selectedUporabnik?.mentor?.priimek }}
+            </template>
+          </list-item>
+
+          <list-item>
+            <template #title>
+              {{ $t("izkaznica.crud.categories.druzina") }}
+            </template>
+            <template #value>
+              {{ selectedUporabnik?.druzina?.ime }}
+            </template>
+          </list-item>
+        </template>
+      </list-container>
+
+      <list-container v-if="selectedUporabnik?.role == 'lovec'">
+        <template #title>
+          <list-title>
+            {{ $t("izkaznica.tab.sections.apprentices") }}
+            <!-- TODO: ti si samo za admina i guess -->
+            <!-- <template #end>uredi</template> -->
+          </list-title>
+        </template>
+        <template #default>
+          <list-item
+            v-for="pripravnik in selectedUporabnik?.pripravniki"
+            :key="pripravnik.id"
+          >
+            <template #title>
+              {{ $t("izkaznica.tab.sections.apprentice") }}
+            </template>
+            <template #value>
+              {{ pripravnik.ime }}
+              {{ pripravnik.priimek }}
+            </template>
+          </list-item>
+        </template>
+      </list-container>
+
+      <list-container>
+        <template #title>
+          <list-title>
+            {{ $t("izkaznica.tab.sections.preferences") }}
+          </list-title>
+        </template>
+
+        <template #default>
+          <list-item>
+            <template #title>
+              {{ $t("izkaznica.tab.sections.language") }}
+            </template>
+            <template #value> (Neki jezik) </template>
+          </list-item>
+          <list-item>
+            <template #title>
+              {{ $t("izkaznica.tab.sections.theme") }}
+            </template>
+            <template #value> (neka tema dark/light) </template>
+          </list-item>
+        </template>
+      </list-container>
+      <!--  -->
+    </template>
+  </tab-template>
 </template>
 
-<script>
-import { IonPage, IonContent, IonButton } from "@ionic/vue"
-import GridIzkaznica from "@/components/izkaznica/GridIzkaznica.vue"
+<script setup lang="ts">
+import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
+import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
+import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
 
-export default {
-  components: {
-    IonPage,
-    IonContent,
-    GridIzkaznica,
-    IonButton,
-  },
-  data() {
-    return {
-      profile_picture:
-        "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F08%2Fsimp_homersingle08_f_hires2-2000.jpg&q=60",
-    }
-  },
+import ImageProfile from "@/components/ui-components/image/ImageProfile.vue"
+import ListContainer from "@/components/ui-components/list/ListContainer.vue"
+import ListTitle from "@/components/ui-components/list/ListTitle.vue"
+import ListItem from "@/components/ui-components/list/ListItem.vue"
+
+import { useRoute } from "vue-router"
+import { useLoginStore } from "@/stores/useLoginStore"
+import { useProfileStore } from "@/stores/useProfileStore"
+import { storeToRefs } from "pinia"
+import { onBeforeMount } from "vue"
+
+const route = useRoute()
+
+const { uporabnik, isLogged } = storeToRefs(useLoginStore())
+
+let uporabnikId = ""
+
+if (route.params.id) {
+  uporabnikId = route.params.id
+} else if (isLogged.value) {
+  uporabnikId = uporabnik.value.id
 }
+
+const profileStore = useProfileStore()
+const { selectItem } = profileStore
+const { selectedUporabnik } = storeToRefs(profileStore)
+
+onBeforeMount(async () => {
+  if (uporabnikId) {
+    await selectItem(uporabnikId)
+    console.log("profile", selectedUporabnik.value)
+  }
+})
 </script>
