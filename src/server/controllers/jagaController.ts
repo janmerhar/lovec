@@ -82,7 +82,7 @@ export class JagaController {
       uporabnikId,
       jaga.naziv,
       jaga.opis,
-      jaga.udelezeni,
+      jaga.udelezeni || [],
       spremenljivke.JAGA_MAX_MEMBERS,
       jaga.lokacija,
       jaga.zacetek
