@@ -157,10 +157,10 @@ export interface Jaga {
 }
 
 export interface InsertJaga {
-  organizator: string
+  organizator?: string
   naziv: string
   opis: string
-  udelezeni: string[]
+  udelezeni?: string[]
   lokacija: number[][]
   zacetek: string
 }
