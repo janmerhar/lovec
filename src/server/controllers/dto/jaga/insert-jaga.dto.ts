@@ -19,6 +19,7 @@ export class InsertJagaDto {
 
   @IsArray({ message: "udelezeni" })
   @IsString({ each: true })
+  @IsOptional()
   udelezeni: string[]
 
   @IsArray({ message: "lokacija" })
