@@ -2,8 +2,14 @@
   <modal-template>
     <template #header>
       <modal-header
-        @confirm="useModal().confirmModal"
         @cancel="useModal().cancelModal"
+        @confirm="
+          submitForm(
+            useJagaStore().createItem,
+            insertJaga,
+            $t('jaga.crud.create.success', { name: insertJaga.naziv })
+          )
+        "
       >
         {{ $t("jaga.crud.create.header") }}
       </modal-header>
@@ -73,13 +79,18 @@ import { useModal } from "@/composables/useModal"
 import { InsertJaga } from "@/types"
 import { useDate } from "@/composables/useDate"
 import { jagaAddSchema } from "@/text-validation/jagaSchema"
+import { useJagaStore } from "@/stores/useJagaStore"
 
 const datum = ref<string>(useDate(new Date()).isoDate())
 const cas = ref<string>(new Date().toTimeString().slice(0, 5))
 
-const datetime = computed(() =>
-  new Date(`${datum.value}T${cas.value}`).toISOString()
-)
+const datetime = computed(() => {
+  const { date, addHours } = useDate(new Date(`${datum.value}T${cas.value}`))
+
+  addHours(2)
+
+  return date.value.toISOString()
+})
 
 const insertJaga = ref<InsertJaga>({
   naziv: "",
@@ -88,4 +99,8 @@ const insertJaga = ref<InsertJaga>({
   lokacija: [123, 123],
   zacetek: datetime.value,
 })
+
+const form = ref<HTMLFormElement | null>(null)
+import { useFormControl } from "@/composables/useFormControl"
+const { submitForm } = useFormControl(form)
 </script>
