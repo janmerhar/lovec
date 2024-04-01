@@ -29,6 +29,25 @@ export default {
         mine: "Moje",
       },
     },
+    crud: {
+      create: {
+        header: "Vnesi jago",
+        button: "Dodaj člana",
+        success: "Jaga {name} uspešno dodana",
+      },
+      delete: {
+        success: "Jaga {name} uspešno izbrisana",
+        failure: "Jaga {name} ni bila izbrisana",
+      },
+      categories: {
+        organizator: "Organizator",
+        naziv: "Naziv",
+        opis: "Opis",
+        udelezeni: "Udeleženi",
+        lokacija: "Lokacija",
+        zacetek: "Začetek",
+      },
+    },
   },
   oprema: {
     tab: {
@@ -116,6 +135,7 @@ export default {
         theme: "Tema",
         language: "Jezik",
       },
+      logout: "Odjava",
     },
     crud: {
       create: {
