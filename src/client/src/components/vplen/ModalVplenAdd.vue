@@ -56,6 +56,8 @@
           </template>
         </input-label-top>
 
+        <!-- TODO: make a map for choosing location -->
+
         <!-- TODO: dodaj delete button, razmisli, input-right ?? -->
         <FieldArray name="bolezni">
           <input-label-top
@@ -108,7 +110,7 @@ import { useVplenStore } from "@/stores/useVplenStore"
 import { useDate } from "@/composables/useDate"
 
 const insertVplen = ref<InsertVplen>({
-  koordinate: ["123", "123"],
+  koordinate: [123, 123],
   zival: "",
   teza: 0,
   datum: useDate(new Date()).isoDate(),
