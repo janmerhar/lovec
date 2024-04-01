@@ -81,6 +81,7 @@ export default class Druzina<R = string, C = string> {
     const druzine = await DruzinaModel.aggregate([
       {
         $project: {
+          ime: 1,
           revirjiCount: {
             $size: "$revirji",
           },
