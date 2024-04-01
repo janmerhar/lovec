@@ -5,6 +5,6 @@ export const jagaAddSchema = yup.object({
   naziv: yup.string().required(),
   opis: yup.string().required(),
   udelezeni: yup.array(yup.string()),
-  lokacija: yup.array(yup.array(yup.number())).required(),
-  zacetek: yup.string().required(),
+  lokacija: yup.array(yup.array(yup.number())) /*.required()*/,
+  zacetek: yup.string() /*.required()*/,
 })
