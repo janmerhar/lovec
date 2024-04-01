@@ -100,6 +100,13 @@
           </list-item>
         </template>
       </list-container>
+
+      <button-wide
+        @click="logoutUser"
+        style="padding-left: 1rem; padding-right: 1rem"
+      >
+        {{ $t("izkaznica.tab.logout") }}
+      </button-wide>
       <!--  -->
     </template>
   </tab-template>
@@ -114,6 +121,7 @@ import ImageProfile from "@/components/ui-components/image/ImageProfile.vue"
 import ListContainer from "@/components/ui-components/list/ListContainer.vue"
 import ListTitle from "@/components/ui-components/list/ListTitle.vue"
 import ListItem from "@/components/ui-components/list/ListItem.vue"
+import ButtonWide from "@/components/ui-components/button/ButtonWide.vue"
 
 import { useRoute } from "vue-router"
 import { useLoginStore } from "@/stores/useLoginStore"
@@ -128,9 +136,9 @@ const { uporabnik, isLogged } = storeToRefs(useLoginStore())
 let uporabnikId = ""
 
 if (route.params.id) {
-  uporabnikId = route.params.id
+  uporabnikId = route.params.id as string
 } else if (isLogged.value) {
-  uporabnikId = uporabnik.value.id
+  uporabnikId = uporabnik.value?.id as string
 }
 
 const profileStore = useProfileStore()
@@ -143,4 +151,12 @@ onBeforeMount(async () => {
     console.log("profile", selectedUporabnik.value)
   }
 })
+
+const logoutUser = async () => {
+  const logoutResult = await useLoginStore().logout()
+
+  if (logoutResult) {
+    window.location.reload()
+  }
+}
 </script>
