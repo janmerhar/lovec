@@ -161,7 +161,7 @@ export interface InsertJaga {
   naziv: string
   opis: string
   udelezeni?: string[]
-  lokacija: number[][]
+  lokacija: number[]
   zacetek: string
 }
 
