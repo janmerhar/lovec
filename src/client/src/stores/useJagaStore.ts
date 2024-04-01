@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { computed, ref } from "vue"
+import { computed } from "vue"
 import type { InsertJaga, Jaga } from "@/types"
 
 import { useRequest } from "@/composables/useRequest"
@@ -64,6 +64,39 @@ export const useJagaStore = defineStore("jaga", () => {
   //
   // CRUD
   //
+  const createJaga = async (jaga: InsertJaga): Promise<Jaga> => {
+    const response = await request.post<Jaga>("/jage", {
+      url: "",
+      data: jaga,
+    })
+
+    return response.data
+  }
+
+  const deleteJaga = async (jaga: Jaga): Promise<boolean> => {
+    const response = await request.delete<boolean>(`/jage/${jaga.id}`)
+
+    return response.data
+  }
+
+  const updateJaga = async (
+    oldVal?: Jaga,
+    newVal?: Jaga
+  ): Promise<Jaga | null> => {
+    if (!oldVal || !newVal) {
+      return null
+    }
+
+    const response = await request.put<Jaga>(`/jage/${oldVal.id}`, {
+      url: "",
+      data: newVal,
+    })
+
+    return response.data
+  }
+
+  const crud = useCRUD<Jaga>(jagaVariable)
+  const { createItem, updateItem, deleteItem } = crud
 
   return {
     selectedItem,
@@ -71,5 +104,12 @@ export const useJagaStore = defineStore("jaga", () => {
     jage,
     fetchMore,
     refreshPagination,
+    // CRUD
+    createItem: createItem(createJaga),
+    updateItem: updateItem(updateJaga),
+    deleteItem: deleteItem(deleteJaga),
+    // TODO: ti dne metodi
+    // dodajClana
+    // odstraniClana
   }
 })
