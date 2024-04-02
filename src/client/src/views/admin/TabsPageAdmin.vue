@@ -10,6 +10,18 @@
       <!-- Bootom tool bar -->
       <ion-tab-bar slot="bottom">
         <ion-tab-button
+          tab="admin_druzine"
+          @click="redirectTo('admin_druzine')"
+          :class="selectedTabStyle('admin_druzine')"
+        >
+          <font-awesome-icon
+            :icon="['fas', 'house-user']"
+            size="2xl"
+            fixed-width
+          />
+        </ion-tab-button>
+
+        <ion-tab-button
           tab="jage"
           :class="selectedTabStyle('jage')"
           @click="redirectTo('jage')"
@@ -22,47 +34,37 @@
         </ion-tab-button>
 
         <ion-tab-button
-          tab="pripravniki"
-          @click="redirectTo('pripravniki')"
-          :class="selectedTabStyle('pripravniki')"
+          tab="tower-observation"
+          @click.prevent="redirectTo('admin_zemljevid')"
+          :class="selectedTabStyle('admin_zemljevid')"
         >
           <font-awesome-icon
-            :icon="['fas', 'people-group']"
+            :icon="['fas', 'tower-observation']"
             size="2xl"
             fixed-width
           />
         </ion-tab-button>
 
+        <!-- Uporabniki -->
         <ion-tab-button
-          tab="opazovalnica"
-          @click.prevent="redirectTo('opazovalnica')"
-          :class="selectedTabStyle('opazovalnica')"
+          tab="admin_uporabniki"
+          @click.prevent="redirectTo('admin_uporabniki')"
+          :class="selectedTabStyle('admin_uporabniki')"
         >
           <font-awesome-icon
-            :icon="['fas', 'people-group']"
+            :icon="['fas', 'magnifying-glass']"
             size="2xl"
             fixed-width
           />
         </ion-tab-button>
 
+        <!-- Sistemske spremenljivke -->
         <ion-tab-button
-          tab="oprema"
-          @click.prevent="redirectTo('oprema')"
-          :class="selectedTabStyle('oprema')"
+          tab="admin_sistem"
+          @click.prevent="redirectTo('admin_sistem')"
+          :class="selectedTabStyle('admin_sistem')"
         >
-          <font-awesome-icon
-            :icon="['fas', 'people-group']"
-            size="2xl"
-            fixed-width
-          />
-        </ion-tab-button>
-
-        <ion-tab-button
-          tab="vplen"
-          @click.prevent="redirectTo('vplen')"
-          :class="selectedTabStyle('vplen')"
-        >
-          <font-awesome-icon :icon="['fas', 'paw']" size="2xl" fixed-width />
+          <font-awesome-icon :icon="['fas', 'gear']" size="2xl" fixed-width />
         </ion-tab-button>
       </ion-tab-bar>
       <!-- End bottom tool bar -->
