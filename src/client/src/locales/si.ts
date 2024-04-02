@@ -158,4 +158,49 @@ export default {
       },
     },
   },
+
+  // Admin tabs
+  admin_druzine: {
+    tab: {
+      header: "Družine",
+      crud: {
+        create: {
+          header: "Dodaj družino",
+          button: "Dodaj",
+          success: "Družina {name} uspešno dodana",
+        },
+        delete: {
+          success: "Družina {name} uspešno izbrisana",
+          failure: "Družina {name} ni bila izbrisana",
+        },
+        categories: {
+          naziv: "Naziv",
+          opis: "Opis",
+          clan: "Član",
+        },
+      },
+    },
+  },
+  admin_sistem: {
+    tab: {
+      header: "Sistem",
+      crud: {
+        update: {
+          header: "Spremeni sistem",
+          button: "Spremeni",
+          success: "Sistem uspešno posodobljen",
+        },
+        categories: {
+          datum: "Revizija",
+          PAGE_SIZE: "Velikost strani",
+          JAGA_MAX_MEMBERS: "Maksimalno število članov jage",
+          OBISK_MAX_LENGTH: "Maksimalna dolžina obiska",
+          USER_OBISKS_MAX_LENGTH: "Maksimalna dolžina obiskov uporabnika",
+        },
+      },
+      sections: {
+        spremenljivke: "Spremenljivke",
+      },
+    },
+  },
 }
