@@ -210,3 +210,20 @@ export interface InsertDnevnik {
   opis: string
   delo: (typeof deloDomain)[number]
 }
+
+/* Sistemske spremenljivke */
+export interface SistemskeSpremenljivke {
+  id: string
+  datum: Date
+  PAGE_SIZE: number
+  JAGA_MAX_MEMBERS: number
+  OBISK_MAX_LENGTH: number
+  USER_OBISKS_MAX_LENGTH: number
+}
+
+export interface InsertSistemskeSpremenljivke {
+  PAGE_SIZE: number
+  JAGA_MAX_MEMBERS: number
+  OBISK_MAX_LENGTH: number
+  USER_OBISKS_MAX_LENGTH: number
+}
