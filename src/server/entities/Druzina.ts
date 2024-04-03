@@ -177,6 +177,11 @@ export default class Druzina<R = string, C = string> {
       return false
     }
 
+    // Not deleting clani, because they are referenced in other collections
+    if (result.clani.length == 0) {
+      return true
+    }
+
     const result2 = await Uporabnik.odstraniVseClaneDruzine(druzinaId)
 
     return result2

@@ -411,7 +411,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
       { druzina: null }
     )
 
-    return result.modifiedCount > 0
+    return result.acknowledged
   }
 
   static async dodajClanstvoDruzine(
