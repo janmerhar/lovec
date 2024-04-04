@@ -15,6 +15,7 @@
                 async () => await deleteItem(elDruzina)
               )
             "
+            @click="redirectTo('admin_druzina_id', { id: elDruzina.id })"
           ></card-druzina>
         </li>
       </TransitionGroup>
@@ -51,4 +52,7 @@ const { openModal } = useModal()
 onBeforeMount(async () => {
   await fetchMore()
 })
+
+import { useTabNavigation } from "@/composables/useTabNavigation"
+const { redirectTo } = useTabNavigation()
 </script>
