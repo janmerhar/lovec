@@ -4,6 +4,10 @@ export default {
     toolbarNavigation: {
       appName: "Lovec",
     },
+    alert: {
+      confirmButton: "Potrdi",
+      cancelButton: "Prekliči",
+    },
   },
 
   // Translation by Tabs
@@ -170,6 +174,8 @@ export default {
           success: "Družina {name} uspešno dodana",
         },
         delete: {
+          header: "Izbriši družino",
+          message: "Ali ste prepričani, da želite izbrisati družino {name}?",
           success: "Družina {name} uspešno izbrisana",
           failure: "Družina {name} ni bila izbrisana",
         },
@@ -178,6 +184,26 @@ export default {
           opis: "Opis",
           clan: "Član",
         },
+      },
+    },
+  },
+  admin_druzina_id: {
+    tab: {
+      header: "Družina",
+      crud: {
+        update: {
+          header: "Spremeni družino",
+          button: "Spremeni",
+          success: "Družina uspešno posodobljena",
+        },
+        categories: {
+          naziv: "Naziv",
+          opis: "Opis",
+          clan: "Član",
+        },
+      },
+      sections: {
+        clan: "Član",
       },
     },
   },
