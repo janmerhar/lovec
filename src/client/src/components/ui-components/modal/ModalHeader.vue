@@ -27,7 +27,7 @@ const emit = defineEmits(["confirm", "cancel"])
 defineProps({
   confirmButton: {
     type: Boolean,
-    default: true,
+    default: false,
     required: false,
   },
 })
