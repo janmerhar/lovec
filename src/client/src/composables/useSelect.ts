@@ -1,12 +1,7 @@
 import { ref, UnwrapRef } from "vue"
 
-/*
-    Hocem nek composable, ki spreminja selected item
-    - neki kar 
-
-*/
-
 export type SelectFunction = () => Promise<any>
+export type FetchItemFunction = <T, U>(item: U) => Promise<T | null>
 
 export const useSelect = <T>(defaultValue: T | null = null) => {
   const selectedItem = ref<T | null>(defaultValue)
@@ -33,9 +28,28 @@ export const useSelect = <T>(defaultValue: T | null = null) => {
     }
   }
 
+  const fetchItem = <U>(call: FetchItemFunction) => {
+    return async (item: U | null) => {
+      if (item == null) {
+        selectedItem.value = null
+        return
+      }
+
+      const result = (await call(item)) as T
+
+      await selectItem()(result)
+    }
+  }
+
+  // TODO
+  // Vglavnem ponovim isti request, samo kako naj to naredim cim bolj effectivno
+  // const refreshItem = async () => {}
+
   return {
     selectedItem,
     selectItem,
     deselectItem,
+    fetchItem,
+    // refreshItem,
   }
 }
