@@ -180,9 +180,9 @@ export default {
           failure: "Družina {name} ni bila izbrisana",
         },
         categories: {
-          naziv: "Naziv",
-          opis: "Opis",
-          clan: "Član",
+          ime: "Naziv",
+          revirji: "Revirji",
+          clani: "Člani",
         },
       },
     },
@@ -226,6 +226,30 @@ export default {
       },
       sections: {
         spremenljivke: "Spremenljivke",
+      },
+    },
+  },
+  admin_uporabniki: {
+    tab: {
+      header: "Uporabniki",
+      crud: {
+        create: {
+          header: "Dodaj uporabnika",
+          button: "Dodaj",
+          success: "Uporabnik {name} uspešno dodan",
+        },
+        delete: {
+          header: "Izbriši uporabnika",
+          message: "Ali ste prepričani, da želite izbrisati uporabnika {name}?",
+          success: "Uporabnik {name} uspešno izbrisan",
+          failure: "Uporabnik {name} ni bil izbrisan",
+        },
+        categories: {
+          ime: "Ime",
+          priimek: "Priimek",
+          email: "Email",
+          role: "Vloga",
+        },
       },
     },
   },
