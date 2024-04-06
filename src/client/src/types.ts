@@ -54,6 +54,16 @@ export interface UporabnikProfile extends UporabnikDetails {
   isDeleted: boolean
 }
 
+export interface InsertUporabnik {
+  ime: string
+  priimek: string
+  email: string
+  geslo: string
+  role: (typeof uporabnikRoles)[number]
+  mentor?: string
+  pripravniki?: string[]
+  druzina?: string
+}
 /* Oprema */
 
 export const opremaTipDomain = ["puska", "nahrbtnik", "drugo"]
@@ -179,6 +189,10 @@ export interface Druzina<R = string, C = string> {
   ime: string
   revirji: R[]
   clani: C[]
+}
+
+export interface InsertDruzina {
+  ime: string
 }
 
 /* Dnevnik */
