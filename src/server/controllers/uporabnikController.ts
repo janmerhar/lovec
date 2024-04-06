@@ -38,7 +38,7 @@ import { authUser } from "middleware/authUser"
 import { LoginUporabnikDTO } from "./dto/uporabnik/login-uporabnik.dto"
 import SistemskeSpremenljivke from "~/entities/SistemskeSpremenljivke"
 
-@Controller("/uporabnik")
+@JsonController("/uporabnik")
 export class UporabnikController {
   @Post("/login")
   async postLogin(@Body() login: LoginUporabnikDTO) {
