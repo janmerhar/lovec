@@ -77,7 +77,7 @@ export class UporabnikController {
       : ResponseBuilder.notfound()
   }
 
-  @Get("/vsi/:stran")
+  @Post("/vsi/:stran")
   @UseBefore(authUser("lovec", "pripravnik", "admin"))
   async getUporabniki(
     @Req() req: any,
