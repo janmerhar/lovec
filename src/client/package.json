@@ -41,7 +41,8 @@
     "vue-axios": "^3.5.2",
     "vue-i18n": "^9.10.2",
     "vue-router": "^4.0.12",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "yup-password": "^0.4.0"
   },
   "devDependencies": {
     "@capacitor/cli": "4.7.1",
