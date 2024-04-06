@@ -107,7 +107,7 @@ export class UporabnikController {
   @Post("/register")
   @UseBefore(authUser("admin"))
   async postRegister(@Req() req: any, @Body() body: any) {
-    console.log(req)
+    console.log(req.file)
     console.log(body)
 
     return ResponseBuilder.success(body)
