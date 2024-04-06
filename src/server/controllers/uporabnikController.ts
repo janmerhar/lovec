@@ -102,4 +102,13 @@ export class UporabnikController {
 
     return result ? ResponseBuilder.success(result) : ResponseBuilder.notfound()
   }
+
+  @Post("/register")
+  @UseBefore(authUser("admin"))
+  async postRegister(@Req() req: any, @Body() body: any) {
+    console.log(req)
+    console.log(body)
+
+    return ResponseBuilder.success(body)
+  }
 }
