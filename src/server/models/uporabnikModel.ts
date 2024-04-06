@@ -7,7 +7,7 @@ const uporabnikSchema = new Schema<IUporabnik>({
   ime: { type: String, required: true },
   priimek: { type: String, required: true },
   slika: { type: String, required: false },
-  rojstniDatum: { type: Date, required: true },
+  rojstniDatum: { type: Date, required: false },
   email: {
     type: String,
     // index: { unique: true, dropDups: true },
