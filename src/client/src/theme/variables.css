@@ -320,3 +320,7 @@ ul {
   opacity: 0;
   transform: translateY(30px);
 }
+
+input:focus {
+  outline: none;
+}
