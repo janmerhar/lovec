@@ -83,7 +83,7 @@ Authorization: Bearer {{token}}
 @query = jan novak
 
 # @name getUporabniki
-GET {{baseUrl}}/uporabnik/vsi/{{stran6}} HTTP/1.1
+POST {{baseUrl}}/uporabnik/vsi/{{stran6}} HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
