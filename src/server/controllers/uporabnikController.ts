@@ -2,6 +2,7 @@ import Uporabnik from "@entities/Uporabnik"
 import ResponseBuilder from "@utils/ResponseBuilder"
 import {
   Body,
+  Controller,
   Delete,
   Get,
   JsonController,
@@ -37,7 +38,7 @@ import { authUser } from "middleware/authUser"
 import { LoginUporabnikDTO } from "./dto/uporabnik/login-uporabnik.dto"
 import SistemskeSpremenljivke from "~/entities/SistemskeSpremenljivke"
 
-@JsonController("/uporabnik")
+@Controller("/uporabnik")
 export class UporabnikController {
   @Post("/login")
   async postLogin(@Body() login: LoginUporabnikDTO) {
