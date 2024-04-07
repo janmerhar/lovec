@@ -2,19 +2,32 @@ import Uporabnik from "@entities/Uporabnik"
 import ResponseBuilder from "@utils/ResponseBuilder"
 import {
   Body,
-  Controller,
+  ContentType,
   Delete,
   Get,
   JsonController,
   Param,
   Post,
   Req,
+  UploadedFile,
   UseBefore,
 } from "routing-controllers"
 
+import multer from "multer"
+import * as crypto from "crypto"
+
+const storage = multer.diskStorage({
+  destination: function (_req: any, _file: any, cb: any) {
+    cb(null, process.env.FILE_UPLOAD_PATH_PROFILE as string)
+  },
+  filename: function (_req: any, file: any, cb: any) {
+    const fileEnd = file.originalname.split(".").pop()
+
+    cb(null, `${crypto.randomBytes(20).toString("hex")}.${fileEnd}`)
+  },
+})
 /*
   Admin:
-  1. Register uporabnikov --> vnos slike
   2. Urejanje uporabnikov --> vnos slike
 */
 
@@ -24,19 +37,13 @@ import {
   2. Če ni, ustvari uporabnika
   3. Vrni uspešno registracijo
 
-  Register opombe:
-  - file upload
-    https://www.perplexity.ai/search/does-it-make-zTkWIjeUR4SA_7sjDEMHtQ?s=c#240ba6cc-3c41-42de-afb5-7968457d03a1
-  - vuejs file upload skupaj s podatki
-    https://www.perplexity.ai/search/does-it-make-zTkWIjeUR4SA_7sjDEMHtQ?s=c#ce218e87-877a-4dc3-9665-1e021565b6ca
-  - REST Client za testiranje
-    https://www.perplexity.ai/search/does-it-make-zTkWIjeUR4SA_7sjDEMHtQ?s=c#362dccfb-e90a-4c50-be4a-2fa85ee9d49d
 */
 
 import { authUser } from "middleware/authUser"
 
-import { LoginUporabnikDTO } from "./dto/uporabnik/login-uporabnik.dto"
-import SistemskeSpremenljivke from "~/entities/SistemskeSpremenljivke"
+import { LoginUporabnikDTO } from "@controllers/dto/uporabnik/login-uporabnik.dto"
+import { RegisterUporabnikDTO } from "@controllers/dto/uporabnik/register-uporabnik.dto"
+import SistemskeSpremenljivke from "@entities/SistemskeSpremenljivke"
 
 @JsonController("/uporabnik")
 export class UporabnikController {
@@ -105,11 +112,28 @@ export class UporabnikController {
   }
 
   @Post("/register")
+  @ContentType("multipart/form-data")
   @UseBefore(authUser("admin"))
-  async postRegister(@Req() req: any, @Body() body: any) {
-    console.log(req.file)
-    console.log(body)
+  async postRegister(
+    @Body() uporabnik: RegisterUporabnikDTO,
+    @UploadedFile("slika", { options: { storage } }) file?: any
+  ) {
+    const slika = file ? file.filename : null
+    console.log(slika)
 
-    return ResponseBuilder.success(body)
+    const result = await Uporabnik.register(
+      uporabnik.ime,
+      uporabnik.priimek,
+      slika,
+      null,
+      uporabnik.email,
+      uporabnik.geslo,
+      uporabnik.role,
+      null,
+      null,
+      null
+    )
+
+    return ResponseBuilder.success(result)
   }
 }
