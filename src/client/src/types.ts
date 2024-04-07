@@ -57,6 +57,7 @@ export interface UporabnikProfile extends UporabnikDetails {
 export interface InsertUporabnik {
   ime: string
   priimek: string
+  slika: File | null
   email: string
   geslo: string
   role: (typeof uporabnikRoles)[number]
