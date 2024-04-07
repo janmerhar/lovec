@@ -1,10 +1,11 @@
-import { defineStore } from "pinia"
+import { defineStore, storeToRefs } from "pinia"
 import { computed, ref } from "vue"
 import { useRequest } from "@/composables/useRequest"
-import type { UporabnikDetails } from "@/types"
+import type { InsertUporabnik, UporabnikDetails } from "@/types"
 import { usePagination } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
 import { useAlert } from "@/composables/useAlert"
+import { useLoginStore } from "../useLoginStore"
 
 import i18n from "@/locales/i18n"
 const { t } = i18n.global
@@ -49,7 +50,36 @@ export const useUporabnikiStore = defineStore("uporabniki", () => {
 
   // CRUD
   const crud = useCRUD<UporabnikDetails>(uporabnikVariable)
-  const { deleteItem } = crud
+  const { createItem, deleteItem } = crud
+
+  // TODO: usposobi za multipart/form-data
+  // na use request posebej klice za POST metodo
+  const createUporabnik = async (
+    uporabnik: InsertUporabnik
+  ): Promise<UporabnikDetails> => {
+    const loginStore = useLoginStore()
+
+    const { token } = storeToRefs(loginStore)
+    // convert insertUporabnik to FormData
+    const formData = new FormData()
+
+    for (const key in uporabnik) {
+      // @ts-ignore
+      formData.append(key, uporabnik[key])
+    }
+
+    const result = await request.post<UporabnikDetails>("/uporabnik/register", {
+      url: "",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token.value}`,
+      },
+      data: formData,
+    })
+
+    console.log("register return", result)
+    return result.data
+  }
 
   const deleteUporabnik = async (
     uporabnik: UporabnikDetails
@@ -77,6 +107,7 @@ export const useUporabnikiStore = defineStore("uporabniki", () => {
     refreshPagination,
     searchItem,
     // CRUD
+    createItem: createItem(createUporabnik),
     deleteItem: toastDelete,
   }
 })
