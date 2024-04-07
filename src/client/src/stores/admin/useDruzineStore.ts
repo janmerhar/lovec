@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { computed, ComputedRef } from "vue"
-import type { DruzinaDetails, Druzina } from "@/types"
+import type { DruzinaDetails, Druzina, InsertDruzina } from "@/types"
 
 import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
@@ -32,6 +32,22 @@ export const useDruzineStore = defineStore("druzine", () => {
   )
 
   // CRUD
+  const createDruzina = async (
+    druzina: InsertDruzina
+  ): Promise<DruzinaDetails> => {
+    const response = await request.post<Druzina>("/druzine", {
+      url: "",
+      data: druzina,
+    })
+
+    return {
+      id: response.data.id,
+      ime: response.data.ime,
+      revirjiCount: 0,
+      claniCount: 0,
+    }
+  }
+
   const deleteDruzina = async (druzina: DruzinaDetails): Promise<boolean> => {
     const response = await request.delete<boolean>(`/druzine/${druzina.id}`)
 
@@ -71,6 +87,7 @@ export const useDruzineStore = defineStore("druzine", () => {
     fetchMore,
     refreshPagination,
     // CRUD
+    createItem: createItem(createDruzina),
     deleteItem: toastDelete,
     // Select
     selectedItem,
