@@ -112,7 +112,6 @@ export class UporabnikController {
   }
 
   @Post("/register")
-  @ContentType("multipart/form-data")
   @UseBefore(authUser("admin"))
   async postRegister(
     @Body() uporabnik: RegisterUporabnikDTO,
