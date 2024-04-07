@@ -14,9 +14,6 @@ import type { Request } from "express"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-// TODO: naredi tako, da se slike avtomatsko joinajo
-// s tam, kjer so shranjene, brez url-ja, saj tega bomo na FE delali
-
 export class UporabnikDetails {
   id: string
   ime: string
@@ -34,7 +31,7 @@ export class UporabnikDetails {
     this.id = id
     this.ime = ime
     this.priimek = priimek
-    this.slika = slika
+    this.slika = `${process.env.VUE_APP_API_URL}/${process.env.FILE_UPLOAD_PATH_PROFILE}/${slika}`
     this.role = role
   }
 }
@@ -68,7 +65,7 @@ export class UporabnikProfile extends UporabnikDetails {
     this.id = id
     this.ime = ime
     this.priimek = priimek
-    this.slika = slika
+    this.slika = `${process.env.VUE_APP_API_URL}/${process.env.FILE_UPLOAD_PATH_PROFILE}/${slika}`
     this.role = role
     this.mentor = mentor
     this.pripravniki = pripravniki
@@ -103,10 +100,6 @@ export class UserLogin extends UporabnikDetails {
   }
 }
 
-// user login
-// - jwt
-// - refresh token
-
 export default class Uporabnik<M = string, P = string, D = string> {
   id: string
   ime: string
@@ -140,7 +133,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
     this.id = id
     this.ime = ime
     this.priimek = priimek
-    this.slika = slika
+    this.slika = `${process.env.VUE_APP_API_URL}/${process.env.FILE_UPLOAD_PATH_PROFILE}/${slika}`
     this.rojstniDatum = rojstniDatum
     this.email = email
     this.hash = hash
