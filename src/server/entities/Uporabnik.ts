@@ -14,6 +14,9 @@ import type { Request } from "express"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
+// TODO: naredi tako, da se slike avtomatsko joinajo
+// s tam, kjer so shranjene, brez url-ja, saj tega bomo na FE delali
+
 export class UporabnikDetails {
   id: string
   ime: string
@@ -210,14 +213,14 @@ export default class Uporabnik<M = string, P = string, D = string> {
     ime: string,
     priimek: string,
     slika: string,
-    rojstniDatum: string,
+    rojstniDatum: string | null,
     email: string,
     geslo: string,
     role: string,
     mentor: string | null,
     pripravniki: string[] | null,
     druzina: string | null
-  ): Promise<boolean> {
+  ): Promise<UporabnikDetails> {
     const salt = await bcrypt.genSalt(10)
     const geslo_hash = await bcrypt.hash(geslo, salt)
 
@@ -234,9 +237,15 @@ export default class Uporabnik<M = string, P = string, D = string> {
       druzina,
     })
 
-    await uporabnik.save()
+    const result = await uporabnik.save()
 
-    return !!uporabnik
+    return new UporabnikDetails(
+      result._id.toString(),
+      result.ime,
+      result.priimek,
+      result.slika,
+      result.role
+    )
   }
 
   static async fetchUserProfile(
