@@ -23,6 +23,15 @@ const app = createExpressServer({
   controllers: [path.join(__dirname, "/controllers/*.ts")],
 })
 
+import * as express from "express"
+app.use(
+  `/${process.env.FILE_UPLOAD_PATH}`,
+  express.static(process.cwd() + `/${process.env.FILE_UPLOAD_PATH}`)
+)
+
+var bodyParser = require("body-parser")
+app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use(httpLogger)
 app.use(ErrorHandler)
 
