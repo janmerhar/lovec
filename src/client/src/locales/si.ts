@@ -10,6 +10,16 @@ export default {
     },
   },
 
+  // Custom translations for validation
+  custom_validation: {
+    min: "Polje mora vsebovati vsaj {min} znakov in vsaj enega od: velike črke, male črke, številko in poseben znak",
+    minLowercase: "Polje mora vsebovati vsaj {min} malih črk",
+    minUppercase: "Polje mora vsebovati vsaj {min} velikih črk",
+    minNumbers: "Polje mora vsebovati vsaj {min} številk",
+    minSymbols: "Polje mora vsebovati vsaj {min} posebnih znakov",
+    passwordMatch: "Gesli se ne ujemata",
+  },
+
   // Translation by Tabs
   login: {
     tab: {
@@ -232,6 +242,7 @@ export default {
   admin_uporabniki: {
     tab: {
       header: "Uporabniki",
+      search: "Poišči uporabnika",
       crud: {
         create: {
           header: "Dodaj uporabnika",
@@ -248,6 +259,8 @@ export default {
           ime: "Ime",
           priimek: "Priimek",
           email: "Email",
+          geslo: "Geslo",
+          gesloRepeat: "Potrdi geslo",
           role: "Vloga",
         },
       },
