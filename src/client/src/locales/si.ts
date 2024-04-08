@@ -266,4 +266,42 @@ export default {
       },
     },
   },
+
+  admin_uporabnik_id: {
+    tab: {
+      header: "Uporabnik",
+      sections: {
+        personalData: "Osebni podatki",
+        mentor: "Mentor",
+        apprentice: "Pripravnik",
+        apprentices: "Pripravniki",
+        preferences: "Preference",
+        theme: "Tema",
+        language: "Jezik",
+        pages: "Strani",
+        jage: "Jage",
+        dnevniki: "Dnevniki",
+        obiski: "Obiski",
+        vpleni: "Vpleni",
+        oprema: "Oprema",
+      },
+      logout: "Odjava",
+    },
+    crud: {
+      update: {
+        header: "Spremeni uporabnika",
+        button: "Spremeni",
+        success: "Uporabnik uspešno posodobljen",
+      },
+      categories: {
+        ime: "Ime",
+        priimek: "Priimek",
+        druzina: "Družina",
+        role: "Vloga",
+        mentor: "Mentor",
+        pripravniki: "Pripravniki",
+        preference: "Preference",
+      },
+    },
+  },
 }
