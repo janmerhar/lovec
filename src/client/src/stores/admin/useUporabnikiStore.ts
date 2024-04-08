@@ -1,11 +1,16 @@
 import { defineStore, storeToRefs } from "pinia"
 import { computed, ref } from "vue"
 import { useRequest } from "@/composables/useRequest"
-import type { InsertUporabnik, UporabnikDetails } from "@/types"
+import type {
+  InsertUporabnik,
+  UporabnikDetails,
+  UporabnikProfile,
+} from "@/types"
 import { usePagination } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
 import { useAlert } from "@/composables/useAlert"
-import { useLoginStore } from "../useLoginStore"
+import { useLoginStore } from "@/stores/useLoginStore"
+import { useSelect } from "@/composables/useSelect"
 
 import i18n from "@/locales/i18n"
 const { t } = i18n.global
@@ -47,6 +52,22 @@ export const useUporabnikiStore = defineStore("uporabniki", () => {
     search.value = query
     await refreshPagination()
   }
+
+  // Select
+  const fetchUporabnik = async (
+    uporabnik: UporabnikDetails | string
+  ): Promise<UporabnikProfile | null> => {
+    const selectedId = typeof uporabnik === "string" ? uporabnik : uporabnik.id
+
+    const response = await request.get<UporabnikProfile | null>(
+      `/uporabnik/${selectedId}`
+    )
+
+    return response.data
+  }
+
+  const { selectedItem, selectItem, fetchItem } =
+    useSelect<UporabnikProfile | null>()
 
   // CRUD
   const crud = useCRUD<UporabnikDetails>(uporabnikVariable)
@@ -109,5 +130,10 @@ export const useUporabnikiStore = defineStore("uporabniki", () => {
     // CRUD
     createItem: createItem(createUporabnik),
     deleteItem: toastDelete,
+    // Select
+    selectedItem,
+    selectItem,
+    // @ts-ignore
+    fetchItem: fetchItem(fetchUporabnik),
   }
 })
