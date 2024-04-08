@@ -22,6 +22,7 @@ import TabMentor from "@/views/TabMentor.vue"
 import { storeToRefs } from "pinia"
 import { useLoginStore } from "@/stores/useLoginStore"
 
+// TODO: naredi admin / lovec / pripravnik specificne route za re-route
 const checkRole = (role: string) => {
   const { isPripravnik, isLovec, isAdmin } = storeToRefs(useLoginStore())
 
@@ -78,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: TabLogin,
-    beforeEnter: allowIsNotRole(["pripravnik", "lovec", "admin"], "oprema"),
+    beforeEnter: allowIsNotRole(["pripravnik", "lovec", "admin"], "druzina"),
   },
   //
   // User routes
@@ -94,6 +95,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "jage",
         name: "jage",
+        component: TabJage,
+        beforeEnter: allowIsRole(["pripravnik", "lovec"]),
+      },
+      // TODO: ogled jag za nekega specificnega uporabnika
+      // TODO: jage description
+      {
+        path: "jage/:id",
+        name: "jage_id",
         component: TabJage,
         beforeEnter: allowIsRole(["pripravnik", "lovec"]),
       },
@@ -157,72 +166,78 @@ const routes: Array<RouteRecordRaw> = [
     path: "/admin",
     name: "admin",
     component: () => import("@/views/admin/TabsPageAdmin.vue"),
-    redirect: { name: "oprema" },
+    redirect: { name: "druzine" },
     beforeEnter: allowIsRole(["admin"]),
     children: [
       {
         path: "druzine",
         name: "admin_druzine",
-        component: async () => import("@/views/admin/TabAdminDruzine.vue"),
+        component: () => import("@/views/admin/TabAdminDruzine.vue"),
+        beforeEnter: allowIsRole(["admin"]),
+      },
+      {
+        path: "druzina/:id?",
+        name: "admin_druzina_id",
+        component: () => import("@/views/admin/SubTabAdminDruzina.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
       {
         path: "jage",
         name: "admin_jage",
-        component: async () => import("@/views/admin/TabAdminJage.vue"),
+        component: TabJage,
         beforeEnter: allowIsRole(["admin"]),
       },
       // TODO: jage description
       {
         path: "sistem",
         name: "admin_sistem",
-        component: async () => import("@/views/admin/TabAdminSistem.vue"),
+        component: () => import("@/views/admin/TabAdminSistem.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
       {
         path: "uporabniki",
         name: "admin_uporabniki",
-        component: async () => import("@/views/admin/TabAdminUporabniki.vue"),
+        component: () => import("@/views/admin/TabAdminUporabniki.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
       {
-        path: "oprema",
+        path: "admin_uporabnik/:id?",
+        name: "admin_uporabnik_id",
+        component: () => import("@/views/admin/TabAdminUporabnikProfil.vue"),
+        beforeEnter: allowIsRole(["admin"]),
+      },
+      {
+        path: "oprema/:id",
         name: "admin_oprema",
-        component: async () =>
-          import("@/views/admin/TabAdminUporabnikOprema.vue"),
+        component: () => import("@/views/admin/TabAdminUporabnikOprema.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
+
       {
-        path: "profil",
-        name: "admin_profil",
-        component: async () =>
-          import("@/views/admin/TabAdminUporabnikProfil.vue"),
-        beforeEnter: allowIsRole(["admin"]),
-      },
-      {
-        path: "vpleni",
+        path: "vpleni/:id",
         name: "admin_vpleni",
-        component: async () =>
-          import("@/views/admin/TabAdminUporabnikVpleni.vue"),
+        component: () => import("@/views/admin/TabAdminUporabnikVpleni.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
+      // TODO: vpleniDetails/:id
       // Zemljevid
       {
         path: "zemljevid",
         name: "admin_zemljevid",
-        component: async () => import("@/views/admin/TabAdminZemljevid.vue"),
+        component: () => import("@/views/admin/TabAdminZemljevid.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
+      // TODO: vaju dva lahko zdruzim skupaj
       {
         path: "zemljevid/opazovalnice",
         name: "admin_opazovalnice",
-        component: async () => import("@/views/admin/TabAdminOpazovalnice.vue"),
+        component: () => import("@/views/admin/TabAdminOpazovalnice.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
       {
         path: "zemljevid/revirji",
         name: "admin_revirji",
-        component: async () => import("@/views/admin/TabAdminRevirji.vue"),
+        component: () => import("@/views/admin/TabAdminRevirji.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
     ],
