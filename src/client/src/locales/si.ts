@@ -280,7 +280,8 @@ export default {
         language: "Jezik",
         pages: "Strani",
         jage: "Jage",
-        dnevniki: "Dnevniki",
+        dnevniki_pripravnik: "Dnevniki",
+        dnevniki_mentor: "Dnevniki pripravnikov",
         obiski: "Obiski",
         vpleni: "Vpleni",
         oprema: "Oprema",
@@ -302,6 +303,24 @@ export default {
         pripravniki: "Pripravniki",
         preference: "Preference",
       },
+    },
+  },
+  admin_uporabnik_oprema: {
+    tab: {
+      header: "Oprema",
+    },
+    crud: {
+      delete: {
+        header: "Izbriši opremo",
+        message: "Ali ste prepričani, da želite izbrisati opremo {name}?",
+        success: "Oprema {name} uspešno izbrisana",
+        failure: "Oprema {name} ni bila izbrisana",
+      },
+    },
+  },
+  admin_pripravnik_dnevniki: {
+    tab: {
+      header: "Dnevniki",
     },
   },
 }
