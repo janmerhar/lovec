@@ -45,7 +45,9 @@
 
       <tab-no-elements :elements="uporabniki"></tab-no-elements>
 
-      <fab-button-add @click.prevent="() => {}"></fab-button-add>
+      <fab-button-add
+        @click.prevent="openModal(ModalUporabnikAdd)"
+      ></fab-button-add>
     </template>
   </tab-template>
 </template>
@@ -59,17 +61,20 @@ import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
 import CardUporabnik from "@/components/admin/uporabnik/CardUporabnik.vue"
 import InputLabelHorizontal from "@/components/ui-components/input/InputLabelHorizontal.vue"
-import { Form, Field, ErrorMessage } from "vee-validate"
+import { Field, ErrorMessage } from "vee-validate"
+import ModalUporabnikAdd from "@/components/admin/uporabnik/ModalUporabnikAdd.vue"
 
 import { useUporabnikiStore } from "@/stores/admin/useUporabnikiStore"
 import { storeToRefs } from "pinia"
 import { useAlert } from "@/composables/useAlert"
 import { useTabNavigation } from "@/composables/useTabNavigation"
+import { useModal } from "@/composables/useModal"
 const uporabnikiStore = useUporabnikiStore()
 
 const { fetchMore, refreshPagination, deleteItem, searchItem } = uporabnikiStore
 const { uporabniki } = storeToRefs(uporabnikiStore)
 const { redirectTo } = useTabNavigation()
+const { openModal } = useModal()
 
 const search = ref<string>("")
 
