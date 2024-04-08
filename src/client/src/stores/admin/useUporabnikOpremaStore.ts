@@ -9,7 +9,7 @@ import { useAlert } from "@/composables/useAlert"
 
 import i18n from "@/locales/i18n"
 const { t } = i18n.global
-export const useUporabnikOpremaStore = defineStore("uporabnikPages", () => {
+export const useUporabnikOpremaStore = defineStore("uporabnikOprema", () => {
   const { request } = useRequest()
 
   const uporabnikStore = useUporabnikiStore()
