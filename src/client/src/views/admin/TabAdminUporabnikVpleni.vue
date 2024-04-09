@@ -2,7 +2,7 @@
   <tab-template :refresh="refreshPagination" :scroll="fetchMore">
     <template #header>
       <tab-header>
-        {{ $t("section.tab.header") }} {{ uporabnik?.ime }}
+        {{ $t("admin_uporabnik_vpleni.tab.header") }} {{ uporabnik?.ime }}
         {{ uporabnik?.priimek }}
       </tab-header>
     </template>
