@@ -323,4 +323,9 @@ export default {
       header: "Dnevniki",
     },
   },
+  admin_uporabnik_vpleni: {
+    tab: {
+      header: "Vpleni",
+    },
+  },
 }
