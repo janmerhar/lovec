@@ -194,28 +194,44 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/admin/TabAdminSistem.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
+      // Uporabniki search
       {
         path: "uporabniki",
         name: "admin_uporabniki",
         component: () => import("@/views/admin/TabAdminUporabniki.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
+      // Uporabnik profil
       {
         path: "admin_uporabnik/:id?",
         name: "admin_uporabnik_id",
         component: () => import("@/views/admin/TabAdminUporabnikProfil.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
+      //
+      // Uporabnik pages
+      //
       {
-        path: "oprema/:id",
-        name: "admin_oprema",
+        path: "uporabnik/oprema",
+        name: "admin_uporabnik_oprema",
         component: () => import("@/views/admin/TabAdminUporabnikOprema.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
-
       {
-        path: "vpleni/:id",
-        name: "admin_vpleni",
+        path: "uporabnik/pripravnik/dnevniki",
+        name: "admin_pripravnik_dnevniki",
+        component: () => import("@/views/admin/TabAdminPripravnikDnevniki.vue"),
+        beforeEnter: allowIsRole(["admin"]),
+      },
+      {
+        path: "uporabnik/mentor/dnevniki",
+        name: "admin_mentor_dnevniki",
+        component: () => import("@/views/admin/TabAdminMentorDnevniki.vue"),
+        beforeEnter: allowIsRole(["admin"]),
+      },
+      {
+        path: "uporabnik/vpleni",
+        name: "admin_uporabnik_vpleni",
         component: () => import("@/views/admin/TabAdminUporabnikVpleni.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
