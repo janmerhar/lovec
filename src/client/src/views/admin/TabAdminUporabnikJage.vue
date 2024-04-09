@@ -9,7 +9,7 @@
     <template #body>
       <inline-select-category>
         <inline-select-button :color="buttonColor(1)" @click="selectItem(1)">{{
-          $t("jaga.tab.headerOptions.active")
+          $t("admin_uporabnik_jage.tab.headerOptions.active")
         }}</inline-select-button>
         <inline-select-button :color="buttonColor(2)" @click="selectItem(2)">{{
           $t("jaga.tab.headerOptions.past")
