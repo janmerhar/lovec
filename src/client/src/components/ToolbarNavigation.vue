@@ -32,8 +32,8 @@ const { uporabnik } = storeToRefs(useLoginStore())
 
 <style scoped>
 img {
-  width: 31px;
-  height: 31px;
+  width: 32px;
+  height: 32px;
   object-fit: cover;
   border-radius: 50%;
   border: 1px solid var(--ion-color-step-600);
@@ -41,5 +41,10 @@ img {
 
 .header-md::after {
   background-image: none !important;
+}
+
+.active-tab {
+  border: 2px solid var(--ion-color-secondary);
+  border-radius: 50%;
 }
 </style>
