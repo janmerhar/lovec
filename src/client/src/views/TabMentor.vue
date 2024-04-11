@@ -4,11 +4,6 @@
       <tab-header>{{ $t("mentor.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <ion-button @click="updateItemPotrjen(dnevniki[0])"
-        >update dnevnik</ion-button
-      >
-      <ion-button @click="selectItem('2019-01-02')">change datum</ion-button>
-
       <datepicker-horizontal
         @change="(datum) => selectItem(datum)"
       ></datepicker-horizontal>
