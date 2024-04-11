@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs>
       <!-- Top tool bar -->
-      <toolbar-navigation></toolbar-navigation>
+      <toolbar-navigation-admin></toolbar-navigation-admin>
 
       <!-- Component view -->
       <ion-router-outlet></ion-router-outlet>
@@ -23,8 +23,8 @@
 
         <ion-tab-button
           tab="jage"
-          :class="selectedTabStyle('jage')"
-          @click="redirectTo('jage')"
+          :class="selectedTabStyle('admin_jage')"
+          @click="redirectTo('admin_jage')"
         >
           <font-awesome-icon
             :icon="['fas', 'people-group']"
@@ -80,7 +80,7 @@ import {
   IonPage,
   IonRouterOutlet,
 } from "@ionic/vue"
-import ToolbarNavigation from "@/components/ToolbarNavigation.vue"
+import ToolbarNavigationAdmin from "@/components/ui-components/layout/ToolbarNavigationAdmin.vue"
 
 import { useTabNavigation } from "@/composables/useTabNavigation"
 
