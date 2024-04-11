@@ -96,16 +96,29 @@
           $t("admin_uporabnik_id.tab.sections.pages")
         }}</template>
         <template #default>
-          <!-- TODO: @click event open page -->
-          <list-item>
+          <list-item @click="redirectTo('admin_uporabnik_jage')">
             <template #title>
               {{ $t("admin_uporabnik_id.tab.sections.jage") }}
             </template>
           </list-item>
 
-          <list-item>
+          <!-- Dnevniki za pripravnika -->
+          <list-item
+            v-if="selectedItem?.role == 'pripravnik'"
+            @click="redirectTo('admin_pripravnik_dnevniki')"
+          >
             <template #title>
-              {{ $t("admin_uporabnik_id.tab.sections.dnevniki") }}
+              {{ $t("admin_uporabnik_id.tab.sections.dnevniki_pripravnik") }}
+            </template>
+          </list-item>
+
+          <!-- Dnevniki za mentorja -->
+          <list-item
+            v-if="selectedItem?.role == 'lovec'"
+            @click="redirectTo('admin_mentor_dnevniki')"
+          >
+            <template #title>
+              {{ $t("admin_uporabnik_id.tab.sections.dnevniki_mentor") }}
             </template>
           </list-item>
 
@@ -115,13 +128,13 @@
             </template>
           </list-item>
 
-          <list-item>
+          <list-item @click="redirectTo('admin_uporabnik_vpleni')">
             <template #title>
               {{ $t("admin_uporabnik_id.tab.sections.vpleni") }}
             </template>
           </list-item>
 
-          <list-item>
+          <list-item @click="redirectTo('admin_uporabnik_oprema')">
             <template #title>
               {{ $t("admin_uporabnik_id.tab.sections.oprema") }}
             </template>
