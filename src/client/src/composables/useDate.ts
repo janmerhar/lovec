@@ -29,5 +29,17 @@ export const useDate = (input: Date | string) => {
     return date.value.getDate()
   }
 
-  return { date, update, isoDate, getMonth, getWeekdayShort, getDayNumber }
+  const addHours = (hours: number) => {
+    date.value.setHours(date.value.getHours() + hours)
+  }
+
+  return {
+    date,
+    update,
+    isoDate,
+    getMonth,
+    getWeekdayShort,
+    getDayNumber,
+    addHours,
+  }
 }
