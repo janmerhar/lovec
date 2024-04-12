@@ -1,5 +1,10 @@
 <template>
-  <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
+  <!-- TODO: naredi detector, ki onemogoci refresh, ko ni povezave -->
+  <ion-refresher
+    slot="fixed"
+    @ionRefresh="handleRefresh($event)"
+    v-if="isVisible"
+  >
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 </template>
@@ -19,12 +24,17 @@ export default defineComponent({
       type: Function,
       required: true,
     },
+    isVisible: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ["refresh"],
   methods: {
-    handleRefresh(event: CustomEvent) {
-      // Verjetno lahko dodam se kaksen delay prej, bom videl
-      this.refresh(event)
+    async handleRefresh(event: CustomEvent) {
+      await this.refresh(event)
+
+      event.detail.complete()
     },
   },
 })
