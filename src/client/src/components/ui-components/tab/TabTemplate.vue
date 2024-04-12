@@ -4,7 +4,10 @@
     <ion-content color="primary fade-in">
       <ion-content id="tab-template-body" class="brd">
         <!--  -->
-        <refresher-component :refresh="refresh"></refresher-component>
+        <refresher-component
+          :refresh="refresh"
+          :is-visible="isRefreshable"
+        ></refresher-component>
 
         <slot name="body"></slot>
 
@@ -37,6 +40,10 @@ defineProps({
     default: () => {
       return null
     },
+  },
+  isRefreshable: {
+    type: Boolean,
+    default: true,
   },
 })
 </script>
