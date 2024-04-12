@@ -33,6 +33,13 @@ export const useDate = (input: Date | string) => {
     date.value.setHours(date.value.getHours() + hours)
   }
 
+  const getTime = () => {
+    const options = { hour: "2-digit", minute: "2-digit" }
+
+    // @ts-ignore
+    return date.value.toLocaleTimeString("en-US", options)
+  }
+
   return {
     date,
     update,
@@ -41,5 +48,6 @@ export const useDate = (input: Date | string) => {
     getWeekdayShort,
     getDayNumber,
     addHours,
+    getTime,
   }
 }
