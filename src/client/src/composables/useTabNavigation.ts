@@ -22,8 +22,13 @@ export const useTabNavigation = () => {
     router.push({ name: tabName, params: routeParams })
   }
 
+  const routeParams = computed(() => {
+    return route.params
+  })
+
   return {
     selectedTabStyle,
     redirectTo,
+    routeParams,
   }
 }
