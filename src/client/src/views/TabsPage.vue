@@ -50,9 +50,9 @@
         </template>
 
         <ion-tab-button
-          tab="opazovalnica"
-          @click.prevent="redirectTo('opazovalnica')"
-          :class="selectedTabStyle('opazovalnica')"
+          tab="opazovalnice"
+          @click.prevent="redirectTo('opazovalnice')"
+          :class="selectedTabStyle('opazovalnice')"
         >
           <font-awesome-icon
             :icon="['fas', 'tower-observation']"
