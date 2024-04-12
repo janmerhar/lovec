@@ -13,7 +13,6 @@ export const useFormControl = (form: Ref<HTMLFormElement | null>) => {
     // @ts-ignore
     const success = await form.value?.validate()
 
-    console.warn("valid", success)
     if (!success.valid) {
       return
     }
@@ -22,7 +21,6 @@ export const useFormControl = (form: Ref<HTMLFormElement | null>) => {
 
     if (result) {
       await useModal().cancelModal()
-      // TODO: dodaj sporočilo o uspešnem dodajanju
 
       if (message) {
         useAlert().successToast(message)
