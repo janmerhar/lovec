@@ -6,12 +6,14 @@ import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
 import { useAlert } from "@/composables/useAlert"
+import { useSelect } from "@/composables/useSelect"
 
 import i18n from "@/locales/i18n"
 const { t } = i18n.global
 export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
   const { request } = useRequest()
 
+  // Pagination
   const getOpazovalnice = async (): Promise<Opazovalnica[]> => {
     const response = await request.get<Opazovalnica[]>("/opazovalnice")
 
@@ -29,6 +31,7 @@ export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
     () => opazovalniceVariable.value
   )
 
+  // CRUD
   const createOpazovalnica = async (
     opazovalnica: InsertOpazovalnica
   ): Promise<Opazovalnica> => {
@@ -64,11 +67,19 @@ export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
     )
   }
 
+  // Select
+  const { selectedItem, selectItem } = useSelect<Opazovalnica>(null)
+
   return {
+    // Pagination
     opazovalnice,
     fetchMore,
     refreshPagination,
+    // CRUD
     createItem: createItem(createOpazovalnica),
     deleteItem: toastDelete,
+    // Select
+    selectedItem,
+    selectItem: selectItem(),
   }
 })
