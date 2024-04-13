@@ -1,142 +1,126 @@
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
-      <!-- 
-        // TODO
-        tukaj lahko na vrhu dam se eno opozorilo oz gumb,
-        ki uporabniku sporoca, da ima aktivno rezervacijo
-      <div class="ion-padding">
-        <ion-button color="danger" expand="full">
-          Zaključi obisk opazovalnice
-        </ion-button>
+  <tab-template :is-refreshable="false">
+    <template #header>
+      <tab-header>
+        {{ $t("zemljevid.tab.header") }}
+      </tab-header>
+    </template>
+    <template #body>
+      <!-- Uporabnik -->
+      <!-- Upgrade activeObisk tako, da vidis, ce je ze potekel in ga potem ne prikazes -->
+      <div
+        v-if="activeObisk && useDate(new Date()).isLessThan(activeObisk.konec)"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-left: 12px;
+          padding-right: 12px;
+          padding-top: 6px;
+          position: absolute;
+          z-index: 100;
+          width: 100vw;
+        "
+      >
+        <button-oval
+          @click="
+            () => {
+              selectItem(activeObisk?.opazovalnica as Opazovalnica)
+              openSheetModal(ModalObisk)
+            }
+          "
+          ><font-awesome-icon
+            style="/*margin-right: 8px*/"
+            :icon="['fas', 'tower-observation']"
+            fixed-width
+          />
+          <!-- TODO: fix timer -->
+          <!-- {{ useCountdown(activeObisk?.zacetek).timer }} -->
+        </button-oval>
+
+        <!-- TODO: koncaj obisk on click -->
+        <button-oval color="danger" @click="endActiveObisk">
+          <!-- TODO: translations -->
+          Zapusti
+          <font-awesome-icon
+            style="margin-left: 8px"
+            :icon="['fas', 'right-from-bracket']"
+            fixed-width
+          />
+        </button-oval>
       </div>
-    -->
 
       <map-component
-        :opazovalnice="opazovalnice"
-        @opazovalnica="(index) => izberiOpazovalnico(index)"
-      ></map-component>
+        style="height: 100%; width: 100%; position: relative; z-index: 1"
+      >
+        <!-- Opazovalnice -->
+        <template v-for="opazovalnica in opazovalnice" :key="opazovalnica.id">
+          <l-marker
+            :lat-lng="opazovalnica.koordinate"
+            :icon="iconOpazovalnica"
+            @click="
+              () => {
+                selectItem(opazovalnica)
+                openSheetModal(ModalObisk)
+              }
+            "
+          ></l-marker>
+        </template>
 
-      <template v-if="izbranaOpazovalnica == null">
-        <div class="ion-padding">
-          <h4 class="ion-text-center">Izberite opazovalnico</h4>
-        </div>
-      </template>
-
-      <template v-else>
-        <div class="ion-padding-top ion-padding-horizontal">
-          <h4 class="ion-text-center">Zasedenost opazovalnice za dan</h4>
-          <ion-item fill="outline" class="">
-            <ion-label position="stacked">Datum</ion-label>
-            <ion-input
-              placeholder="Datum"
-              type="date"
-              :clear-input="true"
-              required
-              v-model="datum"
-            ></ion-input>
-          </ion-item>
-        </div>
-        <div class="ion-padding-horizontal">
-          <ion-list :inset="true">
-            <ion-item
-              v-for="obisk in izbranaOpazovalnica.obiski"
-              :key="obisk._id"
-            >
-              <ion-label>
-                Od {{ formatTime(obisk.zacetek) }} do
-                {{ formatTime(obisk.konec) }}
-              </ion-label>
-            </ion-item>
-          </ion-list>
-
-          <ion-button expand="full">
-            Vstopi v opazovalnico brez rezervacije
-          </ion-button>
-          <ion-button
-            expand="full"
-            @click.prevent="openModalOpazovanilnicaRezerviraj()"
+        <!-- Revirji -->
+        <template v-for="revir in revirji" :key="revir.id">
+          <l-polygon
+            :lat-lngs="revir.koordinate"
+            :color="'red'"
+            :name="revir.ime"
           >
-            Rezerviraj opazovalnico
-          </ion-button>
-          <!-- <ion-button expand="full">Ogled zgodovine zasedenosti</ion-button> -->
-        </div>
-      </template>
-    </ion-content>
-  </ion-page>
+            <l-tooltip :options="{ permanent: true, opacity: 0.7 }">
+              {{ revir.ime }}
+            </l-tooltip>
+          </l-polygon>
+        </template>
+      </map-component>
+    </template>
+  </tab-template>
 </template>
 
-<script>
-import {
-  IonPage,
-  IonContent,
-  IonButton,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonInput,
-  modalController,
-} from "@ionic/vue"
+<script setup lang="ts">
+import { storeToRefs } from "pinia"
+import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
+import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
+import ButtonOval from "@/components/ui-components/button/ButtonOval.vue"
 
-import { defineComponent } from "vue"
+import { onBeforeMount } from "vue"
 
-import MapComponent from "@/components/MapComponent.vue"
-import ModalOpazovalnicaRezerviraj from "@/components/opazovalnica/ModalOpazovalnicaRezerviraj.vue"
+import MapComponent from "@/components/zemljevid/MapComponent.vue"
+import ModalObisk from "@/components/opazovalnica/ModalObisk.vue"
 
-import { Opazovalnica } from "@/entities/Opazovalnica"
+import { useModal } from "@/composables/useModal"
+import { useOpazovalnicaStore } from "@/stores/useOpazovalnicaStore"
+import { useMapElements } from "@/composables/useMapElements"
+import { useRevirStore } from "@/stores/useRevirStore"
+import { useActiveObiskStore } from "@/stores/useActiveObiskStore"
+import { useDate } from "@/composables/useDate"
 
-export default defineComponent({
-  components: {
-    IonPage,
-    IonContent,
-    IonButton,
-    MapComponent,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonInput,
-  },
-  data() {
-    return {
-      opazovalnice: [],
-      izbranaOpazovalnica: null,
-      datum: new Date().toISOString().slice(0, 10),
-    }
-  },
-  methods: {
-    izberiOpazovalnico(index) {
-      this.datum = new Date().toISOString().slice(0, 10)
-      this.izbranaOpazovalnica = this.opazovalnice[index]
-    },
-    async openModalOpazovanilnicaRezerviraj() {
-      const modal = await modalController.create({
-        component: ModalOpazovalnicaRezerviraj,
-        componentProps: {
-          opazovalnica: this.izbranaOpazovalnica,
-        },
-      })
-      modal.present()
-    },
-    formatTime(date) {
-      const datum = new Date(date)
-      const hour = datum.getHours().toString().padStart(2, "0")
-      const minute = datum.getMinutes().toString().padStart(2, "0")
-      return `${hour}.${minute}`
-    },
-  },
-  async beforeMount() {
-    const result = await Opazovalnica.fetchOpazovalnice(this.axios)
-    this.opazovalnice = result.data
-  },
+const { openSheetModal } = useModal()
+const { iconOpazovalnica } = useMapElements()
+
+const opazovalnicaStore = useOpazovalnicaStore()
+const { fetchMore, selectItem } = opazovalnicaStore
+const { opazovalnice } = storeToRefs(opazovalnicaStore)
+const revirStore = useRevirStore()
+const { fetchMore: fetchRevirji } = revirStore
+const { items: revirji } = storeToRefs(revirStore)
+const activeObiskStore = useActiveObiskStore()
+const { fetchItem: fetchActiveObisk, deselectItem: endActiveObisk } =
+  activeObiskStore
+const { selectedItem: activeObisk } = storeToRefs(activeObiskStore)
+
+onBeforeMount(async () => {
+  await fetchMore()
+  await fetchRevirji()
+  await fetchActiveObisk()
 })
-</script>
 
-<style scoped>
-ion-list,
-ion-item {
-  --padding-start: 0;
-  --padding-end: 0;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
-}
-</style>
+import { LMarker, LPolygon, LTooltip } from "@vue-leaflet/vue-leaflet"
+import { Opazovalnica } from "@/types"
+</script>
