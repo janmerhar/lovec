@@ -18,7 +18,7 @@ import { defineStore } from "pinia"
 
 import { useRequest } from "@/composables/useRequest"
 import { useSelect } from "@/composables/useSelect"
-import type { Obisk } from "@/types"
+import type { Obisk, Opazovalnica } from "@/types"
 
 export const useActiveObiskStore = defineStore("activeObisk", () => {
   const { request } = useRequest()
@@ -36,6 +36,19 @@ export const useActiveObiskStore = defineStore("activeObisk", () => {
     return response.data
   }
 
+  const startObisk = async (opazovalnica: Opazovalnica): Promise<Obisk> => {
+    const response = await request.post<Obisk>("/obiski", {
+      url: "",
+      data: {
+        opazovalnica: opazovalnica.id,
+      },
+    })
+
+    selectItem()(response.data)
+
+    return response.data
+  }
+
   const endObisk = async (): Promise<Obisk | null> => {
     const response = await request.patch<Obisk | null>("/obiski/aktivni")
 
@@ -49,5 +62,6 @@ export const useActiveObiskStore = defineStore("activeObisk", () => {
     selectedItem,
     fetchItem: fetchActiveObisk,
     deselectItem: endObisk,
+    startObisk,
   }
 })
