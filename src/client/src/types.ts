@@ -242,3 +242,11 @@ export interface InsertSistemskeSpremenljivke {
   OBISK_MAX_LENGTH: number
   USER_OBISKS_MAX_LENGTH: number
 }
+
+/* Revir */
+export interface Revir {
+  id: string
+  ime: string
+  koordinate: number[][]
+  druzina: DruzinaDetails
+}
