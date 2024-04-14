@@ -10,7 +10,6 @@
       @update:center="centerUpdated"
       @update:bounds="boundariesUpdated"
       @dblclick="clickEventUpdated"
-      @ready="(e) => console.log(e)"
       style="z-index: 50"
     >
       <!-- Base map -->
@@ -52,7 +51,7 @@ onMounted(async () => {
 })
 
 const centerUpdated = (e: any) => {
-  centerPosition.value = e
+  centerPosition.value = [e.lat, e.lng]
   emit("center", centerPosition.value)
 }
 
