@@ -17,5 +17,6 @@ import { IonContent } from "@ionic/vue"
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   background-color: var(--ion-background-color);
+  overflow: hidden;
 }
 </style>
