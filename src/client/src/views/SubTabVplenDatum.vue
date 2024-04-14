@@ -4,6 +4,17 @@
       <tab-header>{{ $t("vplenDatum.tab.header") }}</tab-header>
     </template>
     <template #body>
+      <map-window-template>
+        <map-component class="map-component-window">
+          <template v-for="vplen in vpleni" :key="'icon' + vplen.id">
+            <l-marker
+              :lat-lng="vplen.koordinate"
+              :icon="iconVplen(vplen.zival)"
+            ></l-marker>
+          </template>
+        </map-component>
+      </map-window-template>
+
       <TransitionGroup name="list" tag="ul">
         <li v-for="vplen in vpleni" :key="vplen.id">
           <card-vplen-description
@@ -32,6 +43,13 @@ import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 
 import ModalVplenAdd from "@/components/vplen/ModalVplenAdd.vue"
 import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
+
+import { LMarker } from "@vue-leaflet/vue-leaflet"
+import MapComponent from "@/components/zemljevid/MapComponent.vue"
+import MapWindowTemplate from "@/components/zemljevid/MapWindowTemplate.vue"
+import { useMapElements } from "@/composables/useMapElements"
+
+const { iconVplen } = useMapElements()
 
 import { useVplenStore } from "@/stores/useVplenStore"
 import { useRoute } from "vue-router"
