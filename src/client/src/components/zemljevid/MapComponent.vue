@@ -11,6 +11,7 @@
       @update:bounds="boundariesUpdated"
       @dblclick="clickEventUpdated"
       @ready="(e) => console.log(e)"
+      style="z-index: 50"
     >
       <!-- Base map -->
       <l-tile-layer
