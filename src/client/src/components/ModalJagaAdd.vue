@@ -2,6 +2,7 @@
   <modal-template>
     <template #header>
       <modal-header
+        :confirm-button="true"
         @cancel="useModal().cancelModal"
         @confirm="
           submitForm(
@@ -16,6 +17,13 @@
     </template>
 
     <template #body>
+      <map-window-template>
+        <map-component
+          @center="(e) => (insertJaga.lokacija = e)"
+          class="map-component-window"
+        ></map-component>
+      </map-window-template>
+
       <datepicker-horizontal
         @change="(novDatum) => (datum = novDatum)"
       ></datepicker-horizontal>
@@ -69,6 +77,8 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
 
+import MapComponent from "@/components/zemljevid/MapComponent.vue"
+import MapWindowTemplate from "@/components/zemljevid/MapWindowTemplate.vue"
 import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
 import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
@@ -96,7 +106,7 @@ const insertJaga = ref<InsertJaga>({
   naziv: "",
   opis: "",
   // TODO: zemljevid
-  lokacija: [123, 123],
+  lokacija: [],
   zacetek: datetime.value,
 })
 
