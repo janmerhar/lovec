@@ -172,6 +172,27 @@ export default {
       },
     },
   },
+  zemljevid: {
+    tab: {
+      header: "Zemljevid",
+      crud: {
+        create: {
+          header: "Dodaj opazovalnico",
+          button: "Dodaj",
+          success: "Opazovalnica {name} uspešno dodana",
+        },
+        delete: {},
+      },
+    },
+  },
+  obisk: {
+    tab: {
+      header: "Zasedenost",
+      sections: {
+        zasedenost: "Zasedenost",
+      },
+    },
+  },
 
   // Admin tabs
   admin_druzine: {
@@ -326,6 +347,42 @@ export default {
   admin_uporabnik_vpleni: {
     tab: {
       header: "Vpleni",
+    },
+  },
+  admin_uporabnik_jage: {
+    tab: {
+      header: "Jage",
+      headerOptions: {
+        active: "Aktivne",
+        past: "Pretekle",
+      },
+    },
+  },
+  admin_zemljevid: {
+    tab: {
+      header: "Zemljevid",
+    },
+    obiski: {
+      header: "Obiski",
+      sections: {
+        zasedenost: "Zasedenost",
+        zgodovina: "Ogled drugih obiskov",
+      },
+    },
+  },
+  admin_opazovalnica: {
+    crud: {
+      create: {
+        header: "Dodaj opazovalnico",
+        button: "Dodaj",
+        success: "Opazovalnica {name} uspešno dodana",
+      },
+      delete: {
+        header: "Izbriši opazovalnico",
+        message: "Ali ste prepričani, da želite izbrisati opazovalnico?",
+        success: "Opazovalnica {name} uspešno izbrisana",
+        failure: "Opazovalnica {name} ni bila izbrisana",
+      },
     },
   },
 }
