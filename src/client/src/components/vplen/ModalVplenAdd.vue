@@ -17,6 +17,13 @@
     </template>
     <!--  -->
     <template #body>
+      <map-window-template>
+        <map-component
+          @center="(e) => (insertVplen.koordinate = e)"
+          class="map-component-window"
+        ></map-component>
+      </map-window-template>
+
       <datepicker-horizontal
         @change="(novDatum) => (insertVplen.datum = novDatum)"
       ></datepicker-horizontal>
@@ -96,11 +103,13 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
+import MapComponent from "@/components/zemljevid/MapComponent.vue"
 import ModalHeader from "@/components/ui-components/modal/ModalHeader.vue"
 import DatepickerHorizontal from "@/components/ui-components/DatepickerHorizontal.vue"
 import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 import InputLabelTop from "@/components/ui-components/input/InputLabelTop.vue"
 import ButtonWide from "@/components/ui-components/button/ButtonWide.vue"
+import MapWindowTemplate from "@/components/zemljevid/MapWindowTemplate.vue"
 import { useModal } from "@/composables/useModal"
 
 import { Form, Field, ErrorMessage, FieldArray } from "vee-validate"
@@ -110,7 +119,7 @@ import { useVplenStore } from "@/stores/useVplenStore"
 import { useDate } from "@/composables/useDate"
 
 const insertVplen = ref<InsertVplen>({
-  koordinate: [123, 123],
+  koordinate: [],
   zival: "",
   teza: 0,
   datum: useDate(new Date()).isoDate(),
