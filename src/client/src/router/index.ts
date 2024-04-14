@@ -140,8 +140,8 @@ const routes: Array<RouteRecordRaw> = [
       // ker bom prikazoval tudi card modale cez kot zemljevid i guess
       // TODO: naredi subtab
       {
-        path: "opazovalnica",
-        name: "opazovalnica",
+        path: "opazovalnice",
+        name: "opazovalnice",
         component: TabOpazovalnica,
         beforeEnter: allowIsRole(["pripravnik", "lovec"]),
       },
@@ -235,12 +235,24 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/admin/TabAdminUporabnikVpleni.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
+      {
+        path: "uporabnik/jage",
+        name: "admin_uporabnik_jage",
+        component: () => import("@/views/admin/TabAdminUporabnikJage.vue"),
+        beforeEnter: allowIsRole(["admin"]),
+      },
       // TODO: vpleniDetails/:id
       // Zemljevid
       {
         path: "zemljevid",
         name: "admin_zemljevid",
         component: () => import("@/views/admin/TabAdminZemljevid.vue"),
+        beforeEnter: allowIsRole(["admin"]),
+      },
+      {
+        path: "zemljevid/obiski",
+        name: "admin_zemljevid_obiski",
+        component: () => import("@/views/admin/SubTabAdminObiski.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
       // TODO: vaju dva lahko zdruzim skupaj
