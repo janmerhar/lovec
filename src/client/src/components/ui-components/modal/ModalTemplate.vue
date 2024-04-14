@@ -14,7 +14,6 @@ import { IonContent } from "@ionic/vue"
 <style scoped>
 .modal-body {
   width: 100%;
-  height: 100%;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   background-color: var(--ion-background-color);
