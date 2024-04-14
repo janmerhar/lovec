@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative">
+  <div id="map-window-template" style="position: relative">
     <slot></slot>
     <div
       style="
@@ -22,3 +22,12 @@
     </div>
   </div>
 </template>
+
+<style>
+#map-window-template > .map-component-window {
+  width: 100vw;
+  height: 30vh;
+  margin-left: -16px;
+  margin-top: -16px;
+}
+</style>
