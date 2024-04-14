@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import "leaflet/dist/leaflet.css"
 import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet"
 import { ref, onMounted } from "vue"
 import { Geolocation } from "@capacitor/geolocation"
