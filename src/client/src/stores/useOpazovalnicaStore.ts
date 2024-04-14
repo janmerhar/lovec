@@ -31,6 +31,10 @@ export const useOpazovalnicaStore = defineStore("opazovalnica", () => {
     () => opazovalniceVariable.value
   )
 
+  //
+  // Admin only routes
+  //
+
   // CRUD
   const createOpazovalnica = async (
     opazovalnica: InsertOpazovalnica
