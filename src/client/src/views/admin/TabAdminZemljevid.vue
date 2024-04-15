@@ -38,11 +38,14 @@
 
         <!-- Fab button(s) -->
         <fab-buttons>
-          <ion-fab-button color="tertiary" @click="openSheetModal()">
+          <ion-fab-button color="tertiary" @click="openModal(ModalRevirAdd)">
             <font-awesome-icon :icon="['fas', 'draw-polygon']" fixed-width />
           </ion-fab-button>
 
-          <ion-fab-button color="tertiary" @click="openSheetModal()">
+          <ion-fab-button
+            color="tertiary"
+            @click="openModal(ModalOpazovalnicaAdd)"
+          >
             <font-awesome-icon
               :icon="['fas', 'tower-observation']"
               fixed-width
@@ -65,13 +68,15 @@ import MapComponent from "@/components/zemljevid/MapComponent.vue"
 import { IonFabButton } from "@ionic/vue"
 import FabButtons from "@/components/FabButtons.vue"
 import ModalAdminObiski from "@/components/opazovalnica/ModalAdminObiski.vue"
+import ModalOpazovalnicaAdd from "@/components/zemljevid/ModalOpazovalnicaAdd.vue"
+import ModalRevirAdd from "@/components/zemljevid/ModalRevirAdd.vue"
 
 import { useModal } from "@/composables/useModal"
 import { useOpazovalnicaStore } from "@/stores/useOpazovalnicaStore"
 import { useMapElements } from "@/composables/useMapElements"
 import { useRevirStore } from "@/stores/useRevirStore"
 
-const { openSheetModal } = useModal()
+const { openModal, openSheetModal } = useModal()
 const { iconOpazovalnica } = useMapElements()
 
 const opazovalnicaStore = useOpazovalnicaStore()
