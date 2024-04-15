@@ -250,3 +250,9 @@ export interface Revir {
   koordinate: number[][]
   druzina: DruzinaDetails
 }
+
+export interface InsertRevir {
+  ime: string
+  koordinate: number[][]
+  druzina: string
+}
