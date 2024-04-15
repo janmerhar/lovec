@@ -188,6 +188,17 @@ export default {
   obisk: {
     tab: {
       header: "Zasedenost",
+      crud: {
+        create: {
+          header: "Dodaj obisk",
+          button: "Dodaj",
+          success: "Obisk {name} uspešno dodan",
+        },
+        delete: {
+          success: "Obisk uspešno izbrisan",
+          failure: "Obisk ni bil izbrisan",
+        },
+      },
       sections: {
         zasedenost: "Zasedenost",
       },
@@ -358,6 +369,20 @@ export default {
       },
     },
   },
+  admin_uporabnik_obiski: {
+    tab: {
+      header: "Obiski",
+      sections: {
+        obiski: "Obiski",
+      },
+    },
+    crud: {
+      delete: {
+        success: "Obisk uspešno izbrisan",
+        failure: "Obisk ni bil izbrisan",
+      },
+    },
+  },
   admin_zemljevid: {
     tab: {
       header: "Zemljevid",
@@ -382,6 +407,41 @@ export default {
         message: "Ali ste prepričani, da želite izbrisati opazovalnico?",
         success: "Opazovalnica {name} uspešno izbrisana",
         failure: "Opazovalnica {name} ni bila izbrisana",
+      },
+      categories: {
+        ime: "Ime",
+        kapaciteta: "Kapaciteta",
+        prespanje: "Prespanje",
+        koordinate: "Koordinate",
+      },
+    },
+  },
+  admin_revir: {
+    crud: {
+      create: {
+        header: "Dodaj revir",
+        button: "Dodaj",
+        success: "Revir {name} uspešno dodan",
+      },
+      categories: {
+        ime: "Ime",
+        koordinate: "Koordinate",
+        druzina: "Družina",
+        empty: "Ni družine",
+      },
+    },
+  },
+  admin_zemljevid_obiski: {
+    tab: {
+      header: "Obiski",
+      sections: {
+        obiski: "Obiski",
+      },
+    },
+    crud: {
+      delete: {
+        success: "Obisk uspešno izbrisan",
+        failure: "Obisk ni bil izbrisan",
       },
     },
   },
