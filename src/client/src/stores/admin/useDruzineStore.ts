@@ -55,7 +55,7 @@ export const useDruzineStore = defineStore("druzine", () => {
   }
 
   const crud = useCRUD<DruzinaDetails>(druzineVariable)
-  const { createItem, deleteItem, updateItem } = crud
+  const { createItem, deleteItem } = crud
 
   const toastDelete = async (druzina: DruzinaDetails) => {
     const call = async () => await deleteItem(deleteDruzina)(druzina)
@@ -91,7 +91,7 @@ export const useDruzineStore = defineStore("druzine", () => {
     deleteItem: toastDelete,
     // Select
     selectedItem,
-    selectItem,
+    selectItem: selectItem(),
     // @ts-ignore
     fetchItem: fetchItem(fetchDruzina),
   }
