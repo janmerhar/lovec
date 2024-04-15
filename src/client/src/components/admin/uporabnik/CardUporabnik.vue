@@ -1,7 +1,7 @@
 <template>
   <card-normal>
     <template #right-top>
-      <button-round color="danger" @click="emit('izbrisi')">
+      <button-round color="danger" @click.stop="emit('izbrisi')">
         <font-awesome-icon :icon="['fas', 'trash']" size="xl" fixed-width />
       </button-round>
     </template>
