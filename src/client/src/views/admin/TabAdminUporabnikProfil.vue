@@ -15,7 +15,7 @@
           <list-title>
             {{ $t("admin_uporabnik_id.tab.sections.personalData") }}
             <template #end>
-              <text-edit>
+              <text-edit v-if="selectedItem?.id != uporabnik?.id">
                 {{ $t("admin_uporabnik_id.crud.update.button") }}
               </text-edit>
             </template>
@@ -86,6 +86,10 @@
             <template #value>
               {{ pripravnik.ime }}
               {{ pripravnik.priimek }}
+              <!-- TODO: click update -->
+              <list-item-button @click.stop="() => {}"
+                ><font-awesome-icon :icon="['fas', 'user-minus']" fixed-width />
+              </list-item-button>
             </template>
           </list-item>
         </template>
@@ -122,7 +126,7 @@
             </template>
           </list-item>
 
-          <list-item>
+          <list-item @click="redirectTo('admin_uporabnik_obiski')">
             <template #title>
               {{ $t("admin_uporabnik_id.tab.sections.obiski") }}
             </template>
@@ -195,6 +199,7 @@ import ListTitle from "@/components/ui-components/list/ListTitle.vue"
 import ListItem from "@/components/ui-components/list/ListItem.vue"
 import ButtonWide from "@/components/ui-components/button/ButtonWide.vue"
 import TextEdit from "@/components/ui-components/text/TextEdit.vue"
+import ListItemButton from "@/components/ui-components/list/ListItemButton.vue"
 
 import { useUporabnikiStore } from "@/stores/admin/useUporabnikiStore"
 import { useRoute } from "vue-router"
