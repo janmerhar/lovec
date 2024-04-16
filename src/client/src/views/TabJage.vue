@@ -18,9 +18,15 @@
 
       <TransitionGroup name="list" tag="ul">
         <li v-for="jaga in jage" :key="jaga.id">
-          <card-jaga :jaga="jaga" @click="openModal(ModalJagaDescription)"
-            >banana</card-jaga
-          >
+          <card-jaga
+            :jaga="jaga"
+            @click="
+              () => {
+                selectJaga(jaga)
+                openModal(ModalJagaDescription)
+              }
+            "
+          ></card-jaga>
         </li>
       </TransitionGroup>
 
@@ -48,7 +54,7 @@ import { storeToRefs } from "pinia"
 import { useModal } from "@/composables/useModal"
 
 const jagaStore = useJagaStore()
-const { refreshPagination, selectItem } = jagaStore
+const { refreshPagination, selectItem, selectJaga } = jagaStore
 const { jage } = storeToRefs(jagaStore)
 
 const { openModal } = useModal()
