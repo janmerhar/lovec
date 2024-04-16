@@ -87,11 +87,8 @@
             </template>
           </list-item>
 
-          <!-- Join button -->
-          <list-item
-            v-if="selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni"
-            style="padding: 0"
-          >
+          <!-- Join / leave button -->
+          <list-item style="padding: 0">
             <template #title>
               <div
                 style="padding: 1rem 0.5rem; color: var(--ion-color-step-600)"
@@ -101,11 +98,23 @@
             </template>
             <template #value>
               <!-- TODO: implementiraj join -->
-              <button-round color="success" @click="() => {}">
+              <!-- Join jaga -->
+              <button-round
+                v-if="
+                  selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni
+                "
+                color="success"
+                @click="() => {}"
+              >
                 <font-awesome-icon
                   :icon="['fas', 'right-to-bracket']"
                   fixed-width
                 />
+              </button-round>
+              <!-- TODO: implementiraj join jaga -->
+              <!-- Leave Jaga -->
+              <button-round v-else color="danger" @click="() => {}">
+                <font-awesome-icon :icon="['fas', 'user-minus']" fixed-width />
               </button-round>
             </template>
           </list-item>

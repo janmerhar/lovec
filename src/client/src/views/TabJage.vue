@@ -40,8 +40,8 @@
 <script setup lang="ts">
 import FabButton from "@/components/FabButtonAdd.vue"
 import CardJaga from "@/components/CardJaga.vue"
-import ModalJagaAdd from "@/components/ModalJagaAdd.vue"
-import ModalJagaDescription from "@/components/ModalJagaDescription.vue"
+import ModalJagaAdd from "@/components/jage/ModalJagaAdd.vue"
+import ModalJagaDescription from "@/components/jage/ModalJagaDescription.vue"
 import InlineSelectCategory from "@/components/jage/InlineSelectCategory.vue"
 import InlineSelectButton from "@/components/jage/InlineSelectButton.vue"
 import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
