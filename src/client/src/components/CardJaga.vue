@@ -1,8 +1,14 @@
 <template>
   <card-normal>
+    <template v-if="delete" #right-top>
+      <button-round color="danger" @click.stop="emit('delete')">
+        <font-awesome-icon :icon="['fas', 'trash']" size="xl" fixed-width />
+      </button-round>
+    </template>
+
     <text-card-subtitle>
       <icon-username-inline :uporabnik="jaga.organizator">
-        ·
+        &nbsp;·
         <span
           ><font-awesome-icon
             :icon="['fas', 'calendar-days']"
@@ -31,6 +37,7 @@ import TextCardSubtitle from "@/components/ui-components/card/TextCardSubtitle.v
 import TextCardBody from "@/components/ui-components/card/TextCardBody.vue"
 import IconUserPicture from "@/components/ui-components/misc/IconUserPicture.vue"
 import IconUsernameInline from "@/components/ui-components/misc/IconUsernameInline.vue"
+import ButtonRound from "@/components/ui-components/button/ButtonRound.vue"
 
 import type { Jaga } from "@/types"
 import { useDate } from "@/composables/useDate"
@@ -40,5 +47,11 @@ defineProps({
     type: Object as () => Jaga,
     required: true,
   },
+  delete: {
+    type: Boolean,
+    value: false,
+  },
 })
+
+const emit = defineEmits(["delete"])
 </script>
