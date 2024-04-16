@@ -72,23 +72,27 @@
           </list-item>
 
           <list-item
-            v-for="udelezeni in selectedJaga?.udelezeni"
+            v-for="udelezeni in selectedJaga?.udelezeni.filter(
+              (udelezeni) => udelezeni.id != selectedJaga?.organizator.id
+            )"
             :key="udelezeni.id"
           >
             <template #title>
               {{ udelezeni.ime }}
               {{ udelezeni.priimek }}
             </template>
-            <template #value>
-              <!-- TODO: naredi remove klic -->
-              <list-item-button color="danger" @click.stop="() => {}"
-                ><font-awesome-icon :icon="['fas', 'user-minus']" fixed-width />
-              </list-item-button>
-            </template>
           </list-item>
 
           <!-- Join / leave button -->
-          <list-item style="padding: 0">
+          <list-item
+            v-if="
+              selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni ||
+              selectedJaga?.udelezeni.filter(
+                (udelezeni) => udelezeni.id == uporabnik?.id
+              ).length != 0
+            "
+            style="padding: 0"
+          >
             <template #title>
               <div
                 style="padding: 1rem 0.5rem; color: var(--ion-color-step-600)"
@@ -101,10 +105,12 @@
               <!-- Join jaga -->
               <button-round
                 v-if="
-                  selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni
+                  !selectedJaga?.udelezeni.find(
+                    (udelezeni) => udelezeni.id == uporabnik?.id
+                  )
                 "
                 color="success"
-                @click="() => {}"
+                @click="joinJaga(selectedJaga)"
               >
                 <font-awesome-icon
                   :icon="['fas', 'right-to-bracket']"
@@ -113,7 +119,11 @@
               </button-round>
               <!-- TODO: implementiraj join jaga -->
               <!-- Leave Jaga -->
-              <button-round v-else color="danger" @click="() => {}">
+              <button-round
+                v-else
+                color="danger"
+                @click="leaveJaga(selectedJaga)"
+              >
                 <font-awesome-icon :icon="['fas', 'user-minus']" fixed-width />
               </button-round>
             </template>
@@ -133,7 +143,6 @@ import MapWindowTemplate from "@/components/zemljevid/MapWindowTemplate.vue"
 import ListContainer from "@/components/ui-components/list/ListContainer.vue"
 import ListTitle from "@/components/ui-components/list/ListTitle.vue"
 import ListItem from "@/components/ui-components/list/ListItem.vue"
-import ListItemButton from "@/components/ui-components/list/ListItemButton.vue"
 import ButtonRound from "@/components/ui-components/button/ButtonRound.vue"
 
 import { useModal } from "@/composables/useModal"
@@ -145,6 +154,7 @@ import { storeToRefs } from "pinia"
 import { useDate } from "@/composables/useDate"
 import { useLoginStore } from "@/stores/useLoginStore"
 const jagaStore = useJagaStore()
+const { joinJaga, leaveJaga } = jagaStore
 const { selectedJaga } = storeToRefs(jagaStore)
 const loginStore = useLoginStore()
 const { uporabnik } = storeToRefs(loginStore)
