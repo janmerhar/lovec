@@ -10,7 +10,7 @@
             fixed-width
             style="padding-right: 0.3rem"
         /></span>
-        {{ jaga.zacetek }}
+        {{ useDate(jaga.zacetek).isoDate() }}
       </icon-username-inline>
     </text-card-subtitle>
     <text-card-title>{{ jaga.naziv }}</text-card-title>
@@ -33,6 +33,7 @@ import IconUserPicture from "@/components/ui-components/misc/IconUserPicture.vue
 import IconUsernameInline from "@/components/ui-components/misc/IconUsernameInline.vue"
 
 import type { Jaga } from "@/types"
+import { useDate } from "@/composables/useDate"
 
 defineProps({
   jaga: {
