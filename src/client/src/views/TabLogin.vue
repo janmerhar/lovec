@@ -21,42 +21,45 @@
         gap: 5px;
       "
     >
-      <div style="position: fixed; top: 15px; right: 20px">ICON</div>
+      <!-- TODO razmisli, ce bom zares to naredil -->
+      <!-- Languag icon -->
+      <div style="position: fixed; top: 20px; right: 20px">
+        <font-awesome-icon :icon="['fas', 'globe']" size="2xl" fixed-width />
+      </div>
       <!--  -->
-      <input-label-left>
-        <template #icon
-          ><font-awesome-icon
-            style="padding-left: 0.5rem; padding-top: 1rem"
-            :icon="['fas', 'people-group']"
-            fixed-width
+      <input-label-horizontal>
+        <template #left
+          ><font-awesome-icon :icon="['fas', 'user']" fixed-width
         /></template>
         <template #input>
-          <Field
-            name="email"
-            type="email"
-            v-model="inputData.email"
-            style="
-              background-color: var(--ion-color-step-300);
-              border: none;
-              padding: 0.5rem;
-              margin: 0;
-            "
-          />
+          <Field name="email" type="email" v-model="inputData.email" />
         </template>
         <template #error>
           <ErrorMessage name="email" />
         </template>
-      </input-label-left>
-
-      <Field name="password" type="password" v-model="inputData.password" />
-      <ErrorMessage name="password" />
+      </input-label-horizontal>
+      <!--  -->
+      <input-label-horizontal
+        class="input-label-horizontal"
+        style="margin-top: -10px"
+      >
+        <template #left
+          ><font-awesome-icon :icon="['fas', 'key']" fixed-width
+        /></template>
+        <template #input>
+          <Field name="password" type="password" v-model="inputData.password" />
+        </template>
+        <template #error>
+          <ErrorMessage name="password" />
+        </template>
+      </input-label-horizontal>
 
       <button
         type="submit"
         style="
           position: fixed;
           bottom: 50px;
-          width: 80%;
+          width: 70%;
           height: 2.5rem;
           text-transform: uppercase;
           font-weight: 700;
@@ -71,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import InputLabelLeft from "@/components/ui-components/input/InputLabelLeft.vue"
+import InputLabelHorizontal from "@/components/ui-components/input/InputLabelHorizontal.vue"
 
 import { useLoginStore } from "@/stores/useLoginStore"
 import { useTabNavigation } from "@/composables/useTabNavigation"
@@ -135,5 +138,9 @@ p {
 
 .centered-content {
   padding-top: 5vh;
+}
+
+.input-label-horizontal {
+  border-radius: 10px;
 }
 </style>
