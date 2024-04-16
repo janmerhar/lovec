@@ -28,7 +28,7 @@ export const useJagaStore = defineStore("jaga", () => {
     return response.data
   }
 
-  // select
+  // select section
 
   const { selectItem, selectedItem } = useSelect<number>(1)
 
@@ -73,6 +73,36 @@ export const useJagaStore = defineStore("jaga", () => {
     return response.data
   }
 
+  const joinJaga = async (
+    oldVal?: Jaga,
+    newVal?: Jaga
+  ): Promise<Jaga | null> => {
+    if (!oldVal) {
+      return null
+    }
+
+    const response = await request.patch<Jaga | null>(
+      `/jage/jaga/${oldVal?.id}/pridruzi`
+    )
+
+    return response.data
+  }
+
+  const leaveJaga = async (
+    oldVal?: Jaga,
+    newVal?: Jaga
+  ): Promise<Jaga | null> => {
+    if (!oldVal) {
+      return null
+    }
+
+    const response = await request.patch<Jaga | null>(
+      `/jage/jaga/${oldVal?.id}/odstrani`
+    )
+
+    return response.data
+  }
+
   const deleteJaga = async (jaga: Jaga): Promise<boolean> => {
     const response = await request.delete<boolean>(`/jage/${jaga.id}`)
 
@@ -95,8 +125,12 @@ export const useJagaStore = defineStore("jaga", () => {
     return response.data
   }
 
-  const crud = useCRUD<Jaga>(jagaVariable)
+  const crud = useCRUD<Jaga>(items)
   const { createItem, updateItem, deleteItem } = crud
+
+  // selected jaga
+  const { selectItem: selectJaga, selectedItem: selectedJaga } =
+    useSelect<Jaga>(null)
 
   return {
     selectedItem,
@@ -108,8 +142,11 @@ export const useJagaStore = defineStore("jaga", () => {
     createItem: createItem(createJaga),
     updateItem: updateItem(updateJaga),
     deleteItem: deleteItem(deleteJaga),
-    // TODO: ti dne metodi
-    // dodajClana
-    // odstraniClana
+    // TODO: investigiraj zakaj se update ne vidi takoj
+    joinJaga: updateItem(joinJaga),
+    leaveJaga: updateItem(leaveJaga),
+    // Select jaga
+    selectedJaga,
+    selectJaga: selectJaga(),
   }
 })
