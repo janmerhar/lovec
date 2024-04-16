@@ -69,4 +69,9 @@
   max-width: 20%;
   margin-right: 12px;
 }
+
+#ilh-error {
+  /* center text */
+  text-align: center;
+}
 </style>
