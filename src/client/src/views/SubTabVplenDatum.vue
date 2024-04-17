@@ -1,5 +1,5 @@
 <template>
-  <tab-template :scroll="fetchMore" :refresh="refreshPagination">
+  <tab-template :scroll="fetchMore" :is-refreshable="false">
     <template #header>
       <tab-header>{{ $t("vplenDatum.tab.header") }}</tab-header>
     </template>
