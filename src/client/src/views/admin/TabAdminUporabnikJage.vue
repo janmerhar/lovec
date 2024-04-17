@@ -18,8 +18,15 @@
 
       <TransitionGroup name="list" tag="ul">
         <li v-for="jaga in items" :key="jaga.id">
-          <!-- TODO: open jaga in normal view of admin -->
-          <card-jaga :jaga="jaga"></card-jaga>
+          <card-jaga
+            @click="
+              () => {
+                selectJaga(jaga)
+                openModal(ModalAdminJagaDescription)
+              }
+            "
+            :jaga="jaga"
+          ></card-jaga>
         </li>
       </TransitionGroup>
 
@@ -33,6 +40,8 @@ import { onBeforeMount } from "vue"
 import { useUporabnikiStore } from "@/stores/admin/useUporabnikiStore"
 import { storeToRefs } from "pinia"
 import { useUporabnikJageStore } from "@/stores/admin/useUporabnikJageStore"
+import { useModal } from "@/composables/useModal"
+import { useAdminJagaStore } from "@/stores/admin/useAdminJagaStore"
 
 import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
 import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
@@ -40,6 +49,7 @@ import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
 import CardJaga from "@/components/CardJaga.vue"
 import InlineSelectCategory from "@/components/jage/InlineSelectCategory.vue"
 import InlineSelectButton from "@/components/jage/InlineSelectButton.vue"
+import ModalAdminJagaDescription from "@/components/jage/ModalAdminJagaDescription.vue"
 
 const uporabnikStore = useUporabnikiStore()
 const { selectedItem: uporabnik } = storeToRefs(uporabnikStore)
@@ -47,6 +57,11 @@ const { selectedItem: uporabnik } = storeToRefs(uporabnikStore)
 const uporabnikJagaStore = useUporabnikJageStore()
 const { fetchMore, refreshPagination, selectItem } = uporabnikJagaStore
 const { items } = storeToRefs(uporabnikJagaStore)
+
+const { openModal } = useModal()
+
+const adminJagaStore = useAdminJagaStore()
+const { selectJaga } = adminJagaStore
 
 onBeforeMount(async () => {
   await fetchMore()
