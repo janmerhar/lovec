@@ -58,6 +58,18 @@
             </template>
             <template #value>
               {{ selectedItem?.druzina?.ime }}
+              <list-item-button
+                @click.stop="
+                  ;async () => {
+                    await openSheetModal(SheetModalDruzinaSelect)
+                    await changeDruzina(selectedDruzina)
+                  }
+                "
+                ><font-awesome-icon
+                  :icon="['fas', 'pen-to-square']"
+                  fixed-width
+                />
+              </list-item-button>
             </template>
           </list-item>
         </template>
@@ -200,6 +212,9 @@ import ListItem from "@/components/ui-components/list/ListItem.vue"
 import ButtonWide from "@/components/ui-components/button/ButtonWide.vue"
 import TextEdit from "@/components/ui-components/text/TextEdit.vue"
 import ListItemButton from "@/components/ui-components/list/ListItemButton.vue"
+import SheetModalDruzinaSelect from "@/components/admin/druzina/SheetModalDruzinaSelect.vue"
+import { useModal } from "@/composables/useModal"
+import { useDruzineStore } from "@/stores/admin/useDruzineStore"
 
 import { useUporabnikiStore } from "@/stores/admin/useUporabnikiStore"
 import { useRoute } from "vue-router"
@@ -224,6 +239,10 @@ if (route.params.id) {
 const uporabnikStore = useUporabnikiStore()
 const { fetchItem } = uporabnikStore
 const { selectedItem } = storeToRefs(uporabnikStore)
+const { openSheetModal } = useModal()
+const druzineStore = useDruzineStore()
+const { selectedItem: selectedDruzina } = storeToRefs(druzineStore)
+const { changeDruzina } = uporabnikStore
 
 onBeforeMount(async () => {
   if (uporabnikId) {
