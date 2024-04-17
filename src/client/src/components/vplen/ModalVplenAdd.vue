@@ -63,34 +63,37 @@
           </template>
         </input-label-top>
 
-        <!-- TODO: make a map for choosing location -->
-
-        <!-- TODO: dodaj delete button, razmisli, input-right ?? -->
-        <FieldArray name="bolezni">
-          <input-label-top
-            v-for="(bolezen, index) in insertVplen.bolezni"
-            :key="index"
-          >
-            <template #input>
-              <Field
-                as="select"
-                :name="`bolezni[${index}]`"
-                v-model="insertVplen.bolezni[index]"
+        <input-label-horizontal
+          v-for="(bolezen, index) in insertVplen.bolezni"
+          :key="index"
+          ><template #input>
+            <Field
+              as="select"
+              :name="`bolezni[${index}]`"
+              v-model="insertVplen.bolezni[index]"
+            >
+              <option
+                v-for="bolezen in bolezenDomain"
+                :key="bolezen"
+                :value="bolezen"
               >
-                <option
-                  v-for="bolezen in bolezenDomain"
-                  :key="bolezen"
-                  :value="bolezen"
-                >
-                  {{ bolezen }}
-                </option>
-              </Field>
-            </template>
-            <template #error>
-              <ErrorMessage :name="`bolezni[${index}]`" />
-            </template>
-          </input-label-top>
-        </FieldArray>
+                {{ bolezen }}
+              </option>
+            </Field>
+          </template>
+          <template #right>
+            <list-item-button
+              @click.stop="insertVplen.bolezni.splice(index, 1)"
+              color="danger"
+              ><font-awesome-icon
+                :icon="['fas', 'trash']"
+                fixed-width
+              /> </list-item-button
+          ></template>
+          <template #error>
+            <ErrorMessage :name="`bolezni[${index}]`" />
+          </template>
+        </input-label-horizontal>
 
         <!--  -->
       </Form>
@@ -110,6 +113,8 @@ import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 import InputLabelTop from "@/components/ui-components/input/InputLabelTop.vue"
 import ButtonWide from "@/components/ui-components/button/ButtonWide.vue"
 import MapWindowTemplate from "@/components/zemljevid/MapWindowTemplate.vue"
+import InputLabelHorizontal from "@/components/ui-components/input/InputLabelHorizontal.vue"
+import ListItemButton from "@/components/ui-components/list/ListItemButton.vue"
 import { useModal } from "@/composables/useModal"
 
 import { Form, Field, ErrorMessage, FieldArray } from "vee-validate"
@@ -123,7 +128,7 @@ const insertVplen = ref<InsertVplen>({
   zival: "",
   teza: 0,
   datum: useDate(new Date()).isoDate(),
-  bolezni: ["", ""],
+  bolezni: [],
 })
 
 const form = ref<HTMLFormElement | null>(null)
