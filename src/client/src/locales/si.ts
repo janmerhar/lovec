@@ -8,6 +8,9 @@ export default {
       confirmButton: "Potrdi",
       cancelButton: "Prekliči",
     },
+    TabNoElements: {
+      noElements: "Ni elementov",
+    },
   },
 
   // Custom translations for validation
