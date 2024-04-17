@@ -28,8 +28,9 @@
   flex-direction: row;
   gap: 12px;
   background-color: var(--ion-color-step-250);
-  margin-left: 10px;
-  margin-right: 10px;
+  /* TODO: razmisli ali dejansko rabim to, saj potem polja postanejo kinda majhna */
+  /* margin-left: 10px; */
+  /* margin-right: 10px; */
   border-radius: 1000px;
   height: 2.5rem;
 }
@@ -51,7 +52,9 @@
   height: 100%;
 }
 
-#ilh-input > input {
+#ilh-input > input,
+#ilh-input > textarea,
+#ilh-input > select {
   background-color: var(--ion-color-step-250);
   width: 100%;
   height: 100%;
@@ -71,7 +74,8 @@
 }
 
 #ilh-error {
-  /* center text */
-  text-align: center;
+  color: red;
+  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 </style>
