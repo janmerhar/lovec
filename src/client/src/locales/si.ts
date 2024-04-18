@@ -8,6 +8,9 @@ export default {
       confirmButton: "Potrdi",
       cancelButton: "Prekliči",
     },
+    InfiniteScrollComponent: {
+      fetching: "Nalagam...",
+    },
     TabNoElements: {
       noElements: "Ni elementov",
     },
