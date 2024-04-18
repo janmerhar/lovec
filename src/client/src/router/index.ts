@@ -9,7 +9,6 @@ import TabsPage from "@/views/TabsPage.vue"
 
 // Tab paths
 import TabJage from "@/views/TabJage.vue"
-import TabRevirji from "@/views/TabRevirji.vue"
 import TabOpazovalnica from "@/views/TabOpazovalnica.vue"
 import TabOprema from "@/views/TabOprema.vue"
 import TabIzkaznica from "@/views/TabIzkaznica.vue"
@@ -104,12 +103,6 @@ const routes: Array<RouteRecordRaw> = [
         path: "jage/:id",
         name: "jage_id",
         component: TabJage,
-        beforeEnter: allowIsRole(["pripravnik", "lovec"]),
-      },
-      {
-        path: "revirji",
-        name: "revirji",
-        component: TabRevirji,
         beforeEnter: allowIsRole(["pripravnik", "lovec"]),
       },
       {
