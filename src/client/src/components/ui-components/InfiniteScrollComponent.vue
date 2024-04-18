@@ -1,39 +1,31 @@
 <template>
   <ion-infinite-scroll @ion-infinite="infiniteScroll">
     <ion-infinite-scroll-content
-      loading-text="Prosim počakajte..."
+      :loading-text="$t('framework.InfiniteScrollComponent.fetching')"
       loading-spinner="lines"
     ></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   InfiniteScrollCustomEvent,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
 } from "@ionic/vue"
-import { defineComponent } from "vue"
 
-export default defineComponent({
-  components: {
-    IonInfiniteScroll,
-    IonInfiniteScrollContent,
-  },
-  props: {
-    scroll: {
-      type: Function,
-      required: true,
-    },
-  },
-  methods: {
-    async infiniteScroll(event: InfiniteScrollCustomEvent) {
-      await this.scroll()
-
-      setTimeout(() => {
-        event.target.complete()
-      }, 500)
-    },
+const props = defineProps({
+  scroll: {
+    type: Function,
+    required: true,
   },
 })
+
+const infiniteScroll = async (event: InfiniteScrollCustomEvent) => {
+  await props.scroll()
+
+  setTimeout(() => {
+    event.target.complete()
+  }, 500)
+}
 </script>
