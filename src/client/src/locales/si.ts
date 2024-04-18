@@ -324,6 +324,12 @@ export default {
       logout: "Odjava",
     },
     crud: {
+      create: {
+        header: "Vnesi uporabnika",
+        button: "Vnesi",
+        addPripravnik: "Dodaj pripravnika",
+        success: "Uporabnik {name} uspešno dodan",
+      },
       update: {
         header: "Spremeni uporabnika",
         button: "Spremeni",
