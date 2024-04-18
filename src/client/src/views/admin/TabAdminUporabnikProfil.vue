@@ -44,6 +44,13 @@
             <template #value>
               {{ selectedItem?.mentor?.ime }}
               {{ selectedItem?.mentor?.priimek }}
+              <!-- TODO: imeplmentiraj to -->
+              <list-item-button @click.stop="() => {}"
+                ><font-awesome-icon
+                  :icon="['fas', 'pen-to-square']"
+                  fixed-width
+                />
+              </list-item-button>
             </template>
           </list-item>
 
@@ -58,12 +65,12 @@
             </template>
             <template #value>
               {{ selectedItem?.druzina?.ime }}
+              <!-- TODO: fix: not opening when in await -->
               <list-item-button
                 @click.stop="
-                  ;async () => {
-                    await openSheetModal(SheetModalDruzinaSelect)
-                    await changeDruzina(selectedDruzina)
-                  }
+                  openSheetModal(SheetModalDruzinaSelect).then(() =>
+                    changeDruzina(selectedDruzina)
+                  )
                 "
                 ><font-awesome-icon
                   :icon="['fas', 'pen-to-square']"
@@ -79,11 +86,6 @@
         <template #title>
           <list-title>
             {{ $t("admin_uporabnik_id.tab.sections.apprentices") }}
-            <template #end>
-              <text-edit>
-                {{ $t("admin_uporabnik_id.crud.update.button") }}
-              </text-edit>
-            </template>
           </list-title>
         </template>
         <template #default>
@@ -99,9 +101,28 @@
               {{ pripravnik.ime }}
               {{ pripravnik.priimek }}
               <!-- TODO: click update -->
-              <list-item-button @click.stop="() => {}"
+              <list-item-button color="danger" @click.stop="() => {}"
                 ><font-awesome-icon :icon="['fas', 'user-minus']" fixed-width />
               </list-item-button>
+            </template>
+          </list-item>
+
+          <list-item v-if="uporabnik?.role == 'admin'" style="padding: 0">
+            <template #title>
+              <div
+                style="padding: 1rem 0.5rem; color: var(--ion-color-step-600)"
+              >
+                {{ $t("admin_uporabnik_id.crud.create.addPripravnik") }}
+              </div>
+            </template>
+            <template #value>
+              <!-- TODO: popup -->
+              <button-round
+                color="success"
+                @click="openSheetModal(SheetModalUporabnikSelect)"
+              >
+                <font-awesome-icon :icon="['fas', 'user-plus']" fixed-width />
+              </button-round>
             </template>
           </list-item>
         </template>
@@ -213,6 +234,8 @@ import ButtonWide from "@/components/ui-components/button/ButtonWide.vue"
 import TextEdit from "@/components/ui-components/text/TextEdit.vue"
 import ListItemButton from "@/components/ui-components/list/ListItemButton.vue"
 import SheetModalDruzinaSelect from "@/components/admin/druzina/SheetModalDruzinaSelect.vue"
+import SheetModalUporabnikSelect from "@/components/admin/uporabnik/SheetModalUporabnikSelect.vue"
+import ButtonRound from "@/components/ui-components/button/ButtonRound.vue"
 import { useModal } from "@/composables/useModal"
 import { useDruzineStore } from "@/stores/admin/useDruzineStore"
 
