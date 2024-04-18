@@ -184,7 +184,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "jage",
         name: "admin_jage",
-        component: TabJage,
+        component: () => import("@/views/admin/TabAdminJage.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
       // TODO: jage description
@@ -239,6 +239,12 @@ const routes: Array<RouteRecordRaw> = [
         path: "uporabnik/jage",
         name: "admin_uporabnik_jage",
         component: () => import("@/views/admin/TabAdminUporabnikJage.vue"),
+        beforeEnter: allowIsRole(["admin"]),
+      },
+      {
+        path: "uporabnik/obiski",
+        name: "admin_uporabnik_obiski",
+        component: () => import("@/views/admin/TabAdminUporabnikObiski.vue"),
         beforeEnter: allowIsRole(["admin"]),
       },
       // TODO: vpleniDetails/:id
