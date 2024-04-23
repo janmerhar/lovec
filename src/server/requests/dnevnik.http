@@ -1,0 +1,96 @@
+@baseUrl = http://localhost:1234
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
+
+###
+
+@datum1 = 2019-01-02
+@ure1 = 8
+@opis1 = Hlev, listje, trava
+@delo1 = druga
+
+# @name dnevnikVnesi
+POST {{baseUrl}}/dnevniki HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "datum": "{{datum1}}",
+    "ure": {{ure1}},
+    "opis": "{{opis1}}",
+    "delo": "{{delo1}}"
+}
+
+
+###
+
+@stran = 2
+
+# @name dnevnikPripravnik
+
+GET {{baseUrl}}/dnevniki/pripravnik/{{stran}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@dnevnikId1 = 6579f7c138584ae4187b898b
+@status1 = potrjen
+
+# @name spremeniStatus
+
+PATCH {{baseUrl}}/dnevniki/{{dnevnikId1}}/status/{{status1}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@datum2 = 2019-01-02
+
+# @name dnevnik
+GET {{baseUrl}}/dnevniki/mentor/{{datum2}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "datum": "{{datum2}}"
+}
+
+###
+
+@dnevnikId1 = 6520410e359b19d5d8d8607b
+
+# @name adminDelete
+
+DELETE {{baseUrl}}/dnevniki/admin/{{dnevnikId1}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@mentorId3 = 643e9a14598d827be449b4c4
+@datum3 = 2019-01-02
+
+# @name adminMentorDnevnik
+
+GET {{baseUrl}}/dnevniki/admin/mentor/{{mentorId3}}/{{datum3}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@pripravnikId4 = 643ea251ace3bb5f15f97a3c
+@stran4 = 1
+
+# @name adminPripravnikDnevnik
+
+GET {{baseUrl}}/dnevniki/admin/pripravnik/{{pripravnikId4}}/{{stran4}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+

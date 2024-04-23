@@ -1,7 +1,0 @@
-@baseUrl = http://localhost:1234
-
-###
-
-# @name getRevirji
-GET {{baseUrl}}/revirji/ HTTP/1.1
-Content-Type: application/json

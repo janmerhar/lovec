@@ -1,0 +1,176 @@
+@baseUrl = http://localhost:1234
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
+
+###
+
+@naziv = nova jaga
+@opis = gremo po medvede
+@udelezeni = [ "643e9a14598d827be449b4c4" ]
+@lokacija = [46.123, 15.123]
+@zacetek = 2024-02-02T12:12:12.000Z
+
+# @name insertJaga
+POST {{baseUrl}}/jage
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "naziv": "{{naziv}}",
+    "opis": "{{opis}}",
+    "udelezeni": {{udelezeni}},
+    "lokacija": {{lokacija}},
+    "zacetek": "{{zacetek}}"
+}
+
+###
+
+@id = 657ccae085f6f9807745a438
+@organizator = 643e9a14598d827be449b4c4
+@naziv = nova jaga z novim novim imenom
+@opis = gremo po medvede
+@udelezeni = [ "643e9a14598d827be449b4c4" ]
+@lokacija = [46.123, 15.123]
+@zacetek = 2024-02-02T12:12:12.000Z
+
+# @name updateJaga
+
+PATCH {{baseUrl}}/jage/jaga/{{id}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "organizator": "{{organizator}}",
+    "naziv": "{{naziv}}",
+    "opis": "{{opis}}",
+    "udelezeni": {{udelezeni}},
+    "lokacija": {{lokacija}},
+    "zacetek": "{{zacetek}}"
+}
+###
+
+@stran = 1
+
+# @getJage
+
+GET {{baseUrl}}/jage/{{stran}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@stran = 1
+
+# @name getAktivne
+GET {{baseUrl}}/jage/aktivne/{{stran}} 
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@stran = 1
+
+# @name getPretekle
+GET {{baseUrl}}/jage/pretekle/{{stran}} 
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+# @getJaga
+
+GET {{baseUrl}}/jage/jaga/657ccae085f6f9807745a438
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@id = 657ccae085f6f9807745a438
+
+# @joinJaga
+PATCH {{baseUrl}}/jage/jaga/{{id}}/pridruzi
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@id = 657ccae085f6f9807745a438
+
+# @joinJaga
+PATCH {{baseUrl}}/jage/jaga/{{id}}/odstrani
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@id = 657ccae085f6f9807745a438
+
+# @name deleteJaga
+DELETE {{baseUrl}}/jage/jaga/{{id}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+# 
+# Admin
+# 
+
+###
+
+@id = 657cd390446e44653a9968cb
+
+# @name adminDeleteJaga
+
+DELETE {{baseUrl}}/jage/admin/jaga/{{id}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@id = 657cd8cef4b289de7cdcbcf2
+@uporabnik = 643ea251ace3bb5f15f97a3c
+
+# @name adminPridruziUporabnik
+
+PATCH {{baseUrl}}/jage/admin/jaga/{{id}}/pridruzi/{{uporabnik}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@id = 657cd8cef4b289de7cdcbcf2
+@uporabnik = 643ea251ace3bb5f15f97a3c
+
+# @name adminOdstraniUporabnik
+
+PATCH {{baseUrl}}/jage/admin/jaga/{{id}}/odstrani/{{uporabnik}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@id = 643ea251ace3bb5f15f97a3c
+@stran = 1
+
+# @name getJageUporabnikAktivne
+
+GET {{baseUrl}}/jage/admin/uporabnik/{{id}}/aktivne/{{stran}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+@id = 643ea251ace3bb5f15f97a3c
+@stran = 1
+
+# @name getJageUporabnikAktivne
+
+GET {{baseUrl}}/jage/admin/uporabnik/{{id}}/aktivne/{{stran}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+

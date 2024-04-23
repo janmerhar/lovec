@@ -1,0 +1,64 @@
+@baseUrl = http://localhost:1234
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
+
+###
+
+# @name getRevirji
+GET {{baseUrl}}/revirji/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+
+# @name adminPostRevir
+
+@ime1 = pod gorami
+@koordinate1 = [ [46.363, 14.093], [45.123, 12.345] ]
+@druzina1 = 643d8af94a20dd560693a6ff
+
+POST {{baseUrl}}/revirji/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "ime": "{{ime1}}",
+    "koordinate": {{koordinate1}},
+    "druzina": "{{druzina1}}"
+}
+
+###
+
+# @name adminOdstraniRevir
+
+@id2 = 6578b4d08b2c082ca4c88768
+
+DELETE {{baseUrl}}/revirji/{{id2}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+### 
+
+# @name adminUpdateRevir
+
+@id3 = 6578b95e3c345db50c4b5a9d
+@ime3 = nad gorami
+@koordinate3 = [ [46.363, 14.093] ]
+@druzina3 = 643d8af94a20dd560693a6ff
+
+PATCH {{baseUrl}}/revirji/{{id3}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "ime": "{{ime3}}",
+    "koordinate": {{koordinate3}},
+    "druzina": "{{druzina3}}"
+}

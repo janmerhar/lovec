@@ -1,0 +1,101 @@
+@baseUrl = http://localhost:1234
+
+# Lovec
+# @token = 
+# Admin
+# @token = 
+# Pripravnik
+# @token = 
+
+###
+
+@email1 = pripravnik
+@geslo1 = 123
+
+# @name postLogin
+POST {{baseUrl}}/uporabnik/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "{{email1}}",
+    "geslo": "{{geslo1}}"
+}
+
+###
+
+# @name postLogout
+
+POST {{baseUrl}}/uporabnik/logout HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG9yYWJuaWtJZCI6IjY0M2VhMjUxYWNlM2JiNWYxNWY5N2EzYyIsInJvbGUiOiJwcmlwcmF2bmlrIiwiaWF0IjoxNzA4MjUyMDcyLCJleHAiOjE3MTYwMjgwNzJ9.nGTQCv2qMxfXZS1Az4xPxj0t3ooh-Sa0HCHOHVJSFoc
+
+# @name postRefreshToken
+
+
+POST {{baseUrl}}/uporabnik/refresh HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "refresh_token": "{{refresh_token}}"
+}
+
+###
+
+@ime2 = Klemen
+@priimek2 = Novak
+@slika2 = omg.jpg
+@rojstniDatum2 = 1999-01-01
+@email2 = kn@student.si
+@geslo2 = 123
+
+# @name postRegister
+POST {{baseUrl}}/register HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "ime": "{{ime2}}",
+    "priimek": "{{priimek2}}",
+    "slika": "{{slika2}}",
+    "rojstniDatum": "{{rojstniDatum2}}",
+    "email": "{{email2}}",
+    "geslo": "{{geslo2}}"
+}
+
+###
+@id3 = 643ea251ace3bb5f15f97a3c
+
+# @name getUporabnik
+GET {{baseUrl}}/uporabnik/{{id3}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+@stran6 = 1
+@query = jan novak
+
+# @name getUporabniki
+POST {{baseUrl}}/uporabnik/vsi/{{stran6}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "query": "{{query}}"
+}
+###
+
+@id7 = 643ea251ace3bb5f15f97a3c
+
+# @name deleteUporabnik
+
+DELETE {{baseUrl}}/uporabnik/{{id7}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
