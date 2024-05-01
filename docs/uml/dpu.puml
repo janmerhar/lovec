@@ -15,7 +15,6 @@ actor Uporabnik
 actor Pripravnik
 actor Lovec
 actor "Zemljevid API" as ZemljevidAPI
-actor "Govor-V-Tekst API" as STT
 actor Administrator
 
 
