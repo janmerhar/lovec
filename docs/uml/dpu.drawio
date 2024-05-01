@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="LD_fphp6oKkYH8Suezgv" name="Page-1">
-        <mxGraphModel dx="1329" dy="1900" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="759" dy="1587" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -362,7 +362,7 @@
                 </mxCell>
                 <mxCell id="147" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="126">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="174" y="764" as="targetPoint"/>
+                        <mxPoint x="166" y="758" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="148" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="105">
@@ -407,6 +407,11 @@
                 </mxCell>
                 <mxCell id="11" value="&lt;b&gt;Lovec aplikacija&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
                     <mxGeometry x="380.5" y="-7" width="155" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="160" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="104">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="174" y="766" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
