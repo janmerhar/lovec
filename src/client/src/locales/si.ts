@@ -92,11 +92,11 @@ export default {
   },
   pripravniki: {
     tab: {
-      header: "Pripravniki",
+      header: "Dnevniki",
     },
     crud: {
       create: {
-        header: "Vnesi pripravnika",
+        header: "Vnesi dnevnik",
         button: "Vnesi",
         success: "Dnevnik za {name} uspešno dodan",
       },
