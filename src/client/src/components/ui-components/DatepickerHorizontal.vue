@@ -4,11 +4,18 @@
       text-transform: capitalize;
       padding-left: 0.5rem;
       margin-bottom: 0.5rem;
+      color: var(--ion-text-color);
     "
   >
     {{ useDate(dates[0]).getMonth() }}
   </h4>
-  <div style="display: flex; justify-content: space-between">
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      color: var(--ion-text-color);
+    "
+  >
     <!-- Puscica za naprej -->
     <div
       class="arrow bubble"
