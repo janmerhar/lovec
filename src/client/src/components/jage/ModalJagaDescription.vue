@@ -55,7 +55,7 @@
               {{ $t("jaga.crud.categories.udelezeni") }}
             </template>
             <template #end>
-              {{ selectedJaga?.udelezeni.length }} /
+              {{ selectedJaga?.udelezeni.length + 1 }} /
               {{ selectedJaga?.maxUdelezeni }}</template
             >
           </list-title>
@@ -86,7 +86,7 @@
           <!-- Join / leave button -->
           <list-item
             v-if="
-              selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni ||
+              selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni &&
               selectedJaga?.udelezeni.filter(
                 (udelezeni) => udelezeni.id == uporabnik?.id
               ).length != 0
