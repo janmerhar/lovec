@@ -11,7 +11,7 @@
       <tab-header>{{ $t("izkaznica.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <image-profile> </image-profile>
+      <image-profile :slika="selectedUporabnik?.slika"> </image-profile>
 
       <!--  -->
       <list-container>
@@ -78,7 +78,7 @@
         </template>
       </list-container>
 
-      <list-container>
+      <list-container v-if="false">
         <template #title>
           <list-title>
             {{ $t("izkaznica.tab.sections.preferences") }}
@@ -152,11 +152,15 @@ onBeforeMount(async () => {
   }
 })
 
+import { useTabNavigation } from "@/composables/useTabNavigation"
+const { redirectTo } = useTabNavigation()
+
 const logoutUser = async () => {
   const logoutResult = await useLoginStore().logout()
 
   if (logoutResult) {
-    window.location.reload()
+    redirectTo("login")
+    // window.location.reload()
   }
 }
 </script>
