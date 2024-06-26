@@ -29,6 +29,8 @@ app.use(
   express.static(process.cwd() + `/${process.env.FILE_UPLOAD_PATH}`)
 )
 
+app.use(express.static(path.join(__dirname, "public")))
+
 var bodyParser = require("body-parser")
 app.use(bodyParser.urlencoded({ extended: false }))
 
