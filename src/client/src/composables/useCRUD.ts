@@ -40,8 +40,8 @@ export const useCRUD = <T>(items: Ref<T[]>) => {
     }
   }
 
-  const updateItem = (call: UpdateFunction<T, T>) => {
-    return async (original: T, data?: T): Promise<T | null> => {
+  const updateItem = <U = T>(call: UpdateFunction<T, U>) => {
+    return async (original: T, data?: U): Promise<T | null> => {
       // in case it fails, add to queue
       const result = await call(original, data)
 
