@@ -9,7 +9,6 @@ export const useFormControl = (form: Ref<HTMLFormElement | null>) => {
     data: T,
     message?: string
   ): Promise<undefined> => {
-    console.log("inside")
     // @ts-ignore
     const success = await form.value?.validate()
 
