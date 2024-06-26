@@ -5,13 +5,22 @@ import type { Obisk, Opazovalnica, InsertObisk } from "@/types"
 import { useRequest } from "@/composables/useRequest"
 import { usePagination } from "@/composables/usePagination"
 import { useCRUD } from "@/composables/useCRUD"
+import { useDate } from "@/composables/useDate"
+
+import { storeToRefs } from "pinia"
+import { useOpazovalnicaStore } from "@/stores/useOpazovalnicaStore"
 
 export const useObiskStore = defineStore("obisk", () => {
   const { request } = useRequest()
 
-  const selectedOpazovalnica = ref<Opazovalnica | null>(null)
-  const selectedDatum = ref<string>(new Date().toISOString().split("T")[0])
+  const opazovalnicaStore = useOpazovalnicaStore()
 
+  const { selectedItem: selectedOpazovalnica } = storeToRefs(opazovalnicaStore)
+
+  const selectedDatum = ref<string>(useDate(new Date()).isoDate())
+
+  // Tebe mogoce dam v svoj store
+  // vbistvu ja, raje te imam v svojem store-u
   const activeObisk = ref<Obisk | null>(null)
 
   const fetchObiski = async (
@@ -103,14 +112,18 @@ export const useObiskStore = defineStore("obisk", () => {
   const { createItem, updateItem } = crud
 
   return {
-    opazovalnica,
+    // Pagination
     obiski,
-    setOpazovalnica,
-    setDatum,
     fetchMore,
     refreshPagination,
+    opazovalnica,
+    setOpazovalnica,
+    // Zgodovina mogoce samo za admina
+    setDatum,
+    // Naredi posebej store
     activeObisk,
     fetchActiveObisk,
+    // CRUD
     createItem: createItem(createObisk),
     updateItem: updateItem(endObisk),
   }
