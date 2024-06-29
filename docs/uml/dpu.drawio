@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="LD_fphp6oKkYH8Suezgv" name="Page-1">
-        <mxGraphModel dx="1090" dy="1977" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1090" dy="1575" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -62,10 +62,10 @@
                         <mxPoint x="8" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="27" value="Ogled jag" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="27" value="Ogled lovov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="20" y="98" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="28" value="Vnos jage" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="28" value="Vnos lova" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="84" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="35" value="Ogled dnevnikov pripravnikov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
@@ -143,10 +143,10 @@
                         <mxPoint x="-5" y="-2" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="99" value="Ogled podrobnosti jage" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="99" value="Ogled podrobnosti lova" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="128" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="104" value="Pregled jag" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="104" value="Pregled lovov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="21" y="589" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="105" value="Pregled lovskih družin" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
@@ -180,7 +180,7 @@
                         <mxPoint x="-6" y="-2" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="112" value="Upravljanje jage" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="112" value="Upravljanje lova" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="589" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="115" value="Pregled podatkov o sistemu" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
@@ -270,7 +270,7 @@
                 <mxCell id="145" value="Pregled uporabniške opreme" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="22" y="1035" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="146" value="Pregled uprabniških jag" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="146" value="Pregled uporabnikovih lovov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="20" y="863" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="157" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;dashed=1;" parent="12" source="156" target="144" edge="1">
