@@ -113,6 +113,11 @@ export default {
       header: "Dnevniki",
     },
   },
+  vpleni: {
+    tab: {
+      header: "Zgodovina uplenov",
+    },
+  },
   vplenDatum: {
     tab: {
       header: "Upleni datum",
