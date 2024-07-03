@@ -62,11 +62,6 @@ export class UporabnikProfile extends UporabnikDetails {
   ) {
     super(id, ime, priimek, slika, role)
 
-    this.id = id
-    this.ime = ime
-    this.priimek = priimek
-    this.slika = `${process.env.VUE_APP_API_URL}/${process.env.FILE_UPLOAD_PATH_PROFILE}/${slika}`
-    this.role = role
     this.mentor = mentor
     this.pripravniki = pripravniki
     this.druzina = druzina
