@@ -1,7 +1,7 @@
 <template>
   <tab-template :refresh="refreshPagination" :scroll="fetchMore">
     <template #header>
-      <tab-header>Zgodovina vplenov</tab-header>
+      <tab-header>{{ $t("vpleni.tab.header") }}</tab-header>
     </template>
     <template #body>
       <TransitionGroup name="list" tag="ul">
