@@ -3,11 +3,13 @@
     style="
       height: 100vh;
       box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.15);
-      background-image: url('https://images.unsplash.com/photo-1503435980610-a51f3ddfee50');
       background-size: 200%;
       background-position: 60% 60%;
       z-index: -1;
     "
+    :style="{
+      backgroundImage: `url(${require('../../public/assets/login-page-background.jpeg')})`,
+    }"
   >
     <Form
       :validation-schema="loginSchema"
@@ -23,9 +25,9 @@
     >
       <!-- TODO razmisli, ce bom zares to naredil -->
       <!-- Languag icon -->
-      <div style="position: fixed; top: 20px; right: 20px">
+      <!-- <div style="position: fixed; top: 20px; right: 20px">
         <font-awesome-icon :icon="['fas', 'globe']" size="2xl" fixed-width />
-      </div>
+      </div> -->
       <!--  -->
       <input-label-horizontal>
         <template #left
@@ -87,7 +89,6 @@ import { Form, Field, ErrorMessage } from "vee-validate"
 import { loginSchema } from "@/text-validation/loginSchemas"
 import { storeToRefs } from "pinia"
 
-// Initial values
 const inputData = {
   email: "",
   password: "",
