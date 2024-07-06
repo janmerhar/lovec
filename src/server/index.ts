@@ -26,7 +26,7 @@ const app = createExpressServer({
 
 import * as express from "express"
 app.use(
-  `/${process.env.FILE_UPLOAD_PATH}`,
+  `/api/${process.env.FILE_UPLOAD_PATH}`,
   express.static(process.cwd() + `/${process.env.FILE_UPLOAD_PATH}`)
 )
 

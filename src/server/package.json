@@ -26,6 +26,7 @@
     "multer": "^1.4.5-lts.1",
     "reflect-metadata": "^0.1.14",
     "routing-controllers": "^0.10.4",
+    "sharp": "^0.33.4",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
     "tsconfig-paths-jest": "^0.0.1",
