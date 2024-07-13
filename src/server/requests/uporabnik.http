@@ -25,14 +25,23 @@ Content-Type: application/json
 
 # @name postLogout
 
-POST {{baseUrl}}/uporabnik/logout HTTP/1.1
+POST {{baseUrl}}/uporabnik/logout/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG9yYWJuaWtJZCI6IjY0M2U5YTE0NTk4ZDgyN2JlNDQ5YjRjNCIsInJvbGUiOiJsb3ZlYyIsImlhdCI6MTcyMDg4OTY1OCwiZXhwIjoxNzI4NjY1NjU4fQ.pM7ZzW2YGmBlc1g09kkFFJ-OrCfHGhTzqqHK28BEJ-E HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+###
+
+# @name postLogoutRefreshToken
+
+@refresh_token1 = 
+
+POST {{baseUrl}}/uporabnik/logout/{{refresh_token1}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ###
 
-@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG9yYWJuaWtJZCI6IjY0M2VhMjUxYWNlM2JiNWYxNWY5N2EzYyIsInJvbGUiOiJwcmlwcmF2bmlrIiwiaWF0IjoxNzA4MjUyMDcyLCJleHAiOjE3MTYwMjgwNzJ9.nGTQCv2qMxfXZS1Az4xPxj0t3ooh-Sa0HCHOHVJSFoc
+@refresh_token2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG9yYWJuaWtJZCI6IjY0M2VhMjUxYWNlM2JiNWYxNWY5N2EzYyIsInJvbGUiOiJwcmlwcmF2bmlrIiwiaWF0IjoxNzA4MjUyMDcyLCJleHAiOjE3MTYwMjgwNzJ9.nGTQCv2qMxfXZS1Az4xPxj0t3ooh-Sa0HCHOHVJSFoc
 
 # @name postRefreshToken
 
@@ -42,7 +51,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "refresh_token": "{{refresh_token}}"
+    "refresh_token": "{{refresh_token2}}"
 }
 
 ###
