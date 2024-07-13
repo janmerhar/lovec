@@ -62,3 +62,14 @@ mongoose
   })
 
 export = app
+
+/** CRON JOBS **/
+
+import cron from "node-cron"
+
+import { UporabnikCron } from "@crons/uporabnikCron"
+
+// Clearing expired tokens every last Sunday of the month at 02:00
+cron.schedule("00 02 * * 7", async () => {
+  await UporabnikCron.deleteExpiredTokens()
+})

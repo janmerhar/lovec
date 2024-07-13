@@ -108,7 +108,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
   pripravniki: P[] | null
   druzina: D | null
   isDeleted: boolean
-  refresh_token: string | null
+  refresh_token: string[]
 
   constructor(
     id: string,
@@ -123,7 +123,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
     pripravniki: P[] | null,
     druzina: D | null,
     isDeleted: boolean,
-    refresh_token: string | null
+    refresh_token: string[]
   ) {
     this.id = id
     this.ime = ime
@@ -187,14 +187,21 @@ export default class Uporabnik<M = string, P = string, D = string> {
       returnUporabnik.slika,
       returnUporabnik.role,
       token,
-      returnUporabnik.refresh_token
+      refreshToken
     )
   }
 
-  static async logout(uporabnikId: string): Promise<boolean> {
-    const result = await Uporabnik.deleteRefreshToken(uporabnikId)
+  static async logout(
+    uporabnikId: string,
+    refresh_token: string | null
+  ): Promise<boolean> {
+    if (refresh_token == null) {
+      return true
+    }
 
-    return result
+    Uporabnik.deleteRefreshToken(refresh_token)
+
+    return true
   }
 
   static async register(
@@ -434,7 +441,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
     const uporabnik = await UporabnikModel.findByIdAndUpdate(
       uporabnikId,
       {
-        refresh_token,
+        $push: { refresh_token },
       },
       { new: true }
     )
@@ -446,16 +453,15 @@ export default class Uporabnik<M = string, P = string, D = string> {
     return uporabnik
   }
 
-  static async deleteRefreshToken(uporabnikId: string): Promise<boolean> {
-    const uporabnik = await UporabnikModel.findByIdAndUpdate(
-      uporabnikId,
+  static async deleteRefreshToken(refresh_token: string): Promise<boolean> {
+    const uporabnik = await UporabnikModel.updateOne(
+      {},
       {
-        refresh_token: null,
-      },
-      { new: true }
+        $pull: { refresh_token },
+      }
     )
 
-    return !!uporabnik
+    return !!uporabnik.modifiedCount
   }
 
   static async fetchUserByRefreshToken(
@@ -472,6 +478,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
 
   static JWTcreate(payload: JWTPayload): string {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
+      // Remove this
       expiresIn: "1h",
     })
 
@@ -552,15 +559,18 @@ export default class Uporabnik<M = string, P = string, D = string> {
       role: uporabnik.role,
     })
 
-    const refreshToken = this.JWTcreateRefreshToken({
+    const newRefreshToken = this.JWTcreateRefreshToken({
       uporabnikId: uporabnik._id.toString(),
       role: uporabnik.role,
     })
 
     const uporabnikWithToken = await Uporabnik.insertRefreshToken(
       uporabnik._id.toString(),
-      refreshToken
+      newRefreshToken
     )
+    // Tukaj magari se odstranim stari refresh token
+    // ja, lahko ga odstranim
+    await Uporabnik.deleteRefreshToken(refresh_token)
 
     if (uporabnikWithToken == null) {
       return null
@@ -568,7 +578,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
 
     return {
       accessToken,
-      refreshToken: uporabnikWithToken.refresh_token,
+      refreshToken: newRefreshToken,
     }
   }
 }

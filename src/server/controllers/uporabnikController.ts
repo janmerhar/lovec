@@ -82,7 +82,20 @@ export class UporabnikController {
   async postLogout(@Req() req: any) {
     const { uporabnikId } = Uporabnik.JWTpayload(req)
 
-    const result = await Uporabnik.logout(uporabnikId)
+    const result = await Uporabnik.logout(uporabnikId, null)
+
+    return ResponseBuilder.success(result)
+  }
+
+  @Post("/logout/:refresh_token")
+  @UseBefore(authUser("lovec", "pripravnik", "admin"))
+  async postLogoutRefreshToken(
+    @Req() req: any,
+    @Param("refresh_token") refresh_token: string
+  ) {
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
+
+    const result = await Uporabnik.logout(uporabnikId, refresh_token)
 
     return ResponseBuilder.success(result)
   }

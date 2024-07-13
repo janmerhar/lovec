@@ -3,5 +3,5 @@
     <string name="app_name">Lovec</string>
     <string name="title_activity_main">Lovec</string>
     <string name="package_name">com.janmerhar.lovec</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="custom_url_scheme">com.janmerhar.lovec</string>
 </resources>

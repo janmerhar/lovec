@@ -8,6 +8,7 @@
     "paths": {
       "~/*": ["*"],
       "@controllers/*": ["controllers/*"],
+      "@crons/*": ["crons/*"],
       "@entities/*": ["entities/*"],
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],

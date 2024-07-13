@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.janmerhar.lovec;
 
 import com.getcapacitor.BridgeActivity;
 
