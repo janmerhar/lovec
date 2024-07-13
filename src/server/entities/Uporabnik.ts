@@ -430,7 +430,6 @@ export default class Uporabnik<M = string, P = string, D = string> {
     uporabnikId: string,
     refresh_token: string
   ): Promise<IUporabnik | null> {
-    // Tukaj namesto update, ga dodam
     const uporabnik = await UporabnikModel.findByIdAndUpdate(
       uporabnikId,
       {
@@ -472,6 +471,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
 
   static JWTcreate(payload: JWTPayload): string {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
+      // Remove this
       expiresIn: "1h",
     })
 
