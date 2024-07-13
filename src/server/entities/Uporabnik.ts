@@ -192,9 +192,8 @@ export default class Uporabnik<M = string, P = string, D = string> {
   }
 
   static async logout(uporabnikId: string): Promise<boolean> {
-    const result = await Uporabnik.deleteRefreshToken(uporabnikId)
-
-    return result
+    // TODO: Implement logout on client side to receive uporabnikId
+    return true
   }
 
   static async register(
