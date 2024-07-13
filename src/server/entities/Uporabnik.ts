@@ -108,7 +108,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
   pripravniki: P[] | null
   druzina: D | null
   isDeleted: boolean
-  refresh_token: string | null
+  refresh_token: string[]
 
   constructor(
     id: string,
@@ -123,7 +123,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
     pripravniki: P[] | null,
     druzina: D | null,
     isDeleted: boolean,
-    refresh_token: string | null
+    refresh_token: string[]
   ) {
     this.id = id
     this.ime = ime
@@ -187,7 +187,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
       returnUporabnik.slika,
       returnUporabnik.role,
       token,
-      returnUporabnik.refresh_token
+      refreshToken
     )
   }
 
@@ -431,10 +431,11 @@ export default class Uporabnik<M = string, P = string, D = string> {
     uporabnikId: string,
     refresh_token: string
   ): Promise<IUporabnik | null> {
+    // Tukaj namesto update, ga dodam
     const uporabnik = await UporabnikModel.findByIdAndUpdate(
       uporabnikId,
       {
-        refresh_token,
+        $push: { refresh_token },
       },
       { new: true }
     )
@@ -568,7 +569,7 @@ export default class Uporabnik<M = string, P = string, D = string> {
 
     return {
       accessToken,
-      refreshToken: uporabnikWithToken.refresh_token,
+      refreshToken,
     }
   }
 }

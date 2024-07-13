@@ -34,7 +34,7 @@ const uporabnikSchema = new Schema<IUporabnik>({
   // Clanstvo v neki lovski druzini
   druzina: { type: Schema.Types.ObjectId, ref: "Druzina", required: false },
   // Polje za osvezevanje JWT tokenov
-  refresh_token: { type: String, required: false, default: null },
+  refresh_token: [{ type: String, required: false, default: null }],
   // Polje za izbris uporabnika
   isDeleted: { type: Boolean, default: false },
 })
