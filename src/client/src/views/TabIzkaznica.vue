@@ -96,7 +96,18 @@
             <template #title>
               {{ $t("izkaznica.tab.sections.theme") }}
             </template>
-            <template #value> (neka tema dark/light) </template>
+            <!-- Color Scheme toggle button -->
+            <template #value>
+              <div
+                v-if="colorScheme == 'light'"
+                @click="selectColorScheme('dark')"
+              >
+                <font-awesome-icon :icon="['fas', 'moon']" fixed-width />
+              </div>
+              <div v-else @click="selectColorScheme('light')">
+                <font-awesome-icon :icon="['fas', 'sun']" fixed-width />
+              </div>
+            </template>
           </list-item>
         </template>
       </list-container>
@@ -153,9 +164,15 @@ onBeforeMount(async () => {
 
 // Preferences
 import { usePreferencesStore } from "@/stores/usePreferencesStore"
+import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
 
+// Language
 const preferencesStore = usePreferencesStore()
 const { language } = storeToRefs(preferencesStore)
+
+// Color scheme
+const { colorScheme } = storeToRefs(preferencesStore)
+const { selectColorScheme } = preferencesStore
 
 const logoutUser = async () => {
   const logoutResult = await useLoginStore().logout()
