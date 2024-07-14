@@ -78,7 +78,7 @@
         </template>
       </list-container>
 
-      <list-container v-if="false">
+      <list-container>
         <template #title>
           <list-title>
             {{ $t("izkaznica.tab.sections.preferences") }}
@@ -90,7 +90,7 @@
             <template #title>
               {{ $t("izkaznica.tab.sections.language") }}
             </template>
-            <template #value> (Neki jezik) </template>
+            <template #value>{{ language }}</template>
           </list-item>
           <list-item>
             <template #title>
@@ -148,19 +148,20 @@ const { selectedUporabnik } = storeToRefs(profileStore)
 onBeforeMount(async () => {
   if (uporabnikId) {
     await selectItem(uporabnikId)
-    console.log("profile", selectedUporabnik.value)
   }
 })
 
-import { useTabNavigation } from "@/composables/useTabNavigation"
-const { redirectTo } = useTabNavigation()
+// Preferences
+import { usePreferencesStore } from "@/stores/usePreferencesStore"
+
+const preferencesStore = usePreferencesStore()
+const { language } = storeToRefs(preferencesStore)
 
 const logoutUser = async () => {
   const logoutResult = await useLoginStore().logout()
 
   if (logoutResult) {
-    redirectTo("login")
-    // window.location.reload()
+    window.location.reload()
   }
 }
 </script>
