@@ -90,7 +90,18 @@
             <template #title>
               {{ $t("izkaznica.tab.sections.language") }}
             </template>
-            <template #value>{{ language }}</template>
+            <template #value>
+              <div
+                @click="
+                  useModal().openSheetModal(
+                    SheetModalSelect,
+                    languageSelectModalProps
+                  )
+                "
+              >
+                {{ language }}
+              </div>
+            </template>
           </list-item>
           <list-item>
             <template #title>
@@ -127,6 +138,7 @@
 import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
 import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
+import SheetModalSelect from "@/components/ui-components/modal/SheetModalSelect.vue"
 
 import ImageProfile from "@/components/ui-components/image/ImageProfile.vue"
 import ListContainer from "@/components/ui-components/list/ListContainer.vue"
@@ -138,7 +150,7 @@ import { useRoute } from "vue-router"
 import { useLoginStore } from "@/stores/useLoginStore"
 import { useProfileStore } from "@/stores/useProfileStore"
 import { storeToRefs } from "pinia"
-import { onBeforeMount } from "vue"
+import { onBeforeMount, computed } from "vue"
 
 const route = useRoute()
 
@@ -162,13 +174,35 @@ onBeforeMount(async () => {
   }
 })
 
+//
 // Preferences
+//
 import { usePreferencesStore } from "@/stores/usePreferencesStore"
-import ModalTemplate from "@/components/ui-components/modal/ModalTemplate.vue"
+import { useModal } from "@/composables/useModal"
 
 // Language
+import i18n, { codeToLanguage } from "@/locales/i18n"
+import type { Locale } from "@/locales/i18n"
+
 const preferencesStore = usePreferencesStore()
 const { language } = storeToRefs(preferencesStore)
+const { selectLanguage } = preferencesStore
+
+const t = i18n.global.t
+
+const languageSelectModalProps = {
+  header: computed(() => t("izkaznica.tab.sections.language")),
+  items: codeToLanguage,
+  displayItem: (item: string) => item,
+  selectItem: async (item: string) => {
+    selectLanguage(
+      Object.keys(codeToLanguage).find(
+        // @ts-ignore
+        (key: string) => codeToLanguage[key] === item
+      ) as Locale // Explicitly assert the type here
+    )
+  },
+}
 
 // Color scheme
 const { colorScheme } = storeToRefs(preferencesStore)
