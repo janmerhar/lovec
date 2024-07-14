@@ -10,6 +10,8 @@ import i18n, {
 } from "@/locales/i18n"
 import type { Locale } from "@/locales/i18n"
 
+export type ColorScheme = "light" | "dark"
+
 export const usePreferencesStore = defineStore(
   "preferences",
   () => {
@@ -30,18 +32,28 @@ export const usePreferencesStore = defineStore(
     //
     // Color Scheme
     //
-    const colorScheme = ref("light")
+    const { selectItem: selectColorScheme, selectedItem: colorScheme } =
+      useSelect<ColorScheme>("light")
 
-    /*
-    - language-code: string
-    - language options: string[]
-    - changeLanguage: (language: string) => void
-   */
+    const changeColorScheme = (scheme: ColorScheme) => {
+      const isDark = scheme === "dark"
+
+      document.documentElement.classList.toggle("ion-palette-dark", isDark)
+    }
+
+    const updateColorScheme = async () => {
+      changeColorScheme(colorScheme.value as ColorScheme)
+    }
+
     return {
+      // Locale
       locale,
       language,
       selectLanguage: selectLanguage(updateLanguage),
       availableLanguages,
+      // Color scheme
+      colorScheme,
+      selectColorScheme: selectColorScheme(updateColorScheme),
     }
   },
   {
