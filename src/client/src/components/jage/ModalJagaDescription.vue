@@ -14,7 +14,7 @@
           <!-- l-marker -->
           <l-marker
             :lat-lng="selectedJaga?.lokacija[0]"
-            :icon="iconJaga"
+            :icon="iconJaga()"
           ></l-marker>
         </map-component>
       </map-window-template>
@@ -84,6 +84,7 @@
           </list-item>
 
           <!-- Join / leave button -->
+          <!-- TODO: fix this -->
           <list-item
             v-if="
               selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni &&
@@ -95,7 +96,10 @@
           >
             <template #title>
               <div
-                style="padding: 1rem 0.5rem; color: var(--ion-color-step-600)"
+                style="
+                  padding: 1rem 0.5rem;
+                  color: var(--ion-background-color-step-600);
+                "
               >
                 {{ uporabnik?.ime }} {{ uporabnik?.priimek }}
               </div>
