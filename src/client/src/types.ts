@@ -130,6 +130,8 @@ export interface Opazovalnica {
   kapaciteta: number
   prespanje: boolean
   koordinate: number[]
+
+  isDeleted: boolean
 }
 
 export interface InsertOpazovalnica {
