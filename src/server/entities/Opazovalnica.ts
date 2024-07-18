@@ -42,6 +42,21 @@ export default class Opazovalnica {
       return new Opazovalnica(opazovalnica)
     })
   }
+  static async fetchAllOpazovalnice(
+    includeDeleted = false
+  ): Promise<Opazovalnica[]> {
+    let result = []
+
+    if (includeDeleted) {
+      result = await OpazovalnicaModel.find()
+    } else {
+      result = await OpazovalnicaModel.find({ isDeleted: false })
+    }
+
+    return result.map((opazovalnica) => {
+      return new Opazovalnica(opazovalnica)
+    })
+  }
 
   static async addOpazovalnica(
     ime: string,
