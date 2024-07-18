@@ -7,7 +7,7 @@
           v-if="selectedItem?.prespanje || true"
         />
         {{ selectedItem?.ime }}
-        <span style="margin-left: 1rem">
+        <span style="margin-left: 1rem" v-if="!selectedItem?.isDeleted">
           <font-awesome-icon
             @click="
               () => {
@@ -107,7 +107,6 @@ const { refreshPagination } = obiskStore
 const { obiski } = storeToRefs(obiskStore)
 const { redirectTo } = useTabNavigation()
 const { cancelModal } = useModal()
-const { confimDangerAlert } = useAlert()
 
 onBeforeMount(async () => {
   await refreshPagination()
