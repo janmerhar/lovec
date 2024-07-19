@@ -123,6 +123,7 @@ export interface IOpazovalnica<I = mongoose.Types.ObjectId> extends IIsDeleted {
   kapaciteta: number
   prespanje: boolean
   koordinate: [number, number]
+  zasedenost?: number
 }
 
 /* Obisk */
