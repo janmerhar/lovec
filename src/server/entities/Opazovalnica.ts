@@ -85,7 +85,6 @@ export default class Opazovalnica {
                     { $eq: ["$opazovalnica", "$$opazovalnicaId"] },
                     { $gte: ["$zacetek", zacetek] },
                     { $lt: ["$zacetek", konec] },
-                    { $eq: ["$isDeleted", false] },
                   ],
                 },
               },
