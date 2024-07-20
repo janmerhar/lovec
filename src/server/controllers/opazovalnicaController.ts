@@ -1,4 +1,5 @@
 import Opazovalnica from "@entities/Opazovalnica"
+import Uporabnik from "@entities/Uporabnik"
 
 import ResponseBuilder from "@utils/ResponseBuilder"
 
@@ -11,6 +12,7 @@ import {
   Param,
   Patch,
   JsonController,
+  Req,
 } from "routing-controllers"
 
 import { InsertOpazovalnicaDTO } from "./dto/opazovalnica/insert-opazovalnica.dto"
@@ -20,8 +22,11 @@ import { authUser } from "middleware/authUser"
 export class OpazovalnicaController {
   @Get("/")
   @UseBefore(authUser("pripravnik", "lovec", "admin"))
-  async getOpazovalnice() {
-    const result = await Opazovalnica.fetchOpazovalnice(false)
+  async getOpazovalnice(@Req() req: any) {
+    const { role } = Uporabnik.JWTpayload(req)
+
+    // Letting administrator see deleted opazovalnice as well
+    const result = await Opazovalnica.fetchAllOpazovalnice(role == "admin")
 
     return ResponseBuilder.success(result)
   }

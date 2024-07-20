@@ -14,7 +14,7 @@
           <!-- l-marker -->
           <l-marker
             :lat-lng="selectedJaga?.lokacija[0]"
-            :icon="iconJaga"
+            :icon="iconJaga()"
           ></l-marker>
         </map-component>
       </map-window-template>
