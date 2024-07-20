@@ -23,7 +23,7 @@
         gap: 5px;
       "
     >
-      <!-- Languag icon -->
+      <!-- Language icon -->
       <div
         style="
           position: fixed;
@@ -39,7 +39,7 @@
         <font-awesome-icon :icon="['fas', 'language']" size="2xl" fixed-width />
       </div>
 
-      <input-label-horizontal>
+      <input-label-horizontal style="width: 85%">
         <template #left
           ><font-awesome-icon :icon="['fas', 'user']" fixed-width
         /></template>
@@ -53,7 +53,7 @@
       <!--  -->
       <input-label-horizontal
         class="input-label-horizontal"
-        style="margin-top: -10px"
+        style="margin-top: -10px; width: 85%"
       >
         <template #left
           ><font-awesome-icon :icon="['fas', 'key']" fixed-width
@@ -71,7 +71,7 @@
         style="
           position: fixed;
           bottom: 50px;
-          width: 70%;
+          width: 85%;
           height: 2.5rem;
           text-transform: uppercase;
           font-weight: 700;
