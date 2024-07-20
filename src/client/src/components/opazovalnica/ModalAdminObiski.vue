@@ -2,28 +2,45 @@
   <sheet-modal-template>
     <template #header>
       <sheet-modal-header>
-        <font-awesome-icon
-          :icon="['fas', 'bed']"
-          v-if="selectedItem?.prespanje || true"
-        />
-        {{ selectedItem?.ime }}
-        <span style="margin-left: 1rem" v-if="!selectedItem?.isDeleted">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
           <font-awesome-icon
-            @click="
-              () => {
-                useAlert().confirmDangerAlert(
-                  $t('admin_opazovalnica.crud.delete.header'),
-                  $t('admin_opazovalnica.crud.delete.message'),
-                  async () => await deleteItem(selectedItem)
-                )
-                cancelModal()
-              }
-            "
-            :icon="['fas', 'trash']"
-            style="color: var(--ion-color-danger); cursor: pointer"
-            fixed-width
+            :icon="['fas', 'bed']"
+            v-if="selectedItem?.prespanje || true"
           />
-        </span>
+          <span
+            style="
+              flex-basis: 70%;
+              text-align: center;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            "
+          >
+            {{ selectedItem?.ime }}
+          </span>
+          <span style="margin-left: 1rem" v-if="!selectedItem?.isDeleted">
+            <font-awesome-icon
+              @click="
+                () => {
+                  useAlert().confirmDangerAlert(
+                    $t('admin_opazovalnica.crud.delete.header'),
+                    $t('admin_opazovalnica.crud.delete.message'),
+                    async () => await deleteItem(selectedItem)
+                  )
+                  cancelModal()
+                }
+              "
+              :icon="['fas', 'trash']"
+              style="color: var(--ion-color-danger); cursor: pointer"
+              fixed-width
+            />
+          </span>
+        </div>
       </sheet-modal-header>
     </template>
 
