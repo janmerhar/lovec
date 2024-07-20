@@ -6,6 +6,7 @@
         e.detail.complete()
       }
     "
+    :is-scrollable="false"
   >
     <template #header>
       <tab-header>{{ $t("izkaznica.tab.header") }}</tab-header>
