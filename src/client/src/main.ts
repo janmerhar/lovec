@@ -13,7 +13,8 @@ defineCustomElements(window)
 import axios from "axios"
 import VueAxios from "vue-axios"
 
-axios.defaults.baseURL = process.env.VUE_APP_API_URL
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
+
 axios.defaults.headers["Content-Type"] = "application/json"
 axios.defaults.headers["Authorization"] = ""
 
