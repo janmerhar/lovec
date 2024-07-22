@@ -53,7 +53,10 @@
           >
             <template #title>
               <div
-                style="padding: 1rem 0.5rem; color: var(--ion-color-step-600)"
+                style="
+                  padding: 1rem 0.5rem;
+                  color: var(--ion-background-color-step-600);
+                "
               >
                 {{ uporabnik?.ime }} {{ uporabnik?.priimek }}
               </div>
