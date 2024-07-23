@@ -7,18 +7,21 @@ import { storeToRefs } from "pinia"
 import { useActiveObiskStore } from "@/stores/useActiveObiskStore"
 import { useLoginStore } from "@/stores/useLoginStore"
 
+// Images
+import opazovalnicaIzbrisana from "@/assets/map/opazovalnica/opazovalnica-izbrisana.svg"
+import opazovalnicaPolna from "@/assets/map/opazovalnica/opazovalnica-polna.svg"
+import opazovalnicaPrespanje from "@/assets/map/opazovalnica/opazovalnica-prespanje.svg"
+import opazovalnicaRezervirana from "@/assets/map/opazovalnica/opazovalnica-rezervirana.svg"
+import opazovalnicaOg from "@/assets/map/opazovalnica/opazovalnica.svg"
+
+import vplen from "@/assets/map/vplen/vplen.svg"
+import jaga from "@/assets/map/jaga/jaga.svg"
+
 export const useMapElements = () => {
   const iconSize: PointExpression = [40, 55]
 
   const { selectedItem: activeObisk } = storeToRefs(useActiveObiskStore())
   const { isAdmin } = storeToRefs(useLoginStore())
-
-  const opazovalnicaIzbrisana = require("../../public/assets/map/opazovalnica/opazovalnica-izbrisana.svg")
-  const opazovalnicaPolna = require("../../public/assets/map/opazovalnica/opazovalnica-polna.svg")
-  const opazovalnicaPrespanje = require("../../public/assets/map/opazovalnica/opazovalnica-prespanje.svg")
-
-  const opazovalnicaRezervirana = require("../../public/assets/map/opazovalnica/opazovalnica-rezervirana.svg")
-  const opazovalnicaOg = require("../../public/assets/map/opazovalnica/opazovalnica.svg")
 
   const iconOpazovalnica = (opazovalnica: Opazovalnica) => {
     // User
@@ -58,8 +61,6 @@ export const useMapElements = () => {
   }
 
   const iconVplen = (zival: string) => {
-    const vplen = require("../../public/assets/map/vplen/vplen.svg")
-
     return new Icon({
       iconUrl: vplen,
       iconSize,
@@ -67,8 +68,6 @@ export const useMapElements = () => {
   }
 
   const iconJaga = () => {
-    const jaga = require("../../public/assets/map/jaga/jaga.svg")
-
     return new Icon({
       iconUrl: jaga,
       iconSize,
