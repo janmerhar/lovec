@@ -13,7 +13,7 @@
 
         <infinite-scroll-component
           :scroll="scroll"
-          v-if="true"
+          v-if="isScrollable"
         ></infinite-scroll-component>
         <!--  -->
       </ion-content>
@@ -35,15 +35,19 @@ defineProps({
       event.detail.complete()
     },
   },
+  isRefreshable: {
+    type: Boolean,
+    default: true,
+  },
+  isScrollable: {
+    type: Boolean,
+    default: true,
+  },
   scroll: {
     type: Function,
     default: () => {
       return null
     },
-  },
-  isRefreshable: {
-    type: Boolean,
-    default: true,
   },
 })
 </script>

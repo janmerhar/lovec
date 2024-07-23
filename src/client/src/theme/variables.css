@@ -158,11 +158,12 @@ ion-tab-bar {
 
 /* Background */
 ion-router-outlet {
-  --ion-background-color: var(--ion-color-primary) !important;
+  --background-color: var(--ion-color-primary);
 }
 
 ion-tab-bar {
-  --ion-background-color: var(--ion-background-color-rgb);
+  --background-color: var(--ion-background-color);
+  --border: none;
 }
 
 /* Transition effect */

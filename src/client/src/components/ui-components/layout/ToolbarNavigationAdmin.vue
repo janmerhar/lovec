@@ -5,9 +5,7 @@
         $t("framework.toolbarNavigation.appName")
       }}</ion-title>
       <ion-buttons slot="secondary">
-        <ion-button
-          @click="redirectTo('admin_uporabnik_id', { id: uporabnik?.id })"
-        >
+        <ion-button @click="redirectTo('admin_izkaznica')">
           <img
             :src="uporabnik?.slika"
             :class="selectedTabStyle('admin_uporabnik_id')"
@@ -41,7 +39,7 @@ img {
   height: 32px;
   object-fit: cover;
   border-radius: 50%;
-  border: 1px solid var(--ion-color-step-600);
+  border: 1px solid var(--ion-background-color-step-600);
 }
 
 .header-md::after {

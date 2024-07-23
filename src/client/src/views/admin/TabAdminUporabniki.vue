@@ -4,7 +4,7 @@
       <tab-header>{{ $t("admin_uporabniki.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <input-label-horizontal>
+      <input-label-horizontal style="padding-left: 10px; padding-right: 10px">
         <template #input>
           <Field
             name="search"

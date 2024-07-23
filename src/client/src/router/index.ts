@@ -20,9 +20,32 @@ import TabMentor from "@/views/TabMentor.vue"
 
 import { storeToRefs } from "pinia"
 import { useLoginStore } from "@/stores/useLoginStore"
+import type { Role } from "@/types"
 
-// TODO: naredi admin / lovec / pripravnik specificne route za re-route
-const checkRole = (role: string) => {
+interface RoleReditect {
+  pripravnik?: string
+  lovec?: string
+  admin?: string
+}
+
+const getRoleString = (): Role | null => {
+  const { isPripravnik, isLovec, isAdmin } = storeToRefs(useLoginStore())
+
+  if (isPripravnik.value) {
+    return "pripravnik"
+  }
+
+  if (isLovec.value) {
+    return "lovec"
+  }
+
+  if (isAdmin.value) {
+    return "admin"
+  }
+
+  return null
+}
+const checkRole = (role: Role) => {
   const { isPripravnik, isLovec, isAdmin } = storeToRefs(useLoginStore())
 
   if (role === "pripravnik" && isPripravnik.value) {
@@ -38,22 +61,25 @@ const checkRole = (role: string) => {
   }
 }
 
-const allowIsRole = (roles: string[], redirect?: string) => {
+const allowIsRole = (roles: Role[], redirect?: RoleReditect) => {
   return (
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
     next: NavigationGuardNext
   ) => {
     const isAllowed = roles.some((role) => checkRole(role))
+    const roleString = getRoleString()
 
     if (isAllowed) {
       next()
-    } else if (redirect) {
-      next({ name: redirect })
+    } else if (redirect && roleString && redirect[roleString]) {
+      next({ name: redirect[roleString] })
+    } else {
+      next({ name: "login" })
     }
   }
 }
-const allowIsNotRole = (roles: string[], redirect?: string) => {
+const allowIsNotRole = (roles: Role[], redirect?: RoleReditect) => {
   return (
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
@@ -61,10 +87,14 @@ const allowIsNotRole = (roles: string[], redirect?: string) => {
   ) => {
     const isAllowed = roles.every((role) => !checkRole(role))
 
+    const roleString = getRoleString()
+
     if (isAllowed) {
       next()
-    } else if (redirect) {
-      next({ name: redirect })
+    } else if (redirect && roleString && redirect[roleString]) {
+      next({ name: redirect[roleString] })
+    } else {
+      next({ name: "login" })
     }
   }
 }
@@ -78,7 +108,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: TabLogin,
-    beforeEnter: allowIsNotRole(["pripravnik", "lovec", "admin"], "druzina"),
+    beforeEnter: allowIsNotRole(["pripravnik", "lovec", "admin"], {
+      admin: "admin_druzine",
+      pripravnik: "oprema",
+      lovec: "oprema",
+    }),
   },
   //
   // User routes
@@ -89,7 +123,9 @@ const routes: Array<RouteRecordRaw> = [
     name: "tabs",
     component: TabsPage,
     redirect: { name: "oprema" },
-    beforeEnter: allowIsRole(["pripravnik", "lovec"], "login"),
+    beforeEnter: allowIsRole(["pripravnik", "lovec"], {
+      admin: "admin_druzine",
+    }),
     children: [
       {
         path: "jage",
@@ -109,13 +145,13 @@ const routes: Array<RouteRecordRaw> = [
         path: "pripravniki",
         name: "pripravniki",
         component: TabPripravniki,
-        beforeEnter: allowIsRole(["pripravnik"], "mentor"),
+        beforeEnter: allowIsRole(["pripravnik"]),
       },
       {
         path: "mentor",
         name: "mentor",
         component: TabMentor,
-        beforeEnter: allowIsRole(["lovec"], "pripravniki"),
+        beforeEnter: allowIsRole(["lovec"]),
       },
       {
         path: "vplen",
@@ -148,7 +184,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "izkaznica/:id?",
         name: "izkaznica",
         component: TabIzkaznica,
-        beforeEnter: allowIsRole(["pripravnik", "lovec"]),
+        beforeEnter: allowIsRole(["pripravnik", "lovec", "admin"]),
       },
     ],
   },
@@ -160,8 +196,17 @@ const routes: Array<RouteRecordRaw> = [
     name: "admin",
     component: () => import("@/views/admin/TabsPageAdmin.vue"),
     redirect: { name: "druzine" },
-    beforeEnter: allowIsRole(["admin"]),
+    beforeEnter: allowIsRole(["admin"], {
+      pripravnik: "oprema",
+      lovec: "oprema",
+    }),
     children: [
+      {
+        path: "izkaznica",
+        name: "admin_izkaznica",
+        component: TabIzkaznica,
+        beforeEnter: allowIsRole(["pripravnik", "lovec", "admin"]),
+      },
       {
         path: "druzine",
         name: "admin_druzine",
