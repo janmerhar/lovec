@@ -123,7 +123,7 @@ ion-col {
   text-align: center;
   flex-direction: column;
 
-  color: var(--ion-color-step-950);
+  color: var(--ion-background-color-step-950);
 
   font-weight: bold;
   border-radius: var(--border-rad);

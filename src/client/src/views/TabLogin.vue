@@ -8,7 +8,7 @@
       z-index: -1;
     "
     :style="{
-      backgroundImage: `url(${require('../../public/assets/login-page-background.jpeg')})`,
+      backgroundImage: `url(${backgroundImage})`,
     }"
   >
     <Form
@@ -86,6 +86,7 @@
 </template>
 
 <script setup lang="ts">
+import backgroundImage from "@/assets/login-page-background.jpeg"
 import InputLabelHorizontal from "@/components/ui-components/input/InputLabelHorizontal.vue"
 
 import { useLoginStore } from "@/stores/useLoginStore"

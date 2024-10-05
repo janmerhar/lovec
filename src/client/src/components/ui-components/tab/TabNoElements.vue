@@ -39,7 +39,7 @@ onMounted(() => {
 .parent {
   position: relative;
   top: 30vh;
-  color: var(--ion-color-step-600);
+  color: var(--ion-background-color-step-600);
 }
 
 .child {

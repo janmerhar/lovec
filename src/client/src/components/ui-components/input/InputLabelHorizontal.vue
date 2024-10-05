@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: row;
   gap: 12px;
-  background-color: var(--ion-color-step-250);
+  background-color: var(--ion-background-color-step-250);
   /* TODO: razmisli ali dejansko rabim to, saj potem polja postanejo kinda majhna */
   /* margin-left: 10px; */
   /* margin-right: 10px; */
@@ -55,7 +55,7 @@
 #ilh-input > input,
 #ilh-input > textarea,
 #ilh-input > select {
-  background-color: var(--ion-color-step-250);
+  background-color: var(--ion-background-color-step-250);
   width: 100%;
   height: 100%;
   border: 0;

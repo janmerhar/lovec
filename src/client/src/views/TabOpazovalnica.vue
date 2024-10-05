@@ -56,7 +56,7 @@
         <template v-for="opazovalnica in opazovalnice" :key="opazovalnica.id">
           <l-marker
             :lat-lng="opazovalnica.koordinate"
-            :icon="iconOpazovalnica"
+            :icon="iconOpazovalnica(opazovalnica)"
             @click="
               () => {
                 selectItem(opazovalnica)

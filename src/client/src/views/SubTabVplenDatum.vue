@@ -5,7 +5,7 @@
     </template>
     <template #body>
       <map-window-template>
-        <map-component class="map-component-window">
+        <map-component class="map-component-window" style="width: 102%">
           <template v-for="vplen in vpleni" :key="'icon' + vplen.id">
             <l-marker
               :lat-lng="vplen.koordinate"

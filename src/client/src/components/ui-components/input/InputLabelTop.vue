@@ -34,8 +34,8 @@
 #ilt-input > select {
   width: 100%;
   color: var(--ion-text-color);
-  background-color: var(--ion-color-step-150);
-  border: 1px solid var(--ion-color-step-250);
+  background-color: var(--ion-background-color-step-150);
+  border: 1px solid var(--ion-background-color-step-250);
   border-radius: 10px;
   height: 2rem;
   padding-left: 0.5rem;
