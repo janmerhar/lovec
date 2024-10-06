@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/usr/src/app # Sync local changes with container
+      - /usr/src/app/node_modules # Prevent overwriting node_modules
