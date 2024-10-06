@@ -1,0 +1,16 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile # Ensure this path is correct
+    ports:
+      - "8080:80"
+# nginx:
+#  image: nginx:alpine
+#  container_name: nginx-app
+#  volumes:
+#  - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+#  ports:
+#  - 80:80
+#  depends_on:
+#  - app
