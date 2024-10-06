@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./src/server/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+
+  frontend:
+    build:
+      context: ./src/client/
+      dockerfile: Dockerfile # Ensure this path is correct
+    ports:
+      - "8080:80"
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - backend
