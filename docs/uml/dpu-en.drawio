@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="LD_fphp6oKkYH8Suezgv" name="Page-1">
-        <mxGraphModel dx="674" dy="1698" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1392" dy="1830" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -32,12 +32,12 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="12" value="" style="group;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;connectable=1;" parent="1" vertex="1" connectable="0">
-                    <mxGeometry x="210" y="20" width="510" height="1100" as="geometry"/>
+                    <mxGeometry x="215" y="20" width="517" height="1100" as="geometry"/>
                 </mxCell>
                 <mxCell id="9" value="" style="rounded=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;fontSize=11;" parent="12" vertex="1">
                     <mxGeometry x="1" y="-27" width="510" height="1100" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" value="Logs view" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="13" value="Training logs view" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="20" y="40" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="17" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;" parent="12" source="14" target="13" edge="1">
@@ -48,7 +48,7 @@
                         <mxPoint x="-9" y="1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="14" value="Log input" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="14" value="Training log input" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="40" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="22" value="Map view" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
@@ -146,10 +146,10 @@
                 <mxCell id="99" value="Hunt information view" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="128" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="104" value="Pregled lovov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="104" value="Catches overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="21" y="589" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="105" value="Pregled lovskih družin" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="105" value="Families overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="20" y="645" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="108" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;dashed=1;" parent="12" source="106" target="105" edge="1">
@@ -160,13 +160,13 @@
                         <mxPoint x="6" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="106" value="Vnos družine" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="106" value="Family input" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="632" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="109" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="12" source="107" target="105" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="107" value="Upravljanje družine" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="107" value="Family management" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="672" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="111" value="&amp;lt;&amp;lt;extends&amp;gt;&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Helvetica;fontColor=rgb(0, 0, 0);" parent="12" vertex="1" connectable="0">
@@ -180,10 +180,10 @@
                         <mxPoint x="-6" y="-2" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="112" value="Upravljanje lova" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="112" value="Catch management" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="589" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="115" value="Pregled podatkov o sistemu" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="115" value="System overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="21" y="712" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="117" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="12" source="116" target="115" edge="1">
@@ -194,10 +194,10 @@
                         <mxPoint x="9" y="-3" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="116" value="Upravljanje sistema" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="116" value="System management" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="300" y="712" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="119" value="Pregled uporabnikov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="119" value="Users overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="20" y="825" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="121" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="12" source="120" target="119" edge="1">
@@ -208,7 +208,7 @@
                         <mxPoint x="21" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="120" value="Ogled uporabniškega profila" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="120" value="User profile overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="183" y="794" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="136" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="12" source="123" target="127" edge="1">
@@ -219,10 +219,10 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="123" value="Ogled obiskov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
-                    <mxGeometry x="301" y="463" width="170" height="30" as="geometry"/>
+                <mxCell id="123" value="Observation post reservations overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                    <mxGeometry x="288" y="463" width="221" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="126" value="Pregled zamljevida" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="126" value="Map overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="21" y="549" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="129" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;dashed=1;" parent="12" source="127" target="126" edge="1">
@@ -233,8 +233,8 @@
                         <mxPoint x="5" y="-2" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="127" value="Upravljanje opazovalnice" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
-                    <mxGeometry x="182" y="506" width="170" height="30" as="geometry"/>
+                <mxCell id="127" value="Observation post management" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                    <mxGeometry x="178" y="506" width="182" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="132" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;" parent="12" source="131" target="119" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -244,7 +244,7 @@
                         <mxPoint x="13" y="5" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="131" value="Vnos uporabnika" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="131" value="User input" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="301" y="838" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="140" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;dashed=1;" parent="12" source="139" target="120" edge="1">
@@ -255,22 +255,22 @@
                         <mxPoint x="7" y="-3" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="139" value="Ureditev uporabniškega profila" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="139" value="User profile management" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="299" y="752" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="142" value="Pregled uporabniških dnevnikov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="142" value="Training logs overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="20" y="904" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="143" value="Pregled uporabniških obiskov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="143" value="User post visits overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="21" y="949" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="144" value="Pregled uporabniških uplenov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="144" value="User catches overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="21" y="992" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="145" value="Pregled uporabniške opreme" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="145" value="User equipment overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="22" y="1035" width="170" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="146" value="Pregled uporabnikovih lovov" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="146" value="User hunts overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="20" y="863" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="157" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;fontFamily=Helvetica;fontSize=11;fontColor=rgb(0, 0, 0);startArrow=none;startFill=0;endArrow=classic;endFill=1;dashed=1;" parent="12" source="156" target="144" edge="1">
@@ -281,7 +281,7 @@
                         <mxPoint x="8" y="-1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="156" value="Pregled uporabniških podrobnosti o uplenu" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
+                <mxCell id="156" value="User&amp;nbsp; catch information overview" style="ellipse;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="299" y="992" width="170" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;endArrow=classic;endFill=1;strokeColor=none;curved=1;" parent="1" source="4" target="13" edge="1">
