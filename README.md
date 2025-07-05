@@ -110,7 +110,7 @@ The map is one of the main functionalities available in the mobile application. 
 The mentor hunter has an overview of the logs of all their trainees. If the hunter does not mentor trainees, then they will not have access to the logs, as these are logs that the user must enter themselves. They can check the logs for each day separately. For each entry, they have insight into who entered the log, the work category, when the work was done, and the description of the work itself. The mentor then decides whether to accept or reject the log. This is done by clicking on one of the icons in each log.
 
 <p align="center">
-<img src="./lovec/TabMentor.png" alt="View of the mentor's logs for a certain day." height="400">
+<img src="./docs/md/lovec/TabMentor.png" alt="View of the mentor's logs for a certain day." height="400">
 </p>
 
 #### Trainee
