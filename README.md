@@ -30,7 +30,7 @@ The administrator has access to completely separate functionalities from the pre
 As already mentioned, the login view is accessible to both main roles: user and administrator. This view provides a single entry form through which any user role can log in. For a successful login, the user must enter the correct combination of username and password; otherwise, a message about incorrect login credentials is displayed, and the login attempt is rejected.
 
 <p align="center">
-<img src="./vse-vloge/TabLogin.png" alt="Login view for the mobile application." height="400">
+<img src="./docs/md/vse-vloge/TabLogin.png" alt="Login view for the mobile application." height="400">
 </p>
 
 #### User
