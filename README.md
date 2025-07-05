@@ -29,7 +29,9 @@ The administrator has access to completely separate functionalities from the pre
 
 As already mentioned, the login view is accessible to both main roles: user and administrator. This view provides a single entry form through which any user role can log in. For a successful login, the user must enter the correct combination of username and password; otherwise, a message about incorrect login credentials is displayed, and the login attempt is rejected.
 
-![Login view for the mobile application.](./vse-vloge/TabLogin.png)
+<p align="center">
+<img src="./vse-vloge/TabLogin.png" alt="Login view for the mobile application." height="400">
+</p>
 
 #### User
 
@@ -41,49 +43,65 @@ The user can view hunts. For each hunt, the organizer, date of the hunt, title, 
 **Past** -- this section displays all hunts that have already concluded. Here, the user has an overview of all completed hunts.
 **Mine** -- this section displays all the hunts the user has participated in. This includes hunts the user has joined and those they have organized themselves.
 
-![View of active hunts.](./uporabnik/TabJage.png)
+<p align="center">
+<img src="./uporabnik/TabJage.png" alt="View of active hunts." height="400">
+</p>
 
 ##### Hunt Input
 
 The user can add hunt details. They must specify the start date and time, location, title, and description.
 
-![Hunt input form.](./uporabnik/ModalJagaAdd.png)
+<p align="center">
+<img src="./uporabnik/ModalJagaAdd.png" alt="Hunt input form." height="400">
+</p>
 
 ##### Hunt Details View
 
 The user can view the details of a hunt.
 
-![View of hunt details.](./uporabnik/ModalJagaDescription.png)
+<p align="center">
+<img src="./uporabnik/ModalJagaDescription.png" alt="View of hunt details." height="400">
+</p>
 
 ##### Equipment View
 
 The user can keep a record of their hunting equipment. Only the equipment they have entered themselves by clicking the button in the bottom right corner is listed here. For each piece of equipment, the name, category, condition, and date of entry are displayed. In addition, the user can freely delete entries.
 
-![Equipment view.](./uporabnik/TabOprema.png)
+<p align="center">
+<img src="./uporabnik/TabOprema.png" alt="Equipment view." height="400">
+</p>
 
 ##### Equipment Input
 
 The user can enter equipment by providing details about their equipment.
 
-![Equipment input form.](./uporabnik/ModalOpremaAdd.png)
+<p align="center">
+<img src="./uporabnik/ModalOpremaAdd.png" alt="Equipment input form." height="400">
+</p>
 
 ##### Catches View
 
 The user can make multiple catches in the same day, which they may then want to view. The catches view allows for the display of details for catches. This allows the user to more quickly review the history of their catches and have a quick overview of catches for several days. If they want to look at the catches of a certain day in more detail, they can do so by pressing on the catch. They can also add catches by clicking the button in the bottom right corner.
 
-![Equipment view.](./uporabnik/TabVplen.png)
+<p align="center">
+<img src="./uporabnik/TabVplen.png" alt="Equipment view." height="400">
+</p>
 
 ##### Profile View
 
 Each user can view their user profile. Here, their role, mentor or trainees (if the user is a hunter and has trainees), and family are displayed. A QR code is also displayed, with which the user can identify themselves to the game warden.
 
-![User profile view.](./uporabnik/TabIzkaznica.png)
+<p align="center">
+<img src="./uporabnik/TabIzkaznica.png" alt="User profile view." height="400">
+</p>
 
 ##### Map View
 
 The map is one of the main functionalities available in the mobile application. Here, the user has the option to view observation posts, the hunting ground, and their active visit. They can reserve an observation post if it is free and if the user has enough remaining minutes for visits to observation posts on that day. When this is done, information about the active reservation and the option to cancel it appears at the top of the map.
 
-![Map view.](./uporabnik/TabOpazovalnica.png)
+<p align="center">
+<img src="./uporabnik/TabOpazovalnica.png" alt="Map view." height="400">
+</p>
 
 #### Hunter
 
@@ -91,7 +109,9 @@ The map is one of the main functionalities available in the mobile application. 
 
 The mentor hunter has an overview of the logs of all their trainees. If the hunter does not mentor trainees, then they will not have access to the logs, as these are logs that the user must enter themselves. They can check the logs for each day separately. For each entry, they have insight into who entered the log, the work category, when the work was done, and the description of the work itself. The mentor then decides whether to accept or reject the log. This is done by clicking on one of the icons in each log.
 
-![View of the mentor's logs for a certain day.](./lovec/TabMentor.png)
+<p align="center">
+<img src="./lovec/TabMentor.png" alt="View of the mentor's logs for a certain day." height="400">
+</p>
 
 #### Trainee
 
@@ -99,13 +119,17 @@ The mentor hunter has an overview of the logs of all their trainees. If the hunt
 
 If the mentor has an overview of their trainees' logs, then the trainee must also have the option to enter a log. In doing so, they fill in all the log data themselves and enter it. Then they wait for the log to be confirmed by the mentor.
 
-![Input form for a new log.](./pripravnik/ModalDnevnikAdd.png)
+<p align="center">
+<img src="./pripravnik/ModalDnevnikAdd.png" alt="Input form for a new log." height="400">
+</p>
 
 ##### Trainee Log View
 
 After the user enters a log, it will also be visible among any other logs that the user has already entered. The logs will be colored green or red when the trainee's mentor confirms or rejects them.
 
-![View of the trainee's logs.](./pripravnik/TabPripravniki-potrjen.png)
+<p align="center">
+<img src="./pripravnik/TabPripravniki-potrjen.png" alt="View of the trainee's logs." height="400">
+</p>
 
 #### Administrator
 
@@ -113,37 +137,49 @@ After the user enters a log, it will also be visible among any other logs that t
 
 The map display allows the administrator, as well as the hunter and user, to view all observation posts and hunting grounds. According to business constraints, the administrator is not a user who can reserve an observation post. However, they have the power to enter and delete observation posts and view visits. In addition, they also have the power to enter new hunting grounds.
 
-![Map display.](./administrator/TabAdminZemljevid.png)
+<p align="center">
+<img src="./administrator/TabAdminZemljevid.png" alt="Map display." height="400">
+</p>
 
 ##### Hunts Overview
 
 The hunt display is also available to the regular user, but there we show the hunts in which the user has participated. One of the business constraints here is that the administrator does not have the option to participate in a hunt, so the view is adapted accordingly. However, it still allows them to view all active hunts. They can open or delete hunts.
 
-![Display of all active hunts.](./administrator/TabAdminJage.png)
+<p align="center">
+<img src="./administrator/TabAdminJage.png" alt="Display of all active hunts." height="400">
+</p>
 
 ##### Hunting Families Overview
 
 The administrator has an overview of all families. This can be seen in a list where, in addition to the name of each family, the number of members and how many hunting grounds they manage are also displayed. Each family can also be deleted by pressing the delete button. By clicking the button in the bottom right corner, they have the option to create a new family, and by pressing on the family itself, the details open up.
 
-![Display of all families.](./administrator/TabAdminDruzine.png)
+<p align="center">
+<img src="./administrator/TabAdminDruzine.png" alt="Display of all families." height="400">
+</p>
 
 ##### Users Overview
 
 The mobile application allows for an overview of all system users. In addition to the overview of all users, the application also allows searching for users by name. The user's first name, last name, profile picture, and user role are displayed. For each user, the administrator has the option to view the profile and also the option to delete. By clicking the button in the bottom right corner, they can create a trainee, a hunter, or even an administrator.
 
-![Display of the user search.](./administrator/TabAdminUporabniki.png)
+<p align="center">
+<img src="./administrator/TabAdminUporabniki.png" alt="Display of the user search." height="400">
+</p>
 
 ##### User Profile View
 
 When selecting a user or administrator, the administrator has a view of their profile. This displays data about the selected user. In the case of an administrator, the profile picture and role will be displayed. A mentor will also have data on trainees and family, while a trainee will have data on their mentor. The administrator can also access the users' pages themselves by clicking on one of the entries. This gives them the same view as the user themself. In doing so, they also have the power to change details for both users and administrators.
 
-![Display of the user profile.](./administrator/TabAdminUporabnikProfil.png)
+<p align="center">
+<img src="./administrator/TabAdminUporabnikProfil.png" alt="Display of the user profile." height="400">
+</p>
 
 ##### System Data Overview
 
 The system data overview allows the administrator to manage some business constraints directly from the mobile application. In this way, they can change various system parameters so that they have an immediate effect. They have several entries available.
 
-![Display of the system overview.](./administrator/TabAdminSistem.png)
+<p align="center">
+<img src="./administrator/TabAdminSistem.png" alt="Display of the system overview." height="400">
+</p>
 
 **Revision** indicates when the last change was made to these variables. With each change, this data is recorded and is always available to the administrator for insight as a record of changes.
 
