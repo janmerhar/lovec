@@ -1,3 +1,20 @@
+
+## Built with
+
+Frontend
+
+- Vue.js
+- Ionic and Capacitor
+- Pinia State Management
+- TypeScript
+
+Backend
+
+- TypeScript
+- Node.js
+- Express.js
+- MongoDB
+- JSON Web Tokens
 ## Contributing
 
 To contribute to this project follow these steps:
