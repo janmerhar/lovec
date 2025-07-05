@@ -2,6 +2,29 @@
 
 Lovec aims to digitise the hunting industry by transferring the current processes in the hunting industry into a digital format that is accessible to users on their mobile device. The software solution allows users to organise common hunting parties, view and book observation posts, tour districts and information about their families, manage trainees’ logbooks and the trainees’ own entry of these logbooks, view and manage equipment and, finally, the entry and checking of entries. In addition, it also includes a view for the system supervisor, who can modify the workflow management of the application. The application is written using the Ionic and Vue.js frameworks.
 
+## Features
+
+### User Roles
+
+The Lovec mobile application contains several different user roles. Each has available functionalities and adapted views.
+The roles in the application are as follows: administrator and user. The user role has two specializations: hunter and trainee.
+
+#### User
+
+The user role is a set of functionalities available to both hunters and trainees.
+
+#### Hunter
+
+A hunter accesses the same functionalities as a user, but it includes some additional functions that are not available to the user. Each hunter can have zero or more trainees whom they mentor. Each trainee enters logs describing the work they have done and how much time they spent on it.
+
+#### Trainee
+
+A trainee functions similarly to a hunter, as it extends the functionalities available to the user by providing access to the log entry functionality. Each trainee has their mentor to whom they report their work. Therefore, they have their own view where they enter logs about completed tasks. When the mentor sees their logs and confirms or rejects them, the trainee also sees this in their logs.
+
+#### Administrator
+
+The administrator has access to completely separate functionalities from the previously listed user roles. The only view shared with other roles is the one that allows logging into the mobile application. The application then redirects them to views accessible only to them. The administrator primarily has functionalities that have a direct impact on the operation of the entire mobile application infrastructure.
+
 ## Built with
 
 Frontend
