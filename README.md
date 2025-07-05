@@ -103,6 +103,58 @@ If the mentor has an overview of their trainees' logs, then the trainee must als
 
 ##### Trainee Log View
 
+After the user enters a log, it will also be visible among any other logs that the user has already entered. The logs will be colored green or red when the trainee's mentor confirms or rejects them.
+
+![View of the trainee's logs.](./pripravnik/TabPripravniki-potrjen.png)
+
+#### Administrator
+
+##### Map Overview
+
+The map display allows the administrator, as well as the hunter and user, to view all observation posts and hunting grounds. According to business constraints, the administrator is not a user who can reserve an observation post. However, they have the power to enter and delete observation posts and view visits. In addition, they also have the power to enter new hunting grounds.
+
+![Map display.](./administrator/TabAdminZemljevid.png)
+
+##### Hunts Overview
+
+The hunt display is also available to the regular user, but there we show the hunts in which the user has participated. One of the business constraints here is that the administrator does not have the option to participate in a hunt, so the view is adapted accordingly. However, it still allows them to view all active hunts. They can open or delete hunts.
+
+![Display of all active hunts.](./administrator/TabAdminJage.png)
+
+##### Hunting Families Overview
+
+The administrator has an overview of all families. This can be seen in a list where, in addition to the name of each family, the number of members and how many hunting grounds they manage are also displayed. Each family can also be deleted by pressing the delete button. By clicking the button in the bottom right corner, they have the option to create a new family, and by pressing on the family itself, the details open up.
+
+![Display of all families.](./administrator/TabAdminDruzine.png)
+
+##### Users Overview
+
+The mobile application allows for an overview of all system users. In addition to the overview of all users, the application also allows searching for users by name. The user's first name, last name, profile picture, and user role are displayed. For each user, the administrator has the option to view the profile and also the option to delete. By clicking the button in the bottom right corner, they can create a trainee, a hunter, or even an administrator.
+
+![Display of the user search.](./administrator/TabAdminUporabniki.png)
+
+##### User Profile View
+
+When selecting a user or administrator, the administrator has a view of their profile. This displays data about the selected user. In the case of an administrator, the profile picture and role will be displayed. A mentor will also have data on trainees and family, while a trainee will have data on their mentor. The administrator can also access the users' pages themselves by clicking on one of the entries. This gives them the same view as the user themself. In doing so, they also have the power to change details for both users and administrators.
+
+![Display of the user profile.](./administrator/TabAdminUporabnikProfil.png)
+
+##### System Data Overview
+
+The system data overview allows the administrator to manage some business constraints directly from the mobile application. In this way, they can change various system parameters so that they have an immediate effect. They have several entries available.
+
+![Display of the system overview.](./administrator/TabAdminSistem.png)
+
+**Revision** indicates when the last change was made to these variables. With each change, this data is recorded and is always available to the administrator for insight as a record of changes.
+
+**Page size** indicates how many elements the server returns in the case of a request for a resource that offers multiple pages.
+
+**Maximum number of hunt members** indicates the maximum number of users, hunters, or trainees that can participate in a single hunt.
+
+**Maximum visit duration** indicates how many minutes a single reservation of an observation post can last. This is counted towards the quota of minutes allowed by the next entry.
+
+**Maximum user visit duration** indicates how many minutes a day a hunter can spend in an observation post. With each minute of reservation, this sum decreases. Each day, these quotas are reset for each user, so the hunter or trainee has a newly allocated quota of visit duration the next day.
+
 ## Built with
 
 Frontend
