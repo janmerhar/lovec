@@ -18,6 +18,53 @@ Backend
 - Express.js
 - MongoDB
 - JSON Web Tokens
+## Installation
+
+### Configuration
+
+In order to provide API access to the bot, you need to create a `.env` file in the root directory of the project and add the following variables:
+
+Frontend:
+
+```bash
+VITE_API_URL
+```
+
+Backend:
+
+```bash
+PORT
+MONGO_URI
+NODE_ENV
+JWT_SECRET
+VUE_APP_API_URL
+FILE_UPLOAD_PATH
+FILE_UPLOAD_PATH_PROFILE
+```
+
+### Setup
+
+1. Provide `.env` files in `src/client` and `src/server` directories
+2. Install Node.js and TypeScript
+3. Clone the repository
+   `git clone https://github.com/janmerhar/lovec`
+4. Install the required packages in the `src/client` and `src/server` directory
+   `npm install`
+
+## Usage
+
+Start the backend server by running the following command in the `src/server` directory:
+
+```bash
+npm run dev
+```
+
+Start the frontend server by running the following command in the `src/client` directory:
+
+```bash
+npm run dev
+```
+
 ## Contributing
 
 To contribute to this project follow these steps:
