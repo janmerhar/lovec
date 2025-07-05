@@ -104,8 +104,6 @@ export default class Vplen {
       .skip((stran - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
 
-    console.log(vpleni)
-
     return vpleni.map((vplen) => {
       return new VplenDetails(
         vplen.datum,
