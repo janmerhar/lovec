@@ -19,6 +19,16 @@ Backend
 - MongoDB
 - JSON Web Tokens
 
+## System Architecture
+
+### Data model
+
+![Conceptual data model](./docs/md/ER-diagram-en.png?raw=true "Conceptual data model")
+
+### DPU diagram
+
+![DPU diagram](./docs/md/dpu-en.png?raw=true "DPU diagram")
+
 # Getting started
 
 To get started you need to complete the following steps.
