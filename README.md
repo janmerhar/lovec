@@ -18,6 +18,18 @@ Backend
 - Express.js
 - MongoDB
 - JSON Web Tokens
+
+# Getting started
+
+To get started you need to complete the following steps.
+
+## Prerequisites
+
+- TypeScript 5 or higher
+- Node.js 20 or higher
+- ts-node 10 or higher
+- MongoDB database instance
+
 ## Installation
 
 ### Configuration
