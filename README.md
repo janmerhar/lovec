@@ -25,6 +25,84 @@ A trainee functions similarly to a hunter, as it extends the functionalities ava
 
 The administrator has access to completely separate functionalities from the previously listed user roles. The only view shared with other roles is the one that allows logging into the mobile application. The application then redirects them to views accessible only to them. The administrator primarily has functionalities that have a direct impact on the operation of the entire mobile application infrastructure.
 
+### Login
+
+As already mentioned, the login view is accessible to both main roles: user and administrator. This view provides a single entry form through which any user role can log in. For a successful login, the user must enter the correct combination of username and password; otherwise, a message about incorrect login credentials is displayed, and the login attempt is rejected.
+
+![Login view for the mobile application.](./vse-vloge/TabLogin.png)
+
+#### User
+
+##### Hunts View
+
+The user can view hunts. For each hunt, the organizer, date of the hunt, title, description, and any participants are displayed. By clicking on a hunt, the user can open the remaining details that are not shown on this page. The button in the lower right field allows us to create a new hunt. The view is divided into three sections.
+
+**Active** -- this section displays all hunts that have not yet started. This gives the user the opportunity to view hunts and also to join if there is enough space and they are not yet a participant.
+**Past** -- this section displays all hunts that have already concluded. Here, the user has an overview of all completed hunts.
+**Mine** -- this section displays all the hunts the user has participated in. This includes hunts the user has joined and those they have organized themselves.
+
+![View of active hunts.](./uporabnik/TabJage.png)
+
+##### Hunt Input
+
+The user can add hunt details. They must specify the start date and time, location, title, and description.
+
+![Hunt input form.](./uporabnik/ModalJagaAdd.png)
+
+##### Hunt Details View
+
+The user can view the details of a hunt.
+
+![View of hunt details.](./uporabnik/ModalJagaDescription.png)
+
+##### Equipment View
+
+The user can keep a record of their hunting equipment. Only the equipment they have entered themselves by clicking the button in the bottom right corner is listed here. For each piece of equipment, the name, category, condition, and date of entry are displayed. In addition, the user can freely delete entries.
+
+![Equipment view.](./uporabnik/TabOprema.png)
+
+##### Equipment Input
+
+The user can enter equipment by providing details about their equipment.
+
+![Equipment input form.](./uporabnik/ModalOpremaAdd.png)
+
+##### Catches View
+
+The user can make multiple catches in the same day, which they may then want to view. The catches view allows for the display of details for catches. This allows the user to more quickly review the history of their catches and have a quick overview of catches for several days. If they want to look at the catches of a certain day in more detail, they can do so by pressing on the catch. They can also add catches by clicking the button in the bottom right corner.
+
+![Equipment view.](./uporabnik/TabVplen.png)
+
+##### Profile View
+
+Each user can view their user profile. Here, their role, mentor or trainees (if the user is a hunter and has trainees), and family are displayed. A QR code is also displayed, with which the user can identify themselves to the game warden.
+
+![User profile view.](./uporabnik/TabIzkaznica.png)
+
+##### Map View
+
+The map is one of the main functionalities available in the mobile application. Here, the user has the option to view observation posts, the hunting ground, and their active visit. They can reserve an observation post if it is free and if the user has enough remaining minutes for visits to observation posts on that day. When this is done, information about the active reservation and the option to cancel it appears at the top of the map.
+
+![Map view.](./uporabnik/TabOpazovalnica.png)
+
+#### Hunter
+
+##### Trainee Log View
+
+The mentor hunter has an overview of the logs of all their trainees. If the hunter does not mentor trainees, then they will not have access to the logs, as these are logs that the user must enter themselves. They can check the logs for each day separately. For each entry, they have insight into who entered the log, the work category, when the work was done, and the description of the work itself. The mentor then decides whether to accept or reject the log. This is done by clicking on one of the icons in each log.
+
+![View of the mentor's logs for a certain day.](./lovec/TabMentor.png)
+
+#### Trainee
+
+##### Log Input
+
+If the mentor has an overview of their trainees' logs, then the trainee must also have the option to enter a log. In doing so, they fill in all the log data themselves and enter it. Then they wait for the log to be confirmed by the mentor.
+
+![Input form for a new log.](./pripravnik/ModalDnevnikAdd.png)
+
+##### Trainee Log View
+
 ## Built with
 
 Frontend
