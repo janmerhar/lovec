@@ -271,15 +271,15 @@ To get started you need to complete the following steps.
 
 ### Configuration
 
-In order to provide API access to the bot, you need to create a `.env` file in the root directory of the project and add the following variables:
+In order to provide API access to the bot, you need to create a `.env` file in the `src/client` and `src/server` directories. Below are the variables you need to add.
 
-Frontend:
+**`src/client/.env`:**
 
 ```bash
 VITE_API_URL
 ```
 
-Backend:
+**`src/server/.env`:**
 
 ```bash
 PORT
@@ -293,12 +293,22 @@ FILE_UPLOAD_PATH_PROFILE
 
 ### Setup
 
-1. Provide `.env` files in `src/client` and `src/server` directories
-2. Install Node.js and TypeScript
-3. Clone the repository
-   `git clone https://github.com/janmerhar/lovec`
-4. Install the required packages in the `src/client` and `src/server` directory
-   `npm install`
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/janmerhar/lovec.git
+    cd lovec
+    ```
+2.  Install backend dependencies:
+    ```bash
+    cd src/server
+    npm install
+    ```
+3.  Install frontend dependencies:
+    ```bash
+    cd src/client
+    npm install
+    ```
+4.  Create and configure your `.env` files in the `src/client` and `src/server` directories as described in the Configuration section.
 
 ## Usage
 
@@ -313,6 +323,12 @@ Start the frontend server by running the following command in the `src/client` d
 ```bash
 npm run dev
 ```
+
+## Project Structure
+
+- `src/client`: Contains the Vue.js frontend application.
+- `src/server`: Contains the Node.js/Express.js backend API.
+- `docs`: Contains project documentation, diagrams, and images.
 
 ## Contributing
 
