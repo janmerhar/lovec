@@ -120,7 +120,7 @@ The mentor hunter has an overview of the logs of all their trainees. If the hunt
 If the mentor has an overview of their trainees' logs, then the trainee must also have the option to enter a log. In doing so, they fill in all the log data themselves and enter it. Then they wait for the log to be confirmed by the mentor.
 
 <p align="center">
-<img src="./pripravnik/ModalDnevnikAdd.png" alt="Input form for a new log." height="400">
+<img src="./docs/md/pripravnik/ModalDnevnikAdd.png" alt="Input form for a new log." height="400">
 </p>
 
 ##### Trainee Log View
@@ -128,7 +128,7 @@ If the mentor has an overview of their trainees' logs, then the trainee must als
 After the user enters a log, it will also be visible among any other logs that the user has already entered. The logs will be colored green or red when the trainee's mentor confirms or rejects them.
 
 <p align="center">
-<img src="./pripravnik/TabPripravniki-potrjen.png" alt="View of the trainee's logs." height="400">
+<img src="./docs/md/pripravnik/TabPripravniki-potrjen.png" alt="View of the trainee's logs." height="400">
 </p>
 
 #### Administrator
