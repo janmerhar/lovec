@@ -44,7 +44,7 @@ The user can view hunts. For each hunt, the organizer, date of the hunt, title, 
 **Mine** -- this section displays all the hunts the user has participated in. This includes hunts the user has joined and those they have organized themselves.
 
 <p align="center">
-<img src="./uporabnik/TabJage.png" alt="View of active hunts." height="400">
+<img src="./docs/md/uporabnik/TabJage.png" alt="View of active hunts." height="400">
 </p>
 
 ##### Hunt Input
@@ -52,7 +52,7 @@ The user can view hunts. For each hunt, the organizer, date of the hunt, title, 
 The user can add hunt details. They must specify the start date and time, location, title, and description.
 
 <p align="center">
-<img src="./uporabnik/ModalJagaAdd.png" alt="Hunt input form." height="400">
+<img src="./docs/md/uporabnik/ModalJagaAdd.png" alt="Hunt input form." height="400">
 </p>
 
 ##### Hunt Details View
@@ -60,7 +60,7 @@ The user can add hunt details. They must specify the start date and time, locati
 The user can view the details of a hunt.
 
 <p align="center">
-<img src="./uporabnik/ModalJagaDescription.png" alt="View of hunt details." height="400">
+<img src="./docs/md/uporabnik/ModalJagaDescription.png" alt="View of hunt details." height="400">
 </p>
 
 ##### Equipment View
@@ -68,7 +68,7 @@ The user can view the details of a hunt.
 The user can keep a record of their hunting equipment. Only the equipment they have entered themselves by clicking the button in the bottom right corner is listed here. For each piece of equipment, the name, category, condition, and date of entry are displayed. In addition, the user can freely delete entries.
 
 <p align="center">
-<img src="./uporabnik/TabOprema.png" alt="Equipment view." height="400">
+<img src="./docs/md/uporabnik/TabOprema.png" alt="Equipment view." height="400">
 </p>
 
 ##### Equipment Input
@@ -76,7 +76,7 @@ The user can keep a record of their hunting equipment. Only the equipment they h
 The user can enter equipment by providing details about their equipment.
 
 <p align="center">
-<img src="./uporabnik/ModalOpremaAdd.png" alt="Equipment input form." height="400">
+<img src="./docs/md/uporabnik/ModalOpremaAdd.png" alt="Equipment input form." height="400">
 </p>
 
 ##### Catches View
@@ -84,7 +84,7 @@ The user can enter equipment by providing details about their equipment.
 The user can make multiple catches in the same day, which they may then want to view. The catches view allows for the display of details for catches. This allows the user to more quickly review the history of their catches and have a quick overview of catches for several days. If they want to look at the catches of a certain day in more detail, they can do so by pressing on the catch. They can also add catches by clicking the button in the bottom right corner.
 
 <p align="center">
-<img src="./uporabnik/TabVplen.png" alt="Equipment view." height="400">
+<img src="./docs/md/uporabnik/TabVplen.png" alt="Equipment view." height="400">
 </p>
 
 ##### Profile View
@@ -92,7 +92,7 @@ The user can make multiple catches in the same day, which they may then want to 
 Each user can view their user profile. Here, their role, mentor or trainees (if the user is a hunter and has trainees), and family are displayed. A QR code is also displayed, with which the user can identify themselves to the game warden.
 
 <p align="center">
-<img src="./uporabnik/TabIzkaznica.png" alt="User profile view." height="400">
+<img src="./docs/md/uporabnik/TabIzkaznica.png" alt="User profile view." height="400">
 </p>
 
 ##### Map View
@@ -100,7 +100,7 @@ Each user can view their user profile. Here, their role, mentor or trainees (if 
 The map is one of the main functionalities available in the mobile application. Here, the user has the option to view observation posts, the hunting ground, and their active visit. They can reserve an observation post if it is free and if the user has enough remaining minutes for visits to observation posts on that day. When this is done, information about the active reservation and the option to cancel it appears at the top of the map.
 
 <p align="center">
-<img src="./uporabnik/TabOpazovalnica.png" alt="Map view." height="400">
+<img src="./docs/md/uporabnik/TabOpazovalnica.png" alt="Map view." height="400">
 </p>
 
 #### Hunter
