@@ -71,17 +71,17 @@ export default {
   },
   oprema: {
     tab: {
-      header: "Gear",
+      header: "Equipment",
     },
     crud: {
       create: {
-        header: "New gear",
-        button: "Add gear",
-        success: "Gear {name} added successfully",
+        header: "New equipment",
+        button: "Add equipment",
+        success: "Equipment {name} added successfully",
       },
       delete: {
-        success: "Gear {name} successfully deleted",
-        failure: "Gear {name} failed to delete",
+        success: "Equipment {name} successfully deleted",
+        failure: "Equipment {name} failed to delete",
       },
       categories: {
         naziv: "Name",
@@ -92,13 +92,13 @@ export default {
   },
   pripravniki: {
     tab: {
-      header: "Journals",
+      header: "Logs",
     },
     crud: {
       create: {
-        header: "New journal",
-        button: "Add journal",
-        success: "Journal {name} added successfully",
+        header: "New log",
+        button: "Add log",
+        success: "Log {name} added successfully",
       },
       categories: {
         datum: "Date",
@@ -110,27 +110,27 @@ export default {
   },
   mentor: {
     tab: {
-      header: "Journals",
+      header: "Logs",
     },
   },
   vpleni: {
     tab: {
-      header: "Quarry history",
+      header: "Catch history",
     },
   },
   vplenDatum: {
     tab: {
-      header: "Quarry date",
+      header: "Catch date",
     },
     crud: {
       create: {
-        header: "Insert quarry",
-        button: "Quarries",
-        success: "Quarry {name} added successfully",
+        header: "Insert catch",
+        button: "Catches",
+        success: "Catch {name} added successfully",
       },
       delete: {
-        success: "Quarry {name} successfully deleted",
-        failure: "Quarry {name} failed to delete",
+        success: "Catch {name} successfully deleted",
+        failure: "Catch {name} failed to delete",
       },
       categories: {
         kooridnate: "Coordinates",
@@ -321,13 +321,13 @@ export default {
         preferences: "Preferences",
         theme: "Theme",
         language: "Language",
-        pages: "pages",
+        pages: "Pages",
         jage: "Hunts",
-        dnevniki_pripravnik: "Journals",
-        dnevniki_mentor: "Apprentice journals",
+        dnevniki_pripravnik: "Logs",
+        dnevniki_mentor: "Apprentice logs",
         obiski: "Visits",
-        vpleni: "Quarry history",
-        oprema: "Gear",
+        vpleni: "Catches history",
+        oprema: "Equipment",
       },
       logout: "Odjava",
     },
@@ -339,42 +339,42 @@ export default {
         success: "Uporabnik {name} uspešno dodan",
       },
       update: {
-        header: "Spremeni uporabnika",
-        button: "Spremeni",
+        header: "Update user",
+        button: "Update",
         success: "Uporabnik uspešno posodobljen",
       },
       categories: {
         ime: "Ime",
         priimek: "Priimek",
-        druzina: "Družina",
-        role: "Vloga",
+        druzina: "Family",
+        role: "Role",
         mentor: "Mentor",
-        pripravniki: "Pripravniki",
-        preference: "Preference",
+        pripravniki: "Trainees",
+        preference: "Preferences",
       },
     },
   },
   admin_uporabnik_oprema: {
     tab: {
-      header: "Gear",
+      header: "Equipment",
     },
     crud: {
       delete: {
-        header: "Delete gear",
-        message: "Are you sure you want to delete gear {name}?",
-        success: "Gear {name} successfully deleted",
-        failure: "Gear {name} failed to delete",
+        header: "Delete equipment",
+        message: "Are you sure you want to delete equipment {name}?",
+        success: "Equipment {name} successfully deleted",
+        failure: "Equipment {name} failed to delete",
       },
     },
   },
   admin_pripravnik_dnevniki: {
     tab: {
-      header: "Journals",
+      header: "Logs",
     },
   },
   admin_uporabnik_vpleni: {
     tab: {
-      header: "Quarry history",
+      header: "Catch history",
     },
   },
   admin_uporabnik_jage: {
