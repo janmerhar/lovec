@@ -63,7 +63,7 @@ export default {
         organizator: "Organizer",
         naziv: "Name",
         opis: "Description",
-        udelezeni: "Hunters",
+        udelezeni: "Participants",
         lokacija: "Location",
         zacetek: "Start",
       },
@@ -135,9 +135,9 @@ export default {
       categories: {
         kooridnate: "Coordinates",
         zival: "Animal",
-        teza: "Wight",
+        teza: "Weight",
         datum: "Date",
-        bolezni: "Illness",
+        bolezni: "Diseases",
       },
     },
   },
@@ -155,7 +155,7 @@ export default {
         personalData: "Personal data",
         mentor: "Mentor",
         apprentice: "Apprentice",
-        apprentices: "Apprentice",
+        apprentices: "Apprentices",
         preferences: "Preferences",
         theme: "Theme",
         language: "Language",
@@ -178,7 +178,7 @@ export default {
         druzina: "Family",
         role: "Role",
         mentor: "Mentor",
-        pripravniki: "Apprentice",
+        pripravniki: "Apprentices",
         preference: "Preferences",
       },
     },
@@ -188,7 +188,7 @@ export default {
       header: "Map",
       crud: {
         create: {
-          header: "New obsevatory",
+          header: "New observatory",
           button: "Add observatory",
           success: "Observatory {name} added successfully",
         },
@@ -211,7 +211,7 @@ export default {
         },
       },
       sections: {
-        zasedenost: "Active reservations",
+        zasedenost: "Occupancy",
       },
     },
   },
@@ -227,9 +227,9 @@ export default {
           success: "Family {name} added successfully",
         },
         delete: {
-          header: "Delete fammily",
+          header: "Delete family",
           message: "Are you sure you want to delete family {name}",
-          success: "Family {name} delted successfully",
+          success: "Family {name} deleted successfully",
           failure: "Family {name} failed to delete",
         },
         categories: {
@@ -252,11 +252,11 @@ export default {
         categories: {
           naziv: "Name",
           opis: "Description",
-          clan: "Member",
+          clan: "Members",
         },
       },
       sections: {
-        clan: "Member",
+        clan: "Members",
       },
     },
   },
@@ -270,7 +270,7 @@ export default {
           success: "System update successfully",
         },
         categories: {
-          datum: "Revision",
+          datum: "Date",
           PAGE_SIZE: "Page size",
           JAGA_MAX_MEMBERS: "Max hunt participants",
           OBISK_MAX_LENGTH: "Max reservation length",
@@ -278,7 +278,7 @@ export default {
         },
       },
       sections: {
-        spremenljivke: "Variables",
+        spremenljivke: "System variables",
       },
     },
   },
@@ -293,18 +293,18 @@ export default {
           success: "User {name} added successfully",
         },
         delete: {
-          header: "Izbriši uporabnika",
-          message: "Ali ste prepričani, da želite izbrisati uporabnika {name}?",
-          success: "Uporabnik {name} uspešno izbrisan",
-          failure: "Uporabnik {name} ni bil izbrisan",
+          header: "Delete user",
+          message: "Are you sure you want to delete user {name}?",
+          success: "User {name} successfully deleted",
+          failure: "User {name} was not deleted",
         },
         categories: {
-          ime: "Ime",
-          priimek: "Priimek",
+          ime: "Name",
+          priimek: "Surname",
           email: "Email",
-          geslo: "Geslo",
-          gesloRepeat: "Potrdi geslo",
-          role: "Vloga",
+          geslo: "Password",
+          gesloRepeat: "Confirm password",
+          role: "Role",
         },
       },
     },
@@ -329,27 +329,27 @@ export default {
         vpleni: "Catches history",
         oprema: "Equipment",
       },
-      logout: "Odjava",
+      logout: "Logout",
     },
     crud: {
       create: {
-        header: "Vnesi uporabnika",
-        button: "Vnesi",
-        addPripravnik: "Dodaj pripravnika",
-        success: "Uporabnik {name} uspešno dodan",
+        header: "Add user",
+        button: "Add",
+        addPripravnik: "Add apprentice",
+        success: "User {name} added successfully",
       },
       update: {
         header: "Update user",
         button: "Update",
-        success: "Uporabnik uspešno posodobljen",
+        success: "User updated successfully",
       },
       categories: {
-        ime: "Ime",
-        priimek: "Priimek",
+        ime: "Name",
+        priimek: "Surname",
         druzina: "Family",
         role: "Role",
         mentor: "Mentor",
-        pripravniki: "Trainees",
+        pripravniki: "Apprentices",
         preference: "Preferences",
       },
     },
@@ -390,7 +390,7 @@ export default {
     tab: {
       header: "Reservations",
       sections: {
-        obiski: "Reservations",
+        obiski: "Visits",
       },
     },
     crud: {
@@ -407,8 +407,8 @@ export default {
     obiski: {
       header: "Reservations",
       sections: {
-        zasedenost: "Occupancy",
-        zgodovina: "View history",
+        zasedenost: "Availability",
+        zgodovina: "History",
       },
     },
   },
@@ -428,7 +428,7 @@ export default {
       categories: {
         ime: "Name",
         kapaciteta: "Capacity",
-        prespanje: "Sleeping",
+        prespanje: "Overnight stay",
         koordinate: "Coordinates",
       },
     },
@@ -452,7 +452,7 @@ export default {
     tab: {
       header: "Reservations",
       sections: {
-        obiski: "Reservations",
+        obiski: "Visits",
       },
     },
     crud: {
