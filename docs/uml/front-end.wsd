@@ -147,46 +147,186 @@ SubTabPripravniki --> FabButtonAdd
 SubTabPripravniki --> ModalDnevnikAdd
 SubTabPripravniki --> CardDnevnikDescription
 
-package Factory{
+' Nove stvari
+
+package Entities {
+  ' General use entities
   Class Uporabnik<<entity>> {
-    -ime: String
-    -priimek: String
-    -slika: String
-    -rojstniDatum: Date
-    -email: String
-    -geslo: String
-    -druzina: Druzina
-    -token: String
-' 
-    +getIme(): String
-    +getPriimek(): String
-    +getSlika(): String
-    +getRojstniDatum(): Date
-    +getEmail(): String
-    +getDruzina(): Druzina
-' 
-    +getToken(): String
-    +setToken(token: String): void
+
   }
 
-  Class UporabnikFactory<<control>>{
-    +createUporabnik(): Uporabnik
-    +loginUporabnik(email: String, geslo: String): Uporabnik
+  Class Dnevnik<<entity>> {
+
   }
 
-  Class Lovec<<entity>>{
-    -role: String
-    -pripravniki: Pripravnik[]
+  Class Druzina<<entity>> {
+
   }
 
-  Class Pripravnik<<entity>> {
-    -role: String
-    -mentor: Lovec
+  Class Jaga<<entity>> {
+
+  }
+
+  Class JWT<<entity>> {
+
+  }
+
+  Class Opazovalnica<<entity>> {
+
+  }
+
+  Class Oprema<<entity>> {
+    id: string
+    lastnik: string
+    naziv: string
+    tip: string
+    stanje: string
+    datum: string
+  }
+
+  Class Revir<<entity>> {
+
+  }
+
+  Class Vplen<<entity>> {
+
+  }
+  
+  ' Admin only entities
+}
+
+package Stores {
+  Class useLoginStore<<Store>> {
+    + uporabnik: Uporabnik
+    + isLogged: boolean
+
+    + login(): boolean
+    + logout(): boolean
+    + getToken(): string
+    + getRefreshToken(): string
+    + updateToken(): void
+    + updateRefreshToken(): void
+  }
+
+  ' User preferences: dark mode, language, ...
+  ' tukaj jih ze imam definirane v naprej
+  Class usePreferencesStore<<Store>> {
+    - darkMode: boolean
+    - language: string
+
+    + getDarkMode(): boolean
+    + getLanguage(): string
+
+    + setDarkMode(): void
+    + setLanguage(): void
+  }
+
+  Class useOpremaStore<<Store>> {
+    + oprema: Oprema[]
+    
+    + getOprema(): Oprema[]
+    + deleteOprema(): boolean
+    + postOprema(): Oprema null
+    + adminGetOprema(): Oprema[]
+    + adminDeleteOprema(): boolean
+  }
+
+  useOpremaStore *.. Oprema: uses
+  useOpremaStore *.. useRequest: uses
+  useOpremaStore *.. usePagination: uses
+
+  Class useVpleniStore<<Store>> {
+    + vpleni: Vplen[]
+    
   }
 }
 
-Lovec --|> Uporabnik
-Pripravnik --|> Uporabnik
-UporabnikFactory --> Uporabnik
+package Composables {
+  Class useAlert<<Composable>> {
+    - presentToast(options: AlertOptions): HTMLIonAlertElement
+    + errorToast(message: string)
+    + warningToast(message: string)
+    + successToast(message: string)
+    + successToastAction(action, success: string)
+  }
+
+  ' WONT DO
+  ' Class useCountdown<<Composable>> {
+
+  ' }
+
+  Class "useCRUD<T>"<<Composable>> {
+    - items: T[]                 
+    - createItem<I>(call: <I, T>(Data: I) => T, addToStart: boolean): T null
+    - deleteItem(call: <T>(data: T) => boolean): (item: T) => boolean 
+    - updateItem<U = T>(call: <T, U>oldVal?: T, newVal?: U): (original: T, data?: U) => T null 
+  }
+
+  Class useDate<<Composable>> {
+    -date: Date                 
+    -update(newDate: Date string): void 
+    -isoDate(): string               
+    -getMonth(): string              
+    -getWeekdayShort(): string       
+    -getDayNumber(): number          
+    -addHours(hours: number): void   
+    -getTime(): string               
+  }
+
+  Class useFormControl<<Composable>> {
+    -form: HTMLFormElement null
+    -submitForm<T>(call: (el: T) => any, data: T, message?: string): void
+  }
+
+  Class useMapElements<<Composable>> {
+    -iconOpazovalnica: Icon          
+    -iconVplen(zival: string): Icon  
+    -iconJaga: Icon                  
+  }
+
+  Class useModal<<Composable>> {
+    -openModal(component: any, componentProps: object): any 
+    -cancelModal<T>(data: T | null): any 
+    -confirmModal<T>(data: T | null): any 
+    -openSheetModal(component: any, componentProps: object = {}): any 
+  }
+
+  Class "usePagination<T>"<<Composable>> {
+    + usePagination<T>(fetchFunctionTemplate: (page?: number) => T[], isSinglePage: boolean)
+    + items: T[]
+
+    - page: number
+    - isMore: boolean
+
+    + fetchMore(): void 
+    + refresh(): void
+  }
+
+  Class "useRequest<T>"<<Composable>> {
+    - baseUrl: string
+
+    - requestLong(method: string, url: string, options: HttpOptions): CapacitorHTTP
+    - createAuthenticatedRequest(): <T>(url: string, options: HttpOptions) => APIResponse<T>
+    - refreshTokenCall(): APIResponse<JWTTokenPair>
+    + request(method: string): T
+  }
+
+  ' I think da jih veliko uporabnlja useRequest
+  useRequest *.. useLoginStore: uses
+  useRequest *.. JWTTokenPair: uses
+}
+
+package Types {
+  Class "APIResponse<T>" {
+    + status: number
+    + data: T
+    + message: string
+  }
+
+  Class JWTTokenPair {
+    + token: string
+    + refreshToken: string
+  }
+}
 
 @enduml

@@ -1,0 +1,138 @@
+@startuml DPU
+skinparam backgroundcolor transparent
+skinparam defaultTextAlignment center
+skinparam usecase {
+    backgroundColor white
+    borderColor #5FB8EC
+    arrowColor black
+}
+skinparam actorBorderColor black
+skinparam actorBackgroundColor white
+
+left to right direction
+
+actor Uporabnik
+actor Pripravnik
+actor Lovec
+actor "Zemljevid API" as ZemljevidAPI
+actor Administrator
+
+
+rectangle "Lovec aplikacija" {
+    ' Jage
+    usecase "Ogled jag" as Jage
+    usecase "Vnos jage" as JageVnos
+    usecase "Izbris jage" as JageIzbris
+    usecase "Pridružitev jagi" as JagePridruzitev
+
+    Jage <... JageVnos : <<extends>>
+    Jage <... JageIzbris : <<extends>>
+    Jage <... JagePridruzitev : <<extends>>
+
+    ' Dnevniki za pripravnike
+    usecase "Ogled dnevnikov" as Dnevnik
+    usecase "Vnos dnevnika" as DnevnikVnos
+    
+    Dnevnik <... DnevnikVnos : <<extends>>
+
+    ' Zemljevid
+    usecase "Ogled zemljevida" as Zemljevid
+    usecase "Ogled opazovalnic" as ZemljevidOpazovalnice
+    usecase "Ogled revirjev" as ZemljevidRevirji
+    usecase "Rezervacija opazovalnice" as ZemljevidOpazovalniceRezervacija
+
+    ZemljevidAPI -left-> Zemljevid
+    Zemljevid ...> ZemljevidOpazovalnice : <<include>>
+    Zemljevid ...> ZemljevidRevirji : <<include>>
+    Zemljevid <... ZemljevidOpazovalniceRezervacija : <<extends>>
+
+    ' Dnevniki za lovce
+    usecase "Ogled dnevnikov pripravnikov" as DnevnikLovec
+    usecase "Potrjevanje dnevnika" as DnevnikLovecPotrditev 
+
+    DnevnikLovec <... DnevnikLovecPotrditev : <<extends>>
+
+    ' Oprema
+    usecase "Ogled opreme" as Oprema
+    usecase "Upravljanje opreme" as OpremaUpravljanje
+
+    Oprema <... OpremaUpravljanje : <<extends>>
+
+    ' Vplen
+    usecase "Ogled vplenov" as Vplen
+    usecase "Vnos vplena" as VplenVnos
+
+    Vplen <... VplenVnos : <<extends>>
+    STT -up-> VplenVnos
+
+    ' Profil
+    usecase "Uporabniški profil" as Profil
+    usecase "Urejanje profila" as ProfilUrejanje
+    Profil <... ProfilUrejanje : <<extends>>
+
+
+    ' Jage Admin
+    usecase "Upravljanje jag" as JageAdmin
+
+    ' Oprema Admin
+    usecase "Upravljanje uporabniške opreme" as OpremaAdmin
+
+    ' Profil Admin
+    usecase "Upravljanje uporabnikov" as ProfilAdmin
+
+    ' Družine Admin
+    usecase "Upravljanje družin" as DruzineAdmin
+
+    ' Opazovalnice Admin
+    usecase "Upravljanje opazovalnic" as OpazovalniceAdmin
+    ZemljevidAPI -left-> OpazovalniceAdmin
+
+    ' Revirji Admin
+    usecase "Upravljanje revirjev" as RevirjiAdmin
+    ZemljevidAPI -left-> RevirjiAdmin
+
+    ' Vplen Admin 
+    usecase "Upravljanje vplenov" as VplenAdmin
+    
+    ' Sistemske spremenljivke Admin
+    usecase "Upravljanje sistema" as SistemAdmin
+
+    ' 
+    ' Uporabnik
+    ' 
+
+    Uporabnik -down-> Jage
+    Uporabnik -down-> Oprema
+    Uporabnik -down-> Profil
+    Uporabnik -down-> Zemljevid
+    Uporabnik -down-> Vplen
+
+    ' 
+    ' Pripravnik
+    ' 
+
+    Pripravnik -down-|> Uporabnik
+    Pripravnik -down-> Dnevnik
+
+    ' 
+    ' Lovec
+    ' 
+
+    Lovec -down-|> Uporabnik
+    Lovec -down-> DnevnikLovec
+
+    ' 
+    ' Administrator
+    '
+
+    Administrator -down-> JageAdmin
+    Administrator -down-> OpremaAdmin
+    Administrator -down-> ProfilAdmin
+    Administrator -down-> Profil
+    Administrator -down-> OpazovalniceAdmin
+    Administrator -down-> DruzineAdmin
+    Administrator -down-> RevirjiAdmin
+    Administrator -down-> VplenAdmin
+    Administrator -down-> SistemAdmin
+}
+@enduml
