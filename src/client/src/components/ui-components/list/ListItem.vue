@@ -19,7 +19,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
-  background-color: var(--ion-color-step-150);
+  background-color: var(--ion-background-color-step-150);
   color: var(--ion-text-color);
   align-items: center;
 }

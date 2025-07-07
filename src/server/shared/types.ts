@@ -35,7 +35,7 @@ export interface IUporabnik<
   // Clanstvo v neki lovski druzini
   druzina: D | null
   // Polje za osvezevanje JWT tokenov
-  refresh_token: string
+  refresh_token: string[]
 }
 
 /* Druzina */
@@ -123,6 +123,7 @@ export interface IOpazovalnica<I = mongoose.Types.ObjectId> extends IIsDeleted {
   kapaciteta: number
   prespanje: boolean
   koordinate: [number, number]
+  zasedenost?: number
 }
 
 /* Obisk */

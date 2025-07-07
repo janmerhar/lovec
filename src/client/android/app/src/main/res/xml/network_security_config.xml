@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true">
+    <!--<domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">janmerhar.live</domain>e
+    </domain-config>-->
+    <base-config>
         <trust-anchors>
+            <!-- https://github.com/axios/axios/issues/5271 -->
+            <domain includeSubdomains="false">janmerhar.live</domain>
+            <domain includeSubdomains="true">janmerhar.com</domain>
             <!-- Trust user added CAs while debuggable only -->
-            <certificates src="user" />
+            <certificates src="system" />
         </trust-anchors>
     </base-config>
 </network-security-config>

@@ -14,7 +14,7 @@
           <!-- l-marker -->
           <l-marker
             :lat-lng="selectedJaga?.lokacija[0]"
-            :icon="iconJaga"
+            :icon="iconJaga()"
           ></l-marker>
         </map-component>
       </map-window-template>
@@ -55,7 +55,7 @@
               {{ $t("jaga.crud.categories.udelezeni") }}
             </template>
             <template #end>
-              {{ selectedJaga?.udelezeni.length }} /
+              {{ selectedJaga?.udelezeni.length + 1 }} /
               {{ selectedJaga?.maxUdelezeni }}</template
             >
           </list-title>
@@ -84,9 +84,10 @@
           </list-item>
 
           <!-- Join / leave button -->
+          <!-- TODO: fix this -->
           <list-item
             v-if="
-              selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni ||
+              selectedJaga?.udelezeni.length < selectedJaga?.maxUdelezeni &&
               selectedJaga?.udelezeni.filter(
                 (udelezeni) => udelezeni.id == uporabnik?.id
               ).length != 0
@@ -95,7 +96,10 @@
           >
             <template #title>
               <div
-                style="padding: 1rem 0.5rem; color: var(--ion-color-step-600)"
+                style="
+                  padding: 1rem 0.5rem;
+                  color: var(--ion-background-color-step-600);
+                "
               >
                 {{ uporabnik?.ime }} {{ uporabnik?.priimek }}
               </div>

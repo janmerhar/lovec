@@ -3,6 +3,7 @@
     <template #header>
       <modal-header
         @cancel="useModal().cancelModal"
+        :confirm-button="true"
         @confirm="
           submitForm(
             usePripravnikDnevnikStore().createItem,

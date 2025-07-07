@@ -6,12 +6,13 @@
         e.detail.complete()
       }
     "
+    :is-scrollable="false"
   >
     <template #header>
       <tab-header>{{ $t("izkaznica.tab.header") }}</tab-header>
     </template>
     <template #body>
-      <image-profile> </image-profile>
+      <image-profile :slika="selectedUporabnik?.slika"> </image-profile>
 
       <!--  -->
       <list-container>
@@ -90,13 +91,35 @@
             <template #title>
               {{ $t("izkaznica.tab.sections.language") }}
             </template>
-            <template #value> (Neki jezik) </template>
+            <template #value>
+              <div
+                @click="
+                  useModal().openSheetModal(
+                    SheetModalSelect,
+                    languageSelectModalProps
+                  )
+                "
+              >
+                {{ language }}
+              </div>
+            </template>
           </list-item>
           <list-item>
             <template #title>
               {{ $t("izkaznica.tab.sections.theme") }}
             </template>
-            <template #value> (neka tema dark/light) </template>
+            <!-- Color Scheme toggle button -->
+            <template #value>
+              <div
+                v-if="colorScheme == 'light'"
+                @click="selectColorScheme('dark')"
+              >
+                <font-awesome-icon :icon="['fas', 'moon']" fixed-width />
+              </div>
+              <div v-else @click="selectColorScheme('light')">
+                <font-awesome-icon :icon="['fas', 'sun']" fixed-width />
+              </div>
+            </template>
           </list-item>
         </template>
       </list-container>
@@ -116,6 +139,7 @@
 import TabTemplate from "@/components/ui-components/tab/TabTemplate.vue"
 import TabHeader from "@/components/ui-components/tab/TabHeader.vue"
 import TabNoElements from "@/components/ui-components/tab/TabNoElements.vue"
+import SheetModalSelect from "@/components/ui-components/modal/SheetModalSelect.vue"
 
 import ImageProfile from "@/components/ui-components/image/ImageProfile.vue"
 import ListContainer from "@/components/ui-components/list/ListContainer.vue"
@@ -127,7 +151,7 @@ import { useRoute } from "vue-router"
 import { useLoginStore } from "@/stores/useLoginStore"
 import { useProfileStore } from "@/stores/useProfileStore"
 import { storeToRefs } from "pinia"
-import { onBeforeMount } from "vue"
+import { onBeforeMount, computed } from "vue"
 
 const route = useRoute()
 
@@ -148,9 +172,42 @@ const { selectedUporabnik } = storeToRefs(profileStore)
 onBeforeMount(async () => {
   if (uporabnikId) {
     await selectItem(uporabnikId)
-    console.log("profile", selectedUporabnik.value)
   }
 })
+
+//
+// Preferences
+//
+import { usePreferencesStore } from "@/stores/usePreferencesStore"
+import { useModal } from "@/composables/useModal"
+
+// Language
+import i18n, { codeToLanguage } from "@/locales/i18n"
+import type { Locale } from "@/locales/i18n"
+
+const preferencesStore = usePreferencesStore()
+const { language } = storeToRefs(preferencesStore)
+const { selectLanguage } = preferencesStore
+
+const t = i18n.global.t
+
+const languageSelectModalProps = {
+  header: computed(() => t("izkaznica.tab.sections.language")),
+  items: codeToLanguage,
+  displayItem: (item: string) => item,
+  selectItem: async (item: string) => {
+    selectLanguage(
+      Object.keys(codeToLanguage).find(
+        // @ts-ignore
+        (key: string) => codeToLanguage[key] === item
+      ) as Locale // Explicitly assert the type here
+    )
+  },
+}
+
+// Color scheme
+const { colorScheme } = storeToRefs(preferencesStore)
+const { selectColorScheme } = preferencesStore
 
 const logoutUser = async () => {
   const logoutResult = await useLoginStore().logout()

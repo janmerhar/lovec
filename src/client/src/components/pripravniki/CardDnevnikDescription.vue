@@ -1,10 +1,11 @@
 <template>
   <card-horizontal :class="cardColor(dnevnik)">
     <template #left-side>
-      <img
+      <!-- <img
         class="carousel"
         src="https://t3.ftcdn.net/jpg/02/75/74/58/360_F_275745846_slBI2EsTudIShef6hMliS6Oa123tC9Zv.jpg"
-      />
+      /> -->
+      <font-awesome-icon :icon="['fas', 'broom']" size="8x" fixed-width />
     </template>
 
     <template #right-side>
@@ -14,7 +15,7 @@
 
       <text-card-title> {{ dnevnik.delo }} </text-card-title>
       <text-card-subtitle>
-        {{ dnevnik.datum }} · {{ dnevnik.ure }} ur
+        {{ useDate(dnevnik.datum).isoDate() }} · {{ dnevnik.ure }} h
       </text-card-subtitle>
 
       <text-card-body> {{ dnevnik.opis }} </text-card-body>
@@ -41,6 +42,7 @@ import ButtonRow from "@/components/ui-components/button/ButtonRow.vue"
 import TextUsername from "@/components/ui-components/text/TextUsername.vue"
 
 import type { Dnevnik } from "@/types"
+import { useDate } from "@/composables/useDate"
 
 defineProps({
   dnevnik: {

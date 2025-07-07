@@ -42,22 +42,22 @@ export default {
   },
   jaga: {
     tab: {
-      header: "Jaga",
+      header: "Lovi",
       headerOptions: {
-        active: "Aktivne",
-        past: "Pretekle",
-        mine: "Moje",
+        active: "Aktivni",
+        past: "Pretekli",
+        mine: "Moji",
       },
     },
     crud: {
       create: {
-        header: "Vnesi jago",
+        header: "Vnesi lov",
         button: "Dodaj člana",
         success: "Jaga {name} uspešno dodana",
       },
       delete: {
-        success: "Jaga {name} uspešno izbrisana",
-        failure: "Jaga {name} ni bila izbrisana",
+        success: "Lov {name} uspešno izbrisana",
+        failure: "Lov {name} ni bila izbrisana",
       },
       categories: {
         organizator: "Organizator",
@@ -92,11 +92,11 @@ export default {
   },
   pripravniki: {
     tab: {
-      header: "Pripravniki",
+      header: "Dnevniki",
     },
     crud: {
       create: {
-        header: "Vnesi pripravnika",
+        header: "Vnesi dnevnik",
         button: "Vnesi",
         success: "Dnevnik za {name} uspešno dodan",
       },
@@ -113,19 +113,24 @@ export default {
       header: "Dnevniki",
     },
   },
+  vpleni: {
+    tab: {
+      header: "Zgodovina uplenov",
+    },
+  },
   vplenDatum: {
     tab: {
-      header: "Vpleni datum",
+      header: "Upleni datum",
     },
     crud: {
       create: {
-        header: "Vnesi vplen",
-        button: "Vpleni",
-        success: "Vplen {name} uspešno dodan",
+        header: "Vnesi uplen",
+        button: "Upleni",
+        success: "Uplen {name} uspešno dodan",
       },
       delete: {
-        success: "Vplen {name} uspešno izbrisan",
-        failure: "Vplen {name} ni bila izbrisan",
+        success: "Uplen {name} uspešno izbrisan",
+        failure: "Uplen {name} ni bila izbrisan",
       },
       categories: {
         kooridnate: "Koordinate",
@@ -267,7 +272,7 @@ export default {
         categories: {
           datum: "Revizija",
           PAGE_SIZE: "Velikost strani",
-          JAGA_MAX_MEMBERS: "Maksimalno število članov jage",
+          JAGA_MAX_MEMBERS: "Maksimalno število članov lova",
           OBISK_MAX_LENGTH: "Maksimalna dolžina obiska",
           USER_OBISKS_MAX_LENGTH: "Maksimalna dolžina obiskov uporabnika",
         },
@@ -321,7 +326,7 @@ export default {
         dnevniki_pripravnik: "Dnevniki",
         dnevniki_mentor: "Dnevniki pripravnikov",
         obiski: "Obiski",
-        vpleni: "Vpleni",
+        vpleni: "Upleni",
         oprema: "Oprema",
       },
       logout: "Odjava",
@@ -369,7 +374,7 @@ export default {
   },
   admin_uporabnik_vpleni: {
     tab: {
-      header: "Vpleni",
+      header: "Upleni",
     },
   },
   admin_uporabnik_jage: {

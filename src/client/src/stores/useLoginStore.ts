@@ -22,7 +22,7 @@ export const useLoginStore = defineStore(
       uporabnik.value = null
 
       const response: HttpResponse = await CapacitorHttp.post({
-        url: `${process.env.VUE_APP_API_URL}/uporabnik/login`,
+        url: `${import.meta.env.VITE_API_URL}/uporabnik/login`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -48,7 +48,7 @@ export const useLoginStore = defineStore(
       }
 
       const response: HttpResponse = await CapacitorHttp.post({
-        url: `${process.env.VUE_APP_API_URL}/uporabnik/logout`,
+        url: `${import.meta.env.VITE_API_URL}/uporabnik/logout`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${uporabnik.value?.token}`,

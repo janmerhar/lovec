@@ -3,11 +3,13 @@
     style="
       height: 100vh;
       box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.15);
-      background-image: url('https://images.unsplash.com/photo-1503435980610-a51f3ddfee50');
       background-size: 200%;
       background-position: 60% 60%;
       z-index: -1;
     "
+    :style="{
+      backgroundImage: `url(${backgroundImage})`,
+    }"
   >
     <Form
       :validation-schema="loginSchema"
@@ -21,13 +23,23 @@
         gap: 5px;
       "
     >
-      <!-- TODO razmisli, ce bom zares to naredil -->
-      <!-- Languag icon -->
-      <div style="position: fixed; top: 20px; right: 20px">
-        <font-awesome-icon :icon="['fas', 'globe']" size="2xl" fixed-width />
+      <!-- Language icon -->
+      <div
+        style="
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          color: var(--ion-color-primary);
+          cursor: pointer;
+        "
+        @click="
+          useModal().openSheetModal(SheetModalSelect, languageSelectModalProps)
+        "
+      >
+        <font-awesome-icon :icon="['fas', 'language']" size="2xl" fixed-width />
       </div>
-      <!--  -->
-      <input-label-horizontal>
+
+      <input-label-horizontal style="width: 85%">
         <template #left
           ><font-awesome-icon :icon="['fas', 'user']" fixed-width
         /></template>
@@ -41,7 +53,7 @@
       <!--  -->
       <input-label-horizontal
         class="input-label-horizontal"
-        style="margin-top: -10px"
+        style="margin-top: -10px; width: 85%"
       >
         <template #left
           ><font-awesome-icon :icon="['fas', 'key']" fixed-width
@@ -59,7 +71,7 @@
         style="
           position: fixed;
           bottom: 50px;
-          width: 70%;
+          width: 85%;
           height: 2.5rem;
           text-transform: uppercase;
           font-weight: 700;
@@ -74,6 +86,7 @@
 </template>
 
 <script setup lang="ts">
+import backgroundImage from "@/assets/login-page-background.jpeg"
 import InputLabelHorizontal from "@/components/ui-components/input/InputLabelHorizontal.vue"
 
 import { useLoginStore } from "@/stores/useLoginStore"
@@ -87,7 +100,6 @@ import { Form, Field, ErrorMessage } from "vee-validate"
 import { loginSchema } from "@/text-validation/loginSchemas"
 import { storeToRefs } from "pinia"
 
-// Initial values
 const inputData = {
   email: "",
   password: "",
@@ -110,6 +122,32 @@ const loginRedirect = async () => {
   } else {
     useAlert().errorToast(t("login.tab.alert.loginError"))
   }
+}
+
+// Language select
+import { useModal } from "@/composables/useModal"
+import { codeToLanguage } from "@/locales/i18n"
+import type { Locale } from "@/locales/i18n"
+import { usePreferencesStore } from "@/stores/usePreferencesStore"
+
+import SheetModalSelect from "@/components/ui-components/modal/SheetModalSelect.vue"
+import { computed } from "vue"
+
+const preferencesStore = usePreferencesStore()
+const { selectLanguage } = preferencesStore
+
+const languageSelectModalProps = {
+  header: computed(() => t("izkaznica.tab.sections.language")),
+  items: codeToLanguage,
+  displayItem: (item: string) => item,
+  selectItem: async (item: string) => {
+    selectLanguage(
+      Object.keys(codeToLanguage).find(
+        // @ts-ignore
+        (key: string) => codeToLanguage[key] === item
+      ) as Locale // Explicitly assert the type here
+    )
+  },
 }
 </script>
 

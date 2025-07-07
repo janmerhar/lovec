@@ -7,7 +7,7 @@ import type { APIResponse, JWTTokenPair } from "@/types"
 import { storeToRefs } from "pinia"
 
 export const useRequest = () => {
-  const baseURL = ref<string>(`${process.env.VUE_APP_API_URL}`)
+  const baseURL = ref<string>(`${import.meta.env.VITE_API_URL}`)
 
   const loginStore = useLoginStore()
 
@@ -43,7 +43,7 @@ export const useRequest = () => {
       }
 
       const options: HttpOptions = {
-        url: `${process.env.VUE_APP_API_URL}/uporabnik/refresh`,
+        url: `${import.meta.env.VITE_API_URL}/uporabnik/refresh`,
         headers: {
           "Content-Type": "application/json",
         },

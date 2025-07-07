@@ -20,12 +20,13 @@ const app = createExpressServer({
     methods: "GET,PUT,PATCH,POST,DELETE",
   },
   classTransformer: true,
+  routePrefix: "/api",
   controllers: [path.join(__dirname, "/controllers/*.ts")],
 })
 
 import * as express from "express"
 app.use(
-  `/${process.env.FILE_UPLOAD_PATH}`,
+  `/api/${process.env.FILE_UPLOAD_PATH}`,
   express.static(process.cwd() + `/${process.env.FILE_UPLOAD_PATH}`)
 )
 
@@ -61,3 +62,14 @@ mongoose
   })
 
 export = app
+
+/** CRON JOBS **/
+
+import cron from "node-cron"
+
+import { UporabnikCron } from "@crons/uporabnikCron"
+
+// Clearing expired tokens every last Sunday of the month at 02:00
+cron.schedule("00 02 * * 7", async () => {
+  await UporabnikCron.deleteExpiredTokens()
+})

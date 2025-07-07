@@ -16,7 +16,7 @@
         height: 30px;
         object-fit: cover;
         border-radius: 50%;
-        border: 1px solid var(--ion-color-step-600);
+        border: 1px solid var(--ion-background-color-step-600);
       "
     />
     <slot></slot>

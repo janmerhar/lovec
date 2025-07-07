@@ -52,21 +52,29 @@ export const useOpazovalnicaStore = defineStore(
     // EDIT ti manjka !!!!
 
     const deleteOpazovalnica = async (
-      opazovalnica: Opazovalnica
-    ): Promise<boolean> => {
+      oldVal?: Opazovalnica,
+      newVal?: Opazovalnica
+    ): Promise<Opazovalnica | null> => {
+      if (!oldVal || !newVal) {
+        return null
+      }
       const response = await request.delete<boolean>(
-        `/opazovalnice/admin/${opazovalnica.id}`
+        `/opazovalnice/admin/${oldVal.id}`
       )
 
-      return response.data
+      if (response) {
+        oldVal.isDeleted = true
+      }
+
+      return oldVal
     }
 
     const crud = useCRUD<Opazovalnica>(opazovalniceVariable)
-    const { createItem, deleteItem } = crud
+    const { createItem, updateItem } = crud
 
     const toastDelete = async (opazovalnica: Opazovalnica) => {
       const call = async () =>
-        await deleteItem(deleteOpazovalnica)(opazovalnica)
+        await updateItem(deleteOpazovalnica)(opazovalnica, opazovalnica)
 
       const { successToastAction } = useAlert()
 

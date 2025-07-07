@@ -13,7 +13,8 @@ defineCustomElements(window)
 import axios from "axios"
 import VueAxios from "vue-axios"
 
-axios.defaults.baseURL = process.env.VUE_APP_API_URL
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
+
 axios.defaults.headers["Content-Type"] = "application/json"
 axios.defaults.headers["Authorization"] = ""
 
@@ -38,6 +39,17 @@ import "@ionic/vue/css/text-alignment.css"
 import "@ionic/vue/css/text-transformation.css"
 import "@ionic/vue/css/flex-utils.css"
 import "@ionic/vue/css/display.css"
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import '@ionic/vue/css/palettes/dark.always.css'; */
+/* @import '@ionic/vue/css/palettes/dark.class.css'; */
+import "@/theme/dark.class.css"
 
 /* Theme variables */
 import "./theme/variables.css"

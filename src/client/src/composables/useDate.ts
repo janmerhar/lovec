@@ -40,6 +40,11 @@ export const useDate = (input: Date | string) => {
     return date.value.toLocaleTimeString("en-US", options)
   }
 
+  const isLessThan = (otherDate: Date | string): boolean => {
+    const other = new Date(otherDate)
+    return date.value < other
+  }
+
   return {
     date,
     update,
@@ -49,5 +54,6 @@ export const useDate = (input: Date | string) => {
     getDayNumber,
     addHours,
     getTime,
+    isLessThan,
   }
 }

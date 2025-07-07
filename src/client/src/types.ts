@@ -10,7 +10,7 @@ export type APIResponse<T = any> = {
 // to je posel serverja.
 export type JWTPayload = {
   uporabnikId: string
-  role: string
+  role: Role
 }
 
 export type JWTTokenPair = {
@@ -20,13 +20,14 @@ export type JWTTokenPair = {
 
 /* Uporabnik */
 export const uporabnikRoles = ["pripravnik", "lovec", "admin"]
+export type Role = "pripravnik" | "lovec" | "admin"
 
 export type UporabnikLogin = {
   id: string
   ime: string
   priimek: string
   slika: string
-  role: string
+  role: Role
 
   token: string
   refresh_token: string
@@ -37,7 +38,7 @@ export interface UporabnikDetails {
   ime: string
   priimek: string
   slika: string
-  role: (typeof uporabnikRoles)[number]
+  role: Role
 }
 
 export interface UporabnikProfile extends UporabnikDetails {
@@ -45,7 +46,7 @@ export interface UporabnikProfile extends UporabnikDetails {
   ime: string
   priimek: string
   slika: string
-  role: string
+  role: Role
 
   mentor: UporabnikDetails | null
   pripravniki: UporabnikDetails[] | null
@@ -60,7 +61,7 @@ export interface InsertUporabnik {
   slika: File | null
   email: string
   geslo: string
-  role: (typeof uporabnikRoles)[number]
+  role: Role
   mentor?: string
   pripravniki?: string[]
   druzina?: string
@@ -130,6 +131,9 @@ export interface Opazovalnica {
   kapaciteta: number
   prespanje: boolean
   koordinate: number[]
+  zasedenost?: number
+
+  isDeleted: boolean
 }
 
 export interface InsertOpazovalnica {

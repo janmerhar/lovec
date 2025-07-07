@@ -13,8 +13,11 @@ import {
   UseBefore,
 } from "routing-controllers"
 
+/** File upload imports **/
 import multer from "multer"
 import * as crypto from "crypto"
+import sharp from "sharp"
+import path from "path"
 
 const storage = multer.diskStorage({
   destination: function (_req: any, _file: any, cb: any) {
@@ -26,6 +29,22 @@ const storage = multer.diskStorage({
     cb(null, `${crypto.randomBytes(20).toString("hex")}.${fileEnd}`)
   },
 })
+
+const compressImage = async (filePath: string) => {
+  const filename = path.parse(filePath).name
+  const extension = path.parse(filePath).ext
+  const metadata = await sharp(filePath).metadata()
+  const { width, height } = metadata
+
+  const buffer = await sharp(filePath)
+    .resize(800, null, {
+      fit: "inside",
+    })
+    .webp({ quality: 90 })
+    .toBuffer()
+
+  await sharp(buffer).toFile(filePath)
+}
 /*
   Admin:
   2. Urejanje uporabnikov --> vnos slike
@@ -63,7 +82,20 @@ export class UporabnikController {
   async postLogout(@Req() req: any) {
     const { uporabnikId } = Uporabnik.JWTpayload(req)
 
-    const result = await Uporabnik.logout(uporabnikId)
+    const result = await Uporabnik.logout(uporabnikId, null)
+
+    return ResponseBuilder.success(result)
+  }
+
+  @Post("/logout/:refresh_token")
+  @UseBefore(authUser("lovec", "pripravnik", "admin"))
+  async postLogoutRefreshToken(
+    @Req() req: any,
+    @Param("refresh_token") refresh_token: string
+  ) {
+    const { uporabnikId } = Uporabnik.JWTpayload(req)
+
+    const result = await Uporabnik.logout(uporabnikId, refresh_token)
 
     return ResponseBuilder.success(result)
   }
@@ -118,7 +150,7 @@ export class UporabnikController {
     @UploadedFile("slika", { options: { storage } }) file?: any
   ) {
     const slika = file ? file.filename : null
-    console.log(slika)
+    await compressImage(`${process.env.FILE_UPLOAD_PATH_PROFILE}/${slika}`)
 
     const result = await Uporabnik.register(
       uporabnik.ime,
